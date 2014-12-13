@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Índice de Poder Legislativo do Brasil</title>
+  <meta name="author" content="Michel Pavan Macedo">
+
+  <!--Icons-->
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+
+  <style>
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 0 200px;
+      text-align: center;
+    }
+
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p, pre { margin: 10px; }
+
+    .c3-xgrid-line.linha-era line {
+      stroke-dasharray: 5 10;
+    }
+    .c3-xgrid-line.linha-era text {
+    }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="/css/c3.min.css">
+</head>
+<body>
+  <h1>Índice de Poder Legislativo do Brasil</h1>
+  <div id="nacional" class="grafico"></div>
+
+  <script src="/js/d3.min.js" charset="UTF-8"></script>
+  <script src="/js/c3.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="//js/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script type="text/javascript">
+    $(function() {
+      var chart = c3.generate({
+        bindto: '#nacional',
+        data: {
+          x: 'x',
+          columns: [
+            ['x', '1994-01-01', '1996-01-01', '1998-01-01', '2000-01-01', '2002-01-01', '2004-01-01', '2006-01-01', '2008-01-01', '2010-01-01', '2012-01-01', '2014-01-01'],
+            ['PT', 100, 0, 100, 150, 250, 30, 200, 100, 0, 150, 250],
+            ['PSDB', 50, 20, 15, 10, 40, 50, 20, 10, 40, 15, 25]
+          ],
+          colors: {
+              PT:   'rgb(214, 39, 40)',
+              PSDB: '#0C59A1'
+          },
+          type: 'line',
+          labels: true
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y'
+            }
+          },
+          y: {
+            min: 0,
+            padding: {
+              bottom: 0,
+              top: 50
+            }
+          }
+        },
+        grid: {
+            x: {
+                lines: [{value: '1994-01-01', text: 'FHC', 'class': 'linha-era'}, {value: '2002-01-01', text: 'Lula', 'class': 'linha-era'}, {value: '2010-01-01', text: 'Dilma', 'class': 'linha-era'}]
+            },
+            y: {
+                show: true
+            }
+        }
+      });
+    });
+  </script>
+</body></html>
