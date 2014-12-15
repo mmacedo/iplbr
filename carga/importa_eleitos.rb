@@ -21,12 +21,14 @@ anos.each do |ano|
 
   # Seleciona colunas de acordo com o ano
   if ano <= 1990
+    nome_municipio      = 5
     nome_candidato      = 10
     nome_urna_candidato = 11
     descricao_cargo     = 12
     desc_sit_cand_tot   = 18
     sigla_partido       = 20
   else
+    nome_municipio      = 8
     nome_candidato      = 13
     nome_urna_candidato = 14
     descricao_cargo     = 15
@@ -37,10 +39,10 @@ anos.each do |ano|
   ufs.each do |uf|
 
     # Seleciona arquivo de acordo com o ano
-    if ano <= 1990
-      arquivo = "VOTACAO_CANDIDATO_UF_#{ano}/VOTACAO_CANDIDATO_UF_#{ano}_#{uf}.txt"
+    arquivo = if ano <= 1990
+      "VOTACAO_CANDIDATO_UF_#{ano}/VOTACAO_CANDIDATO_UF_#{ano}_#{uf}.txt"
     else
-      arquivo = "votacao_candidato_munzona_#{ano}/votacao_candidato_munzona_#{ano}_#{uf}.txt"
+      "votacao_candidato_munzona_#{ano}/votacao_candidato_munzona_#{ano}_#{uf}.txt"
     end
     arquivo = File.join(pasta_de_download, arquivo)
 
@@ -48,13 +50,19 @@ anos.each do |ano|
       sequenciais = {}
       visao = []
       IO.foreach(arquivo, encoding: "WINDOWS-1252:UTF-8") do |linha|
-        candidato = linha.chomp.split(';').map { |coluna| coluna.sub(%r{\A"(.*)"\z}, '\1') }
-        unico = candidato[nome_candidato]
+        candidato   = linha.chomp.split(';').map { |coluna| coluna.sub(%r{\A"(.*)"\z}, '\1') }
+        chave_unica = candidato[nome_candidato]
 
-        unless sequenciais.has_key?(unico)
+        unless sequenciais.has_key?(chave_unica)
           if candidato[desc_sit_cand_tot].match(%r{\AELEITO|MÉDIA\z})
-            sequenciais[unico] = nil
-            visao << [candidato[descricao_cargo], candidato[sigla_partido], candidato[nome_urna_candidato]]
+            sequenciais[chave_unica] = nil
+
+            cargo     = candidato[descricao_cargo]
+            sigla     = candidato[sigla_partido]
+            nome      = candidato[nome_urna_candidato]
+            municipio = if cargo.match(%r{\APREFEITO|VEREADOR\z}) then candidato[nome_municipio] else "" end
+
+            visao << [ano, uf, municipio, cargo, sigla, nome]
           end
         end
       end
