@@ -13,6 +13,7 @@
 #  popd
 
 pushd $(dirname "$0")/_deploy
+git pull origin
 cp -r ../public/* .
 git add -A
 git commit -m "$(git log master --pretty=format:"%s" | tail -1)"
