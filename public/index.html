@@ -39,12 +39,6 @@
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
     p, pre { margin: 10px; }
-
-    .c3-xgrid-line.linha-era line {
-      stroke-dasharray: 5 10;
-    }
-    .c3-xgrid-line.linha-era text {
-    }
   </style>
 </head>
 <body>
@@ -52,35 +46,38 @@
   <div id="grafico" class="grafico"></div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="//js/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="//code.highcharts.com/highcharts.js"></script>
   <script src="//code.highcharts.com/highcharts-more.js"></script>
-  <script>!window.jQuery.fn.highcharts && document.write(unescape('%3Cscript src="//js/highcharts.js"%3E%3C/script%3E %3Cscript src="//js/highcharts-more.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery.fn.highcharts && document.write(unescape('%3Cscript src="/js/highcharts.js"%3E%3C/script%3E %3Cscript src="/js/highcharts-more.js"%3E%3C/script%3E'))</script>
+  <script src="/js/lazy.min.js"></script>
 
   <script type="text/javascript">
     $(function() {
-      $("#grafico").highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Fruit Consumption'
-        },
-        xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
-        },
-        yAxis: {
+      $.getJSON("/eleitos.json").done(function(json) {
+
+        anos = Lazy(json.f).keys()
+
+        $("#grafico").highcharts({
+          title: {
+            text: 'Câmara dos Deputados'
+          },
+          xAxis: {
+            categories: anos.toArray()
+          },
+          yAxis: {
             title: {
-                text: 'Fruit eaten'
+              text: '‰'
             }
-        },
-        series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
-        }, {
-            name: 'John',
-            data: [5, 7, 3]
-        }]
+          },
+          series: [{
+            name: 'PT',
+            data: anos.map(function(ano) { return json.f[ano].deputados_por_sigla.PT / json.f[ano].total_deputados * 1000 }).toArray()
+          }, {
+            name: 'PSDB',
+            data: anos.map(function(ano) { return json.f[ano].deputados_por_sigla.PSDB / json.f[ano].total_deputados * 1000 }).toArray()
+          }]
+        });
       });
     });
   </script>
