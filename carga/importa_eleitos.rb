@@ -21,6 +21,7 @@ anos.each do |ano|
 
   # Seleciona colunas de acordo com o ano
   if ano <= 1990
+    descricao_eleicao   = 4
     nome_municipio      = 5
     nome_candidato      = 10
     nome_urna_candidato = 11
@@ -28,6 +29,7 @@ anos.each do |ano|
     desc_sit_cand_tot   = 18
     sigla_partido       = 20
   else
+    descricao_eleicao   = 4
     nome_municipio      = 8
     nome_candidato      = 13
     nome_urna_candidato = 14
@@ -53,18 +55,23 @@ anos.each do |ano|
         candidato   = linha.chomp.split(';').map { |coluna| coluna.sub(%r{\A"(.*)"\z}, '\1') }
         chave_unica = candidato[nome_candidato]
 
-        unless sequenciais.has_key?(chave_unica)
-          if candidato[desc_sit_cand_tot].match(%r{\AELEITO|MÉDIA\z})
-            sequenciais[chave_unica] = nil
+        # Verifica se não é repetido
+        next if sequenciais.has_key?(chave_unica)
 
-            cargo     = candidato[descricao_cargo]
-            sigla     = candidato[sigla_partido]
-            nome      = candidato[nome_urna_candidato]
-            municipio = if cargo.match(%r{\APREFEITO|VEREADOR\z}) then candidato[nome_municipio] else "" end
+        # Verifica se foi eleito
+        next unless candidato[desc_sit_cand_tot].match(%r{\AELEITO|MÉDIA\z})
 
-            visao << [ano, uf, municipio, cargo, sigla, nome]
-          end
-        end
+        # Verifica se não é um plebiscito
+        next unless candidato[descricao_eleicao].match(%R{\AELEIÇÕES #{ano}\z})
+
+        sequenciais[chave_unica] = nil
+
+        cargo     = candidato[descricao_cargo]
+        sigla     = candidato[sigla_partido]
+        nome      = candidato[nome_urna_candidato]
+        municipio = if cargo.match(%r{\APREFEITO|VEREADOR\z}) then candidato[nome_municipio] else "" end
+
+        visao << [ano, uf, municipio, cargo, sigla, nome]
       end
       visao = visao.sort
     else
