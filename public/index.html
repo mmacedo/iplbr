@@ -55,7 +55,10 @@
 </head>
 <body>
   <h1>Índice de Poder Legislativo do Brasil</h1>
-  <div id="grafico" class="grafico"></div>
+  <div id="deputados_federais" class="grafico"></div>
+  <div id="senadores" class="grafico"></div>
+  <div id="deputados_estaduais" class="grafico"></div>
+  <div id="vereadores" class="grafico"></div>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -68,28 +71,154 @@
     $(function() {
       $.getJSON("eleitos.json").done(function(json) {
 
-        anos = Lazy(json.f).keys()
+        anos_f = Lazy(json.f).keys().map(function(ano) { return parseInt(ano, 10); });
 
-        $("#grafico").highcharts({
+        siglas_deputados_federais  = anos_f.map(function(ano) { return Lazy(json.f[ano].deputados_por_sigla).keys(); }).flatten().uniq();
+        siglas_senadores           = anos_f.map(function(ano) { return Lazy(json.f[ano].senadores_por_sigla).keys(); }).flatten().uniq();
+
+        anos_e = Lazy(json.e).keys().map(function(ano) { return parseInt(ano, 10); });
+
+        siglas_deputados_estaduais = anos_e.map(function(ano) { return Lazy(json.e[ano].deputados_por_sigla).keys(); }).flatten().uniq();
+
+        anos_m = Lazy(json.m).keys().map(function(ano) { return parseInt(ano, 10); });
+
+        siglas_vereadores          = anos_m.map(function(ano) { return Lazy(json.m[ano].vereadores_por_sigla).keys(); }).flatten().uniq();
+
+        $("#deputados_federais").highcharts({
           title: {
             text: 'Câmara dos Deputados'
           },
           xAxis: {
-            categories: anos.toArray()
+            categories: anos_f.toArray()
           },
           yAxis: {
             title: {
-              text: '‰'
-            }
+              text: '%'
+            },
+            min: 0,
+            max: .3,
+            showFirstLabel: false
           },
-          series: [{
-            name: 'PT',
-            data: anos.map(function(ano) { return json.f[ano].deputados_por_sigla.PT / json.f[ano].total_deputados * 1000 }).toArray()
-          }, {
-            name: 'PSDB',
-            data: anos.map(function(ano) { return json.f[ano].deputados_por_sigla.PSDB / json.f[ano].total_deputados * 1000 }).toArray()
-          }]
+          tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueDecimals: 3
+          },
+          series: siglas_deputados_federais.map(function(sigla) {
+            return {
+              name: sigla,
+              data: anos_f.filter(function(ano) { return sigla in json.f[ano.toString()].deputados_por_sigla; })
+                        .map(function(ano) { return [ ano, json.f[ano.toString()].deputados_por_sigla[sigla] / json.f[ano.toString()].total_deputados ]; })
+                        .toArray()
+            };
+          }).toArray()
         });
+
+        $("#senadores").highcharts({
+          title: {
+            text: 'Senado'
+          },
+          xAxis: {
+            categories: anos_f.toArray()
+          },
+          yAxis: {
+            title: {
+              text: '%'
+            },
+            min: 0,
+            max: .3,
+            showFirstLabel: false
+          },
+          tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueDecimals: 3
+          },
+          series: siglas_senadores.map(function(sigla) {
+            return {
+              name: sigla,
+              data: anos_f
+                .filter(function(ano) {
+                  return (ano - 4).toString() in json.f &&
+                         ((ano.toString() in json.f && sigla in json.f[ano.toString()].senadores_por_sigla) ||
+                          ((ano - 4).toString() in json.f && sigla in json.f[(ano - 4).toString()].senadores_por_sigla));
+                })
+                .map(function(ano) {
+                    senadores = 0
+                    if (ano.toString() in json.f && sigla in json.f[ano.toString()].senadores_por_sigla) { senadores += json.f[ano.toString()].senadores_por_sigla[sigla] }
+                    if ((ano - 4).toString() in json.f && sigla in json.f[(ano - 4).toString()].senadores_por_sigla) { senadores += json.f[(ano - 4).toString()].senadores_por_sigla[sigla] }
+
+                    total_senadores = json.f[ano.toString()].total_senadores
+                    if ((ano - 4).toString() in json.f && sigla in json.f[(ano - 4).toString()].senadores_por_sigla) { total_senadores += json.f[(ano - 4).toString()].total_senadores }
+                    return [
+                      ano,
+                      senadores / total_senadores
+                    ];
+                }).toArray()
+            };
+          }).toArray()
+        });
+
+        $("#deputados_estaduais").highcharts({
+          title: {
+            text: 'Assembléias Legislativas Estaduais ou Distritais'
+          },
+          xAxis: {
+            categories: anos_e.toArray()
+          },
+          yAxis: {
+            title: {
+              text: '%'
+            },
+            min: 0,
+            max: .3,
+            showFirstLabel: false
+          },
+          tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueDecimals: 3
+          },
+          series: siglas_deputados_estaduais.map(function(sigla) {
+            return {
+              name: sigla,
+              data: anos_e.filter(function(ano) { return sigla in json.e[ano.toString()].deputados_por_sigla; })
+                        .map(function(ano) { return [ ano, json.e[ano.toString()].deputados_por_sigla[sigla] / json.e[ano.toString()].total_deputados ]; })
+                        .toArray()
+            };
+          }).toArray()
+        });
+
+        $("#vereadores").highcharts({
+          title: {
+            text: 'Câmaras Municipais'
+          },
+          xAxis: {
+            categories: anos_m.toArray()
+          },
+          yAxis: {
+            title: {
+              text: '%'
+            },
+            min: 0,
+            max: .3,
+            showFirstLabel: false
+          },
+          tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueDecimals: 3
+          },
+          series: siglas_vereadores.map(function(sigla) {
+            return {
+              name: sigla,
+              data: anos_m.filter(function(ano) { return sigla in json.m[ano.toString()].vereadores_por_sigla; })
+                        .map(function(ano) { return [ ano, json.m[ano.toString()].vereadores_por_sigla[sigla] / json.m[ano.toString()].total_vereadores ]; })
+                        .toArray()
+            };
+          }).toArray()
+        });
+
       });
     });
   </script>
