@@ -47,11 +47,11 @@ end
 # Processa totais por partido e gera com os totais necessários
 # -------------------------------------------------------------
 
-json = { m:{}, e:{}, f:{} }
+json = { municipais:{}, estaduais:{}, federais:{} }
 
 municipais.each do |ano, ufs|
 
-  json[:m][ano] = {
+  json[:municipais][ano] = {
     total_prefeitos:              0,
     total_vereadores:             0,
     prefeitos_por_sigla:          Hash.new(0),
@@ -67,18 +67,18 @@ municipais.each do |ano, ufs|
 
       total_vereadores = cargos['VEREADOR'].map { |sigla, vereadores| vereadores }.reduce(:+)
 
-      json[:m][ano][:total_prefeitos]  += 1
-      json[:m][ano][:total_vereadores] += total_vereadores
+      json[:municipais][ano][:total_prefeitos]  += 1
+      json[:municipais][ano][:total_vereadores] += total_vereadores
 
       if cargos.has_key? 'PREFEITO'
         cargos['PREFEITO'].each do |sigla, prefeitos|
-          json[:m][ano][:prefeitos_por_sigla][sigla]          += 1
-          json[:m][ano][:peso_dos_prefeitos_por_sigla][sigla] += total_vereadores
+          json[:municipais][ano][:prefeitos_por_sigla][sigla]          += 1
+          json[:municipais][ano][:peso_dos_prefeitos_por_sigla][sigla] += total_vereadores
         end
       end
 
       cargos['VEREADOR'].each do |sigla, vereadores|
-        json[:m][ano][:vereadores_por_sigla][sigla] += vereadores
+        json[:municipais][ano][:vereadores_por_sigla][sigla] += vereadores
       end
     end
   end
@@ -86,54 +86,54 @@ end
 
 estaduais.each do |ano, ufs|
 
-  json[:e][ano] = {
+  json[:estaduais][ano] = {
     total_governadores:              0,
-    total_deputados:                 0,
+    total_deputados_estaduais:       0,
     governadores_por_sigla:          Hash.new(0),
     peso_dos_governadores_por_sigla: Hash.new(0),
-    deputados_por_sigla:             Hash.new(0)
+    deputados_estaduais_por_sigla:   Hash.new(0)
   }
 
   ufs.each do |uf, cargos|
 
-    total_deputados = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados| deputados }.reduce(:+)
+    total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
 
-    json[:e][ano][:total_governadores] += 1
-    json[:e][ano][:total_deputados]    += total_deputados
+    json[:estaduais][ano][:total_governadores] += 1
+    json[:estaduais][ano][:total_deputados_estaduais]    += total_deputados_estaduais
 
     cargos['GOVERNADOR'].each do |sigla, governadores|
-      json[:e][ano][:governadores_por_sigla][sigla]          += 1
-      json[:e][ano][:peso_dos_governadores_por_sigla][sigla] += total_deputados
+      json[:estaduais][ano][:governadores_por_sigla][sigla]          += 1
+      json[:estaduais][ano][:peso_dos_governadores_por_sigla][sigla] += total_deputados_estaduais
     end
 
-    cargos['DEPUTADO ESTADUAL OU DISTRITAL'].each do |sigla, deputados|
-      json[:e][ano][:deputados_por_sigla][sigla] += deputados
+    cargos['DEPUTADO ESTADUAL OU DISTRITAL'].each do |sigla, deputados_estaduais|
+      json[:estaduais][ano][:deputados_estaduais_por_sigla][sigla] += deputados_estaduais
     end
   end
 end
 
 federais.each do |ano, cargos|
 
-  json[:f][ano] = {
-    total_presidentes:     1,
-    total_deputados:       0,
-    total_senadores:       0,
-    presidentes_por_sigla: Hash.new(0),
-    deputados_por_sigla:   Hash.new(0),
-    senadores_por_sigla:   Hash.new(0)
+  json[:federais][ano] = {
+    total_presidentes:            1,
+    total_deputados_federais:     0,
+    total_senadores:              0,
+    presidentes_por_sigla:        Hash.new(0),
+    deputados_federais_por_sigla: Hash.new(0),
+    senadores_por_sigla:          Hash.new(0)
   }
 
-  json[:f][ano][:total_deputados] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados| deputados }.reduce(:+)
-  json[:f][ano][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
+  json[:federais][ano][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
+  json[:federais][ano][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
 
-  cargos['PRESIDENTE'].each { |sigla, presidentes| json[:f][ano][:presidentes_por_sigla][sigla] = 1 }
+  cargos['PRESIDENTE'].each { |sigla, presidentes| json[:federais][ano][:presidentes_por_sigla][sigla] = 1 }
 
-  cargos['DEPUTADO FEDERAL'].each do |sigla, deputados|
-    json[:f][ano][:deputados_por_sigla][sigla] += deputados
+  cargos['DEPUTADO FEDERAL'].each do |sigla, deputados_federais|
+    json[:federais][ano][:deputados_federais_por_sigla][sigla] += deputados_federais
   end
 
   cargos['SENADOR'].each do |sigla, senadores|
-    json[:f][ano][:senadores_por_sigla][sigla] += senadores
+    json[:federais][ano][:senadores_por_sigla][sigla] += senadores
   end
 end
 
