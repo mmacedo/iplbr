@@ -74,12 +74,14 @@
 
         var indice = new Indice(json);
 
+        var deputadosFederais = indice.deputadosFederais();
+
         $("#deputados_federais").highcharts({
           title: {
             text: 'Câmara dos Deputados'
           },
           xAxis: {
-            categories: indice.anos_federais()
+            categories: deputadosFederais.categories()
           },
           yAxis: {
             title: {
@@ -92,17 +94,20 @@
           tooltip: {
             crosshairs: true,
             shared: true,
-            valueDecimals: 2
+            valueDecimals: 2,
+            useHTML: true
           },
-          series: indice.deputados_federais()
+          series: deputadosFederais.series()
         });
+
+        var senadores = indice.senadores();
 
         $("#senadores").highcharts({
           title: {
             text: 'Senado'
           },
           xAxis: {
-            categories: indice.anos_federais()
+            categories: senadores.categories()
           },
           yAxis: {
             title: {
@@ -115,17 +120,20 @@
           tooltip: {
             crosshairs: true,
             shared: true,
-            valueDecimals: 2
+            valueDecimals: 2,
+            useHTML: true
           },
-          series: indice.senadores()
+          series: senadores.series()
         });
+
+        var deputadosEstaduais = indice.deputadosEstaduais();
 
         $("#deputados_estaduais").highcharts({
           title: {
             text: 'Assembléias Legislativas Estaduais ou Distritais'
           },
           xAxis: {
-            categories: indice.anos_estaduais()
+            categories: deputadosEstaduais.categories()
           },
           yAxis: {
             title: {
@@ -138,17 +146,20 @@
           tooltip: {
             crosshairs: true,
             shared: true,
-            valueDecimals: 2
+            valueDecimals: 2,
+            useHTML: true
           },
-          series: indice.deputados_estaduais()
+          series: deputadosEstaduais.series()
         });
+
+        var vereadores = indice.vereadores();
 
         $("#vereadores").highcharts({
           title: {
             text: 'Câmaras Municipais'
           },
           xAxis: {
-            categories: indice.anos_municipais()
+            categories: vereadores.categories()
           },
           yAxis: {
             title: {
@@ -161,9 +172,10 @@
           tooltip: {
             crosshairs: true,
             shared: true,
-            valueDecimals: 2
+            valueDecimals: 2,
+            useHTML: true
           },
-          series: indice.vereadores()
+          series: vereadores.series()
         });
 
       });

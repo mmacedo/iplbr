@@ -1,171 +1,260 @@
 ;(function() {
 
+  // Realiza herança, copiado do CoffeeScript
+  var _extends = function(child, parent) {
+    function ctor() { this.constructor = child; }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+  }
+
   // Para função map, converte todos os itens para inteiros
   var toInt = function(s) {
     return parseInt(s, 10);
   };
 
-  Indice = (function() {
+  // Retorna uma lista de anos que ocorreu eleições
+  var anos = function(eleicoes) {
+    return Lazy(eleicoes).keys();
+  };
+
+  // Retorna todas as siglas que já elegeram determinado cargo
+  var siglas = function(eleicoes, cargo) {
+    return anos(eleicoes).map(function(ano) {
+      return Lazy(eleicoes[ano]["" + cargo + "_por_sigla"]).keys();
+    }).flatten().uniq();
+  };
+
+  var Grafico = (function() {
+    function Grafico() {}
+    Grafico.prototype.anos = function() { return []; };
+    Grafico.prototype.siglas = function() { return []; };
+    Grafico.prototype.total = function(ano) { return 0; };
+    Grafico.prototype.valorPorSigla = function(ano, sigla) { return 0; };
+    Grafico.prototype.temBancada = function(ano, sigla) { return false; };
+    Grafico.prototype.calculaIndice = function(ano, sigla) { return 0.0; };
+
+    Grafico.prototype.categories = function() {
+      return this.anos().map(toInt).toArray();
+    };
+
+    Grafico.prototype.series = function() {
+
+      var _this = this;
+
+      return _this.siglas().map(function(sigla) {
+
+        // Anos que a sigla elegeu alguém
+        var anosComBancada = _this.anos().filter(function(ano) {
+          return _this.temBancada(ano, sigla);
+        });
+
+        // Tamanho da bancada em relação ao total da casa
+        var percentualBancadaPorAno = anosComBancada.map(function(ano) {
+          return _this.calculaIndice(ano, sigla)
+        });
+
+        return {
+          name: sigla,
+          data: percentualBancadaPorAno.toArray()
+        };
+      }).toArray();
+    };
+
+    return Grafico;
+
+  })();
+
+  var MandatoQuatroAnos = (function() {
+
+    _extends(MandatoQuatroAnos, Grafico);
+
+    function MandatoQuatroAnos(eleicoes) {
+      this.eleicoes = eleicoes;
+    }
+
+    MandatoQuatroAnos.prototype.temBancada = function(ano, sigla) {
+      return this.valorPorSigla(ano, sigla) > 0;
+    };
+
+    MandatoQuatroAnos.prototype.calculaIndice = function(ano, sigla) {
+
+      var eleitos = this.valorPorSigla(ano, sigla);
+      var total   = this.total(ano);
+
+      return [ parseInt(ano, 10), eleitos / total * 100 ];
+    };
+
+    return MandatoQuatroAnos;
+
+  })();
+
+  var MandatoOitoAnos = (function() {
+
+    _extends(MandatoOitoAnos, Grafico);
+
+    function MandatoOitoAnos(eleicoes) {
+      this.eleicoes = eleicoes;
+    }
+
+    MandatoOitoAnos.prototype.temBancada = function(ano, sigla) {
+
+      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
+
+      // Só os anos que tenha todos
+      if (this.total(quatroAnosAntes) == 0) {
+        return false;
+      }
+
+      return this.valorPorSigla(quatroAnosAntes, sigla) > 0 ||
+             this.valorPorSigla(ano, sigla) > 0;
+    };
+
+    MandatoOitoAnos.prototype.calculaIndice = function(ano, sigla) {
+
+      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
+
+      var eleitos = this.valorPorSigla(quatroAnosAntes, sigla) + this.valorPorSigla(ano, sigla);
+      var total   = this.total(quatroAnosAntes) + this.total(ano);
+
+      return [ parseInt(ano, 10), eleitos / total * 100 ];
+    };
+
+    return MandatoOitoAnos;
+
+  })();
+
+  var DeputadosFederais = (function() {
+
+    _extends(DeputadosFederais, MandatoQuatroAnos);
+
+    function DeputadosFederais(eleicoes) {
+      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+    }
+
+    DeputadosFederais.prototype.anos = function() {
+      return anos(this.eleicoes);
+    };
+
+    DeputadosFederais.prototype.siglas = function() {
+      return siglas(this.eleicoes, "deputados_federais");
+    };
+
+    DeputadosFederais.prototype.total = function(ano) {
+      return this.eleicoes[ano].total_deputados_federais;
+    };
+
+    DeputadosFederais.prototype.valorPorSigla = function(ano, sigla) {
+      return this.eleicoes[ano].deputados_federais_por_sigla[sigla] || 0;
+    };
+
+    return DeputadosFederais;
+
+  })();
+
+  var Senadores = (function() {
+
+    _extends(Senadores, MandatoOitoAnos);
+
+    function Senadores(eleicoes) {
+      MandatoOitoAnos.prototype.constructor.apply(this, arguments);
+    }
+
+    Senadores.prototype.anos = function() {
+      return anos(this.eleicoes);
+    };
+
+    Senadores.prototype.siglas = function() {
+      return siglas(this.eleicoes, "senadores");
+    };
+
+    Senadores.prototype.total = function(ano) {
+      return ano in this.eleicoes ? this.eleicoes[ano].total_senadores : 0;
+    };
+
+    Senadores.prototype.valorPorSigla = function(ano, sigla) {
+      return ano in this.eleicoes ? (this.eleicoes[ano].senadores_por_sigla[sigla] || 0) : 0;
+    };
+
+    return Senadores;
+
+  })();
+
+  var DeputadosEstaduais = (function() {
+
+    _extends(DeputadosEstaduais, MandatoQuatroAnos);
+
+    function DeputadosEstaduais(eleicoes) {
+      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+    }
+
+    DeputadosEstaduais.prototype.anos = function() {
+      return anos(this.eleicoes);
+    };
+
+    DeputadosEstaduais.prototype.siglas = function() {
+      return siglas(this.eleicoes, "deputados_estaduais");
+    };
+
+    DeputadosEstaduais.prototype.total = function(ano) {
+      return this.eleicoes[ano].total_deputados_estaduais;
+    };
+
+    DeputadosEstaduais.prototype.valorPorSigla = function(ano, sigla) {
+      return this.eleicoes[ano].deputados_estaduais_por_sigla[sigla] || 0;
+    };
+
+    return DeputadosEstaduais;
+
+  })();
+
+  var Vereadores = (function() {
+
+    _extends(Vereadores, MandatoQuatroAnos);
+
+    function Vereadores(eleicoes) {
+      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+    }
+
+    Vereadores.prototype.anos = function() {
+      return anos(this.eleicoes);
+    };
+
+    Vereadores.prototype.siglas = function() {
+      return siglas(this.eleicoes, "vereadores");
+    };
+
+    Vereadores.prototype.total = function(ano) {
+      return this.eleicoes[ano].total_vereadores;
+    };
+
+    Vereadores.prototype.valorPorSigla = function(ano, sigla) {
+      return this.eleicoes[ano].vereadores_por_sigla[sigla] || 0;
+    };
+
+    return Vereadores;
+
+  })();
+
+  window.Indice = (function() {
+
     function Indice(eleitos) {
       this.eleitos = eleitos;
     }
 
-    // Retorna uma lista de anos que ocorreu eleições
-    Indice.prototype.anos = function(esfera) {
-      return Lazy(this.eleitos[esfera]).keys();
-    };
-
-    // Retorna todas as siglas que já elegeram determinado cargo
-    Indice.prototype.siglas = function(esfera, cargo) {
-      var _this = this;
-      return this.anos(esfera).map(function(ano) {
-        return Lazy(_this.eleitos[esfera][ano]["" + cargo + "_por_sigla"]).keys();
-      }).flatten().uniq();
-    };
-
-    Indice.prototype.anos_federais = function() {
-      return this.anos('federais').map(toInt).toArray();
-    };
-
-    Indice.prototype.anos_estaduais = function() {
-      return this.anos('estaduais').map(toInt).toArray();
-    };
-
-    Indice.prototype.anos_municipais = function() {
-      return this.anos('municipais').map(toInt).toArray();
-    };
-
-    Indice.prototype.deputados_federais = function() {
-
-      var _this = this;
-      var anos = this.anos('federais');
-      var siglas = this.siglas('federais', 'deputados_federais');
-
-      return siglas.map(function(sigla) {
-
-        // Anos que a sigla elegeu deputado federal
-        var anos_com_deputado = anos.filter(function(ano) {
-          return sigla in _this.eleitos.federais[ano].deputados_federais_por_sigla;
-        });
-
-        // Tamanho da bancada em relação ao total de deputados
-        var percentual_deputados = anos_com_deputado.map(function(ano) {
-
-          var bancada = _this.eleitos.federais[ano].deputados_federais_por_sigla[sigla];
-          var total   = _this.eleitos.federais[ano].total_deputados_federais;
-
-          return [ parseInt(ano, 10), bancada / total * 100 ];
-        });
-
-        // Ex.: { name: 'PT', data: [ [ 1998, 8.901 ], [ 2002, 13.02 ] ] }
-        return {
-          name: sigla,
-          data: percentual_deputados.toArray()
-        };
-      }).toArray();
+    Indice.prototype.deputadosFederais = function() {
+      return new DeputadosFederais(this.eleitos.federais);
     };
 
     Indice.prototype.senadores = function() {
-
-      var _this = this;
-      var anos = this.anos('federais');
-      var siglas = this.siglas('federais', 'senadores');
-
-      return siglas.map(function(sigla) {
-
-        // Anos que a sigla elegeu senador (ou continuou tendo)
-        var anos_com_senador = anos.filter(function(ano) {
-
-          var quatro_anos_antes = parseInt(ano - 4, 10).toString();
-
-          // Só os anos que eu tenho todos os senadores
-          if (!(quatro_anos_antes in _this.eleitos.federais)) {
-            return false;
-          }
-
-          return sigla in _this.eleitos.federais[quatro_anos_antes].senadores_por_sigla ||
-                 sigla in _this.eleitos.federais[ano].senadores_por_sigla;
-        });
-
-        // Tamanho da bancada em relação ao total de senadores
-        var percentual_senadores = anos_com_senador.map(function(ano) {
-
-          var quatro_anos_antes = parseInt(ano - 4, 10).toString();
-
-          var bancada = (_this.eleitos.federais[quatro_anos_antes].senadores_por_sigla[sigla] || 0) +
-                        (_this.eleitos.federais[ano].senadores_por_sigla[sigla] || 0);
-          var total   = _this.eleitos.federais[quatro_anos_antes].total_senadores +
-                        _this.eleitos.federais[ano].total_senadores;
-
-          return [ parseInt(ano, 10), bancada / total * 100 ];
-        });
-
-        // Ex.: { name: 'PT', data: [ [ 1998, 8.901 ], [ 2002, 13.02 ] ] }
-        return {
-          name: sigla,
-          data: percentual_senadores.toArray()
-        };
-      }).toArray();
+      return new Senadores(this.eleitos.federais);
     };
 
-    Indice.prototype.deputados_estaduais = function() {
-
-      var _this = this;
-      var anos = this.anos('estaduais');
-      var siglas = this.siglas('estaduais', 'deputados_estaduais');
-
-      return siglas.map(function(sigla) {
-
-        // Anos que a sigla elegeu deputado estadual
-        var anos_com_deputado = anos.filter(function(ano) {
-          return sigla in _this.eleitos.estaduais[ano].deputados_estaduais_por_sigla;
-        });
-
-        // Tamanho da bancada em relação ao total de deputados
-        var percentual_deputados = anos_com_deputado.map(function(ano) {
-
-          var bancada = _this.eleitos.estaduais[ano].deputados_estaduais_por_sigla[sigla];
-          var total   = _this.eleitos.estaduais[ano].total_deputados_estaduais;
-
-          return [ parseInt(ano, 10), bancada / total * 100 ];
-        });
-
-        // Ex.: { name: 'PT', data: [ [ 1998, 8.901 ], [ 2002, 13.02 ] ] }
-        return {
-          name: sigla,
-          data: percentual_deputados.toArray()
-        };
-      }).toArray();
+    Indice.prototype.deputadosEstaduais = function() {
+      return new DeputadosEstaduais(this.eleitos.estaduais);
     };
 
     Indice.prototype.vereadores = function() {
-
-      var _this = this;
-      var anos = this.anos('municipais');
-      var siglas = this.siglas('municipais', 'vereadores');
-
-      return siglas.map(function(sigla) {
-
-        // Anos que a sigla elegeu deputado estadual
-        var anos_com_deputado = anos.filter(function(ano) {
-          return sigla in _this.eleitos.municipais[ano].vereadores_por_sigla;
-        });
-
-        // Tamanho da bancada em relação ao total de vereadores
-        var percentual_vereadores = anos_com_deputado.map(function(ano) {
-
-          var bancada = _this.eleitos.municipais[ano].vereadores_por_sigla[sigla];
-          var total   = _this.eleitos.municipais[ano].total_vereadores;
-
-          return [ parseInt(ano, 10), bancada / total * 100 ];
-        });
-
-        // Ex.: { name: 'PT', data: [ [ 1998, 8.901 ], [ 2002, 13.02 ] ] }
-        return {
-          name: sigla,
-          data: percentual_vereadores.toArray()
-        };
-      }).toArray();
+      return new Vereadores(this.eleitos.municipais);
     };
 
     return Indice;
