@@ -98,8 +98,8 @@ estaduais.each do |ano, ufs|
 
     total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
 
-    json[:estaduais][ano][:total_governadores] += 1
-    json[:estaduais][ano][:total_deputados_estaduais]    += total_deputados_estaduais
+    json[:estaduais][ano][:total_governadores]        += 1
+    json[:estaduais][ano][:total_deputados_estaduais] += total_deputados_estaduais
 
     cargos['GOVERNADOR'].each do |sigla, governadores|
       json[:estaduais][ano][:governadores_por_sigla][sigla]          += 1
