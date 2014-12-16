@@ -25,12 +25,12 @@
   };
 
   var Grafico = (function() {
+
     function Grafico() {}
+
     Grafico.prototype.anos = function() { return []; };
     Grafico.prototype.siglas = function() { return []; };
-    Grafico.prototype.total = function(ano) { return 0; };
-    Grafico.prototype.valorPorSigla = function(ano, sigla) { return 0; };
-    Grafico.prototype.temBancada = function(ano, sigla) { return false; };
+    Grafico.prototype.temEleito = function(ano, sigla) { return false; };
     Grafico.prototype.calculaIndice = function(ano, sigla) { return 0.0; };
 
     Grafico.prototype.categories = function() {
@@ -45,12 +45,12 @@
 
         // Anos que a sigla elegeu alguém
         var anosComBancada = _this.anos().filter(function(ano) {
-          return _this.temBancada(ano, sigla);
+          return _this.temEleito(ano, sigla);
         });
 
         // Tamanho da bancada em relação ao total da casa
         var percentualBancadaPorAno = anosComBancada.map(function(ano) {
-          return _this.calculaIndice(ano, sigla)
+          return [ parseInt(ano, 10), _this.calculaIndice(ano, sigla) ];
         });
 
         return {
@@ -72,7 +72,10 @@
       this.eleicoes = eleicoes;
     }
 
-    MandatoQuatroAnos.prototype.temBancada = function(ano, sigla) {
+    MandatoQuatroAnos.prototype.total = function(ano) { return 0; };
+    MandatoQuatroAnos.prototype.valorPorSigla = function(ano, sigla) { return 0; };
+
+    MandatoQuatroAnos.prototype.temEleito = function(ano, sigla) {
       return this.valorPorSigla(ano, sigla) > 0;
     };
 
@@ -81,7 +84,7 @@
       var eleitos = this.valorPorSigla(ano, sigla);
       var total   = this.total(ano);
 
-      return [ parseInt(ano, 10), eleitos / total * 100 ];
+      return eleitos / total * 100;
     };
 
     return MandatoQuatroAnos;
@@ -96,7 +99,10 @@
       this.eleicoes = eleicoes;
     }
 
-    MandatoOitoAnos.prototype.temBancada = function(ano, sigla) {
+    MandatoOitoAnos.prototype.total = function(ano) { return 0; };
+    MandatoOitoAnos.prototype.valorPorSigla = function(ano, sigla) { return 0; };
+
+    MandatoOitoAnos.prototype.temEleito = function(ano, sigla) {
 
       var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
 
@@ -116,7 +122,7 @@
       var eleitos = this.valorPorSigla(quatroAnosAntes, sigla) + this.valorPorSigla(ano, sigla);
       var total   = this.total(quatroAnosAntes) + this.total(ano);
 
-      return [ parseInt(ano, 10), eleitos / total * 100 ];
+      return eleitos / total * 100;
     };
 
     return MandatoOitoAnos;
@@ -176,6 +182,48 @@
     };
 
     return Senadores;
+
+  })();
+
+  var CongressoNacional = (function() {
+
+    _extends(CongressoNacional, Grafico);
+
+    function CongressoNacional(eleicoes) {
+      this.eleicoes = eleicoes;
+
+      this.deputadosFederais = new DeputadosFederais(eleicoes);
+      this.senadores         = new Senadores(eleicoes);
+    }
+
+    CongressoNacional.prototype.anos = function() {
+      return anos(this.eleicoes);
+    };
+
+    CongressoNacional.prototype.siglas = function() {
+      return Lazy([ this.deputadosFederais.siglas(), this.senadores.siglas() ]).flatten().uniq();
+    };
+
+    CongressoNacional.prototype.temEleito = function(ano, sigla) {
+
+      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
+
+      // Só os anos que tenha todos os senadores
+      if (this.senadores.total(quatroAnosAntes) == 0) {
+        return false;
+      }
+
+      return this.deputadosFederais.valorPorSigla(ano, sigla) > 0 ||
+             this.senadores.valorPorSigla(ano, sigla) > 0;
+    };
+
+    CongressoNacional.prototype.calculaIndice = function(ano, sigla) {
+
+      return this.deputadosFederais.calculaIndice(ano, sigla) * 0.5 +
+             this.senadores.calculaIndice(ano, sigla) * 0.5;
+    };
+
+    return CongressoNacional;
 
   })();
 
@@ -247,6 +295,10 @@
 
     Indice.prototype.senadores = function() {
       return new Senadores(this.eleitos.federais);
+    };
+
+    Indice.prototype.congressoNacional = function() {
+      return new CongressoNacional(this.eleitos.federais);
     };
 
     Indice.prototype.deputadosEstaduais = function() {
