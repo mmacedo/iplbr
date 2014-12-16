@@ -57,6 +57,7 @@
   <h1>Índice de Poder Legislativo do Brasil</h1>
   <div id="deputados_federais" class="grafico"></div>
   <div id="senadores" class="grafico"></div>
+  <div id="congresso_nacional" class="grafico"></div>
   <div id="deputados_estaduais" class="grafico"></div>
   <div id="vereadores" class="grafico"></div>
 
@@ -124,6 +125,32 @@
             useHTML: true
           },
           series: senadores.series()
+        });
+
+        var congressoNacional = indice.congressoNacional();
+
+        $("#congresso_nacional").highcharts({
+          title: {
+            text: 'Congresso Nacional (Câmara dos Deputados + Senado)'
+          },
+          xAxis: {
+            categories: congressoNacional.categories()
+          },
+          yAxis: {
+            title: {
+              text: '%'
+            },
+            min: 0,
+            max: 30,
+            showFirstLabel: false
+          },
+          tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueDecimals: 2,
+            useHTML: true
+          },
+          series: congressoNacional.series()
         });
 
         var deputadosEstaduais = indice.deputadosEstaduais();
