@@ -21,7 +21,7 @@ Dir.glob(File.join(pasta_de_entrada, "*.txt")) do |arquivo|
 
   IO.foreach(arquivo) do |linha|
 
-    ano, uf, municipio, cargo, sigla = linha.chomp.split(';')
+    ano, uf, municipio, cargo, numero, sigla, nome = linha.chomp.split(';')
 
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
 
