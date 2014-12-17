@@ -635,8 +635,11 @@
 
     Eleicoes.prototype.dadosPorSigla = function(nome, ano) {
 
-      var _this = this;
+      if (!(ano in this.json)) {
+        return {};
+      }
 
+      var _this = this;
       return this.obter(nome + ano, function() {
         return _this.json[ano][nome + '_por_sigla'];
       });
@@ -679,15 +682,15 @@
     };
 
     EleicoesFederais.prototype.deputadosFederais = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('deputados_federais', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('deputados_federais', ano)[sigla] || 0;
     };
 
     EleicoesFederais.prototype.senadores = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('senadores', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('senadores', ano)[sigla] || 0;
     };
 
     EleicoesFederais.prototype.presidentes = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('presidentes', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('presidentes', ano)[sigla] || 0;
     };
 
     return EleicoesFederais;
@@ -719,15 +722,15 @@
     };
 
     EleicoesEstaduais.prototype.deputadosEstaduais = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('deputados_estaduais', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('deputados_estaduais', ano)[sigla] || 0;
     };
 
     EleicoesEstaduais.prototype.governadores = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('governadores', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('governadores', ano)[sigla] || 0;
     };
 
     EleicoesEstaduais.prototype.pesosDosGovernadores = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('peso_dos_governadores', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('peso_dos_governadores', ano)[sigla] || 0;
     };
 
     return EleicoesEstaduais;
@@ -759,15 +762,15 @@
     };
 
     EleicoesMunicipais.prototype.vereadores = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('vereadores', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('vereadores', ano)[sigla] || 0;
     };
 
     EleicoesMunicipais.prototype.prefeitos = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('prefeitos', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('prefeitos', ano)[sigla] || 0;
     };
 
     EleicoesMunicipais.prototype.pesosDosPrefeitos = function(ano, sigla) {
-      return ano in this.json ? (this.dadosPorSigla('peso_dos_prefeitos', ano)[sigla] || 0) : 0;
+      return this.dadosPorSigla('peso_dos_prefeitos', ano)[sigla] || 0;
     };
 
     return EleicoesMunicipais;
