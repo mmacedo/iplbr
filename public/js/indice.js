@@ -12,24 +12,12 @@
     return parseInt(s, 10);
   };
 
-  // Retorna uma lista de anos que ocorreu eleições
-  var anos = function(eleicoes) {
-    return Lazy(eleicoes).keys();
-  };
-
-  // Retorna todas as siglas que já elegeram determinado cargo
-  var siglas = function(eleicoes, cargo) {
-    return anos(eleicoes).map(function(ano) {
-      return Lazy(eleicoes[ano]["" + cargo + "_por_sigla"]).keys();
-    }).flatten().uniq();
-  };
-
   var Grafico = (function() {
 
     function Grafico() {}
 
-    Grafico.prototype.anos = function() { return []; };
-    Grafico.prototype.siglas = function() { return []; };
+    Grafico.prototype.anos = function() { return Lazy([]); };
+    Grafico.prototype.siglas = function() { return Lazy([]); };
     Grafico.prototype.temDados = function(ano) { return false; };
     Grafico.prototype.temEleito = function(ano, sigla) { return false; };
     Grafico.prototype.calculaIndice = function(ano, sigla) { return 0.0; };
@@ -69,9 +57,7 @@
 
     _extends(MandatoQuatroAnos, Grafico);
 
-    function MandatoQuatroAnos(eleicoes) {
-      this.eleicoes = eleicoes;
-    }
+    function MandatoQuatroAnos() {}
 
     MandatoQuatroAnos.prototype.valorTotal = function(ano) { return 0; };
     MandatoQuatroAnos.prototype.valorPorSigla = function(ano, sigla) { return 0; };
@@ -108,9 +94,7 @@
 
     _extends(MandatoOitoAnos, Grafico);
 
-    function MandatoOitoAnos(eleicoes) {
-      this.eleicoes = eleicoes;
-    }
+    function MandatoOitoAnos() {}
 
     MandatoOitoAnos.prototype.valorTotal = function(ano) { return 0; };
     MandatoOitoAnos.prototype.valorPorSigla = function(ano, sigla) { return 0; };
@@ -157,23 +141,23 @@
     _extends(DeputadosFederais, MandatoQuatroAnos);
 
     function DeputadosFederais(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     DeputadosFederais.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     DeputadosFederais.prototype.siglas = function() {
-      return siglas(this.eleicoes, "deputados_federais");
+      return this.eleicoes.siglasDeputadosFederais();
     };
 
     DeputadosFederais.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_deputados_federais : 0;
+      return this.eleicoes.totalDeputadosFederais(ano);
     };
 
     DeputadosFederais.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].deputados_federais_por_sigla[sigla] || 0;
+      return this.eleicoes.deputadosFederais(ano, sigla);
     };
 
     return DeputadosFederais;
@@ -185,23 +169,23 @@
     _extends(Senadores, MandatoOitoAnos);
 
     function Senadores(eleicoes) {
-      MandatoOitoAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     Senadores.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     Senadores.prototype.siglas = function() {
-      return siglas(this.eleicoes, "senadores");
+      return this.eleicoes.siglasSenadores();
     };
 
     Senadores.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_senadores : 0;
+      return this.eleicoes.totalSenadores(ano);
     };
 
     Senadores.prototype.valorPorSigla = function(ano, sigla) {
-      return ano in this.eleicoes ? (this.eleicoes[ano].senadores_por_sigla[sigla] || 0) : 0;
+      return this.eleicoes.senadores(ano, sigla);
     };
 
     return Senadores;
@@ -220,7 +204,7 @@
     }
 
     CongressoNacional.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     CongressoNacional.prototype.siglas = function() {
@@ -254,23 +238,23 @@
     _extends(Presidentes, MandatoQuatroAnos);
 
     function Presidentes(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     Presidentes.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     Presidentes.prototype.siglas = function() {
-      return siglas(this.eleicoes, "presidentes");
+      return this.eleicoes.siglasPresidentes();
     };
 
     Presidentes.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_presidentes : 0;
+      return this.eleicoes.totalPresidentes(ano);
     };
 
     Presidentes.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].presidentes_por_sigla[sigla] || 0;
+      return this.eleicoes.presidentes(ano, sigla);
     };
 
     return Presidentes;
@@ -289,7 +273,7 @@
     }
 
     IndiceFederal.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     IndiceFederal.prototype.siglas = function() {
@@ -323,23 +307,23 @@
     _extends(DeputadosEstaduais, MandatoQuatroAnos);
 
     function DeputadosEstaduais(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     DeputadosEstaduais.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     DeputadosEstaduais.prototype.siglas = function() {
-      return siglas(this.eleicoes, "deputados_estaduais");
+      return this.eleicoes.siglasDeputadosEstaduais();
     };
 
     DeputadosEstaduais.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_deputados_estaduais : 0;
+      return this.eleicoes.totalDeputadosEstaduais(ano);
     };
 
     DeputadosEstaduais.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].deputados_estaduais_por_sigla[sigla] || 0;
+      return this.eleicoes.deputadosEstaduais(ano, sigla);
     };
 
     return DeputadosEstaduais;
@@ -351,23 +335,23 @@
     _extends(Governadores, MandatoQuatroAnos);
 
     function Governadores(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     Governadores.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     Governadores.prototype.siglas = function() {
-      return siglas(this.eleicoes, "governadores");
+      return this.eleicoes.siglasGovernadores();
     };
 
     Governadores.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_governadores : 0;
+      return this.eleicoes.totalGovernadores(ano);
     };
 
     Governadores.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].governadores_por_sigla[sigla] || 0;
+      return this.eleicoes.governadores(ano, sigla);
     };
 
     return Governadores;
@@ -379,23 +363,23 @@
     _extends(GovernadoresComPeso, MandatoQuatroAnos);
 
     function GovernadoresComPeso(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     GovernadoresComPeso.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     GovernadoresComPeso.prototype.siglas = function() {
-      return siglas(this.eleicoes, "governadores");
+      return this.eleicoes.siglasGovernadores();
     };
 
     GovernadoresComPeso.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_deputados_estaduais : 0;
+      return this.eleicoes.totalDeputadosEstaduais(ano);
     };
 
     GovernadoresComPeso.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].peso_dos_governadores_por_sigla[sigla] || 0;
+      return this.eleicoes.pesosDosGovernadores(ano, sigla);
     };
 
     return GovernadoresComPeso;
@@ -414,7 +398,7 @@
     }
 
     IndiceEstadual.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     IndiceEstadual.prototype.siglas = function() {
@@ -448,23 +432,23 @@
     _extends(Vereadores, MandatoQuatroAnos);
 
     function Vereadores(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     Vereadores.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     Vereadores.prototype.siglas = function() {
-      return siglas(this.eleicoes, "vereadores");
+      return this.eleicoes.siglasVereadores();
     };
 
     Vereadores.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_vereadores : 0;
+      return this.eleicoes.totalVereadores(ano);
     };
 
     Vereadores.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].vereadores_por_sigla[sigla] || 0;
+      return this.eleicoes.vereadores(ano, sigla);
     };
 
     return Vereadores;
@@ -476,23 +460,23 @@
     _extends(Prefeitos, MandatoQuatroAnos);
 
     function Prefeitos(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     Prefeitos.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     Prefeitos.prototype.siglas = function() {
-      return siglas(this.eleicoes, "prefeitos");
+      return this.eleicoes.siglasPrefeitos();
     };
 
     Prefeitos.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_prefeitos : 0;
+      return this.eleicoes.totalPrefeitos(ano);
     };
 
     Prefeitos.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].prefeitos_por_sigla[sigla] || 0;
+      return this.eleicoes.prefeitos(ano, sigla);
     };
 
     return Prefeitos;
@@ -504,23 +488,23 @@
     _extends(PrefeitosComPeso, MandatoQuatroAnos);
 
     function PrefeitosComPeso(eleicoes) {
-      MandatoQuatroAnos.prototype.constructor.apply(this, arguments);
+      this.eleicoes = eleicoes;
     }
 
     PrefeitosComPeso.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     PrefeitosComPeso.prototype.siglas = function() {
-      return siglas(this.eleicoes, "prefeitos");
+      return this.eleicoes.siglasPrefeitos();
     };
 
     PrefeitosComPeso.prototype.valorTotal = function(ano) {
-      return ano in this.eleicoes ? this.eleicoes[ano].total_vereadores : 0;
+      return this.eleicoes.totalVereadores(ano);
     };
 
     PrefeitosComPeso.prototype.valorPorSigla = function(ano, sigla) {
-      return this.eleicoes[ano].peso_dos_prefeitos_por_sigla[sigla] || 0;
+      return this.eleicoes.pesosDosPrefeitos(ano, sigla);
     };
 
     return PrefeitosComPeso;
@@ -539,7 +523,7 @@
     }
 
     IndiceMunicipal.prototype.anos = function() {
-      return anos(this.eleicoes);
+      return this.eleicoes.anos();
     };
 
     IndiceMunicipal.prototype.siglas = function() {
@@ -583,7 +567,7 @@
     }
 
     IndiceNacional.prototype.anos = function() {
-      return Lazy([ anos(this.federais), anos(this.estaduais), anos(this.municipais) ]).flatten().uniq();
+      return Lazy([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]).flatten().uniq();
     };
 
     IndiceNacional.prototype.siglas = function() {
@@ -615,66 +599,245 @@
 
   })();
 
+  var Eleicoes = (function() {
+
+    function Eleicoes(json) {
+      this.json = json;
+      this.banco = {};
+    }
+
+    Eleicoes.prototype.obter = function(chave, fn) {
+      if (!(chave in this.banco)) {
+        this.banco[chave] = fn.call(this);
+      }
+      return this.banco[chave];
+    };
+
+    Eleicoes.prototype.anos = function() {
+
+      var _this = this;
+
+      return this.obter('anos', function() {
+        return Lazy(_this.json).keys();
+      });
+    };
+
+    Eleicoes.prototype.siglas = function(cargo) {
+
+      var _this = this;
+
+      return this.obter(cargo, function () {
+        return _this.anos().map(function(ano) {
+          return Lazy(_this.json[ano][cargo + "_por_sigla"]).keys();
+        }).flatten().uniq();
+      });
+    };
+
+    Eleicoes.prototype.dadosPorSigla = function(nome, ano) {
+
+      var _this = this;
+
+      return this.obter(nome + ano, function() {
+        return _this.json[ano][nome + '_por_sigla'];
+      });
+    };
+
+    return Eleicoes;
+
+  })();
+
+  var EleicoesFederais = (function() {
+
+    _extends(EleicoesFederais, Eleicoes);
+
+    function EleicoesFederais() {
+      Eleicoes.prototype.constructor.apply(this, arguments);
+    }
+
+    EleicoesFederais.prototype.siglasDeputadosFederais = function() {
+      return this.siglas('deputados_federais');
+    };
+
+    EleicoesFederais.prototype.siglasSenadores = function() {
+      return this.siglas('senadores');
+    };
+
+    EleicoesFederais.prototype.siglasPresidentes = function() {
+      return this.siglas('presidentes');
+    };
+
+    EleicoesFederais.prototype.totalDeputadosFederais = function(ano) {
+      return ano in this.json ? this.json[ano].total_deputados_federais : 0;
+    };
+
+    EleicoesFederais.prototype.totalSenadores = function(ano) {
+      return ano in this.json ? this.json[ano].total_senadores : 0;
+    };
+
+    EleicoesFederais.prototype.totalPresidentes = function(ano) {
+      return ano in this.json ? this.json[ano].total_presidentes : 0;
+    };
+
+    EleicoesFederais.prototype.deputadosFederais = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('deputados_federais', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesFederais.prototype.senadores = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('senadores', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesFederais.prototype.presidentes = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('presidentes', ano)[sigla] || 0) : 0;
+    };
+
+    return EleicoesFederais;
+
+  })();
+
+  var EleicoesEstaduais = (function() {
+
+    _extends(EleicoesEstaduais, Eleicoes);
+
+    function EleicoesEstaduais() {
+      Eleicoes.prototype.constructor.apply(this, arguments);
+    }
+
+    EleicoesEstaduais.prototype.siglasDeputadosEstaduais = function() {
+      return this.siglas('deputados_estaduais');
+    };
+
+    EleicoesEstaduais.prototype.siglasGovernadores = function() {
+      return this.siglas('governadores');
+    };
+
+    EleicoesEstaduais.prototype.totalDeputadosEstaduais = function(ano) {
+      return ano in this.json ? this.json[ano].total_deputados_estaduais : 0;
+    };
+
+    EleicoesEstaduais.prototype.totalGovernadores = function(ano) {
+      return ano in this.json ? this.json[ano].total_governadores : 0;
+    };
+
+    EleicoesEstaduais.prototype.deputadosEstaduais = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('deputados_estaduais', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesEstaduais.prototype.governadores = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('governadores', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesEstaduais.prototype.pesosDosGovernadores = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('peso_dos_governadores', ano)[sigla] || 0) : 0;
+    };
+
+    return EleicoesEstaduais;
+
+  })();
+
+  var EleicoesMunicipais = (function() {
+
+    _extends(EleicoesMunicipais, Eleicoes);
+
+    function EleicoesMunicipais() {
+      Eleicoes.prototype.constructor.apply(this, arguments);
+    }
+
+    EleicoesMunicipais.prototype.siglasVereadores = function() {
+      return this.siglas('vereadores');
+    };
+
+    EleicoesMunicipais.prototype.siglasPrefeitos = function() {
+      return this.siglas('prefeitos');
+    };
+
+    EleicoesMunicipais.prototype.totalVereadores = function(ano) {
+      return ano in this.json ? this.json[ano].total_vereadores : 0;
+    };
+
+    EleicoesMunicipais.prototype.totalPrefeitos = function(ano) {
+      return ano in this.json ? this.json[ano].total_prefeitos : 0;
+    };
+
+    EleicoesMunicipais.prototype.vereadores = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('vereadores', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesMunicipais.prototype.prefeitos = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('prefeitos', ano)[sigla] || 0) : 0;
+    };
+
+    EleicoesMunicipais.prototype.pesosDosPrefeitos = function(ano, sigla) {
+      return ano in this.json ? (this.dadosPorSigla('peso_dos_prefeitos', ano)[sigla] || 0) : 0;
+    };
+
+    return EleicoesMunicipais;
+
+  })();
+
   window.Indice = (function() {
 
     function Indice(eleitos) {
       this.eleitos = eleitos;
+
+      this.federais   = new EleicoesFederais(this.eleitos.federais);
+      this.estaduais  = new EleicoesEstaduais(this.eleitos.estaduais);
+      this.municipais = new EleicoesMunicipais(this.eleitos.municipais);
     }
 
     Indice.prototype.deputadosFederais = function() {
-      return new DeputadosFederais(this.eleitos.federais);
+      return new DeputadosFederais(this.federais);
     };
 
     Indice.prototype.senadores = function() {
-      return new Senadores(this.eleitos.federais);
+      return new Senadores(this.federais);
     };
 
     Indice.prototype.congressoNacional = function() {
-      return new CongressoNacional(this.eleitos.federais);
+      return new CongressoNacional(this.federais);
     };
 
     Indice.prototype.presidentes = function() {
-      return new Presidentes(this.eleitos.federais);
+      return new Presidentes(this.federais);
     };
 
     Indice.prototype.indiceFederal = function() {
-      return new IndiceFederal(this.eleitos.federais);
+      return new IndiceFederal(this.federais);
     };
 
     Indice.prototype.deputadosEstaduais = function() {
-      return new DeputadosEstaduais(this.eleitos.estaduais);
+      return new DeputadosEstaduais(this.estaduais);
     };
 
     Indice.prototype.governadores = function() {
-      return new Governadores(this.eleitos.estaduais);
+      return new Governadores(this.estaduais);
     };
 
     Indice.prototype.governadoresComPeso = function() {
-      return new GovernadoresComPeso(this.eleitos.estaduais);
+      return new GovernadoresComPeso(this.estaduais);
     };
 
     Indice.prototype.indiceEstadual = function() {
-      return new IndiceEstadual(this.eleitos.estaduais);
+      return new IndiceEstadual(this.estaduais);
     };
 
     Indice.prototype.vereadores = function() {
-      return new Vereadores(this.eleitos.municipais);
+      return new Vereadores(this.municipais);
     };
 
     Indice.prototype.prefeitos = function() {
-      return new Prefeitos(this.eleitos.municipais);
+      return new Prefeitos(this.municipais);
     };
 
     Indice.prototype.prefeitosComPeso = function() {
-      return new PrefeitosComPeso(this.eleitos.municipais);
+      return new PrefeitosComPeso(this.municipais);
     };
 
     Indice.prototype.indiceMunicipal = function() {
-      return new IndiceMunicipal(this.eleitos.municipais);
+      return new IndiceMunicipal(this.municipais);
     };
 
     Indice.prototype.indiceNacional = function() {
-      return new IndiceNacional(this.eleitos.federais, this.eleitos.estaduais, this.eleitos.municipais);
+      return new IndiceNacional(this.federais, this.estaduais, this.municipais);
     };
 
     return Indice;
