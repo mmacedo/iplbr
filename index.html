@@ -30,6 +30,10 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,10 +48,15 @@
     body {
       max-width: 900px;
       margin: 0 auto;
+      background-color: #222;
       padding: 0 0 200px;
       text-align: center;
     }
 
+    body, a {
+      color: #ddd;
+      font-family: 'PT Serif', Georgia, 'Helvetica Neue', Arial, sans-serif;
+    }
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
     p, pre { margin: 10px; }
@@ -73,10 +82,10 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="//code.highcharts.com/highcharts.js"></script>
-  <script src="//code.highcharts.com/highcharts-more.js"></script>
-  <script>!window.jQuery.fn.highcharts && document.write(unescape('%3Cscript src="js/highcharts.js"%3E%3C/script%3E %3Cscript src="js/highcharts-more.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery.fn.highcharts && document.write(unescape('%3Cscript src="js/highcharts.js"%3E%3C/script%3E'))</script>
   <script src="js/lazy.min.js"></script>
   <script src="js/indice.js"></script>
+  <script src="js/dark-unica.js"></script>
 
   <script type="text/javascript">
     $(function() {
@@ -87,6 +96,9 @@
         var deputadosFederais = indice.deputadosFederais();
 
         $("#deputados_federais").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Câmara dos Deputados'
           },
@@ -98,7 +110,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -106,12 +117,24 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: deputadosFederais.series()
         });
 
         var senadores = indice.senadores();
 
         $("#senadores").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Senado'
           },
@@ -123,7 +146,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -131,14 +153,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: senadores.series()
         });
 
         var congressoNacional = indice.congressoNacional();
 
         $("#congresso_nacional").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Congresso Nacional (Câmara dos Deputados + Senado)'
+            text: 'Congresso Nacional'
+          },
+          subtitle: {
+            text: 'Câmara dos Deputados + Senado Federal'
           },
           xAxis: {
             categories: congressoNacional.categories()
@@ -148,7 +185,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -156,12 +192,24 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: congressoNacional.series()
         });
 
         var presidentes = indice.presidentes();
 
         $("#presidentes").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Presidência'
           },
@@ -181,14 +229,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: presidentes.series()
         });
 
         var indiceFederal = indice.indiceFederal();
 
         $("#indice_federal").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Índice Federal (deputados federais = 75% e presidentes = 25%)'
+            text: 'Índice Federal'
+          },
+          subtitle: {
+            text: 'deputados federais = 75% e presidentes = 25%'
           },
           xAxis: {
             categories: indiceFederal.categories()
@@ -198,7 +261,6 @@
               text: '%'
             },
             min: 0,
-            max: 40,
             showFirstLabel: true
           },
           tooltip: {
@@ -206,12 +268,24 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: indiceFederal.series()
         });
 
         var deputadosEstaduais = indice.deputadosEstaduais();
 
         $("#deputados_estaduais").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Assembléias Legislativas Estaduais ou Distritais'
           },
@@ -223,7 +297,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -231,12 +304,33 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: deputadosEstaduais.series()
         });
 
         var governadores = indice.governadores();
 
         $("#governadores").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Governos Estaduais'
           },
@@ -248,7 +342,6 @@
               text: '%'
             },
             min: 0,
-            max: 40,
             showFirstLabel: false
           },
           tooltip: {
@@ -256,14 +349,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: governadores.series()
         });
 
         var governadoresComPeso = indice.governadoresComPeso();
 
         $("#governadores_peso").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Governos Estaduais (peso = número de deputados estaduais ou distritais)'
+            text: 'Governos Estaduais'
+          },
+          subtitle: {
+            text: 'peso = número de deputados estaduais ou distritais'
           },
           xAxis: {
             categories: governadoresComPeso.categories()
@@ -273,7 +381,6 @@
               text: '%'
             },
             min: 0,
-            max: 40,
             showFirstLabel: false
           },
           tooltip: {
@@ -281,14 +388,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: governadoresComPeso.series()
         });
 
         var indiceEstadual = indice.indiceEstadual();
 
         $("#indice_estadual").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Índice Estadual (deputados estaduais e distritais = 75% e governadores = 25%)'
+            text: 'Índice Estadual'
+          },
+          subtitle: {
+            text: 'deputados estaduais e distritais = 75% e governadores = 25%'
           },
           xAxis: {
             categories: indiceEstadual.categories()
@@ -298,7 +420,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: true
           },
           tooltip: {
@@ -306,12 +427,24 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: indiceEstadual.series()
         });
 
         var vereadores = indice.vereadores();
 
         $("#vereadores").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Câmaras Municipais'
           },
@@ -323,7 +456,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -331,12 +463,24 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: vereadores.series()
         });
 
         var prefeitos = indice.prefeitos();
 
         $("#prefeitos").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
             text: 'Prefeituras'
           },
@@ -348,7 +492,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -356,14 +499,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: prefeitos.series()
         });
 
         var prefeitosComPeso = indice.prefeitosComPeso();
 
         $("#prefeitos_peso").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Prefeituras (peso = número de vereadores)'
+            text: 'Prefeituras'
+          },
+          subtitle: {
+            text: 'peso = número de vereadores'
           },
           xAxis: {
             categories: prefeitosComPeso.categories()
@@ -373,7 +531,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: false
           },
           tooltip: {
@@ -381,14 +538,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: prefeitosComPeso.series()
         });
 
         var indiceMunicipal = indice.indiceMunicipal();
 
         $("#indice_municipal").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Índice Municipal (vereadores = 75% e prefeitos = 25%)'
+            text: 'Índice Municipal'
+          },
+          subtitle: {
+            text: 'vereadores = 75% e prefeitos = 25%'
           },
           xAxis: {
             categories: indiceMunicipal.categories()
@@ -398,7 +570,6 @@
               text: '%'
             },
             min: 0,
-            max: 30,
             showFirstLabel: true
           },
           tooltip: {
@@ -406,14 +577,29 @@
             shared: true,
             valueDecimals: 2
           },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
           series: indiceMunicipal.series()
         });
 
         var indiceNacional = indice.indiceNacional();
 
         $("#indice_nacional").highcharts({
+          chart: {
+            type: 'spline'
+          },
           title: {
-            text: 'Índice Nacional (Federal / 3 + Estadual / 3 + Municipal / 3)'
+            text: 'Índice Nacional'
+          },
+          subtitle: {
+            text: 'Federal / 3 + Estadual / 3 + Municipal / 3'
           },
           xAxis: {
             categories: indiceNacional.categories()
@@ -423,13 +609,21 @@
               text: '%'
             },
             min: 0,
-            max: 25,
             showFirstLabel: true
           },
           tooltip: {
             crosshairs: true,
             shared: true,
             valueDecimals: 2
+          },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
           },
           series: indiceNacional.series()
         });
