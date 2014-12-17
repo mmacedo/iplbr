@@ -23,20 +23,22 @@ Dir.glob(File.join(pasta_de_entrada, "*.txt")) do |arquivo|
 
     ano, uf, municipio, cargo, numero, sigla, nome = linha.chomp.split(';')
 
+    partido = "#{sigla}#{numero}"
+
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
 
-      ((((municipais[ano] ||= {})[uf] ||= {})[municipio] ||= {})[cargo] ||= Hash.new(0))[sigla] += 1
+      ((((municipais[ano] ||= {})[uf] ||= {})[municipio] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
 
     elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO (ESTADUAL|DISTRITAL)\z})
 
       # Unifica DEPUTADO ESTADUAL e DEPUTADO DISTRITAL
       cargo.gsub!(%r{ESTADUAL|DISTRITAL}, "ESTADUAL OU DISTRITAL")
 
-      (((estaduais[ano] ||= {})[uf] ||= {})[cargo] ||= Hash.new(0))[sigla] += 1
+      (((estaduais[ano] ||= {})[uf] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
 
     else
 
-      ((federais[ano] ||= {})[cargo] ||= Hash.new(0))[sigla] += 1
+      ((federais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
 
     end
   end
