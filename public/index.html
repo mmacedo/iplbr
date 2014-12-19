@@ -72,6 +72,21 @@
 
     <h1>Índice de Poder Legislativo</h1>
 
+    <div id="tipo_de_grafico_group" class="btn-group btn-group-justified" data-toggle="buttons">
+      <label class="btn btn-primary active" aria-pressed="true">
+        <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
+      </label>
+    </div>
+
     <div role="tabpanel">
 
       <!-- Nav tabs -->
@@ -95,20 +110,20 @@
         <div role="tabpanel" class="tab-pane active" id="tab_nacional">
           <div id="indice_nacional" class="grafico"></div>
         </div>
-        <div role="tabpanel" class="tab-pane fade in" id="tab_federal">
+        <div role="tabpanel" class="tab-pane" id="tab_federal">
           <div id="indice_federal" class="grafico"></div>
           <div id="deputados_federais" class="grafico"></div>
           <div id="senadores" class="grafico"></div>
           <div id="congresso_nacional" class="grafico"></div>
           <div id="presidentes" class="grafico"></div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="tab_estadual">
+        <div role="tabpanel" class="tab-pane" id="tab_estadual">
           <div id="indice_estadual" class="grafico"></div>
           <div id="deputados_estaduais" class="grafico"></div>
           <div id="governadores" class="grafico"></div>
           <div id="governadores_peso" class="grafico"></div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="tab_municipal">
+        <div role="tabpanel" class="tab-pane" id="tab_municipal">
           <div id="indice_municipal" class="grafico"></div>
           <div id="vereadores" class="grafico"></div>
           <div id="prefeitos" class="grafico"></div>
@@ -141,43 +156,75 @@
   <script src="js/indice.js"></script>
 
   <script type="text/javascript">
-    function criaGrafico(id, titulo, subtitulo, indice) {
+    function criaGrafico(id, titulo, subtitulo, serie) {
+
+      var splineChecked  = $('#tipo_spline').is(':checked'),
+          lineChecked    = $('#tipo_line').is(':checked'),
+          areaChecked    = $('#tipo_area').is(':checked'),
+          percentChecked = $('#tipo_percent').is(':checked');
+
+      var chartType = splineChecked?'spline':lineChecked?'line':'area';
+      var stacking  = areaChecked?'normal':percentChecked?'percent':null;
+
       $(id).highcharts({
-        chart: { type: 'spline' },
+        chart: { type: chartType },
         title: { text: titulo },
         subtitle: { text: subtitulo },
-        xAxis: { categories: indice.categories() },
         yAxis: {
           title: { text: '%' },
-          min: 0
+          floor: 0,
+          ceiling: 100
         },
         tooltip: {
           crosshairs: true,
           shared: true,
           valueDecimals: 2
         },
-        series: indice.series()
+        series: serie,
+        plotOptions: {
+          series: { marker: { enabled: false } },
+          area: { stacking: stacking, fillOpacity: 1 }
+        }
       });
     }
 
     $(function() {
-      $.getJSON("eleitos.json").done(function(json) {
 
-        var indice = new Indice(json);
+      // Atualiza os gráficos quando o usuário muda o tipo
+      $(document).on('change', '[name="tipo_de_grafico"]', function() {
 
-        // fix dimensions of chart that was in a hidden element
-        $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-          var panel_id = $(this).attr('aria-controls');
-          $("#" + panel_id + " [data-highcharts-chart]").each(function() {
-              $(this).highcharts().reflow();
-          });
+        // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
+        Lazy(Highcharts.charts).each(function(chart) {
+          if (chart != null) {
+            chart.destroy();
+          }
         });
 
-        var indiceNacional = indice.indiceNacional();
-        criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', indiceNacional);
+        // Recria charts da tab atual
+        $('.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+      });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          console.log(e.target);
+      // fix dimensions of chart that was in a hidden element
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+        var panel_id = $(this).attr('aria-controls');
+        $("#" + panel_id + " [data-highcharts-chart]").each(function() {
+          $(this).highcharts().redraw();
+          $(this).highcharts().reflow();
+        });
+      });
+
+      $.getJSON("eleitos.json").done(function(json) {
+
+        var configuracao = new Configuracao();
+        var indices = new GeradorDeIndices(json, configuracao);
+
+        $('a[data-toggle="tab"][aria-controls="tab_nacional"]').on('shown.bs.tab', function (e) {
+
+          if ($("#indice_nacional").highcharts() != null) {
+            return;
+          }
+
+          criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', indices.indiceNacional());
         });
 
         $('a[data-toggle="tab"][aria-controls="tab_federal"]').on('shown.bs.tab', function (e) {
@@ -186,23 +233,12 @@
             return;
           }
 
-          var indiceFederal = indice.indiceFederal();
-          criaGrafico("#indice_federal", 'Índice Federal', 'deputados federais = 75% e presidentes = 25%', indiceFederal);
-
-          var deputadosFederais = indice.deputadosFederais();
-          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, deputadosFederais);
-
-          var senadores = indice.senadores();
-          criaGrafico("#senadores", 'Senado Federal', null, senadores);
-
-          var congressoNacional = indice.congressoNacional();
-          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', congressoNacional);
-
-          var presidentes = indice.presidentes();
-          criaGrafico("#presidentes", 'Presidência da República', null, presidentes);
-
+          criaGrafico("#indice_federal", 'Índice Federal', 'deputados federais = 75% e presidentes = 25%', indices.indiceFederal());
+          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, indices.deputadosFederais());
+          criaGrafico("#senadores", 'Senado Federal', null, indices.senadores());
+          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', indices.congressoNacional());
+          criaGrafico("#presidentes", 'Presidência da República', null, indices.presidentes());
         });
-
 
         $('a[data-toggle="tab"][aria-controls="tab_estadual"]').on('shown.bs.tab', function (e) {
 
@@ -210,20 +246,11 @@
             return;
           }
 
-          var indiceEstadual = indice.indiceEstadual();
-          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = 75% e governadores = 25%', indiceEstadual);
-
-          var deputadosEstaduais = indice.deputadosEstaduais();
-          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, deputadosEstaduais);
-
-          var governadores = indice.governadores();
-          criaGrafico("#governadores", 'Governos Estaduais', null, governadores);
-
-          var governadoresComPeso = indice.governadoresComPeso();
-          criaGrafico("#governadores_peso", 'Governos Estaduais', 'peso = número de deputados estaduais ou distritais', governadoresComPeso);
-
+          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = 75% e governadores = 25%', indices.indiceEstadual());
+          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, indices.deputadosEstaduais());
+          criaGrafico("#governadores", 'Governos Estaduais', null, indices.governadores());
+          criaGrafico("#governadores_peso", 'Governos Estaduais', 'peso = número de deputados estaduais ou distritais', indices.governadoresComPeso());
         });
-
 
         $('a[data-toggle="tab"][aria-controls="tab_municipal"]').on('shown.bs.tab', function (e) {
 
@@ -231,19 +258,13 @@
             return;
           }
 
-          var indiceMunicipal = indice.indiceMunicipal();
-          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = 75% e prefeitos = 25%', indiceMunicipal);
-
-          var vereadores = indice.vereadores();
-          criaGrafico("#vereadores", 'Câmaras Municipais', null, vereadores);
-
-          var prefeitos = indice.prefeitos();
-          criaGrafico("#prefeitos", 'Prefeituras', null, prefeitos);
-
-          var prefeitosComPeso = indice.prefeitosComPeso();
-          criaGrafico("#prefeitos_peso", 'Prefeituras', 'peso = número de vereadores', prefeitosComPeso);
-
+          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = 75% e prefeitos = 25%', indices.indiceMunicipal());
+          criaGrafico("#vereadores", 'Câmaras Municipais', null, indices.vereadores());
+          criaGrafico("#prefeitos", 'Prefeituras', null, indices.prefeitos());
+          criaGrafico("#prefeitos_peso", 'Prefeituras', 'peso = número de vereadores', indices.prefeitosComPeso());
         });
+
+        $('.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
 
       });
     });
