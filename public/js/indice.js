@@ -14,14 +14,31 @@
 
   window.Configuracao = (function() {
 
-    function Configuracao() {}
+    function Configuracao() {
+      this.passos = false;
+    }
 
     Configuracao.prototype.filtrarAnos = function(sigla, anos) {
+
+      if (this.passos === true) {
+        var ultimoAno = anos.map(toInt).max();
+        return anos.concat([ ultimoAno + 1 ]);
+      }
+
       return anos;
+
     }
 
     Configuracao.prototype.reescreverSiglas = function(dadosPorSigla) {
-      return dadosPorSigla;
+
+      return dadosPorSigla.map(function(partido) {
+        var indices = partido.indices.map(function(tupla) {
+          var ano = tupla[0], indice = tupla[1];
+          return [ Date.UTC(ano + 1, 0, 1), indice ];
+        });
+        return { sigla: partido.sigla, indices: indices };
+      });
+
     };
 
     return Configuracao;
@@ -59,9 +76,9 @@
       return configuracao.reescreverSiglas(dadosPorSigla).map(function(linha) {
         return {
           name: linha.sigla,
-          data: linha.indices.sort().toArray()
+          data: linha.indices.sortBy(function(linha) { return linha[0]; }).toArray()
         };
-      }).sort(function(linha) {
+      }).sortBy(function(linha) {
         return linha.name;
       }).toArray();
     };
