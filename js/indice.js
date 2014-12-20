@@ -22,6 +22,9 @@
 
       // Deixa gráficos de linha mais bonitos, mas estraga gráficos empilhados
       this.completaExtremos = true;
+
+      // Ex.: Configuracao.tabelaDePartidosAntigos
+      this.tabelaDeReescrita = null;
     }
 
     Configuracao.tabelaDePartidos = [
@@ -70,6 +73,61 @@
       { sigla: 'PROS',    numero: 90, fundado: 2013 }
     ];
 
+    Configuracao.tabelaTop10 = {
+      mapear: [
+        { de: { sigla: 'PT',      numero: 13 }, para: 'PT' },
+        { de: { sigla: 'PMDB',    numero: 15 }, para: 'PMDB' },
+        { de: { sigla: 'PSDB',    numero: 45 }, para: 'PSDB' },
+        { de: { sigla: 'PSB',     numero: 40 }, para: 'PSB' },
+        { de: { sigla: 'PFL',     numero: 25 }, para: 'DEM' },
+        { de: { sigla: 'DEM',     numero: 25 }, para: 'DEM' },
+        { de: { sigla: 'PPB',     numero: 11 }, para: 'PP' },
+        { de: { sigla: 'PP',      numero: 11 }, para: 'PP' },
+        { de: { sigla: 'PSD',     numero: 55 }, para: 'PSD' },
+        { de: { sigla: 'PL',      numero: 22 }, para: 'PR' },
+        { de: { sigla: 'PRONA',   numero: 56 }, para: 'PR' },
+        { de: { sigla: 'PR',      numero: 22 }, para: 'PR' },
+        { de: { sigla: 'PDT',     numero: 12 }, para: 'PDT' },
+        { de: { sigla: 'PTB',     numero: 14 }, para: 'PTB' },
+      ],
+      resto: 'Resto'
+    };
+
+    Configuracao.tabelaTop3 = {
+      mapear: [
+        { de: { sigla: 'PT',      numero: 13 }, para: 'PT' },
+        { de: { sigla: 'PMDB',    numero: 15 }, para: 'PMDB' },
+        { de: { sigla: 'PSDB',    numero: 45 }, para: 'PSDB' },
+      ],
+      resto: 'Resto'
+    };
+
+    Configuracao.tabelaDePartidosAntigos = {
+      mapear: [
+        { de: { sigla: 'PPB',     numero: 11 }, para: 'ARENA' },
+        { de: { sigla: 'PP',      numero: 11 }, para: 'ARENA' },
+        { de: { sigla: 'PFL',     numero: 25 }, para: 'ARENA' },
+        { de: { sigla: 'DEM',     numero: 25 }, para: 'ARENA' },
+        { de: { sigla: 'PSD',     numero: 55 }, para: 'ARENA' },
+        { de: { sigla: 'PMDB',    numero: 15 }, para: 'MDB' },
+        { de: { sigla: 'PSDB',    numero: 45 }, para: 'MDB' },
+        { de: { sigla: 'PT',      numero: 13 }, para: 'PT' },
+        { de: { sigla: 'PSTU',    numero: 16 }, para: 'PT' },
+        { de: { sigla: 'PSOL',    numero: 50 }, para: 'PT' },
+        { de: { sigla: 'PCO',     numero: 29 }, para: 'PT' },
+        { de: { sigla: 'PSB',     numero: 40 }, para: 'PSB' },
+        { de: { sigla: 'PTB',     numero: 14 }, para: 'Antigo PTB' },
+        { de: { sigla: 'PT do B', numero: 70 }, para: 'Antigo PTB' },
+        { de: { sigla: 'PDT',     numero: 12 }, para: 'Antigo PTB' },
+        { de: { sigla: 'SD',      numero: 77 }, para: 'Antigo PTB' },
+        { de: { sigla: 'PCB',     numero: 21 }, para: 'PCB' },
+        { de: { sigla: 'PPS',     numero: 23 }, para: 'PCB' },
+        { de: { sigla: 'PC do B', numero: 65 }, para: 'PCB' },
+        { de: { sigla: 'PPL',     numero: 54 }, para: 'PCB' }
+      ],
+      resto: 'Resto'
+    };
+
     Configuracao.prototype.filtrarAnos = function(anos, fundado, extinto) {
 
       var anos = anos.map(toInt);
@@ -82,7 +140,7 @@
       // Partido novo
       if ((fundado - 1) > anos.min()) {
 
-        if (this.completaExtremos === true) {
+        if (this.completaExtremos === true && this.tabelaDeReescrita == null) {
 
           // Remove anos antes da fundação
           anos = anos.filter(function(ano) {
@@ -125,7 +183,7 @@
             return ano <= extinto;
           });
 
-          if (this.completaExtremos === true) {
+          if (this.completaExtremos === true && this.tabelaDeReescrita == null) {
             // Adiciona ano da dissolução, normalmente iria até a última eleição
             if ((extinto - 1) > anos.max()) {
               anos = anos.concat([ extinto - 1 ]);
@@ -144,14 +202,13 @@
       var _this = this;
       var migrouUmPartido = false;
 
-      // Realizar migrações
+      // Realiza migrações
       var dadosCorrigidos = dados.map(function(partido) {
 
-        var config = Lazy(Configuracao.tabelaDePartidos)
-          .find(function(config) {
-            return partido.sigla  === config.sigla &&
-                   partido.numero === config.numero;
-          });
+        var config = Lazy(Configuracao.tabelaDePartidos).find(function(config) {
+          return partido.sigla  === config.sigla &&
+                 partido.numero === config.numero;
+        });
 
         var configDestino = config;
 
@@ -171,12 +228,11 @@
 
             migrouUmPartido = true;
 
-            configDestino = Lazy(Configuracao.tabelaDePartidos)
-              .find(function(configDestino) {
-                return mesclarCom  === configDestino.sigla &&
-                       configDestino.fundado <= config.extinto &&
-                       (configDestino.extinto == null || configDestino.extinto >= config.extinto);
-              });
+            configDestino = Lazy(Configuracao.tabelaDePartidos).find(function(configDestino) {
+              return mesclarCom  === configDestino.sigla &&
+                     configDestino.fundado <= config.extinto &&
+                     (configDestino.extinto == null || configDestino.extinto >= config.extinto);
+            });
 
           }
 
@@ -244,7 +300,60 @@
     }
 
     Configuracao.prototype.reescreverSiglas = function(dadosPorSigla) {
-      return dadosPorSigla;
+
+      var _this = this;
+
+      if (this.tabelaDeReescrita == null) {
+        return dadosPorSigla;
+      }
+
+      // Realiza migrações
+      var dadosCorrigidos = dadosPorSigla.map(function(partido) {
+
+        var config = Lazy(_this.tabelaDeReescrita.mapear).find(function(config) {
+          return partido.sigla  === config.de.sigla &&
+                 partido.numero === config.de.numero;
+        });
+
+        if (config == null) {
+          return { sigla: _this.tabelaDeReescrita.resto, indices: partido.indices };
+        }
+
+        return { sigla: config.para, indices: partido.indices };
+
+      }).compact();
+
+      // Agrupa partidos repetidos para mesclar
+      var dadosAgrupados = dadosCorrigidos.groupBy(function(partido) {
+        return partido.sigla;
+      }).values();
+
+      // Mescla partidos somando os índices
+      var dadosMesclados = dadosAgrupados.map(function(partidos) {
+        if (partidos.length == 1) {
+          return partidos[0];
+        }
+
+        var todosOsIndices = Lazy(partidos).map(function(partido) {
+          return partido.indices;
+        }).flatten().chunk(2); // flatten 1 nível
+
+        var indicesAgrupadosPorAno = todosOsIndices.groupBy(function(lista) {
+          var ano = lista[0];
+          return 'ano' + ano.toString();
+        }).values();
+
+        var somasDosIndicesPorAno = indicesAgrupadosPorAno.map(function(listas) {
+          var ano = listas[0][0];
+          var indicesNoMesmoAno = Lazy(listas).map(function(lista) { return lista[1]; });
+          return [ ano, indicesNoMesmoAno.sum() ];
+        });
+
+        return { sigla: partidos[0].sigla, indices: somasDosIndicesPorAno };
+      });
+
+      return dadosMesclados;
+
     };
 
     return Configuracao;
@@ -279,7 +388,7 @@
         // Filtra anos que o partido existe
         var anosComDadosParaSigla = configuracao.filtrarAnos(anosComDados, config.fundado, config.extinto);
 
-        // Mantém todas as possibilidades, realiza o filtro de novo depois de reescrever siglas
+        // Mantém todas as possibilidades, realiza o filtro de novo depois de corrigir siglas
         anosComDadosParaSigla = Lazy([ anosComDados, anosComDadosParaSigla ]).flatten().map(toInt).uniq();
 
         var indicePorAno = anosComDadosParaSigla.map(function(ano) {
@@ -336,7 +445,7 @@
           return [ Date.UTC(ano + 1, 0, 1), indice ];
         });
 
-        return { sigla: partido.sigla, numero: partido.numero, indices: indices };
+        return { sigla: partido.sigla, indices: indices };
 
       });
 
@@ -351,7 +460,16 @@
 
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
       indicesPorSigla = indicesPorSigla.sortBy(function(linha) {
-        return Lazy(linha.data).sum(function(tupla) { return tupla[1]; });
+
+        var somaDosIndices = Lazy(linha.data).sum(function(tupla) { return tupla[1]; });
+
+        // Faz ajusta na ordenação para manter o resto em último
+        if (configuracao.tabelaDeReescrita != null) {
+          somaDosIndices += (configuracao.tabelaDeReescrita.resto == linha.name) ? 0 : 9999;
+        }
+
+        return somaDosIndices;
+
       }, true);
 
       return indicesPorSigla.toArray();
