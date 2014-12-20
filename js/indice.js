@@ -12,50 +12,358 @@
     return parseInt(s, 10);
   };
 
-  var Grafico = (function() {
+  window.Configuracao = (function() {
 
-    function Grafico() {}
+    function Configuracao() {
+      this.passos         = false;
+      this.mudancasDeNome = true;
+      this.incorporacoes  = true;
+      this.fusoes         = true;
 
-    Grafico.prototype.anos = function() { return Lazy([]); };
-    Grafico.prototype.siglas = function() { return Lazy([]); };
-    Grafico.prototype.temDados = function(ano) { return false; };
-    Grafico.prototype.temEleito = function(ano, sigla) { return false; };
-    Grafico.prototype.calculaIndice = function(ano, sigla) { return 0.0; };
+      // Deixa gráficos de linha mais bonitos, mas estraga gráficos empilhados
+      this.completaExtremos = true;
+    }
 
-    Grafico.prototype.categories = function() {
-      return this.anos().map(toInt).toArray();
+    Configuracao.tabelaDePartidos = [
+      { sigla: 'PRB',     numero: 10, fundado: 2005 },
+      { sigla: 'PPB',     numero: 11, fundado: 1993, extinto: 2003, renomeado: 'PP' },
+      { sigla: 'PP',      numero: 11, fundado: 2003 },
+      { sigla: 'PDT',     numero: 12, fundado: 1979 },
+      { sigla: 'PT',      numero: 13, fundado: 1980 },
+      { sigla: 'PTB',     numero: 14, fundado: 1980 },
+      { sigla: 'PMDB',    numero: 15, fundado: 1980 },
+      { sigla: 'PSTU',    numero: 16, fundado: 1993 },
+      { sigla: 'PSL',     numero: 17, fundado: 1994 },
+      { sigla: 'PST',     numero: 18, fundado: 1996, extinto: 2003, incorporado: 'PL' },
+      { sigla: 'PTN',     numero: 19, fundado: 1995 },
+      { sigla: 'PSC',     numero: 20, fundado: 1985 },
+      { sigla: 'PCB',     numero: 21, fundado: 1996 },
+      { sigla: 'PL',      numero: 22, fundado: 1985, extinto: 2006, fusao: 'PR' },
+      { sigla: 'PR',      numero: 22, fundado: 2006 },
+      { sigla: 'PPS',     numero: 23, fundado: 1992 },
+      { sigla: 'PFL',     numero: 25, fundado: 1988, extinto: 2007, renomeado: 'DEM' },
+      { sigla: 'DEM',     numero: 25, fundado: 2007 },
+      { sigla: 'PAN',     numero: 26, fundado: 1998, extinto: 2006, incorporado: 'PTB' },
+      { sigla: 'PSDC',    numero: 27, fundado: 1997 },
+      { sigla: 'PRTB',    numero: 28, fundado: 1997 },
+      { sigla: 'PCO',     numero: 29, fundado: 1995 },
+      { sigla: 'PGT',     numero: 30, fundado: 1995, extinto: 2003, incorporado: 'PL' },
+      { sigla: 'PSN',     numero: 31, fundado: 1997, extinto: 2003, renomeado: 'PHS' },
+      { sigla: 'PHS',     numero: 31, fundado: 2003 },
+      { sigla: 'PMN',     numero: 33, fundado: 1984 },
+      { sigla: 'PRN',     numero: 36, fundado: 1989, extinto: 2000, renomeado: 'PTC' },
+      { sigla: 'PTC',     numero: 36, fundado: 2000 },
+      { sigla: 'PSB',     numero: 40, fundado: 1988 },
+      { sigla: 'PSD',     numero: 41, fundado: 1987, extinto: 2003, incorporado: 'PTB' },
+      { sigla: 'PV',      numero: 43, fundado: 1993 },
+      { sigla: 'PRP',     numero: 44, fundado: 1991 },
+      { sigla: 'PSDB',    numero: 45, fundado: 1988 },
+      { sigla: 'PSOL',    numero: 50, fundado: 2004 },
+      { sigla: 'PEN',     numero: 51, fundado: 2011 },
+      { sigla: 'PEN',     numero: 51, fundado: 2011 },
+      { sigla: 'PPL',     numero: 54, fundado: 2009 },
+      { sigla: 'PSD',     numero: 55, fundado: 2011 },
+      { sigla: 'PRONA',   numero: 56, fundado: 1989, extinto: 2006, fusao: 'PR' },
+      { sigla: 'PC do B', numero: 65, fundado: 1988 },
+      { sigla: 'PT do B', numero: 70, fundado: 1989 },
+      { sigla: 'SD',      numero: 77, fundado: 2013 },
+      { sigla: 'PROS',    numero: 90, fundado: 2013 }
+    ];
+
+    Configuracao.prototype.filtrarAnos = function(anos, fundado, extinto) {
+
+      var anos = anos.map(toInt);
+
+      // Adiciona um ano depois da última eleição para o último passo ficar visível
+      if (this.passos === true) {
+        anos = anos.concat([ anos.max() + 1 ]);
+      }
+
+      // Partido novo
+      if ((fundado - 1) > anos.min()) {
+
+        if (this.completaExtremos === true) {
+
+          // Remove anos antes da fundação
+          anos = anos.filter(function(ano) {
+            return ano >= fundado;
+          });
+
+          // Adiciona 1 anterior a fundação (= zero em 01/01 do ano da fundação)
+          anos = anos.concat([ fundado - 1 ]);
+
+        } else {
+
+          var ultimaEleicaoAntesDaFundacao = anos.filter(function(ano) { return ano < fundado; }).max();
+
+          // Remove anos antes da fundação
+          anos = anos.filter(function(ano) {
+            return ano >= fundado;
+          });
+
+          // Readiciona última eleição para fechar os gráficos de área
+          if (isFinite(ultimaEleicaoAntesDaFundacao)) {
+            anos = anos.concat([ ultimaEleicaoAntesDaFundacao ]);
+          }
+
+        }
+
+      }
+
+      // Partido morto
+      if (extinto != null) {
+
+        // Se o partido foi extinto antes do primeiro ano do gráfico
+        if (extinto < anos.min()) {
+
+          anos = Lazy([]);
+
+        } else {
+
+          // Remove anos depois da dissolução
+          anos = anos.filter(function(ano) {
+            return ano <= extinto;
+          });
+
+          if (this.completaExtremos === true) {
+            // Adiciona ano da dissolução, normalmente iria até a última eleição
+            if ((extinto - 1) > anos.max()) {
+              anos = anos.concat([ extinto - 1 ]);
+            }
+          }
+
+        }
+      }
+
+      return anos;
+
+    }
+
+    Configuracao.prototype.corrigirDados = function(dados) {
+
+      var _this = this;
+      var migrouUmPartido = false;
+
+      // Realizar migrações
+      var dadosCorrigidos = dados.map(function(partido) {
+
+        var config = Lazy(Configuracao.tabelaDePartidos)
+          .find(function(config) {
+            return partido.sigla  === config.sigla &&
+                   partido.numero === config.numero;
+          });
+
+        var configDestino = config;
+
+        // Apenas partidos extintos podem ser migrados
+        if (config.extinto != null) {
+
+          var mesclarCom = null;
+          if (_this.mudancasDeNome === true && config.renomeado != null) {
+            mesclarCom = config.renomeado;
+          } else if (_this.incorporacoes === true && config.incorporado != null) {
+            mesclarCom = config.incorporado;
+          } else if (_this.fusoes === true && config.fusao != null) {
+            mesclarCom = config.fusao;
+          }
+
+          if (mesclarCom != null) {
+
+            migrouUmPartido = true;
+
+            configDestino = Lazy(Configuracao.tabelaDePartidos)
+              .find(function(configDestino) {
+                return mesclarCom  === configDestino.sigla &&
+                       configDestino.fundado <= config.extinto &&
+                       (configDestino.extinto == null || configDestino.extinto >= config.extinto);
+              });
+
+          }
+
+        }
+
+        return {
+          sigla:   configDestino.sigla,
+          numero:  configDestino.numero,
+          fundado: partido.fundado == null ? config.fundado : partido.fundado,
+          extinto: configDestino.extinto,
+          indices: partido.indices
+        };
+
+      });
+
+      // Força execução do Lazy para definir flag migrouUmPartido
+      dadosCorrigidos = Lazy(dadosCorrigidos.toArray());
+
+      if (migrouUmPartido === true) {
+
+        // Agrupa partidos repetidos para mesclar
+        var dadosAgrupados = dadosCorrigidos.groupBy(function(partido) {
+          return partido.sigla + partido.numero;
+        }).values();
+
+        // Mescla partidos somando os índices
+        var dadosMesclados = dadosAgrupados.map(function(partidos) {
+          if (partidos.length == 1) {
+            return partidos[0];
+          }
+
+          var todosOsIndices = Lazy(partidos).map(function(partido) {
+            return partido.indices;
+          }).flatten().chunk(2); // flatten 1 nível
+
+          var indicesAgrupadosPorAno = todosOsIndices.groupBy(function(lista) {
+            var ano = lista[0];
+            return 'ano' + ano.toString();
+          }).values();
+
+          var somasDosIndicesPorAno = indicesAgrupadosPorAno.map(function(listas) {
+            var ano = listas[0][0];
+            var indicesNoMesmoAno = Lazy(listas).map(function(lista) { return lista[1]; });
+            return [ ano, indicesNoMesmoAno.sum() ];
+          });
+
+          return {
+            sigla:   partidos[0].sigla,
+            numero:  partidos[0].numero,
+            fundado: Lazy(partidos).pluck('fundado').min(),
+            extinto: partidos[0].extinto,
+            indices: somasDosIndicesPorAno
+          };
+        });
+
+        // Força execução do Lazy para chamar função recursiva
+        dadosMesclados = Lazy(dadosMesclados.toArray());
+
+        // Reaplica migrações nos novos dados
+        return this.corrigirDados(dadosMesclados);
+
+      }
+
+      return dadosCorrigidos;
+    }
+
+    Configuracao.prototype.reescreverSiglas = function(dadosPorSigla) {
+      return dadosPorSigla;
     };
 
-    Grafico.prototype.series = function() {
+    return Configuracao;
+
+  })();
+
+  var Indice = (function() {
+
+    function Indice() {}
+
+    Indice.prototype.anos = function() { return Lazy([]); };
+    Indice.prototype.siglas = function() { return Lazy([]); };
+    Indice.prototype.temDados = function(ano) { return false; };
+    Indice.prototype.calculaIndice = function(ano, sigla) { return 0.0; };
+
+    Indice.prototype.series = function(configuracao) {
 
       var _this = this;
 
-      return _this.siglas().map(function(sigla) {
+      // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
+      var anosComDados = this.anos().filter(function(ano) {
+        return _this.temDados(ano);
+      });
 
-        // Anos que a sigla elegeu alguém
-        var anosComBancada = _this.anos().filter(function(ano) {
-          return _this.temDados(ano) && _this.temEleito(ano, sigla);
+      // Calcula para cada sigla os índices por ano
+      var indicesPorSigla = this.siglas().map(function(sigla) {
+
+        var config = Lazy(Configuracao.tabelaDePartidos).find(function(config) {
+          return sigla === (config.sigla + config.numero.toString());
         });
 
-        // Tamanho da bancada em relação ao total da casa
-        var percentualBancadaPorAno = anosComBancada.map(function(ano) {
+        // Filtra anos que o partido existe
+        var anosComDadosParaSigla = configuracao.filtrarAnos(anosComDados, config.fundado, config.extinto);
+
+        // Mantém todas as possibilidades, realiza o filtro de novo depois de reescrever siglas
+        anosComDadosParaSigla = Lazy([ anosComDados, anosComDadosParaSigla ]).flatten().map(toInt).uniq();
+
+        var indicePorAno = anosComDadosParaSigla.map(function(ano) {
           return [ parseInt(ano, 10), _this.calculaIndice(ano, sigla) ];
         });
 
+        return { sigla: sigla, indices: indicePorAno };
+
+      });
+
+      // Extrai siglas e números dos partidos
+      indicesPorSigla = indicesPorSigla.map(function(partido) {
+        var matches = partido.sigla.match(/(.*?)([0-9]{2})/);
         return {
-          name: sigla,
-          data: percentualBancadaPorAno.sort().toArray()
+          sigla: matches[1],
+          numero: parseInt(matches[2], 10),
+          indices: partido.indices
         };
-      }).toArray();
+      });
+
+      // Força execução do Lazy pra poder chamar função recursiva (corrigirDados) sem executar várias vezes
+      indicesPorSigla = Lazy(indicesPorSigla.toArray());
+
+      // Aplica configuração de partidos (parte 1)
+      indicesPorSigla = configuracao.corrigirDados(indicesPorSigla);
+
+      // Filtra anos que o partido existe
+      indicesPorSigla = indicesPorSigla.map(function(partido) {
+
+        var anosComDadosParaSigla = configuracao.filtrarAnos(anosComDados, partido.fundado, partido.extinto);
+
+        var indicesPorAno = anosComDadosParaSigla.map(function(ano) {
+          var indice = partido.indices.find(function(indice) { return ano == indice[0]; })[1];
+          return [ ano, indice ];
+        });
+
+        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno };
+
+      });
+
+      // Aplica configuração de partidos (parte 2)
+      indicesPorSigla = configuracao.reescreverSiglas(indicesPorSigla);
+
+      // Filtra partidos que não tem dados para nenhum ano
+      indicesPorSigla = indicesPorSigla.filter(function(partido) {
+        return partido.indices.some();
+      });
+
+      // Converte anos dos índices em datas
+      indicesPorSigla = indicesPorSigla.map(function(partido) {
+
+        var indices = partido.indices.map(function(tupla) {
+          var ano = tupla[0], indice = tupla[1];
+          return [ Date.UTC(ano + 1, 0, 1), indice ];
+        });
+
+        return { sigla: partido.sigla, numero: partido.numero, indices: indices };
+
+      });
+
+      // Converte para formato esperado pelo Highcharts
+      indicesPorSigla = indicesPorSigla.map(function(linha) {
+        return {
+          name: linha.sigla,
+          // Índices ordenados por ano (Highcharts faz a linha dar voltas se não tiver ordenado)
+          data: linha.indices.sortBy(function(linha) { return linha[0]; }).toArray()
+        };
+      });
+
+      // Ordena pela "importância do partido", isto é, a soma de todos os índices
+      indicesPorSigla = indicesPorSigla.sortBy(function(linha) {
+        return Lazy(linha.data).sum(function(tupla) { return tupla[1]; });
+      }, true);
+
+      return indicesPorSigla.toArray();
     };
 
-    return Grafico;
+    return Indice;
 
   })();
 
   var MandatoQuatroAnos = (function() {
 
-    _extends(MandatoQuatroAnos, Grafico);
+    _extends(MandatoQuatroAnos, Indice);
 
     function MandatoQuatroAnos() {}
 
@@ -64,26 +372,27 @@
 
     MandatoQuatroAnos.prototype.temDados = function(ano) {
 
-      var doisAnosAntes = (parseInt(ano, 10) - 2).toString();
+      var _this = this, _ano = parseInt(ano, 10);
 
-      return this.valorTotal(doisAnosAntes) > 0 || this.valorTotal(ano) > 0;
-    };
+      // Eleições que ainda teria mandato
+      var mandato = Lazy.range(_ano, _ano - 4, -1);
 
-    MandatoQuatroAnos.prototype.temEleito = function(ano, sigla) {
+      return mandato.some(function(ano) { return _this.valorTotal(ano.toString()) > 0 });
 
-      var ano = this.valorTotal(ano) > 0 ? ano : (parseInt(ano, 10) - 2).toString();
-
-      return this.valorPorSigla(ano, sigla) > 0;
     };
 
     MandatoQuatroAnos.prototype.calculaIndice = function(ano, sigla) {
 
-      var ano = this.valorTotal(ano) > 0 ? ano : (parseInt(ano, 10) - 2).toString();
+      var _this = this, _ano = parseInt(ano, 10);
 
-      var eleitos = this.valorPorSigla(ano, sigla);
-      var total   = this.valorTotal(ano);
+      // Eleições que ainda teria mandato
+      var mandato = Lazy.range(_ano, _ano - 4, -1);
+
+      var eleitos = mandato.sum(function(ano) { return _this.valorPorSigla(ano.toString(), sigla); });
+      var total   = mandato.sum(function(ano) { return _this.valorTotal(ano.toString()); });
 
       return eleitos / total * 100;
+
     };
 
     return MandatoQuatroAnos;
@@ -92,7 +401,7 @@
 
   var MandatoOitoAnos = (function() {
 
-    _extends(MandatoOitoAnos, Grafico);
+    _extends(MandatoOitoAnos, Indice);
 
     function MandatoOitoAnos() {}
 
@@ -101,35 +410,30 @@
 
     MandatoOitoAnos.prototype.temDados = function(ano) {
 
-      var doisAnosAntes   = (parseInt(ano, 10) - 2).toString();
-      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
-      var seisAnosAntes   = (parseInt(ano, 10) - 6).toString();
+      var _this = this, _ano = parseInt(ano, 10);
 
-      // Só os anos que tenha todos
-      return (this.valorTotal(seisAnosAntes) > 0 || this.valorTotal(quatroAnosAntes) > 0) &&
-             (this.valorTotal(doisAnosAntes) > 0 || this.valorTotal(ano) > 0);
-    };
+      // Eleições que ainda teria mandato
+      var metade1 = Lazy.range(_ano, _ano - 4, -1);
+      var metade2 = Lazy.range(_ano - 4, _ano - 8, -1);
 
-    MandatoOitoAnos.prototype.temEleito = function(ano, sigla) {
+      // Precisa de dados de duas eleições
+      return metade1.some(function(ano) { return _this.valorTotal(ano.toString()) > 0 }) &&
+             metade2.some(function(ano) { return _this.valorTotal(ano.toString()) > 0 });
 
-      var ano = this.valorTotal(ano) > 0 ? ano : (parseInt(ano, 10) - 2).toString();
-
-      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
-
-      return this.valorPorSigla(quatroAnosAntes, sigla) > 0 ||
-             this.valorPorSigla(ano, sigla) > 0;
     };
 
     MandatoOitoAnos.prototype.calculaIndice = function(ano, sigla) {
 
-      var ano = this.valorTotal(ano) > 0 ? ano : (parseInt(ano, 10) - 2).toString();
+      var _this = this, _ano = parseInt(ano, 10);
 
-      var quatroAnosAntes = (parseInt(ano, 10) - 4).toString();
+      // Eleições que ainda teria mandato
+      var mandato = Lazy.range(_ano, _ano - 8, -1);
 
-      var eleitos = this.valorPorSigla(quatroAnosAntes, sigla) + this.valorPorSigla(ano, sigla);
-      var total   = this.valorTotal(quatroAnosAntes) + this.valorTotal(ano);
+      var eleitos = mandato.sum(function(ano) { return _this.valorPorSigla(ano.toString(), sigla); });
+      var total   = mandato.sum(function(ano) { return _this.valorTotal(ano.toString()); });
 
       return eleitos / total * 100;
+
     };
 
     return MandatoOitoAnos;
@@ -194,7 +498,7 @@
 
   var CongressoNacional = (function() {
 
-    _extends(CongressoNacional, Grafico);
+    _extends(CongressoNacional, Indice);
 
     function CongressoNacional(eleicoes) {
       this.eleicoes = eleicoes;
@@ -215,12 +519,6 @@
 
       return this.deputadosFederais.temDados(ano) &&
              this.senadores.temDados(ano);
-    };
-
-    CongressoNacional.prototype.temEleito = function(ano, sigla) {
-
-      return this.deputadosFederais.temEleito(ano, sigla) ||
-             this.senadores.temEleito(ano, sigla);
     };
 
     CongressoNacional.prototype.calculaIndice = function(ano, sigla) {
@@ -263,7 +561,7 @@
 
   var IndiceFederal = (function() {
 
-    _extends(IndiceFederal, Grafico);
+    _extends(IndiceFederal, Indice);
 
     function IndiceFederal(eleicoes) {
       this.eleicoes = eleicoes;
@@ -284,12 +582,6 @@
 
       return this.congressoNacional.temDados(ano) &&
              this.presidentes.temDados(ano);
-    };
-
-    IndiceFederal.prototype.temEleito = function(ano, sigla) {
-
-      return this.congressoNacional.temEleito(ano, sigla) ||
-             this.presidentes.temEleito(ano, sigla);
     };
 
     IndiceFederal.prototype.calculaIndice = function(ano, sigla) {
@@ -388,7 +680,7 @@
 
   var IndiceEstadual = (function() {
 
-    _extends(IndiceEstadual, Grafico);
+    _extends(IndiceEstadual, Indice);
 
     function IndiceEstadual(eleicoes) {
       this.eleicoes = eleicoes;
@@ -409,12 +701,6 @@
 
       return this.deputadosEstaduais.temDados(ano) &&
              this.governadores.temDados(ano);
-    };
-
-    IndiceEstadual.prototype.temEleito = function(ano, sigla) {
-
-      return this.deputadosEstaduais.temEleito(ano, sigla) ||
-             this.governadores.temEleito(ano, sigla);
     };
 
     IndiceEstadual.prototype.calculaIndice = function(ano, sigla) {
@@ -513,7 +799,7 @@
 
   var IndiceMunicipal = (function() {
 
-    _extends(IndiceMunicipal, Grafico);
+    _extends(IndiceMunicipal, Indice);
 
     function IndiceMunicipal(eleicoes) {
       this.eleicoes = eleicoes;
@@ -536,12 +822,6 @@
              this.prefeitos.temDados(ano);
     };
 
-    IndiceMunicipal.prototype.temEleito = function(ano, sigla) {
-
-      return this.vereadores.temEleito(ano, sigla) ||
-             this.prefeitos.temEleito(ano, sigla);
-    };
-
     IndiceMunicipal.prototype.calculaIndice = function(ano, sigla) {
 
       return this.vereadores.calculaIndice(ano, sigla) * 0.75 +
@@ -554,7 +834,7 @@
 
   var IndiceNacional = (function() {
 
-    _extends(IndiceNacional, Grafico);
+    _extends(IndiceNacional, Indice);
 
     function IndiceNacional(federais, estaduais, municipais) {
       this.federais   = federais;
@@ -579,13 +859,6 @@
       return this.indiceFederal.temDados(ano) &&
              this.indiceEstadual.temDados(ano) &&
              this.indiceMunicipal.temDados(ano);
-    };
-
-    IndiceNacional.prototype.temEleito = function(ano, sigla) {
-
-      return this.indiceFederal.temEleito(ano, sigla) ||
-             this.indiceEstadual.temEleito(ano, sigla) ||
-             this.indiceFederal.temEleito(ano, sigla);
     };
 
     IndiceNacional.prototype.calculaIndice = function(ano, sigla) {
@@ -777,73 +1050,88 @@
 
   })();
 
-  window.Indice = (function() {
+  window.GeradorDeIndices = (function() {
 
-    function Indice(eleitos) {
-      this.eleitos = eleitos;
+    function GeradorDeIndices(eleitos, configuracao) {
+      this.eleitos      = eleitos;
+      this.configuracao = configuracao;
 
       this.federais   = new EleicoesFederais(this.eleitos.federais);
       this.estaduais  = new EleicoesEstaduais(this.eleitos.estaduais);
       this.municipais = new EleicoesMunicipais(this.eleitos.municipais);
     }
 
-    Indice.prototype.deputadosFederais = function() {
-      return new DeputadosFederais(this.federais);
+    GeradorDeIndices.prototype.deputadosFederais = function() {
+      var indice = new DeputadosFederais(this.federais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.senadores = function() {
-      return new Senadores(this.federais);
+    GeradorDeIndices.prototype.senadores = function() {
+      var indice = new Senadores(this.federais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.congressoNacional = function() {
-      return new CongressoNacional(this.federais);
+    GeradorDeIndices.prototype.congressoNacional = function() {
+      var indice = new CongressoNacional(this.federais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.presidentes = function() {
-      return new Presidentes(this.federais);
+    GeradorDeIndices.prototype.presidentes = function() {
+      var indice = new Presidentes(this.federais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.indiceFederal = function() {
-      return new IndiceFederal(this.federais);
+    GeradorDeIndices.prototype.indiceFederal = function() {
+      var indice = new IndiceFederal(this.federais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.deputadosEstaduais = function() {
-      return new DeputadosEstaduais(this.estaduais);
+    GeradorDeIndices.prototype.deputadosEstaduais = function() {
+      var indice = new DeputadosEstaduais(this.estaduais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.governadores = function() {
-      return new Governadores(this.estaduais);
+    GeradorDeIndices.prototype.governadores = function() {
+      var indice = new Governadores(this.estaduais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.governadoresComPeso = function() {
-      return new GovernadoresComPeso(this.estaduais);
+    GeradorDeIndices.prototype.governadoresComPeso = function() {
+      var indice = new GovernadoresComPeso(this.estaduais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.indiceEstadual = function() {
-      return new IndiceEstadual(this.estaduais);
+    GeradorDeIndices.prototype.indiceEstadual = function() {
+      var indice = new IndiceEstadual(this.estaduais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.vereadores = function() {
-      return new Vereadores(this.municipais);
+    GeradorDeIndices.prototype.vereadores = function() {
+      var indice = new Vereadores(this.municipais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.prefeitos = function() {
-      return new Prefeitos(this.municipais);
+    GeradorDeIndices.prototype.prefeitos = function() {
+      var indice = new Prefeitos(this.municipais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.prefeitosComPeso = function() {
-      return new PrefeitosComPeso(this.municipais);
+    GeradorDeIndices.prototype.prefeitosComPeso = function() {
+      var indice = new PrefeitosComPeso(this.municipais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.indiceMunicipal = function() {
-      return new IndiceMunicipal(this.municipais);
+    GeradorDeIndices.prototype.indiceMunicipal = function() {
+      var indice = new IndiceMunicipal(this.municipais);
+      return indice.series(this.configuracao);
     };
 
-    Indice.prototype.indiceNacional = function() {
-      return new IndiceNacional(this.federais, this.estaduais, this.municipais);
+    GeradorDeIndices.prototype.indiceNacional = function() {
+      var indice = new IndiceNacional(this.federais, this.estaduais, this.municipais);
+      return indice.series(this.configuracao);
     };
 
-    return Indice;
+    return GeradorDeIndices;
 
   })();
 
