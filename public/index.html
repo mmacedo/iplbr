@@ -73,22 +73,42 @@
 
     <h1>Índice de Poder Legislativo</h1>
 
-    <div id="tipo_de_grafico_group" class="btn-group btn-group-justified" data-toggle="buttons">
-      <label class="btn btn-primary active" aria-pressed="true">
-        <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
-      </label>
-    </div>
+    <div class="well well-sm">
 
-    <input type="checkbox" id="step" data-toggle="toggle" data-on="Com passos" data-off="Sem passos" disabled>
+      <div class="panel panel-default">
+        <div class="panel-heading">Aplicar retroativo</div>
+        <div class="panel-body">
+          <input type="checkbox" id="mudancas_de_nome" data-toggle="toggle" checked> Mudanças de nome
+          <input type="checkbox" id="incorporacoes" data-toggle="toggle" checked> Incorporações
+          <input type="checkbox" id="fusoes" data-toggle="toggle" checked> Fusões
+        </div>
+      </div>
+
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-9">
+              <div id="tipo_de_grafico_group" class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-primary active" aria-pressed="true">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
+                </label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="checkbox" id="step" data-toggle="toggle" data-on="Com passos" data-off="Sem passos" disabled>
+            </div>
+          </div>
+        </div>
+
+    </div>
 
     <div role="tabpanel" id="tabpanel_graficos">
 
@@ -198,7 +218,7 @@
     $(function() {
 
       // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], #step', function() {
+      $(document).on('change', '[name="tipo_de_grafico"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
         if ($(this).is('#tipo_spline')) {
           $('#step').bootstrapToggle('disable');
@@ -230,12 +250,14 @@
 
         var configuracao = new Configuracao();
         var indices = new GeradorDeIndices(json, configuracao);
-        window.configuracao = configuracao;
-        window.indices = indices;
 
         $(document)
           .on('shown.bs.tab', '#tabpanel_graficos a[data-toggle="tab"]', function() {
-            configuracao.passos = $('#step').is(':checked:enabled');
+            configuracao.passos           = $('#step').is(':checked:enabled');
+            configuracao.mudancasDeNome   = $('#mudancas_de_nome').is(':checked:enabled');
+            configuracao.incorporacoes    = $('#incorporacoes').is(':checked:enabled');
+            configuracao.fusoes           = $('#fusoes').is(':checked:enabled');
+            configuracao.completaExtremos = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
           })
           .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
 
