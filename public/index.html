@@ -60,8 +60,6 @@
   </script>
 
   <style>
-    body { text-align: center; }
-
     .grafico {
       width: 100%;
       height: 600px;
@@ -75,38 +73,80 @@
 
     <div class="well well-sm">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">Aplicar retroativo</div>
-        <div class="panel-body">
-          <input type="checkbox" id="mudancas_de_nome" data-toggle="toggle" checked> Mudanças de nome
-          <input type="checkbox" id="incorporacoes" data-toggle="toggle" checked> Incorporações
-          <input type="checkbox" id="fusoes" data-toggle="toggle" checked> Fusões
-        </div>
-      </div>
+      <div class="container-fluid">
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-9">
-              <div id="tipo_de_grafico_group" class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-primary active" aria-pressed="true">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
-                </label>
+        <div class="row">
+          <div class="col-md-9">
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-primary active" aria-pressed="true">
+                <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
+              </label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <input type="checkbox" id="step" data-toggle="toggle" data-on="Com passos" data-off="Sem passos" disabled>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">Aplicar retroativo</div>
+              <div class="panel-body">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="mudancas_de_nome" data-toggle="toggle" checked>
+                    Mudanças de nome
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="incorporacoes" data-toggle="toggle" checked>
+                    Incorporações
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="fusoes" data-toggle="toggle" checked>
+                    Fusões
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <input type="checkbox" id="step" data-toggle="toggle" data-on="Com passos" data-off="Sem passos" disabled>
+          </div>
+          <div class="col-md-9">
+            <div class="panel panel-default">
+              <div class="panel-heading">Configuração de partidos</div>
+              <div class="panel-body">
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-primary active" aria-pressed="true">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off" checked> Todos
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off"> Top 10
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+      </div>
 
     </div>
 
@@ -199,7 +239,8 @@
         yAxis: {
           title: { text: '%' },
           floor: 0,
-          ceiling: 100
+          ceiling: 100,
+          reversedStacks: false
         },
         xAxis: { type: 'datetime' },
         tooltip: {
@@ -218,7 +259,7 @@
     $(function() {
 
       // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
         if ($(this).is('#tipo_spline')) {
           $('#step').bootstrapToggle('disable');
@@ -258,6 +299,16 @@
             configuracao.incorporacoes    = $('#incorporacoes').is(':checked:enabled');
             configuracao.fusoes           = $('#fusoes').is(':checked:enabled');
             configuracao.completaExtremos = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
+
+            if ($('#configuracao_todos').is(':checked')) {
+              configuracao.tabelaDeReescrita = null;
+            } else if ($('#configuracao_top10').is(':checked')) {
+              configuracao.tabelaDeReescrita = Configuracao.tabelaTop10;
+            } else if ($('#configuracao_top3').is(':checked')) {
+              configuracao.tabelaDeReescrita = Configuracao.tabelaTop3;
+            } else if ($('#configuracao_antigos').is(':checked')) {
+              configuracao.tabelaDeReescrita = Configuracao.tabelaDePartidosAntigos;
+            }
           })
           .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
 
