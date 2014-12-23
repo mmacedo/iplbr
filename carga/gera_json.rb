@@ -255,7 +255,8 @@ municipais.each do |ano, ufs|
     prefeitos_por_sigla:                  Hash.new(0),
     prefeitos_por_sigla_peso_legislativo: Hash.new(0),
     prefeitos_por_sigla_peso_populacao:   Hash.new(0),
-    vereadores_por_sigla:                 Hash.new(0)
+    vereadores_por_sigla:                 Hash.new(0),
+    vereadores_por_sigla_peso_populacao:  Hash.new(0)
   }
 
   ufs.each do |uf, municipios|
@@ -265,20 +266,22 @@ municipais.each do |ano, ufs|
       next unless cargos.has_key? 'VEREADOR'
 
       total_vereadores = cargos['VEREADOR'].map { |sigla, vereadores| vereadores }.reduce(:+)
+      total_populacao  = populacao(populacao_municipios, uf, municipio, ano)
 
       json[:municipais][ano][:total_prefeitos]  += 1
       json[:municipais][ano][:total_vereadores] += total_vereadores
 
       if cargos.has_key? 'PREFEITO'
         cargos['PREFEITO'].each do |sigla, prefeitos|
-          json[:municipais][ano][:prefeitos_por_sigla][sigla]          += 1
+          json[:municipais][ano][:prefeitos_por_sigla][sigla]                  += 1
           json[:municipais][ano][:prefeitos_por_sigla_peso_legislativo][sigla] += total_vereadores
-          json[:municipais][ano][:prefeitos_por_sigla_peso_populacao][sigla]   += populacao(populacao_municipios, uf, municipio, ano)
+          json[:municipais][ano][:prefeitos_por_sigla_peso_populacao][sigla]   += total_populacao
         end
       end
 
       cargos['VEREADOR'].each do |sigla, vereadores|
-        json[:municipais][ano][:vereadores_por_sigla][sigla] += vereadores
+        json[:municipais][ano][:vereadores_por_sigla][sigla]                += vereadores
+        json[:municipais][ano][:vereadores_por_sigla_peso_populacao][sigla] += vereadores * (total_populacao / total_vereadores)
       end
     end
   end
@@ -287,30 +290,33 @@ end
 estaduais.each do |ano, ufs|
 
   json[:estaduais][ano] = {
-    total_governadores:                      0,
-    total_deputados_estaduais:               0,
-    total_populacao:                         populacao(populacao_brasil, nil, nil, ano),
-    governadores_por_sigla:                  Hash.new(0),
-    governadores_por_sigla_peso_legislativo: Hash.new(0),
-    governadores_por_sigla_peso_populacao:   Hash.new(0),
-    deputados_estaduais_por_sigla:           Hash.new(0)
+    total_governadores:                           0,
+    total_deputados_estaduais:                    0,
+    total_populacao:                              populacao(populacao_brasil, nil, nil, ano),
+    governadores_por_sigla:                       Hash.new(0),
+    governadores_por_sigla_peso_legislativo:      Hash.new(0),
+    governadores_por_sigla_peso_populacao:        Hash.new(0),
+    deputados_estaduais_por_sigla:                Hash.new(0),
+    deputados_estaduais_por_sigla_peso_populacao: Hash.new(0)
   }
 
   ufs.each do |uf, cargos|
 
     total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
+    total_populacao           = populacao(populacao_ufs, uf, nil, ano)
 
     json[:estaduais][ano][:total_governadores]        += 1
     json[:estaduais][ano][:total_deputados_estaduais] += total_deputados_estaduais
 
     cargos['GOVERNADOR'].each do |sigla, governadores|
-      json[:estaduais][ano][:governadores_por_sigla][sigla]          += 1
+      json[:estaduais][ano][:governadores_por_sigla][sigla]                  += 1
       json[:estaduais][ano][:governadores_por_sigla_peso_legislativo][sigla] += total_deputados_estaduais
-      json[:estaduais][ano][:governadores_por_sigla_peso_populacao][sigla]   += populacao(populacao_ufs, uf, nil, ano)
+      json[:estaduais][ano][:governadores_por_sigla_peso_populacao][sigla]   += total_populacao
     end
 
     cargos['DEPUTADO ESTADUAL OU DISTRITAL'].each do |sigla, deputados_estaduais|
-      json[:estaduais][ano][:deputados_estaduais_por_sigla][sigla] += deputados_estaduais
+      json[:estaduais][ano][:deputados_estaduais_por_sigla][sigla]                += deputados_estaduais
+      json[:estaduais][ano][:deputados_estaduais_por_sigla_peso_populacao][sigla] += deputados_estaduais * (total_populacao / total_deputados_estaduais)
     end
   end
 end
