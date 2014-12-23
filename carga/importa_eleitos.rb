@@ -18,7 +18,7 @@ FileUtils.mkdir_p(pasta_de_saida)
 partidos = SortedSet.new
 
 # Quais pastas extrair (para 1994 e 1996 faltam estados)
-anos = [ 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
+anos = [ 1994, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
 
 # Quais arquivos extrair
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
@@ -59,14 +59,20 @@ anos.each do |ano|
     arquivo = File.join(pasta_de_download, arquivo)
 
     if File.exists? arquivo
+
+      linhas = IO.foreach(arquivo, encoding: "WINDOWS-1252:UTF-8", undef: :replace).lazy
+
+      next if linhas.first.chomp == 'Não há dados para esta pesquisa !'
+
       sequenciais = Set.new
-      visao = []
-      IO.foreach(arquivo, encoding: "WINDOWS-1252:UTF-8") do |linha|
+      visao       = []
+      linhas.each do |linha|
+
         candidato   = linha.chomp.split(';').map { |coluna| coluna.sub(%r{\A"(.*)"\z}, '\1') }
-        chave_unica = candidato[nome_candidato]
+        nome_completo = candidato[nome_candidato]
 
         # Verifica se não é repetido
-        next if sequenciais.include?(chave_unica)
+        next if sequenciais.include?(nome_completo)
 
         # Verifica se foi eleito
         next unless candidato[desc_sit_cand_tot].match(%r{\AELEITO|M[ÉE]DIA\z})
@@ -74,12 +80,12 @@ anos.each do |ano|
         # Verifica se não é um plebiscito
         next unless candidato[descricao_eleicao].match(%r{\A(ELEI[ÇC][ÕO]ES|ELEI[ÇC][ÕO]ES GERAIS|ELEI[ÇC][ÃA]O MUNICIPAL) #{ano}\z})
 
-        sequenciais << chave_unica
+        sequenciais << nome_completo
 
         cargo     = candidato[descricao_cargo]
         numero    = candidato[numero_partido]
         sigla     = candidato[sigla_partido]
-        nome      = candidato[nome_urna_candidato]
+        nome      = if candidato[nome_urna_candidato] == '#NE#' then nome_completo else candidato[nome_urna_candidato] end
         municipio = if cargo.match(%r{\APREFEITO|VEREADOR\z}) then candidato[nome_municipio] else "" end
 
         visao << [ ano, uf, municipio, cargo, numero, sigla, nome ]
