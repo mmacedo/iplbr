@@ -1,0 +1,5565 @@
+RO;Alta Floresta D'Oeste;24354
+RO;Alto Alegre dos Parecis;11875
+RO;Alto Paraíso;17569
+RO;Alvorada D'Oeste;17127
+RO;Ariquemes;85541
+RO;Buritis;34693
+RO;Cabixi;6695
+RO;Cacaulândia;5736
+RO;Cacoal;78675
+RO;Campo Novo de Rondônia;12915
+RO;Candeias do Jamari;17547
+RO;Castanheiras;3685
+RO;Cerejeiras;16622
+RO;Chupinguaia;7843
+RO;Colorado do Oeste;17822
+RO;Corumbiara;9680
+RO;Costa Marques;14452
+RO;Cujubim;14889
+RO;Espigão D'Oeste;28892
+RO;Governador Jorge Teixeira;11593
+RO;Guajará-Mirim;40762
+RO;Itapuã do Oeste;8235
+RO;Jaru;53943
+RO;Ji-Paraná;111010
+RO;Machadinho D'Oeste;33159
+RO;Ministro Andreazza;10572
+RO;Mirante da Serra;12363
+RO;Monte Negro;12708
+RO;Nova Brasilândia D'Oeste;17698
+RO;Nova Mamoré;22337
+RO;Nova União;7944
+RO;Novo Horizonte do Oeste;9720
+RO;Ouro Preto do Oeste;36725
+RO;Parecis;4802
+RO;Pimenta Bueno;33984
+RO;Pimenteiras do Oeste;2415
+RO;Porto Velho;382829
+RO;Presidente Médici;22519
+RO;Primavera de Rondônia;3765
+RO;Rio Crespo;3290
+RO;Rolim de Moura;50499
+RO;Santa Luzia D'Oeste;9348
+RO;São Felipe D'Oeste;6412
+RO;São Francisco do Guaporé;16491
+RO;São Miguel do Guaporé;23201
+RO;Seringueiras;12117
+RO;Teixeirópolis;5010
+RO;Theobroma;10325
+RO;Urupá;13661
+RO;Vale do Anari;9100
+RO;Vale do Paraíso;8913
+RO;Vilhena;69866
+AC;Acrelândia;12241
+AC;Assis Brasil;5662
+AC;Brasiléia;20238
+AC;Bujari;6772
+AC;Capixaba;9287
+AC;Cruzeiro do Sul;77004
+AC;Epitaciolândia;14224
+AC;Feijó;32261
+AC;Jordão;6520
+AC;Mâncio Lima;14774
+AC;Manoel Urbano;7505
+AC;Marechal Thaumaturgo;14275
+AC;Plácido de Castro;18235
+AC;Porto Acre;14682
+AC;Porto Walter;8855
+AC;Rio Branco;305954
+AC;Rodrigues Alves;13460
+AC;Santa Rosa do Purus;4358
+AC;Sena Madureira;36166
+AC;Senador Guiomard;19697
+AC;Tarauacá;33883
+AC;Xapuri;15079
+AM;Alvarães;13566
+AM;Amaturá;8828
+AM;Anamã;8673
+AM;Anori;14688
+AM;Apuí;18597
+AM;Atalaia do Norte;14715
+AM;Autazes;31774
+AM;Barcelos;25410
+AM;Barreirinha;28162
+AM;Benjamin Constant;31195
+AM;Beruri;14705
+AM;Boa Vista do Ramos;13994
+AM;Boca do Acre;31221
+AM;Borba;32496
+AM;Caapiranga;11170
+AM;Canutama;11948
+AM;Carauari;26187
+AM;Careiro;32638
+AM;Careiro da Várzea;24704
+AM;Coari;66991
+AM;Codajás;16291
+AM;Eirunepé;30901
+AM;Envira;17614
+AM;Fonte Boa;18803
+AM;Guajará;15031
+AM;Humaitá;40735
+AM;Ipixuna;18202
+AM;Iranduba;33884
+AM;Itacoatiara;89440
+AM;Itamarati;8281
+AM;Itapiranga;9733
+AM;Japurá;4238
+AM;Juruá;9275
+AM;Jutaí;16791
+AM;Lábrea;39393
+AM;Manacapuru;86472
+AM;Manaquiri;20836
+AM;Manaus;1738641
+AM;Manicoré;46773
+AM;Maraã;18135
+AM;Maués;49666
+AM;Nhamundá;18474
+AM;Nova Olinda do Norte;31012
+AM;Novo Airão;15915
+AM;Novo Aripuanã;18952
+AM;Parintins;107250
+AM;Pauini;19111
+AM;Presidente Figueiredo;26282
+AM;Rio Preto da Eva;26847
+AM;Santa Isabel do Rio Negro;18506
+AM;Santo Antônio do Içá;30351
+AM;São Gabriel da Cachoeira;41885
+AM;São Paulo de Olivença;32958
+AM;São Sebastião do Uatumã;9268
+AM;Silves;8543
+AM;Tabatinga;47948
+AM;Tapauá;19884
+AM;Tefé;64671
+AM;Tonantins;20286
+AM;Uarini;10108
+AM;Urucará;15780
+AM;Urucurituba;18541
+RR;Alto Alegre;14205
+RR;Amajari;8249
+RR;Boa Vista;266901
+RR;Bonfim;10726
+RR;Cantá;11942
+RR;Caracaraí;19235
+RR;Caroebe;7569
+RR;Iracema;6250
+RR;Mucajaí;13188
+RR;Normandia;7527
+RR;Pacaraima;9220
+RR;Rorainópolis;26546
+RR;São João da Baliza;6028
+RR;São Luiz;5979
+RR;Uiramutã;7934
+PA;Abaetetuba;139819
+PA;Abel Figueiredo;6967
+PA;Acará;48501
+PA;Afuá;32633
+PA;Água Azul do Norte;31216
+PA;Alenquer;57067
+PA;Almeirim;31192
+PA;Altamira;98750
+PA;Anajás;27386
+PA;Ananindeua;505512
+PA;Anapu;20421
+PA;Augusto Corrêa;39317
+PA;Aurora do Pará;22315
+PA;Aveiro;20266
+PA;Bagre;20386
+PA;Baião;28299
+PA;Bannach;3947
+PA;Barcarena;92567
+PA;Belém;1437600
+PA;Belterra;12671
+PA;Benevides;46611
+PA;Bom Jesus do Tocantins;13593
+PA;Bonito;12013
+PA;Bragança;107060
+PA;Brasil Novo;19754
+PA;Brejo Grande do Araguaia;7688
+PA;Breu Branco;52200
+PA;Breves;101094
+PA;Bujaru;23654
+PA;Cachoeira do Arari;20411
+PA;Cachoeira do Piriá;18777
+PA;Cametá;117099
+PA;Canaã dos Carajás;27675
+PA;Capanema;64429
+PA;Capitão Poço;52797
+PA;Castanhal;161497
+PA;Chaves;20506
+PA;Colares;11433
+PA;Conceição do Araguaia;47237
+PA;Concórdia do Pará;22251
+PA;Cumaru do Norte;11890
+PA;Curionópolis;17944
+PA;Curralinho;27543
+PA;Curuá;12984
+PA;Curuçá;36748
+PA;Dom Eliseu;39088
+PA;Eldorado dos Carajás;29251
+PA;Faro;19585
+PA;Floresta do Araguaia;15629
+PA;Garrafão do Norte;25538
+PA;Goianésia do Pará;29164
+PA;Gurupá;25511
+PA;Igarapé-Açu;35241
+PA;Igarapé-Miri;57003
+PA;Inhangapi;10377
+PA;Ipixuna do Pará;44396
+PA;Irituia;30552
+PA;Itaituba;127848
+PA;Itupiranga;41541
+PA;Jacareacanga;41487
+PA;Jacundá;55900
+PA;Juruti;35530
+PA;Limoeiro do Ajuru;24967
+PA;Mãe do Rio;29087
+PA;Magalhães Barata;7895
+PA;Marabá;203049
+PA;Maracanã;29417
+PA;Marapanim;28011
+PA;Marituba;101158
+PA;Medicilândia;23682
+PA;Melgaço;17657
+PA;Mocajuba;24695
+PA;Moju;68600
+PA;Monte Alegre;63941
+PA;Muaná;30568
+PA;Nova Esperança do Piriá;24062
+PA;Nova Ipixuna;15097
+PA;Nova Timboteua;12677
+PA;Novo Progresso;21504
+PA;Novo Repartimento;55762
+PA;Óbidos;48429
+PA;Oeiras do Pará;26796
+PA;Oriximiná;58683
+PA;Ourém;15841
+PA;Ourilândia do Norte;21327
+PA;Pacajá;41953
+PA;Palestina do Pará;7301
+PA;Paragominas;97350
+PA;Parauapebas;152777
+PA;Pau D'Arco;6522
+PA;Peixe-Boi;7916
+PA;Piçarra;13140
+PA;Placas;19592
+PA;Ponta de Pedras;26445
+PA;Portel;48945
+PA;Porto de Moz;28091
+PA;Prainha;26570
+PA;Primavera;10993
+PA;Quatipuru;13459
+PA;Redenção;67064
+PA;Rio Maria;17437
+PA;Rondon do Pará;47772
+PA;Rurópolis;36068
+PA;Salinópolis;39184
+PA;Salvaterra;18124
+PA;Santa Bárbara do Pará;14740
+PA;Santa Cruz do Arari;6280
+PA;Santa Isabel do Pará;55570
+PA;Santa Luzia do Pará;18417
+PA;Santa Maria das Barreiras;17778
+PA;Santa Maria do Pará;23202
+PA;Santana do Araguaia;55033
+PA;Santarém;276665
+PA;Santarém Novo;6347
+PA;Santo Antônio do Tauá;26855
+PA;São Caetano de Odivelas;16862
+PA;São Domingos do Araguaia;22063
+PA;São Domingos do Capim;27923
+PA;São Félix do Xingu;67208
+PA;São Francisco do Pará;11743
+PA;São Geraldo do Araguaia;25027
+PA;São João da Ponta;5038
+PA;São João de Pirabas;19900
+PA;São João do Araguaia;11923
+PA;São Miguel do Guamá;44818
+PA;São Sebastião da Boa Vista;21874
+PA;Sapucaia;5609
+PA;Senador José Porfírio;14434
+PA;Soure;22459
+PA;Tailândia;72720
+PA;Terra Alta;10580
+PA;Terra Santa;16004
+PA;Tomé-Açu;48607
+PA;Tracuateua;27825
+PA;Trairão;17134
+PA;Tucumã;27691
+PA;Tucuruí;96010
+PA;Ulianópolis;36020
+PA;Uruará;59
+PA;Vigia;46205
+PA;Viseu;55512
+PA;Vitória do Xingu;9664
+PA;Xinguara;40529
+AP;Amapá;7802
+AP;Calçoene;9291
+AP;Cutias;4652
+AP;Ferreira Gomes;5475
+AP;Itaubal;3650
+AP;Laranjal do Jari;40357
+AP;Macapá;366484
+AP;Mazagão;14655
+AP;Oiapoque;20962
+AP;Pedra Branca do Amapari;8182
+AP;Porto Grande;14951
+AP;Pracuúba;3658
+AP;Santana;97220
+AP;Serra do Navio;3982
+AP;Tartarugalzinho;13769
+AP;Vitória do Jari;11519
+TO;Abreulândia;2321
+TO;Aguiarnópolis;4216
+TO;Aliança do Tocantins;5822
+TO;Almas;7605
+TO;Alvorada;8161
+TO;Ananás;9514
+TO;Angico;3300
+TO;Aparecida do Rio Negro;4200
+TO;Aragominas;5555
+TO;Araguacema;5591
+TO;Araguaçu;9225
+TO;Araguaína;119637
+TO;Araguanã;5248
+TO;Araguatins;26771
+TO;Arapoema;7029
+TO;Arraias;10913
+TO;Augustinópolis;15469
+TO;Aurora do Tocantins;3523
+TO;Axixá do Tocantins;9203
+TO;Babaçulândia;10698
+TO;Bandeirantes do Tocantins;2807
+TO;Barra do Ouro;3691
+TO;Barrolândia;5322
+TO;Bernardo Sayão;4653
+TO;Bom Jesus do Tocantins;2839
+TO;Brasilândia do Tocantins;2208
+TO;Brejinho de Nazaré;5506
+TO;Buriti do Tocantins;8454
+TO;Cachoeirinha;2255
+TO;Campos Lindos;8079
+TO;Cariri do Tocantins;3738
+TO;Carmolândia;2420
+TO;Carrasco Bonito;3428
+TO;Caseara;4927
+TO;Centenário;2485
+TO;Chapada da Natividade;3840
+TO;Chapada de Areia;1273
+TO;Colinas do Tocantins;30666
+TO;Colméia;8961
+TO;Combinado;5070
+TO;Conceição do Tocantins;4541
+TO;Couto de Magalhães;5102
+TO;Cristalândia;6628
+TO;Crixás do Tocantins;1289
+TO;Darcinópolis;5388
+TO;Dianópolis;19524
+TO;Divinópolis do Tocantins;6623
+TO;Dois Irmãos do Tocantins;7254
+TO;Dueré;4618
+TO;Esperantina;8445
+TO;Fátima;4123
+TO;Figueirópolis;4883
+TO;Filadélfia;7978
+TO;Formoso do Araguaia;18719
+TO;Fortaleza do Tabocão;2149
+TO;Goianorte;5426
+TO;Goiatins;12068
+TO;Guaraí;22530
+TO;Gurupi;74357
+TO;Ipueiras;1813
+TO;Itacajá;6534
+TO;Itaguatins;6226
+TO;Itapiratins;3543
+TO;Itaporã do Tocantins;3135
+TO;Jaú do Tocantins;3983
+TO;Juarina;2185
+TO;Lagoa da Confusão;8711
+TO;Lagoa do Tocantins;3352
+TO;Lajeado;2204
+TO;Lavandeira;1683
+TO;Lizarda;3729
+TO;Luzinópolis;2959
+TO;Marianópolis do Tocantins;4743
+TO;Mateiros;1802
+TO;Maurilândia do Tocantins;3322
+TO;Miracema do Tocantins;19740
+TO;Miranorte;12231
+TO;Monte do Carmo;6723
+TO;Monte Santo do Tocantins;1914
+TO;Muricilândia;2958
+TO;Natividade;9396
+TO;Nazaré;4596
+TO;Nova Olinda;10974
+TO;Nova Rosalândia;3956
+TO;Novo Acordo;3950
+TO;Novo Alegre;1802
+TO;Novo Jardim;2525
+TO;Oliveira de Fátima;1129
+TO;Palmas;188645
+TO;Palmeirante;4959
+TO;Palmeiras do Tocantins;4673
+TO;Palmeirópolis;8492
+TO;Paraíso do Tocantins;42015
+TO;Paranã;10824
+TO;Pau D'Arco;4964
+TO;Pedro Afonso;10758
+TO;Peixe;9018
+TO;Pequizeiro;4971
+TO;Pindorama do Tocantins;4500
+TO;Piraquê;3127
+TO;Pium;6701
+TO;Ponte Alta do Bom Jesus;4664
+TO;Ponte Alta do Tocantins;6818
+TO;Porto Alegre do Tocantins;2968
+TO;Porto Nacional;46722
+TO;Praia Norte;7310
+TO;Presidente Kennedy;3784
+TO;Pugmil;2252
+TO;Recursolândia;3839
+TO;Riachinho;3808
+TO;Rio da Conceição;1530
+TO;Rio dos Bois;2136
+TO;Rio Sono;6366
+TO;Sampaio;3886
+TO;Sandolândia;3562
+TO;Santa Fé do Araguaia;5795
+TO;Santa Maria do Tocantins;2807
+TO;Santa Rita do Tocantins;2377
+TO;Santa Rosa do Tocantins;4565
+TO;Santa Tereza do Tocantins;2390
+TO;Santa Terezinha do Tocantins;2343
+TO;São Bento do Tocantins;4666
+TO;São Félix do Tocantins;1468
+TO;São Miguel do Tocantins;10737
+TO;São Salvador do Tocantins;3136
+TO;São Sebastião do Tocantins;4441
+TO;São Valério da Natividade;5017
+TO;Silvanópolis;5299
+TO;Sítio Novo do Tocantins;9568
+TO;Sucupira;1741
+TO;Taguatinga;14655
+TO;Taipas do Tocantins;1999
+TO;Talismã;2663
+TO;Tocantínia;6971
+TO;Tocantinópolis;21826
+TO;Tupirama;1474
+TO;Tupiratins;2143
+TO;Wanderlândia;9493
+TO;Xambioá;11099
+MA;Açailândia;101130
+MA;Afonso Cunha;5948
+MA;Água Doce do Maranhão;12460
+MA;Alcântara;22020
+MA;Aldeias Altas;22667
+MA;Altamira do Maranhão;7771
+MA;Alto Alegre do Maranhão;22914
+MA;Alto Alegre do Pindaré;33211
+MA;Alto Parnaíba;10640
+MA;Amapá do Maranhão;6451
+MA;Amarante do Maranhão;37388
+MA;Anajatuba;25063
+MA;Anapurus;13257
+MA;Apicum-Açu;13890
+MA;Araguanã;10325
+MA;Araioses;39166
+MA;Arame;27750
+MA;Arari;28787
+MA;Axixá;15203
+MA;Bacabal;98489
+MA;Bacabeira;15574
+MA;Bacuri;16585
+MA;Bacurituba;5687
+MA;Balsas;83617
+MA;Barão de Grajaú;17231
+MA;Barra do Corda;81329
+MA;Barreirinhas;50354
+MA;Bela Vista do Maranhão;8855
+MA;Belágua;5953
+MA;Benedito Leite;5567
+MA;Bequimão;21508
+MA;Bernardo do Mearim;6249
+MA;Boa Vista do Gurupi;7895
+MA;Bom Jardim;39224
+MA;Bom Jesus das Selvas;25473
+MA;Bom Lugar;13384
+MA;Brejo;32453
+MA;Brejo de Areia;5505
+MA;Buriti;26202
+MA;Buriti Bravo;23074
+MA;Buriticupu;64685
+MA;Buritirana;15051
+MA;Cachoeira Grande;9286
+MA;Cajapió;10337
+MA;Cajari;13170
+MA;Campestre do Maranhão;12716
+MA;Cândido Mendes;19684
+MA;Cantanhede;19564
+MA;Capinzal do Norte;10688
+MA;Carolina;25257
+MA;Carutapera;21121
+MA;Caxias;148072
+MA;Cedral;10152
+MA;Central do Maranhão;9246
+MA;Centro do Guilherme;7432
+MA;Centro Novo do Maranhão;15668
+MA;Chapadinha;70537
+MA;Cidelândia;12866
+MA;Codó;113937
+MA;Coelho Neto;45624
+MA;Colinas;36787
+MA;Conceição do Lago-Açu;14909
+MA;Coroatá;63081
+MA;Cururupu;35108
+MA;Davinópolis;12091
+MA;Dom Pedro;22086
+MA;Duque Bacelar;10827
+MA;Esperantinópolis;18815
+MA;Estreito;27756
+MA;Feira Nova do Maranhão;7899
+MA;Fernando Falcão;8765
+MA;Formosa da Serra Negra;17792
+MA;Fortaleza dos Nogueiras;11972
+MA;Fortuna;14922
+MA;Godofredo Viana;11207
+MA;Gonçalves Dias;16911
+MA;Governador Archer;10330
+MA;Governador Edison Lobão;14921
+MA;Governador Eugênio Barros;16503
+MA;Governador Luiz Rocha;7144
+MA;Governador Newton Bello;11642
+MA;Governador Nunes Freire;24520
+MA;Graça Aranha;6470
+MA;Grajaú;56633
+MA;Guimarães;12740
+MA;Humberto de Campos;25403
+MA;Icatu;25557
+MA;Igarapé do Meio;12291
+MA;Igarapé Grande;11121
+MA;Imperatriz;236691
+MA;Itaipava do Grajaú;13964
+MA;Itapecuru Mirim;56810
+MA;Itinga do Maranhão;26125
+MA;Jatobá;8909
+MA;Jenipapo dos Vieiras;15438
+MA;João Lisboa;20395
+MA;Joselândia;16188
+MA;Junco do Maranhão;3950
+MA;Lago da Pedra;44272
+MA;Lago do Junco;9888
+MA;Lago dos Rodrigues;7940
+MA;Lago Verde;15103
+MA;Lagoa do Mato;10639
+MA;Lagoa Grande do Maranhão;9363
+MA;Lajeado Novo;6937
+MA;Lima Campos;11794
+MA;Loreto;10701
+MA;Luís Domingues;6997
+MA;Magalhães de Almeida;14808
+MA;Maracaçumé;18414
+MA;Marajá do Sena;6954
+MA;Maranhãozinho;12684
+MA;Mata Roma;14491
+MA;Matinha;21204
+MA;Matões;29386
+MA;Matões do Norte;11295
+MA;Milagres do Maranhão;7854
+MA;Mirador;19991
+MA;Miranda do Norte;18494
+MA;Mirinzal;14311
+MA;Monção;28602
+MA;Montes Altos;8914
+MA;Morros;17916
+MA;Nina Rodrigues;10527
+MA;Nova Colinas;5094
+MA;Nova Iorque;5087
+MA;Nova Olinda do Maranhão;17835
+MA;Olho d'Água das Cunhãs;17923
+MA;Olinda Nova do Maranhão;12684
+MA;Paço do Lumiar;103958
+MA;Palmeirândia;18772
+MA;Paraibano;20255
+MA;Parnarama;36300
+MA;Passagem Franca;17898
+MA;Pastos Bons;18306
+MA;Paulino Neves;13355
+MA;Paulo Ramos;16236
+MA;Pedreiras;38934
+MA;Pedro do Rosário;22856
+MA;Penalva;34907
+MA;Peri Mirim;12492
+MA;Peritoró;19817
+MA;Pindaré-Mirim;32236
+MA;Pinheiro;77182
+MA;Pio XII;22220
+MA;Pirapemas;15500
+MA;Poção de Pedras;15533
+MA;Porto Franco;19503
+MA;Porto Rico do Maranhão;7179
+MA;Presidente Dutra;41303
+MA;Presidente Juscelino;12382
+MA;Presidente Médici;6363
+MA;Presidente Sarney;16325
+MA;Presidente Vargas;10191
+MA;Primeira Cruz;12493
+MA;Raposa;25837
+MA;Riachão;21672
+MA;Ribamar Fiquene;7477
+MA;Rosário;39627
+MA;Sambaíba;6038
+MA;Santa Filomena do Maranhão;5804
+MA;Santa Helena;35472
+MA;Santa Inês;85701
+MA;Santa Luzia;71455
+MA;Santa Luzia do Paruá;20190
+MA;Santa Quitéria do Maranhão;29551
+MA;Santa Rita;32872
+MA;Santana do Maranhão;11170
+MA;Santo Amaro do Maranhão;11693
+MA;Santo Antônio dos Lopes;14663
+MA;São Benedito do Rio Preto;17818
+MA;São Bento;39312
+MA;São Bernardo;26615
+MA;São Domingos do Azeitão;7252
+MA;São Domingos do Maranhão;33506
+MA;São Félix de Balsas;4442
+MA;São Francisco do Brejão;8863
+MA;São Francisco do Maranhão;14801
+MA;São João do Carú;12511
+MA;São João do Paraíso;11729
+MA;São João do Soter;17326
+MA;São João dos Patos;24357
+MA;São João Batista;18570
+MA;São José de Ribamar;139473
+MA;São José dos Basílios;7489
+MA;São Luís;997098
+MA;São Luís Gonzaga do Maranhão;19877
+MA;São Mateus do Maranhão;39622
+MA;São Pedro da Água Branca;11481
+MA;São Pedro dos Crentes;4144
+MA;São Raimundo das Mangabeiras;16594
+MA;São Raimundo do Doca Bezerra;4372
+MA;São Roberto;5217
+MA;São Vicente Ferrer;20463
+MA;Satubinha;8715
+MA;Senador Alexandre Costa;9414
+MA;Senador La Rocque;19359
+MA;Serrano do Maranhão;11085
+MA;Sítio Novo;16086
+MA;Sucupira do Norte;10535
+MA;Sucupira do Riachão;4869
+MA;Tasso Fragoso;6890
+MA;Timbiras;26909
+MA;Timon;150635
+MA;Trizidela do Vale;19104
+MA;Tufilândia;5687
+MA;Tuntum;39380
+MA;Turiaçu;33649
+MA;Turilândia;21102
+MA;Tutóia;48424
+MA;Urbano Santos;22938
+MA;Vargem Grande;45630
+MA;Viana;49348
+MA;Vila Nova dos Martírios;9185
+MA;Vitória do Mearim;32018
+MA;Vitorino Freire;31144
+MA;Zé Doca;46265
+PI;Acauã;7354
+PI;Agricolândia;5094
+PI;Água Branca;16518
+PI;Alagoinha do Piauí;7736
+PI;Alegrete do Piauí;4595
+PI;Alto Longá;14147
+PI;Altos;39735
+PI;Alvorada do Gurguéia;5209
+PI;Amarante;17892
+PI;Angical do Piauí;6793
+PI;Anísio de Abreu;8552
+PI;Antônio Almeida;3267
+PI;Aroazes;6019
+PI;Aroeiras do Itaim;2759
+PI;Arraial;5165
+PI;Assunção do Piauí;8370
+PI;Avelino Lopes;12039
+PI;Baixa Grande do Ribeiro;10804
+PI;Barra D'Alcântara;3886
+PI;Barras;44913
+PI;Barreiras do Piauí;3485
+PI;Barro Duro;6853
+PI;Batalha;26681
+PI;Bela Vista do Piauí;3762
+PI;Belém do Piauí;2912
+PI;Beneditinos;9837
+PI;Bertolínia;5484
+PI;Betânia do Piauí;6442
+PI;Boa Hora;6369
+PI;Bocaina;4146
+PI;Bom Jesus;20511
+PI;Bom Princípio do Piauí;5506
+PI;Bonfim do Piauí;5376
+PI;Boqueirão do Piauí;6599
+PI;Brasileira;7970
+PI;Brejo do Piauí;4025
+PI;Buriti dos Lopes;19796
+PI;Buriti dos Montes;8117
+PI;Cabeceiras do Piauí;9826
+PI;Cajazeiras do Piauí;3323
+PI;Cajueiro da Praia;7286
+PI;Caldeirão Grande do Piauí;5809
+PI;Campinas do Piauí;5818
+PI;Campo Alegre do Fidalgo;4647
+PI;Campo Grande do Piauí;5898
+PI;Campo Largo do Piauí;7035
+PI;Campo Maior;46068
+PI;Canavieira;4093
+PI;Canto do Buriti;20761
+PI;Capitão de Campos;11246
+PI;Capitão Gervásio Oliveira;4029
+PI;Caracol;10838
+PI;Caraúbas do Piauí;5595
+PI;Caridade do Piauí;4778
+PI;Castelo do Piauí;19142
+PI;Caxingó;5270
+PI;Cocal;27220
+PI;Cocal de Telha;4689
+PI;Cocal dos Alves;5525
+PI;Coivaras;3955
+PI;Colônia do Gurguéia;5947
+PI;Colônia do Piauí;7940
+PI;Conceição do Canindé;5077
+PI;Coronel José Dias;4484
+PI;Corrente;25406
+PI;Cristalândia do Piauí;8177
+PI;Cristino Castro;9836
+PI;Curimatá;10765
+PI;Currais;4710
+PI;Curral Novo do Piauí;5119
+PI;Curralinhos;4242
+PI;Demerval Lobão;13232
+PI;Dirceu Arcoverde;6996
+PI;Dom Expedito Lopes;6793
+PI;Dom Inocêncio;10795
+PI;Domingos Mourão;4447
+PI;Elesbão Veloso;14490
+PI;Eliseu Martins;4923
+PI;Esperantina;37520
+PI;Fartura do Piauí;5402
+PI;Flores do Piauí;4615
+PI;Floresta do Piauí;2643
+PI;Floriano;57968
+PI;Francinópolis;5458
+PI;Francisco Ayres;5147
+PI;Francisco Macedo;2315
+PI;Francisco Santos;8315
+PI;Fronteiras;11502
+PI;Geminiano;5465
+PI;Gilbués;10681
+PI;Guadalupe;9809
+PI;Guaribas;4491
+PI;Hugo Napoleão;3784
+PI;Ilha Grande;8734
+PI;Inhuma;15490
+PI;Ipiranga do Piauí;9739
+PI;Isaías Coelho;8043
+PI;Itainópolis;11498
+PI;Itaueira;10904
+PI;Jacobina do Piauí;5831
+PI;Jaicós;17786
+PI;Jardim do Mulato;4318
+PI;Jatobá do Piauí;4683
+PI;Jerumenha;4490
+PI;João Costa;3315
+PI;Joaquim Pires;14276
+PI;Joca Marques;5614
+PI;José de Freitas;36485
+PI;Juazeiro do Piauí;4941
+PI;Júlio Borges;5444
+PI;Jurema;4559
+PI;Lagoa de São Francisco;6796
+PI;Lagoa do Barro do Piauí;4692
+PI;Lagoa do Piauí;3817
+PI;Lagoa do Sítio;5292
+PI;Lagoa Alegre;8210
+PI;Lagoinha do Piauí;2676
+PI;Landri Sales;5753
+PI;Luís Correia;27148
+PI;Luzilândia;25099
+PI;Madeiro;8012
+PI;Manoel Emídio;5543
+PI;Marcolândia;7477
+PI;Marcos Parente;4297
+PI;Massapê do Piauí;6672
+PI;Matias Olímpio;10863
+PI;Miguel Alves;33410
+PI;Miguel Leão;1212
+PI;Milton Brandão;7246
+PI;Monsenhor Gil;10639
+PI;Monsenhor Hipólito;7425
+PI;Monte Alegre do Piauí;10663
+PI;Morro do Chapéu do Piauí;6611
+PI;Morro Cabeça no Tempo;4378
+PI;Murici dos Portelas;8024
+PI;Nazaré do Piauí;7070
+PI;Nazária;7895
+PI;Nossa Senhora de Nazaré;4192
+PI;Nossa Senhora dos Remédios;8378
+PI;Nova Santa Rita;4199
+PI;Novo Oriente do Piauí;6321
+PI;Novo Santo Antônio;3547
+PI;Oeiras;36293
+PI;Olho D'Água do Piauí;2755
+PI;Padre Marcos;7582
+PI;Paes Landim;4562
+PI;Pajeú do Piauí;3802
+PI;Palmeira do Piauí;5116
+PI;Palmeirais;14306
+PI;Paquetá;4686
+PI;Parnaguá;10731
+PI;Parnaíba;146059
+PI;Passagem Franca do Piauí;4246
+PI;Patos do Piauí;6417
+PI;Pau D'Arco do Piauí;3903
+PI;Paulistana;20390
+PI;Pavussu;4465
+PI;Pedro II;37850
+PI;Pedro Laurentino;2418
+PI;Picos;73021
+PI;Pimenteiras;12125
+PI;Pio IX;17714
+PI;Piracuruca;26499
+PI;Piripiri;62107
+PI;Porto;11941
+PI;Porto Alegre do Piauí;2567
+PI;Prata do Piauí;3260
+PI;Queimada Nova;9116
+PI;Redenção do Gurguéia;8567
+PI;Regeneração;18190
+PI;Riacho Frio;5093
+PI;Ribeira do Piauí;4252
+PI;Ribeiro Gonçalves;6869
+PI;Rio Grande do Piauí;6650
+PI;Santa Cruz do Piauí;5969
+PI;Santa Cruz dos Milagres;3457
+PI;Santa Filomena;6180
+PI;Santa Luz;5495
+PI;Santa Rosa do Piauí;5304
+PI;Santana do Piauí;5015
+PI;Santo Antônio de Lisboa;5965
+PI;Santo Antônio dos Milagres;2032
+PI;Santo Inácio do Piauí;3756
+PI;São Braz do Piauí;4455
+PI;São Félix do Piauí;3201
+PI;São Francisco de Assis do Piauí;5224
+PI;São Francisco do Piauí;6461
+PI;São Gonçalo do Gurguéia;2544
+PI;São Gonçalo do Piauí;4485
+PI;São João da Canabrava;4511
+PI;São João da Fronteira;5174
+PI;São João da Serra;6877
+PI;São João da Varjota;4965
+PI;São João do Arraial;7440
+PI;São João do Piauí;19264
+PI;São José do Divino;5217
+PI;São José do Peixe;3835
+PI;São José do Piauí;7028
+PI;São Julião;6111
+PI;São Lourenço do Piauí;5115
+PI;São Luis do Piauí;2687
+PI;São Miguel da Baixa Grande;2153
+PI;São Miguel do Fidalgo;3182
+PI;São Miguel do Tapuio;19831
+PI;São Pedro do Piauí;13544
+PI;São Raimundo Nonato;32215
+PI;Sebastião Barros;4270
+PI;Sebastião Leal;4231
+PI;Sigefredo Pacheco;9846
+PI;Simões;14167
+PI;Simplício Mendes;11886
+PI;Socorro do Piauí;4733
+PI;Sussuapara;5759
+PI;Tamboril do Piauí;3037
+PI;Tanque do Piauí;2714
+PI;Teresina;802537
+PI;União;43135
+PI;Uruçuí;19811
+PI;Valença do Piauí;20303
+PI;Várzea Branca;5338
+PI;Várzea Grande;4560
+PI;Vera Mendes;3212
+PI;Vila Nova do Piauí;3136
+PI;Wall Ferraz;4636
+CE;Abaiara;11077
+CE;Acarape;15627
+CE;Acaraú;54753
+CE;Acopiara;50784
+CE;Aiuaba;16423
+CE;Alcântaras;10816
+CE;Altaneira;6834
+CE;Alto Santo;20829
+CE;Amontada;40198
+CE;Antonina do Norte;7059
+CE;Apuiarés;14414
+CE;Aquiraz;71400
+CE;Aracati;69616
+CE;Aracoiaba;25351
+CE;Ararendá;11186
+CE;Araripe;22373
+CE;Aratuba;12478
+CE;Arneiroz;7486
+CE;Assaré;22550
+CE;Aurora;25113
+CE;Baixio;5991
+CE;Banabuiú;18388
+CE;Barbalha;53011
+CE;Barreira;19469
+CE;Barro;21556
+CE;Barroquinha;15558
+CE;Baturité;33271
+CE;Beberibe;48760
+CE;Bela Cruz;30900
+CE;Boa Viagem;56236
+CE;Brejo Santo;41266
+CE;Camocim;61278
+CE;Campos Sales;26417
+CE;Canindé;77552
+CE;Capistrano;17033
+CE;Caridade;19233
+CE;Cariré;19132
+CE;Caririaçu;27380
+CE;Cariús;19338
+CE;Carnaubal;16755
+CE;Cascavel;67956
+CE;Catarina;18010
+CE;Catunda;11198
+CE;Caucaia;334364
+CE;Cedro;25591
+CE;Chaval;12644
+CE;Choró;13439
+CE;Chorozinho;18759
+CE;Coreaú;22215
+CE;Crateús;75249
+CE;Crato;116759
+CE;Croatá;18246
+CE;Cruz;23540
+CE;Deputado Irapuan Pinheiro;9615
+CE;Ererê;7332
+CE;Eusébio;41307
+CE;Farias Brito;19605
+CE;Forquilha;21599
+CE;Fortaleza;2505552
+CE;Fortim;15095
+CE;Frecheirinha;13537
+CE;General Sampaio;6654
+CE;Graça;15949
+CE;Granja;53952
+CE;Granjeiro;4999
+CE;Groaíras;9971
+CE;Guaiúba;23853
+CE;Guaraciaba do Norte;38406
+CE;Guaramiranga;4070
+CE;Hidrolândia;19252
+CE;Horizonte;54362
+CE;Ibaretama;13206
+CE;Ibiapina;24125
+CE;Ibicuitinga;11800
+CE;Icapuí;19385
+CE;Icó;65612
+CE;Iguatu;97203
+CE;Independência;26317
+CE;Ipaporanga;11768
+CE;Ipaumirim;11999
+CE;Ipu;41052
+CE;Ipueiras;39288
+CE;Iracema;15114
+CE;Irauçuba;23309
+CE;Itaiçaba;7955
+CE;Itaitinga;32678
+CE;Itapagé;47354
+CE;Itapipoca;114441
+CE;Itapiúna;18610
+CE;Itarema;36536
+CE;Itatira;18875
+CE;Jaguaretama;18411
+CE;Jaguaribara;10399
+CE;Jaguaribe;36493
+CE;Jaguaruana;32352
+CE;Jardim;26578
+CE;Jati;7518
+CE;Jijoca de Jericoacoara;16880
+CE;Juazeiro do Norte;249829
+CE;Jucás;23738
+CE;Lavras da Mangabeira;30524
+CE;Limoeiro do Norte;56098
+CE;Madalena;17773
+CE;Maracanaú;201693
+CE;Maranguape;110523
+CE;Marco;24622
+CE;Martinópole;11118
+CE;Massapê;35388
+CE;Mauriti;44211
+CE;Meruoca;12780
+CE;Milagres;28077
+CE;Milhã;14826
+CE;Miraíma;12737
+CE;Missão Velha;35135
+CE;Mombaça;46728
+CE;Monsenhor Tabosa;17178
+CE;Morada Nova;63126
+CE;Moraújo;8538
+CE;Morrinhos;22695
+CE;Mucambo;14537
+CE;Mulungu;11914
+CE;Nova Olinda;13659
+CE;Nova Russas;32016
+CE;Novo Oriente;28703
+CE;Ocara;24636
+CE;Orós;21784
+CE;Pacajus;59689
+CE;Pacatuba;71839
+CE;Pacoti;11519
+CE;Pacujá;6233
+CE;Palhano;9268
+CE;Palmácia;10838
+CE;Paracuru;32557
+CE;Paraipaba;29892
+CE;Parambu;32231
+CE;Paramoti;12130
+CE;Pedra Branca;42152
+CE;Penaforte;8168
+CE;Pentecoste;35166
+CE;Pereiro;15828
+CE;Pindoretama;18322
+CE;Piquet Carneiro;15673
+CE;Pires Ferreira;9857
+CE;Poranga;12356
+CE;Porteiras;15058
+CE;Potengi;10144
+CE;Potiretama;6891
+CE;Quiterianópolis;21230
+CE;Quixadá;80447
+CE;Quixelô;16272
+CE;Quixeramobim;73517
+CE;Quixeré;19772
+CE;Redenção;26768
+CE;Reriutaba;19444
+CE;Russas;67960
+CE;Saboeiro;16851
+CE;Salitre;16845
+CE;Santa Quitéria;45080
+CE;Santana do Acaraú;30410
+CE;Santana do Cariri;18369
+CE;São Benedito;45407
+CE;São Gonçalo do Amarante;42962
+CE;São João do Jaguaribe;8500
+CE;São Luís do Curu;12613
+CE;Senador Pompeu;25263
+CE;Senador Sá;6669
+CE;Sobral;182431
+CE;Solonópole;18025
+CE;Tabuleiro do Norte;29576
+CE;Tamboril;26857
+CE;Tarrafas;8900
+CE;Tauá;56639
+CE;Tejuçuoca;16180
+CE;Tianguá;68588
+CE;Trairi;51386
+CE;Tururu;14308
+CE;Ubajara;31247
+CE;Umari;7891
+CE;Umirim;19044
+CE;Uruburetama;20627
+CE;Uruoca;13820
+CE;Varjota;17802
+CE;Várzea Alegre;39810
+CE;Viçosa do Ceará;56673
+RN;Acari;11215
+RN;Açu;53282
+RN;Afonso Bezerra;10594
+RN;Água Nova;2952
+RN;Alexandria;14151
+RN;Almino Afonso;5071
+RN;Alto do Rodrigues;12045
+RN;Angicos;11525
+RN;Antônio Martins;7245
+RN;Apodi;35768
+RN;Areia Branca;25394
+RN;Arês;12732
+RN;Augusto Severo;9203
+RN;Baía Formosa;8811
+RN;Baraúna;24347
+RN;Barcelona;4042
+RN;Bento Fernandes;5199
+RN;Bodó;2592
+RN;Bom Jesus;8725
+RN;Brejinho;11585
+RN;Caiçara do Norte;6652
+RN;Caiçara do Rio do Vento;3185
+RN;Caicó;63006
+RN;Campo Redondo;10947
+RN;Canguaretama;30541
+RN;Caraúbas;20471
+RN;Carnaúba dos Dantas;7083
+RN;Carnaubais;9712
+RN;Ceará-Mirim;67869
+RN;Cerro Corá;11235
+RN;Coronel Ezequiel;5399
+RN;Coronel João Pessoa;4993
+RN;Cruzeta;8029
+RN;Currais Novos;43536
+RN;Doutor Severiano;6616
+RN;Encanto;5365
+RN;Equador;6084
+RN;Espírito Santo;10373
+RN;Extremoz;22751
+RN;Felipe Guerra;5875
+RN;Fernando Pedroza;2994
+RN;Florânia;8487
+RN;Francisco Dantas;3008
+RN;Frutuoso Gomes;4468
+RN;Galinhos;2264
+RN;Goianinha;21321
+RN;Governador Dix-Sept Rosado;12835
+RN;Grossos;9886
+RN;Guamaré;12558
+RN;Ielmo Marinho;12189
+RN;Ipanguaçu;14056
+RN;Ipueira;2115
+RN;Itajá;6629
+RN;Itaú;5999
+RN;Jaçanã;8045
+RN;Jandaíra;6688
+RN;Janduís;5562
+RN;Januário Cicco;8629
+RN;Japi;5693
+RN;Jardim de Angicos;2598
+RN;Jardim de Piranhas;14347
+RN;Jardim do Seridó;12384
+RN;João Câmara;31518
+RN;João Dias;2824
+RN;José da Penha;6177
+RN;Jucurutu;18069
+RN;Jundiá;3663
+RN;Lagoa d'Anta;6164
+RN;Lagoa de Pedras;7282
+RN;Lagoa de Velhos;2789
+RN;Lagoa Nova;13718
+RN;Lagoa Salgada;7449
+RN;Lajes;10865
+RN;Lajes Pintadas;4309
+RN;Lucrécia;3550
+RN;Luís Gomes;10144
+RN;Macaíba;66380
+RN;Macau;28157
+RN;Major Sales;3631
+RN;Marcelino Vieira;8331
+RN;Martins;8386
+RN;Maxaranguape;9371
+RN;Messias Targino;3923
+RN;Montanhas;12834
+RN;Monte das Gameleiras;2449
+RN;Monte Alegre;21448
+RN;Mossoró;244287
+RN;Natal;806203
+RN;Nísia Floresta;24109
+RN;Nova Cruz;36561
+RN;Olho-d'Água do Borges;4578
+RN;Ouro Branco;5166
+RN;Paraná;4039
+RN;Paraú;3974
+RN;Parazinho;4977
+RN;Parelhas;20676
+RN;Parnamirim;184222
+RN;Passa e Fica;10954
+RN;Passagem;2703
+RN;Patu;11671
+RN;Pau dos Ferros;27809
+RN;Pedra Grande;4027
+RN;Pedra Preta;2718
+RN;Pedro Avelino;7559
+RN;Pedro Velho;14118
+RN;Pendências;13034
+RN;Pilões;3535
+RN;Poço Branco;12673
+RN;Portalegre;7082
+RN;Porto do Mangue;5033
+RN;Presidente Juscelino;8703
+RN;Pureza;8415
+RN;Rafael Fernandes;4797
+RN;Rafael Godeiro;3251
+RN;Riacho da Cruz;3165
+RN;Riacho de Santana;4437
+RN;Riachuelo;7171
+RN;Rio do Fogo;10124
+RN;Rodolfo Fernandes;4724
+RN;Ruy Barbosa;3730
+RN;Santa Cruz;35095
+RN;Santa Maria;4915
+RN;Santana do Matos;14544
+RN;Santana do Seridó;2858
+RN;Santo Antônio;22071
+RN;São Bento do Norte;3658
+RN;São Bento do Trairí;3875
+RN;São Fernando;3505
+RN;São Francisco do Oeste;3807
+RN;São Gonçalo do Amarante;80737
+RN;São João do Sabugi;5953
+RN;São José de Mipibu;38404
+RN;São José do Campestre;12079
+RN;São José do Seridó;4066
+RN;São Miguel;23593
+RN;São Miguel do Gostoso;9240
+RN;São Paulo do Potengi;15017
+RN;São Pedro;6590
+RN;São Rafael;8357
+RN;São Tomé;11501
+RN;São Vicente;6023
+RN;Senador Elói de Souza;6201
+RN;Senador Georgino Avelino;3854
+RN;Serra de São Bento;5973
+RN;Serra do Mel;9627
+RN;Serra Negra do Norte;7428
+RN;Serrinha;6885
+RN;Serrinha dos Pintos;4504
+RN;Severiano Melo;5224
+RN;Sítio Novo;5471
+RN;Taboleiro Grande;2380
+RN;Taipu;12165
+RN;Tangará;13610
+RN;Tenente Ananias;9655
+RN;Tenente Laurentino Cruz;5369
+RN;Tibau;3937
+RN;Tibau do Sul;11707
+RN;Timbaúba dos Batistas;2380
+RN;Touros;30549
+RN;Triunfo Potiguar;3327
+RN;Umarizal;10913
+RN;Upanema;13334
+RN;Várzea;5475
+RN;Venha-Ver;3612
+RN;Vera Cruz;10861
+RN;Viçosa;1856
+RN;Vila Flor;2745
+PB;Água Branca;9581
+PB;Aguiar;5799
+PB;Alagoa Grande;28126
+PB;Alagoa Nova;19799
+PB;Alagoinha;13470
+PB;Alcantil;5232
+PB;Algodão de Jandaíra;2425
+PB;Alhandra;18941
+PB;Amparo;2078
+PB;Aparecida;7607
+PB;Araçagi;17839
+PB;Arara;12804
+PB;Araruna;20009
+PB;Areia;25648
+PB;Areia de Baraúnas;2159
+PB;Areial;6441
+PB;Aroeiras;19725
+PB;Assunção;3471
+PB;Baía da Traição;7966
+PB;Bananeiras;22316
+PB;Baraúna;4045
+PB;Barra de Santa Rosa;13273
+PB;Barra de Santana;8909
+PB;Barra de São Miguel;5624
+PB;Bayeux;96198
+PB;Belém;17746
+PB;Belém do Brejo do Cruz;7256
+PB;Bernardino Batista;3315
+PB;Boa Ventura;5905
+PB;Boa Vista;5908
+PB;Bom Jesus;2305
+PB;Bom Sucesso;5296
+PB;Bonito de Santa Fé;10657
+PB;Boqueirão;16360
+PB;Borborema;5186
+PB;Brejo do Cruz;12852
+PB;Brejo dos Santos;5899
+PB;Caaporã;20064
+PB;Cabaceiras;5112
+PB;Cabedelo;51865
+PB;Cachoeira dos Índios;8693
+PB;Cacimba de Areia;3604
+PB;Cacimba de Dentro;17654
+PB;Cacimbas;7029
+PB;Caiçara;7535
+PB;Cajazeiras;57875
+PB;Cajazeirinhas;3168
+PB;Caldas Brandão;5544
+PB;Camalaú;5959
+PB;Campina Grande;383764
+PB;Campo de Santana;9854
+PB;Capim;5458
+PB;Caraúbas;3964
+PB;Carrapateira;2347
+PB;Casserengue;6985
+PB;Catingueira;5006
+PB;Catolé do Rocha;28468
+PB;Caturité;4629
+PB;Conceição;17988
+PB;Condado;6925
+PB;Conde;20849
+PB;Congo;4930
+PB;Coremas;15709
+PB;Coxixola;1770
+PB;Cruz do Espírito Santo;15854
+PB;Cubati;6546
+PB;Cuité;20834
+PB;Cuité de Mamanguape;6737
+PB;Cuitegi;7243
+PB;Curral de Cima;5648
+PB;Curral Velho;2886
+PB;Damião;4998
+PB;Desterro;8191
+PB;Diamante;6751
+PB;Dona Inês;11142
+PB;Duas Estradas;3855
+PB;Emas;3374
+PB;Esperança;30855
+PB;Fagundes;12183
+PB;Frei Martinho;3025
+PB;Gado Bravo;8461
+PB;Guarabira;56136
+PB;Gurinhém;13998
+PB;Gurjão;3093
+PB;Ibiara;6304
+PB;Igaracy;6529
+PB;Imaculada;11851
+PB;Ingá;18784
+PB;Itabaiana;25463
+PB;Itaporanga;23224
+PB;Itapororoca;16573
+PB;Itatuba;10182
+PB;Jacaraú;14087
+PB;Jericó;8100
+PB;João Pessoa;702235
+PB;Juarez Távora;7603
+PB;Juazeirinho;16476
+PB;Junco do Seridó;6731
+PB;Juripiranga;10605
+PB;Juru;10548
+PB;Lagoa;4949
+PB;Lagoa de Dentro;7495
+PB;Lagoa Seca;25766
+PB;Lastro;2894
+PB;Livramento;7330
+PB;Logradouro;3971
+PB;Lucena;11383
+PB;Mãe d'Água;4127
+PB;Malta;5800
+PB;Mamanguape;41677
+PB;Manaíra;11366
+PB;Marcação;7606
+PB;Mari;21137
+PB;Marizópolis;6457
+PB;Massaranduba;12946
+PB;Mataraca;7299
+PB;Matinhas;4314
+PB;Mato Grosso;2695
+PB;Maturéia;6029
+PB;Mogeiro;12504
+PB;Montadas;4750
+PB;Monte Horebe;4498
+PB;Monteiro;31100
+PB;Mulungu;9629
+PB;Natuba;10495
+PB;Nazarezinho;7248
+PB;Nova Floresta;10392
+PB;Nova Olinda;6455
+PB;Nova Palmeira;4087
+PB;Olho d'Água;7642
+PB;Olivedos;3622
+PB;Ouro Velho;3078
+PB;Parari;1266
+PB;Passagem;2202
+PB;Patos;100732
+PB;Paulista;12004
+PB;Pedra Branca;3861
+PB;Pedra Lavrada;7035
+PB;Pedras de Fogo;27116
+PB;Pedro Régis;5822
+PB;Piancó;16455
+PB;Picuí;19359
+PB;Pilar;11737
+PB;Pilões;7068
+PB;Pilõezinhos;5470
+PB;Pirpirituba;10546
+PB;Pitimbu;16832
+PB;Pocinhos;16538
+PB;Poço de José de Moura;4118
+PB;Poço Dantas;4046
+PB;Pombal;32443
+PB;Prata;4057
+PB;Princesa Isabel;20017
+PB;Puxinanã;13354
+PB;Queimadas;40323
+PB;Quixabá;1488
+PB;Remígio;17423
+PB;Riachão;3564
+PB;Riachão do Bacamarte;4319
+PB;Riachão do Poço;4417
+PB;Riacho de Santo Antônio;1588
+PB;Riacho dos Cavalos;8301
+PB;Rio Tinto;23788
+PB;Salgadinho;3518
+PB;Salgado de São Félix;12950
+PB;Santa Cecília;7244
+PB;Santa Cruz;6677
+PB;Santa Helena;6198
+PB;Santa Inês;3834
+PB;Santa Luzia;14752
+PB;Santa Rita;126775
+PB;Santa Teresinha;4778
+PB;Santana de Mangueira;5764
+PB;Santana dos Garrotes;7817
+PB;Santarém;2749
+PB;Santo André;2707
+PB;São Bentinho;4214
+PB;São Bento;30353
+PB;São Domingos de Pombal;2822
+PB;São Domingos do Cariri;2341
+PB;São Francisco;3544
+PB;São João do Cariri;4563
+PB;São João do Rio do Peixe;18323
+PB;São João do Tigre;4726
+PB;São José da Lagoa Tapada;8067
+PB;São José de Caiana;6141
+PB;São José de Espinharas;5045
+PB;São José de Piranhas;19566
+PB;São José de Princesa;4756
+PB;São José do Bonfim;3314
+PB;São José do Brejo do Cruz;1707
+PB;São José do Sabugi;4115
+PB;São José dos Cordeiros;4079
+PB;São José dos Ramos;5702
+PB;São Mamede;7998
+PB;São Miguel de Taipu;6812
+PB;São Sebastião de Lagoa de Roça;11320
+PB;São Sebastião do Umbuzeiro;3170
+PB;Sapé;47682
+PB;Seridó;10091
+PB;Serra da Raiz;3198
+PB;Serra Branca;12816
+PB;Serra Grande;3147
+PB;Serra Redonda;7915
+PB;Serraria;6798
+PB;Sertãozinho;4411
+PB;Sobrado;7604
+PB;Solânea;27951
+PB;Soledade;13623
+PB;Sossêgo;3089
+PB;Sousa;65930
+PB;Sumé;17085
+PB;Taperoá;15236
+PB;Tavares;14487
+PB;Teixeira;14177
+PB;Tenório;2921
+PB;Triunfo;9968
+PB;Uiraúna;14963
+PB;Umbuzeiro;9450
+PB;Várzea;2568
+PB;Vieirópolis;4908
+PB;Vista Serrana;3364
+PB;Zabelê;2101
+PE;Abreu e Lima;96266
+PE;Afogados da Ingazeira;35528
+PE;Afrânio;17445
+PE;Agrestina;22591
+PE;Água Preta;30792
+PE;Águas Belas;39672
+PE;Alagoinha;14913
+PE;Aliança;35235
+PE;Altinho;22427
+PE;Amaraji;20509
+PE;Angelim;10385
+PE;Araçoiaba;17484
+PE;Araripina;79877
+PE;Arcoverde;68000
+PE;Barra de Guabiraba;13623
+PE;Barreiros;43911
+PE;Belém de Maria;9703
+PE;Belém de São Francisco;21342
+PE;Belo Jardim;74028
+PE;Betânia;12011
+PE;Bezerros;58354
+PE;Bodocó;34988
+PE;Bom Conselho;45250
+PE;Bom Jardim;40924
+PE;Bonito;40832
+PE;Brejão;9780
+PE;Brejinho;7369
+PE;Brejo da Madre de Deus;42250
+PE;Buenos Aires;13675
+PE;Buíque;53272
+PE;Cabo de Santo Agostinho;171583
+PE;Cabrobó;30432
+PE;Cachoeirinha;18123
+PE;Caetés;26386
+PE;Calçado;11619
+PE;Calumbi;7977
+PE;Camaragibe;143210
+PE;Camocim de São Félix;16574
+PE;Camutanga;8214
+PE;Canhotinho;24847
+PE;Capoeiras;19936
+PE;Carnaíba;19155
+PE;Carnaubeira da Penha;12451
+PE;Carpina;68070
+PE;Caruaru;298501
+PE;Casinhas;14798
+PE;Catende;35251
+PE;Cedro;10784
+PE;Chã de Alegria;12185
+PE;Chã Grande;17924
+PE;Condado;24403
+PE;Correntes;16686
+PE;Cortês;11712
+PE;Cumaru;13812
+PE;Cupira;22783
+PE;Custódia;33874
+PE;Dormentes;16462
+PE;Escada;62604
+PE;Exu;31086
+PE;Feira Nova;20052
+PE;Fernando de Noronha;3108
+PE;Ferreiros;11456
+PE;Flores;23034
+PE;Floresta;28100
+PE;Frei Miguelinho;14855
+PE;Gameleira;27823
+PE;Garanhuns;131313
+PE;Glória do Goitá;28289
+PE;Goiana;74424
+PE;Granito;6955
+PE;Gravatá;75229
+PE;Iati;18350
+PE;Ibimirim;29018
+PE;Ibirajuba;7833
+PE;Igarassu;100191
+PE;Iguaraci;12397
+PE;Ilha de Itamaracá;18658
+PE;Inajá;14729
+PE;Ingazeira;4561
+PE;Ipojuca;75512
+PE;Ipubi;27353
+PE;Itacuruba;4358
+PE;Itaíba;27631
+PE;Itambé;36126
+PE;Itapetim;14063
+PE;Itapissuma;24406
+PE;Itaquitinga;15507
+PE;Jaboatão dos Guararapes;687688
+PE;Jaqueira;12642
+PE;Jataúba;15365
+PE;Jatobá;14452
+PE;João Alfredo;29875
+PE;Joaquim Nabuco;16498
+PE;Jucati;11086
+PE;Jupi;14461
+PE;Jurema;15552
+PE;Lagoa do Carro;15230
+PE;Lagoa do Itaenga;20618
+PE;Lagoa do Ouro;12244
+PE;Lagoa dos Gatos;15567
+PE;Lagoa Grande;22408
+PE;Lajedo;34809
+PE;Limoeiro;57243
+PE;Macaparana;24031
+PE;Machados;11802
+PE;Manari;18097
+PE;Maraial;12303
+PE;Mirandiba;13810
+PE;Moreilândia;10584
+PE;Moreno;55659
+PE;Nazaré da Mata;30185
+PE;Olinda;397268
+PE;Orobó;22239
+PE;Orocó;14279
+PE;Ouricuri;66978
+PE;Palmares;58819
+PE;Palmeirina;8481
+PE;Panelas;25500
+PE;Paranatama;12441
+PE;Parnamirim;19850
+PE;Passira;28518
+PE;Paudalho;47521
+PE;Paulista;319373
+PE;Pedra;20788
+PE;Pesqueira;64454
+PE;Petrolândia;32568
+PE;Petrolina;281851
+PE;Poção;11503
+PE;Pombos;22120
+PE;Primavera;12364
+PE;Quipapá;25603
+PE;Quixaba;7116
+PE;Recife;1561659
+PE;Riacho das Almas;18930
+PE;Ribeirão;39317
+PE;Rio Formoso;21815
+PE;Sairé;14194
+PE;Salgadinho;8214
+PE;Salgueiro;55435
+PE;Saloá;15547
+PE;Sanharó;18723
+PE;Santa Cruz;14782
+PE;Santa Cruz da Baixa Verde;12209
+PE;Santa Cruz do Capibaribe;80330
+PE;Santa Filomena;14694
+PE;Santa Maria da Boa Vista;41745
+PE;Santa Maria do Cambucá;12942
+PE;Santa Terezinha;10184
+PE;São Benedito do Sul;10838
+PE;São Bento do Una;49372
+PE;São Caitano;36336
+PE;São João;22087
+PE;São Joaquim do Monte;21872
+PE;São José da Coroa Grande;18555
+PE;São José do Belmonte;34118
+PE;São José do Egito;31792
+PE;São Lourenço da Mata;99945
+PE;São Vicente Ferrer;17333
+PE;Serra Talhada;80294
+PE;Serrita;18958
+PE;Sertânia;35914
+PE;Sirinhaém;38610
+PE;Solidão;6123
+PE;Surubim;56795
+PE;Tabira;27219
+PE;Tacaimbó;12273
+PE;Tacaratu;22231
+PE;Tamandaré;18999
+PE;Taquaritinga do Norte;22657
+PE;Terezinha;6774
+PE;Terra Nova;9801
+PE;Timbaúba;51770
+PE;Toritama;33206
+PE;Tracunhaém;13265
+PE;Trindade;26250
+PE;Triunfo;15770
+PE;Tupanatinga;19026
+PE;Tuparetama;8678
+PE;Venturosa;16706
+PE;Verdejante;10098
+PE;Vertente do Lério;7464
+PE;Vertentes;18186
+PE;Vicência;27883
+PE;Vitória de Santo Antão;126399
+PE;Xexéu;14887
+AL;Água Branca;19989
+AL;Anadia;17740
+AL;Arapiraca;210521
+AL;Atalaia;53023
+AL;Barra de Santo Antônio;14435
+AL;Barra de São Miguel;7572
+AL;Batalha;16919
+AL;Belém;5083
+AL;Belo Monte;7510
+AL;Boca da Mata;26030
+AL;Branquinha;12215
+AL;Cacimbinhas;10182
+AL;Cajueiro;20825
+AL;Campestre;6178
+AL;Campo Alegre;47209
+AL;Campo Grande;9909
+AL;Canapi;18397
+AL;Capela;17366
+AL;Carneiros;8463
+AL;Chã Preta;7073
+AL;Coité do Nóia;11127
+AL;Colônia Leopoldina;20181
+AL;Coqueiro Seco;5525
+AL;Coruripe;53369
+AL;Craíbas;23294
+AL;Delmiro Gouveia;48462
+AL;Dois Riachos;11200
+AL;Estrela de Alagoas;17251
+AL;Feira Grande;21824
+AL;Feliz Deserto;4568
+AL;Flexeiras;12290
+AL;Girau do Ponciano;36904
+AL;Ibateguara;15863
+AL;Igaci;25865
+AL;Igreja Nova;23807
+AL;Inhapi;18166
+AL;Jacaré dos Homens;5902
+AL;Jacuípe;7045
+AL;Japaratinga;7763
+AL;Jaramataia;6140
+AL;Jequiá da Praia;11615
+AL;Joaquim Gomes;22436
+AL;Jundiá;4698
+AL;Junqueiro;25290
+AL;Lagoa da Canoa;18196
+AL;Limoeiro de Anadia;26415
+AL;Maceió;936314
+AL;Major Isidoro;19530
+AL;Mar Vermelho;4131
+AL;Maragogi;26978
+AL;Maravilha;10110
+AL;Marechal Deodoro;47623
+AL;Maribondo;14144
+AL;Mata Grande;25309
+AL;Matriz de Camaragibe;25493
+AL;Messias;15899
+AL;Minador do Negrão;5292
+AL;Monteirópolis;7292
+AL;Murici;26918
+AL;Novo Lino;12449
+AL;Olho d'Água das Flores;20555
+AL;Olho d'Água do Casado;8517
+AL;Olho d'Água Grande;4963
+AL;Olivença;10865
+AL;Ouro Branco;11504
+AL;Palestina;5071
+AL;Palmeira dos Índios;72564
+AL;Pão de Açúcar;24534
+AL;Pariconha;10539
+AL;Paripueira;10222
+AL;Passo de Camaragibe;14261
+AL;Paulo Jacinto;7772
+AL;Penedo;61082
+AL;Piaçabuçu;18087
+AL;Pilar;32655
+AL;Pindoba;3246
+AL;Piranhas;25107
+AL;Poço das Trincheiras;12463
+AL;Porto de Pedras;10649
+AL;Porto Calvo;26044
+AL;Porto Real do Colégio;18453
+AL;Quebrangulo;11566
+AL;Rio Largo;67797
+AL;Roteiro;6864
+AL;Santa Luzia do Norte;7572
+AL;Santana do Ipanema;43699
+AL;Santana do Mundaú;12039
+AL;São Brás;7062
+AL;São José da Laje;23112
+AL;São José da Tapera;31361
+AL;São Luís do Quitunde;32871
+AL;São Miguel dos Campos;54064
+AL;São Miguel dos Milagres;7601
+AL;São Sebastião;32181
+AL;Satuba;14779
+AL;Senador Rui Palmeira;13110
+AL;Tanque d'Arca;5766
+AL;Taquarana;18848
+AL;Teotônio Vilela;41935
+AL;Traipu;25854
+AL;União dos Palmares;62727
+AL;Viçosa;26830
+SE;Amparo de São Francisco;2268
+SE;Aquidabã;19890
+SE;Aracaju;544039
+SE;Arauá;12042
+SE;Areia Branca;16733
+SE;Barra dos Coqueiros;19998
+SE;Boquim;25270
+SE;Brejo Grande;8086
+SE;Campo do Brito;16745
+SE;Canhoba;4025
+SE;Canindé de São Francisco;23005
+SE;Capela;28960
+SE;Carira;19708
+SE;Carmópolis;12610
+SE;Cedro de São João;5522
+SE;Cristinápolis;16131
+SE;Cumbe;3870
+SE;Divina Pastora;4448
+SE;Estância;63582
+SE;Feira Nova;5875
+SE;Frei Paulo;13060
+SE;Gararu;11999
+SE;General Maynard;2907
+SE;Gracho Cardoso;5732
+SE;Ilha das Flores;8906
+SE;Indiaroba;18126
+SE;Itabaiana;86564
+SE;Itabaianinha;38850
+SE;Itabi;4827
+SE;Itaporanga d'Ajuda;29347
+SE;Japaratuba;16046
+SE;Japoatã;14027
+SE;Lagarto;92474
+SE;Laranjeiras;24714
+SE;Macambira;6554
+SE;Malhada dos Bois;3830
+SE;Malhador;12124
+SE;Maruim;15582
+SE;Moita Bonita;11269
+SE;Monte Alegre de Sergipe;13817
+SE;Muribeca;7466
+SE;Neópolis;19538
+SE;Nossa Senhora da Glória;30804
+SE;Nossa Senhora das Dores;24747
+SE;Nossa Senhora de Lourdes;6509
+SE;Nossa Senhora do Socorro;155334
+SE;Nossa Senhora Aparecida;8813
+SE;Pacatuba;12870
+SE;Pedra Mole;2878
+SE;Pedrinhas;8709
+SE;Pinhão;5809
+SE;Pirambu;8608
+SE;Poço Redondo;30249
+SE;Poço Verde;21882
+SE;Porto da Folha;27456
+SE;Propriá;28520
+SE;Riachão do Dantas;19588
+SE;Riachuelo;9466
+SE;Ribeirópolis;16194
+SE;Rosário do Catete;8965
+SE;Salgado;19101
+SE;Santa Luzia do Itanhy;13502
+SE;Santa Rosa de Lima;3996
+SE;Santana do São Francisco;6861
+SE;Santo Amaro das Brotas;12140
+SE;São Cristóvão;75104
+SE;São Domingos;10555
+SE;São Francisco;3007
+SE;São Miguel do Aleixo;3813
+SE;Simão Dias;38343
+SE;Siriri;7946
+SE;Telha;2969
+SE;Tobias Barreto;49261
+SE;Tomar do Geru;13717
+SE;Umbaúba;21397
+BA;Abaíra;8821
+BA;Abaré;18831
+BA;Acajutiba;15192
+BA;Adustina;15448
+BA;Água Fria;15328
+BA;Aiquara;5361
+BA;Alagoinhas;137810
+BA;Alcobaça;20242
+BA;Almadina;6621
+BA;Amargosa;35278
+BA;Amélia Rodrigues;24491
+BA;América Dourada;16787
+BA;Anagé;25262
+BA;Andaraí;14609
+BA;Andorinha;14201
+BA;Angical;15191
+BA;Anguera;9826
+BA;Antas;17583
+BA;Antônio Cardoso;12589
+BA;Antônio Gonçalves;11240
+BA;Aporá;18738
+BA;Apuarema;7610
+BA;Araças;12209
+BA;Aracatu;14316
+BA;Araci;54713
+BA;Aramari;9911
+BA;Arataca;10953
+BA;Aratuípe;8822
+BA;Aurelino Leal;14280
+BA;Baianópolis;14195
+BA;Baixa Grande;21814
+BA;Banzaê;11157
+BA;Barra;50226
+BA;Barra da Estiva;20537
+BA;Barra do Choça;31527
+BA;Barra do Mendes;14459
+BA;Barra do Rocha;5860
+BA;Barreiras;137832
+BA;Barro Alto;14172
+BA;Barro Preto;6417
+BA;Barrocas;13868
+BA;Belmonte;22553
+BA;Belo Campo;15185
+BA;Biritinga;14260
+BA;Boa Nova;15427
+BA;Boa Vista do Tupim;18298
+BA;Bom Jesus da Lapa;66192
+BA;Bom Jesus da Serra;10588
+BA;Boninal;13857
+BA;Bonito;14326
+BA;Boquira;22521
+BA;Botuporã;11048
+BA;Brejões;12446
+BA;Brejolândia;9791
+BA;Brotas de Macaúbas;10949
+BA;Brumado;64642
+BA;Buerarema;20830
+BA;Buritirama;19492
+BA;Caatiba;9450
+BA;Cabaceiras do Paraguaçu;18569
+BA;Cachoeira;33782
+BA;Caculé;22557
+BA;Caém;10187
+BA;Caetanos;12307
+BA;Caetité;48007
+BA;Cafarnaum;18314
+BA;Cairu;14736
+BA;Caldeirão Grande;13922
+BA;Camacan;31113
+BA;Camaçari;234558
+BA;Camamu;32881
+BA;Campo Alegre de Lourdes;27670
+BA;Campo Formoso;68101
+BA;Canápolis;11136
+BA;Canarana;25935
+BA;Canavieiras;37041
+BA;Candeal;9050
+BA;Candeias;81699
+BA;Candiba;12821
+BA;Cândido Sales;27180
+BA;Cansanção;34093
+BA;Canudos;15366
+BA;Capela do Alto Alegre;12824
+BA;Capim Grosso;27158
+BA;Caraíbas;10495
+BA;Caravelas;22115
+BA;Cardeal da Silva;8618
+BA;Carinhanha;30240
+BA;Casa Nova;66718
+BA;Castro Alves;24978
+BA;Catolândia;4059
+BA;Catu;50809
+BA;Caturama;8713
+BA;Central;18029
+BA;Chorrochó;11022
+BA;Cícero Dantas;31832
+BA;Cipó;15758
+BA;Coaraci;22274
+BA;Cocos;17923
+BA;Conceição da Feira;20117
+BA;Conceição do Almeida;17974
+BA;Conceição do Coité;62893
+BA;Conceição do Jacuípe;28769
+BA;Conde;23166
+BA;Condeúba;17210
+BA;Contendas do Sincorá;3886
+BA;Coração de Maria;23774
+BA;Cordeiros;8883
+BA;Coribe;14895
+BA;Coronel João Sá;18408
+BA;Correntina;32980
+BA;Cotegipe;14191
+BA;Cravolândia;5713
+BA;Crisópolis;20279
+BA;Cristópolis;14279
+BA;Cruz das Almas;57098
+BA;Curaçá;34421
+BA;Dário Meira;12331
+BA;Dias d'Ávila;57708
+BA;Dom Basílio;11620
+BA;Dom Macedo Costa;3951
+BA;Elísio Medrado;8183
+BA;Encruzilhada;20720
+BA;Entre Rios;40524
+BA;Érico Cardoso;10717
+BA;Esplanada;33115
+BA;Euclides da Cunha;59193
+BA;Eunápolis;99553
+BA;Fátima;19703
+BA;Feira da Mata;6562
+BA;Feira de Santana;591707
+BA;Filadélfia;16215
+BA;Firmino Alves;5864
+BA;Floresta Azul;10364
+BA;Formosa do Rio Preto;22171
+BA;Gandu;31819
+BA;Gavião;4507
+BA;Gentio do Ouro;11988
+BA;Glória;14176
+BA;Gongogi;6170
+BA;Governador Mangabeira;20668
+BA;Guajeru;9330
+BA;Guanambi;79886
+BA;Guaratinga;22960
+BA;Heliópolis;14713
+BA;Iaçu;28602
+BA;Ibiassucê;9008
+BA;Ibicaraí;24569
+BA;Ibicoara;16940
+BA;Ibicuí;16464
+BA;Ibipeba;17666
+BA;Ibipitanga;14408
+BA;Ibiquera;5300
+BA;Ibirapitanga;24223
+BA;Ibirapuã;7893
+BA;Ibirataia;24544
+BA;Ibitiara;16665
+BA;Ibititá;19410
+BA;Ibotirama;26419
+BA;Ichu;6148
+BA;Igaporã;14970
+BA;Igrapiúna;13268
+BA;Iguaí;29449
+BA;Ilhéus;219266
+BA;Inhambupe;36719
+BA;Ipecaetá;15888
+BA;Ipiaú;43723
+BA;Ipirá;62197
+BA;Ipupiara;9325
+BA;Irajuba;7666
+BA;Iramaia;15045
+BA;Iraquara;24415
+BA;Irará;25811
+BA;Irecê;66061
+BA;Itabela;26704
+BA;Itaberaba;61490
+BA;Itabuna;213656
+BA;Itacaré;27170
+BA;Itaeté;14664
+BA;Itagi;14162
+BA;Itagibá;16590
+BA;Itagimirim;7118
+BA;Itaguaçu da Bahia;13269
+BA;Itaju do Colônia;7706
+BA;Itajuípe;20490
+BA;Itamaraju;67803
+BA;Itamari;8781
+BA;Itambé;35512
+BA;Itanagra;6884
+BA;Itanhém;21154
+BA;Itaparica;20796
+BA;Itapé;10630
+BA;Itapebi;12003
+BA;Itapetinga;66665
+BA;Itapicuru;32563
+BA;Itapitanga;10376
+BA;Itaquara;7743
+BA;Itarantim;18375
+BA;Itatim;15516
+BA;Itiruçu;16827
+BA;Itiúba;36996
+BA;Itororó;20930
+BA;Ituaçu;18772
+BA;Ituberá;24169
+BA;Iuiú;12093
+BA;Jaborandi;8895
+BA;Jacaraci;14837
+BA;Jacobina;79013
+BA;Jaguaquara;48206
+BA;Jaguarari;30484
+BA;Jaguaripe;17435
+BA;Jandaíra;10018
+BA;Jequié;150541
+BA;Jeremoabo;39302
+BA;Jiquiriçá;13772
+BA;Jitaúna;16365
+BA;João Dourado;21990
+BA;Juazeiro;243896
+BA;Jucuruçu;10516
+BA;Jussara;15204
+BA;Jussari;6914
+BA;Jussiape;8043
+BA;Lafaiete Coutinho;3502
+BA;Lagoa Real;14510
+BA;Laje;22180
+BA;Lajedão;3599
+BA;Lajedinho;4468
+BA;Lajedo do Tabocal;8999
+BA;Lamarão;12995
+BA;Lapão;26616
+BA;Lauro de Freitas;156936
+BA;Lençóis;10112
+BA;Licínio de Almeida;13205
+BA;Livramento de Nossa Senhora;44568
+BA;Luís Eduardo Magalhães;52054
+BA;Macajuba;11517
+BA;Macarani;16940
+BA;Macaúbas;48633
+BA;Macururé;7834
+BA;Madre de Deus;16783
+BA;Maetinga;7884
+BA;Maiquinique;8848
+BA;Mairi;19700
+BA;Malhada;16739
+BA;Malhada de Pedras;7677
+BA;Manoel Vitorino;14138
+BA;Mansidão;12244
+BA;Maracás;35990
+BA;Maragogipe;43921
+BA;Maraú;17270
+BA;Marcionílio Souza;11061
+BA;Mascote;16590
+BA;Mata de São João;39585
+BA;Matina;13245
+BA;Medeiros Neto;22752
+BA;Miguel Calmon;27724
+BA;Milagres;12092
+BA;Mirangaba;18849
+BA;Mirante;8375
+BA;Monte Santo;53429
+BA;Morpará;8871
+BA;Morro do Chapéu;35031
+BA;Mortugaba;14692
+BA;Mucugê;14714
+BA;Mucuri;35501
+BA;Mulungu do Morro;13879
+BA;Mundo Novo;25245
+BA;Muniz Ferreira;7236
+BA;Muquém de São Francisco;10691
+BA;Muritiba;27755
+BA;Mutuípe;22066
+BA;Nazaré;27427
+BA;Nilo Peçanha;13274
+BA;Nordestina;12670
+BA;Nova Canaã;20311
+BA;Nova Fátima;7964
+BA;Nova Ibiá;7029
+BA;Nova Itarana;7875
+BA;Nova Redenção;9318
+BA;Nova Soure;26874
+BA;Nova Viçosa;36407
+BA;Novo Horizonte;11092
+BA;Novo Triunfo;14763
+BA;Olindina;24557
+BA;Oliveira dos Brejinhos;23596
+BA;Ouriçangas;8131
+BA;Ourolândia;17080
+BA;Palmas de Monte Alto;22061
+BA;Palmeiras;8437
+BA;Paramirim;20870
+BA;Paratinga;29874
+BA;Paripiranga;29727
+BA;Pau Brasil;12342
+BA;Paulo Afonso;106703
+BA;Pé de Serra;14788
+BA;Pedrão;7597
+BA;Pedro Alexandre;17698
+BA;Piatã;18470
+BA;Pilão Arcado;34466
+BA;Pindaí;15772
+BA;Pindobaçu;20854
+BA;Pintadas;10812
+BA;Piraí do Norte;8818
+BA;Piripá;13325
+BA;Piritiba;26265
+BA;Planaltino;8880
+BA;Planalto;22151
+BA;Poções;46390
+BA;Pojuca;32225
+BA;Ponto Novo;14734
+BA;Porto Seguro;122896
+BA;Potiraguá;9656
+BA;Prado;26016
+BA;Presidente Dutra;14306
+BA;Presidente Jânio Quadros;14212
+BA;Presidente Tancredo Neves;24249
+BA;Queimadas;28729
+BA;Quijingue;28143
+BA;Quixabeira;9631
+BA;Rafael Jambeiro;24004
+BA;Remanso;39705
+BA;Retirolândia;11798
+BA;Riachão das Neves;23431
+BA;Riachão do Jacuípe;33666
+BA;Riacho de Santana;30602
+BA;Ribeira do Amparo;14621
+BA;Ribeira do Pombal;49263
+BA;Ribeirão do Largo;14528
+BA;Rio de Contas;13816
+BA;Rio do Antônio;15110
+BA;Rio do Pires;11612
+BA;Rio Real;38095
+BA;Rodelas;7446
+BA;Ruy Barbosa;30422
+BA;Salinas da Margarida;14194
+BA;Salvador;2998056
+BA;Santa Bárbara;20461
+BA;Santa Brígida;15652
+BA;Santa Cruz da Vitória;6443
+BA;Santa Cruz Cabrália;26250
+BA;Santa Inês;10803
+BA;Santa Luzia;15613
+BA;Santa Maria da Vitória;41758
+BA;Santa Rita de Cássia;27528
+BA;Santa Teresinha;10546
+BA;Santaluz;35416
+BA;Santana;27259
+BA;Santanópolis;9643
+BA;Santo Amaro;58387
+BA;Santo Antônio de Jesus;88768
+BA;Santo Estêvão;46855
+BA;São Desidério;27513
+BA;São Domingos;9730
+BA;São Felipe;20952
+BA;São Félix;16208
+BA;São Félix do Coribe;13504
+BA;São Francisco do Conde;31699
+BA;São Gabriel;19099
+BA;São Gonçalo dos Campos;30724
+BA;São José da Vitória;6270
+BA;São José do Jacuípe;11134
+BA;São Miguel das Matas;10675
+BA;São Sebastião do Passé;41758
+BA;Sapeaçu;17087
+BA;Sátiro Dias;18919
+BA;Saubara;11632
+BA;Saúde;12355
+BA;Seabra;42175
+BA;Sebastião Laranjeiras;11421
+BA;Senhor do Bonfim;76113
+BA;Sento Sé;38735
+BA;Serra do Ramalho;31809
+BA;Serra Dourada;17858
+BA;Serra Preta;16168
+BA;Serrinha;73859
+BA;Serrolândia;12665
+BA;Simões Filho;116662
+BA;Sítio do Mato;13187
+BA;Sítio do Quinto;13811
+BA;Sobradinho;22026
+BA;Souto Soares;19407
+BA;Tabocas do Brejo Velho;12608
+BA;Tanhaçu;20134
+BA;Tanque Novo;16466
+BA;Tanquinho;7875
+BA;Taperoá;19388
+BA;Tapiramutá;17879
+BA;Teixeira de Freitas;125430
+BA;Teodoro Sampaio;8442
+BA;Teofilândia;21461
+BA;Teolândia;12810
+BA;Terra Nova;12583
+BA;Tremedal;18433
+BA;Tucano;49827
+BA;Uauá;25159
+BA;Ubaíra;21428
+BA;Ubaitaba;20333
+BA;Ubatã;26355
+BA;Uibaí;14203
+BA;Umburanas;17096
+BA;Una;24650
+BA;Urandi;16289
+BA;Uruçuca;23237
+BA;Utinga;20448
+BA;Valença;89597
+BA;Valente;22295
+BA;Várzea da Roça;15171
+BA;Várzea do Poço;8992
+BA;Várzea Nova;14365
+BA;Varzedo;9451
+BA;Vera Cruz;37539
+BA;Vereda;7346
+BA;Vitória da Conquista;318901
+BA;Wagner;8807
+BA;Wanderley;13252
+BA;Wenceslau Guimarães;24802
+BA;Xique-Xique;47470
+MG;Abadia dos Dourados;6805
+MG;Abaeté;23258
+MG;Abre Campo;13177
+MG;Acaiaca;4234
+MG;Açucena;11409
+MG;Água Boa;16643
+MG;Água Comprida;2164
+MG;Aguanil;4315
+MG;Águas Formosas;19310
+MG;Águas Vermelhas;13301
+MG;Aimorés;24825
+MG;Aiuruoca;6210
+MG;Alagoa;2926
+MG;Albertina;2976
+MG;Além Paraíba;34591
+MG;Alfenas;75214
+MG;Alfredo Vasconcelos;6300
+MG;Almenara;38531
+MG;Alpercata;7252
+MG;Alpinópolis;18619
+MG;Alterosa;13810
+MG;Alto Caparaó;5312
+MG;Alto Jequitibá;8122
+MG;Alto Rio Doce;12778
+MG;Alvarenga;4545
+MG;Alvinópolis;15678
+MG;Alvorada de Minas;3588
+MG;Amparo do Serra;5362
+MG;Andradas;36633
+MG;Andrelândia;12369
+MG;Angelândia;8571
+MG;Antônio Carlos;11624
+MG;Antônio Dias;9598
+MG;Antônio Prado de Minas;2070
+MG;Araçaí;2524
+MG;Aracitaba;1885
+MG;Araçuaí;37388
+MG;Araguari;111095
+MG;Arantina;2538
+MG;Araponga;8328
+MG;Araporã;6522
+MG;Arapuá;2778
+MG;Araújos;7692
+MG;Araxá;92927
+MG;Arceburgo;8253
+MG;Arcos;36455
+MG;Areado;13864
+MG;Argirita;3051
+MG;Aricanduva;5140
+MG;Arinos;18153
+MG;Astolfo Dutra;13109
+MG;Ataléia;15162
+MG;Augusto de Lima;4599
+MG;Baependi;18745
+MG;Baldim;8582
+MG;Bambuí;22622
+MG;Bandeira;5521
+MG;Bandeira do Sul;5330
+MG;Barão de Cocais;28074
+MG;Barão de Monte Alto;5700
+MG;Barbacena;128572
+MG;Barra Longa;7050
+MG;Barroso;20253
+MG;Bela Vista de Minas;10333
+MG;Belmiro Braga;3079
+MG;Belo Horizonte;2452617
+MG;Belo Oriente;22555
+MG;Belo Vale;7470
+MG;Berilo;13717
+MG;Berizal;4655
+MG;Bertópolis;4780
+MG;Betim;441748
+MG;Bias Fortes;3881
+MG;Bicas;14309
+MG;Biquinhas;2621
+MG;Boa Esperança;39254
+MG;Bocaina de Minas;5216
+MG;Bocaiúva;46624
+MG;Bom Despacho;44265
+MG;Bom Jardim de Minas;6657
+MG;Bom Jesus da Penha;3980
+MG;Bom Jesus do Amparo;5744
+MG;Bom Jesus do Galho;15462
+MG;Bom Repouso;10826
+MG;Bom Sucesso;17805
+MG;Bonfim;6902
+MG;Bonfinópolis de Minas;5869
+MG;Bonito de Minas;9315
+MG;Borda da Mata;15507
+MG;Botelhos;15289
+MG;Botumirim;6550
+MG;Brás Pires;4615
+MG;Brasilândia de Minas;13593
+MG;Brasília de Minas;32438
+MG;Brasópolis;14756
+MG;Braúnas;5332
+MG;Brumadinho;34391
+MG;Bueno Brandão;11212
+MG;Buenópolis;9627
+MG;Bugre;4095
+MG;Buritis;22465
+MG;Buritizeiro;27068
+MG;Cabeceira Grande;6600
+MG;Cabo Verde;14042
+MG;Cachoeira da Prata;3936
+MG;Cachoeira de Minas;11250
+MG;Cachoeira de Pajeú;9537
+MG;Cachoeira Dourada;2595
+MG;Caetanópolis;10040
+MG;Caeté;41043
+MG;Caiana;4733
+MG;Cajuri;4106
+MG;Caldas;14655
+MG;Camacho;3229
+MG;Camanducaia;20160
+MG;Cambuí;26365
+MG;Cambuquira;12936
+MG;Campanário;3757
+MG;Campanha;15949
+MG;Campestre;20854
+MG;Campina Verde;19201
+MG;Campo do Meio;11871
+MG;Campo Azul;4020
+MG;Campo Belo;53653
+MG;Campo Florido;7105
+MG;Campos Altos;13719
+MG;Campos Gerais;27964
+MG;Cana Verde;5915
+MG;Canaã;4795
+MG;Canápolis;11865
+MG;Candeias;16281
+MG;Cantagalo;4132
+MG;Caparaó;4991
+MG;Capela Nova;4661
+MG;Capelinha;34634
+MG;Capetinga;7326
+MG;Capim Branco;9276
+MG;Capinópolis;16043
+MG;Capitão Andrade;5087
+MG;Capitão Enéas;14830
+MG;Capitólio;7864
+MG;Caputira;9157
+MG;Caraí;22392
+MG;Caranaíba;3553
+MG;Carandaí;23286
+MG;Carangola;33182
+MG;Caratinga;85472
+MG;Carbonita;10783
+MG;Careaçu;6286
+MG;Carlos Chagas;21212
+MG;Carmésia;2712
+MG;Carmo da Cachoeira;12061
+MG;Carmo da Mata;11446
+MG;Carmo de Minas;14397
+MG;Carmo do Cajuru;20031
+MG;Carmo do Paranaíba;32059
+MG;Carmo do Rio Claro;20070
+MG;Carmópolis de Minas;16624
+MG;Carneirinho;9143
+MG;Carrancas;4182
+MG;Carvalhópolis;3380
+MG;Carvalhos;4735
+MG;Casa Grande;2129
+MG;Cascalho Rico;2938
+MG;Cássia;17587
+MG;Cataguases;70507
+MG;Catas Altas;4795
+MG;Catas Altas da Noruega;3573
+MG;Catuji;6633
+MG;Catuti;5473
+MG;Caxambu;21431
+MG;Cedro do Abaeté;1221
+MG;Central de Minas;6821
+MG;Centralina;10557
+MG;Chácara;2762
+MG;Chalé;5598
+MG;Chapada do Norte;16025
+MG;Chapada Gaúcha;11368
+MG;Chiador;2974
+MG;Cipotânea;6807
+MG;Claraval;4453
+MG;Claro dos Poções;8389
+MG;Cláudio;25938
+MG;Coimbra;7209
+MG;Coluna;9570
+MG;Comendador Gomes;3252
+MG;Comercinho;8637
+MG;Conceição da Aparecida;10771
+MG;Conceição da Barra de Minas;4077
+MG;Conceição das Alagoas;21938
+MG;Conceição das Pedras;2821
+MG;Conceição de Ipanema;4549
+MG;Conceição do Mato Dentro;18534
+MG;Conceição do Pará;4866
+MG;Conceição do Rio Verde;13244
+MG;Conceição dos Ouros;10869
+MG;Cônego Marinho;6440
+MG;Confins;6072
+MG;Congonhal;10261
+MG;Congonhas;48723
+MG;Congonhas do Norte;5335
+MG;Conquista;6922
+MG;Conselheiro Lafaiete;114579
+MG;Conselheiro Pena;22539
+MG;Consolação;1750
+MG;Contagem;625393
+MG;Coqueiral;9747
+MG;Coração de Jesus;27110
+MG;Cordisburgo;9465
+MG;Cordislândia;3743
+MG;Corinto;23048
+MG;Coroaci;11131
+MG;Coromandel;28296
+MG;Coronel Fabriciano;105037
+MG;Coronel Murta;9423
+MG;Coronel Pacheco;2427
+MG;Coronel Xavier Chaves;3303
+MG;Córrego do Bom Jesus;3824
+MG;Córrego Danta;3475
+MG;Córrego Fundo;5939
+MG;Córrego Novo;3138
+MG;Couto de Magalhães de Minas;4560
+MG;Crisólita;5941
+MG;Cristais;11269
+MG;Cristália;5961
+MG;Cristiano Otoni;5039
+MG;Cristina;11478
+MG;Crucilândia;4776
+MG;Cruzeiro da Fortaleza;3897
+MG;Cruzília;15373
+MG;Cuparaque;4561
+MG;Curral de Dentro;7376
+MG;Curvelo;75051
+MG;Datas;5696
+MG;Delfim Moreira;8047
+MG;Delfinópolis;6954
+MG;Delta;7210
+MG;Descoberto;5126
+MG;Desterro de Entre Rios;7173
+MG;Desterro do Melo;3302
+MG;Diamantina;46372
+MG;Diogo de Vasconcelos;4066
+MG;Dionísio;10589
+MG;Divinésia;3409
+MG;Divino;20099
+MG;Divino das Laranjeiras;5092
+MG;Divinolândia de Minas;7023
+MG;Divinópolis;216099
+MG;Divisa Alegre;6235
+MG;Divisa Nova;5828
+MG;Divisópolis;8463
+MG;Dom Bosco;3839
+MG;Dom Cavati;5811
+MG;Dom Joaquim;4640
+MG;Dom Silvério;5475
+MG;Dom Viçoso;3117
+MG;Dona Eusébia;5808
+MG;Dores de Campos;9821
+MG;Dores de Guanhães;5751
+MG;Dores do Indaiá;14366
+MG;Dores do Turvo;4668
+MG;Doresópolis;1578
+MG;Douradoquara;1924
+MG;Durandé;7146
+MG;Elói Mendes;25532
+MG;Engenheiro Caldas;10908
+MG;Engenheiro Navarro;7315
+MG;Entre Folhas;5065
+MG;Entre Rios de Minas;14548
+MG;Ervália;18855
+MG;Esmeraldas;59408
+MG;Espera Feliz;21612
+MG;Espinosa;32461
+MG;Espírito Santo do Dourado;4471
+MG;Estiva;11426
+MG;Estrela do Indaiá;3787
+MG;Estrela do Sul;7439
+MG;Estrela Dalva;2536
+MG;Eugenópolis;10769
+MG;Ewbank da Câmara;3676
+MG;Extrema;27155
+MG;Fama;2259
+MG;Faria Lemos;3734
+MG;Felício dos Santos;5865
+MG;Felisburgo;7024
+MG;Felixlândia;14287
+MG;Fernandes Tourinho;2713
+MG;Ferros;11531
+MG;Fervedouro;10754
+MG;Florestal;6199
+MG;Formiga;67178
+MG;Formoso;6857
+MG;Fortaleza de Minas;3986
+MG;Fortuna de Minas;2541
+MG;Francisco Badaró;10604
+MG;Francisco Dumont;4987
+MG;Francisco Sá;25994
+MG;Franciscópolis;5662
+MG;Frei Gaspar;6649
+MG;Frei Inocêncio;9347
+MG;Frei Lagonegro;3493
+MG;Fronteira;15706
+MG;Fronteira dos Vales;4980
+MG;Fruta de Leite;6426
+MG;Frutal;54819
+MG;Funilândia;3852
+MG;Galiléia;7563
+MG;Gameleiras;5392
+MG;Glaucilândia;3072
+MG;Goiabeira;3239
+MG;Goianá;3846
+MG;Gonçalves;4450
+MG;Gonzaga;5786
+MG;Gouveia;11927
+MG;Governador Valadares;263274
+MG;Grão Mogol;15177
+MG;Grupiara;1468
+MG;Guanhães;30638
+MG;Guapé;13475
+MG;Guaraciaba;10820
+MG;Guaraciama;4728
+MG;Guaranésia;18635
+MG;Guarani;10049
+MG;Guarará;4114
+MG;Guarda-Mor;6778
+MG;Guaxupé;49719
+MG;Guidoval;7523
+MG;Guimarânia;7322
+MG;Guiricema;9116
+MG;Gurinhatã;6228
+MG;Heliodora;6295
+MG;Iapu;11501
+MG;Ibertioga;5206
+MG;Ibiá;23069
+MG;Ibiaí;7907
+MG;Ibiracatu;5936
+MG;Ibiraci;11593
+MG;Ibirité;157438
+MG;Ibitiúra de Minas;3516
+MG;Ibituruna;2938
+MG;Icaraí de Minas;10934
+MG;Igarapé;33773
+MG;Igaratinga;9045
+MG;Iguatama;7727
+MG;Ijaci;6036
+MG;Ilicínea;11828
+MG;Imbé de Minas;6641
+MG;Inconfidentes;7692
+MG;Indaiabira;7748
+MG;Indianópolis;6671
+MG;Ingaí;2580
+MG;Inhapim;24952
+MG;Inhaúma;5565
+MG;Inimutaba;6713
+MG;Ipaba;15422
+MG;Ipanema;17916
+MG;Ipatinga;244508
+MG;Ipiaçu;4374
+MG;Ipuiúna;9549
+MG;Iraí de Minas;6605
+MG;Itabira;110419
+MG;Itabirinha;10819
+MG;Itabirito;43832
+MG;Itacambira;5303
+MG;Itacarambi;18261
+MG;Itaguara;12956
+MG;Itaipé;12072
+MG;Itajubá;90225
+MG;Itamarandiba;33581
+MG;Itamarati de Minas;4232
+MG;Itambacuri;23386
+MG;Itambé do Mato Dentro;2479
+MG;Itamogi;11218
+MG;Itamonte;14611
+MG;Itanhandu;15253
+MG;Itanhomi;12357
+MG;Itaobim;21618
+MG;Itapagipe;15043
+MG;Itapecerica;21200
+MG;Itapeva;8073
+MG;Itatiaiuçu;9364
+MG;Itaú de Minas;15257
+MG;Itaúna;85838
+MG;Itaverava;5749
+MG;Itinga;15252
+MG;Itueta;6074
+MG;Ituiutaba;96759
+MG;Itumirim;6667
+MG;Iturama;33231
+MG;Itutinga;4165
+MG;Jaboticatubas;16513
+MG;Jacinto;12923
+MG;Jacuí;7426
+MG;Jacutinga;21424
+MG;Jaguaraçu;2857
+MG;Jaíba;32190
+MG;Jampruca;5145
+MG;Janaúba;68527
+MG;Januária;67516
+MG;Japaraíba;3866
+MG;Japonvar;8536
+MG;Jeceaba;6036
+MG;Jenipapo de Minas;7242
+MG;Jequeri;13225
+MG;Jequitaí;8117
+MG;Jequitibá;5756
+MG;Jequitinhonha;25060
+MG;Jesuânia;4983
+MG;Joaíma;15464
+MG;Joanésia;5567
+MG;João Monlevade;75320
+MG;João Pinheiro;45150
+MG;Joaquim Felício;4086
+MG;Jordânia;11337
+MG;José Gonçalves de Minas;4662
+MG;José Raydan;4412
+MG;Josenópolis;4636
+MG;Juatuba;20978
+MG;Juiz de Fora;526706
+MG;Juramento;4108
+MG;Juruaia;8684
+MG;Juvenília;6321
+MG;Ladainha;17195
+MG;Lagamar;7873
+MG;Lagoa da Prata;47007
+MG;Lagoa dos Patos;4596
+MG;Lagoa Dourada;12265
+MG;Lagoa Formosa;17134
+MG;Lagoa Grande;9216
+MG;Lagoa Santa;48213
+MG;Lajinha;17678
+MG;Lambari;19244
+MG;Lamim;3654
+MG;Laranjal;6568
+MG;Lassance;6651
+MG;Lavras;92542
+MG;Leandro Ferreira;2986
+MG;Leme do Prado;5145
+MG;Leopoldina;51545
+MG;Liberdade;5397
+MG;Lima Duarte;16494
+MG;Limeira do Oeste;6792
+MG;Lontra;8332
+MG;Luisburgo;6482
+MG;Luislândia;6727
+MG;Luminárias;5527
+MG;Luz;17835
+MG;Machacalis;7069
+MG;Machado;39509
+MG;Madre de Deus de Minas;5173
+MG;Malacacheta;18181
+MG;Mamonas;6485
+MG;Manga;21338
+MG;Manhuaçu;78605
+MG;Manhumirim;20934
+MG;Mantena;27580
+MG;Mar de Espanha;11658
+MG;Maravilhas;7224
+MG;Maria da Fé;14637
+MG;Mariana;54689
+MG;Marilac;4394
+MG;Mário Campos;12029
+MG;Maripá de Minas;2981
+MG;Marliéria;3793
+MG;Marmelópolis;3156
+MG;Martinho Campos;12662
+MG;Martins Soares;6715
+MG;Mata Verde;7802
+MG;Materlândia;4772
+MG;Mateus Leme;26862
+MG;Mathias Lobato;3526
+MG;Matias Barbosa;13872
+MG;Matias Cardoso;11037
+MG;Matipó;17017
+MG;Mato Verde;12957
+MG;Matozinhos;35233
+MG;Matutina;3789
+MG;Medeiros;3398
+MG;Medina;21115
+MG;Mendes Pimentel;6684
+MG;Mercês;10902
+MG;Mesquita;6641
+MG;Minas Novas;31647
+MG;Minduri;3665
+MG;Mirabela;13252
+MG;Miradouro;10648
+MG;Miraí;13502
+MG;Miravânia;4998
+MG;Moeda;4667
+MG;Moema;7041
+MG;Monjolos;2311
+MG;Monsenhor Paulo;7582
+MG;Montalvânia;16135
+MG;Monte Alegre de Minas;19051
+MG;Monte Azul;22838
+MG;Monte Belo;12852
+MG;Monte Carmelo;45975
+MG;Monte Formoso;4943
+MG;Monte Santo de Minas;20536
+MG;Monte Sião;20135
+MG;Montes Claros;363227
+MG;Montezuma;7677
+MG;Morada Nova de Minas;8750
+MG;Morro da Garça;2966
+MG;Morro do Pilar;3524
+MG;Munhoz;6419
+MG;Muriaé;99628
+MG;Mutum;27123
+MG;Muzambinho;20426
+MG;Nacip Raydan;3015
+MG;Nanuque;41329
+MG;Naque;6154
+MG;Natalândia;3376
+MG;Natércia;4773
+MG;Nazareno;8096
+MG;Nepomuceno;25152
+MG;Ninheira;11031
+MG;Nova Belém;3532
+MG;Nova Era;18579
+MG;Nova Lima;76608
+MG;Nova Módica;3952
+MG;Nova Ponte;12504
+MG;Nova Porteirinha;7597
+MG;Nova Resende;14686
+MG;Nova Serrana;67967
+MG;Nova União;5653
+MG;Novo Cruzeiro;31319
+MG;Novo Oriente de Minas;10763
+MG;Novorizonte;5136
+MG;Olaria;2479
+MG;Olhos-d'Água;5338
+MG;Olímpio Noronha;2655
+MG;Oliveira;39214
+MG;Oliveira Fortes;1951
+MG;Onça de Pitangui;3129
+MG;Oratórios;4538
+MG;Orizânia;7078
+MG;Ouro Branco;35475
+MG;Ouro Fino;32639
+MG;Ouro Preto;69495
+MG;Ouro Verde de Minas;7215
+MG;Padre Carvalho;6176
+MG;Padre Paraíso;18891
+MG;Pai Pedro;6217
+MG;Paineiras;4672
+MG;Pains;8476
+MG;Paiva;1687
+MG;Palma;6212
+MG;Palmópolis;6810
+MG;Papagaios;15384
+MG;Pará de Minas;84264
+MG;Paracatu;83560
+MG;Paraguaçu;20429
+MG;Paraisópolis;18844
+MG;Paraopeba;23410
+MG;Passa Quatro;15907
+MG;Passa Tempo;8783
+MG;Passa-Vinte;2132
+MG;Passabém;1825
+MG;Passos;107619
+MG;Patis;5572
+MG;Patos de Minas;139841
+MG;Patrocínio;86467
+MG;Patrocínio do Muriaé;5613
+MG;Paula Cândido;9404
+MG;Paulistas;5002
+MG;Pavão;9155
+MG;Peçanha;17727
+MG;Pedra do Anta;3731
+MG;Pedra do Indaiá;4080
+MG;Pedra Azul;26000
+MG;Pedra Bonita;6751
+MG;Pedra Dourada;2241
+MG;Pedralva;11351
+MG;Pedras de Maria da Cruz;11877
+MG;Pedrinópolis;3586
+MG;Pedro Leopoldo;59064
+MG;Pedro Teixeira;1680
+MG;Pequeri;3093
+MG;Pequi;4504
+MG;Perdigão;7961
+MG;Perdizes;14786
+MG;Perdões;20228
+MG;Periquito;7161
+MG;Pescador;4197
+MG;Piau;3064
+MG;Piedade de Caratinga;6937
+MG;Piedade de Ponte Nova;4273
+MG;Piedade do Rio Grande;4871
+MG;Piedade dos Gerais;4762
+MG;Pimenta;8525
+MG;Pingo-d'Água;4201
+MG;Pintópolis;8183
+MG;Piracema;6785
+MG;Pirajuba;4059
+MG;Piranga;17836
+MG;Piranguçu;5319
+MG;Piranguinho;8227
+MG;Pirapetinga;10636
+MG;Pirapora;53708
+MG;Piraúba;10931
+MG;Pitangui;26038
+MG;Piumhi;32580
+MG;Planura;11138
+MG;Poço Fundo;15916
+MG;Poços de Caldas;151449
+MG;Pocrane;8790
+MG;Pompéu;29929
+MG;Ponte Nova;57654
+MG;Ponto dos Volantes;11458
+MG;Ponto Chique;4282
+MG;Porteirinha;37842
+MG;Porto Firme;10989
+MG;Poté;15237
+MG;Pouso Alegre;127974
+MG;Pouso Alto;6494
+MG;Prados;8560
+MG;Prata;26857
+MG;Pratápolis;8800
+MG;Pratinha;3435
+MG;Presidente Bernardes;5853
+MG;Presidente Juscelino;4385
+MG;Presidente Kubitschek;3085
+MG;Presidente Olegário;18989
+MG;Prudente de Morais;9335
+MG;Quartel Geral;3353
+MG;Queluzito;1896
+MG;Raposos;15521
+MG;Raul Soares;24606
+MG;Recreio;10538
+MG;Reduto;6663
+MG;Resende Costa;10941
+MG;Resplendor;17608
+MG;Ressaquinha;4732
+MG;Riachinho;8437
+MG;Riacho dos Machados;9716
+MG;Ribeirão das Neves;349307
+MG;Ribeirão Vermelho;3938
+MG;Rio do Prado;4412
+MG;Rio Acima;8685
+MG;Rio Casca;14790
+MG;Rio Doce;2656
+MG;Rio Espera;6728
+MG;Rio Manso;5266
+MG;Rio Novo;9300
+MG;Rio Paranaíba;10990
+MG;Rio Pardo de Minas;29947
+MG;Rio Piracicaba;14846
+MG;Rio Pomba;17359
+MG;Rio Preto;5631
+MG;Rio Vermelho;15343
+MG;Ritápolis;5149
+MG;Rochedo de Minas;2137
+MG;Rodeiro;6589
+MG;Romaria;3636
+MG;Rosário da Limeira;4362
+MG;Rubelita;8097
+MG;Rubim;9855
+MG;Sabará;126195
+MG;Sabinópolis;16326
+MG;Sacramento;23112
+MG;Salinas;38789
+MG;Salto da Divisa;7157
+MG;Santa Bárbara;27571
+MG;Santa Bárbara do Leste;7762
+MG;Santa Bárbara do Monte Verde;2999
+MG;Santa Bárbara do Tugúrio;4574
+MG;Santa Cruz de Minas;7671
+MG;Santa Cruz de Salinas;5466
+MG;Santa Cruz do Escalvado;5321
+MG;Santa Efigênia de Minas;4568
+MG;Santa Fé de Minas;4129
+MG;Santa Helena de Minas;6126
+MG;Santa Juliana;11571
+MG;Santa Luzia;231607
+MG;Santa Margarida;14806
+MG;Santa Maria de Itabira;10821
+MG;Santa Maria do Salto;5989
+MG;Santa Maria do Suaçuí;14931
+MG;Santa Rita de Caldas;9333
+MG;Santa Rita de Ibitipoca;3847
+MG;Santa Rita de Jacutinga;5869
+MG;Santa Rita de Minas;5980
+MG;Santa Rita do Itueto;5739
+MG;Santa Rita do Sapucaí;36150
+MG;Santa Rosa da Serra;3407
+MG;Santa Vitória;15791
+MG;Santana da Vargem;7222
+MG;Santana de Cataguases;3785
+MG;Santana de Pirapama;8820
+MG;Santana do Deserto;3977
+MG;Santana do Garambéu;2205
+MG;Santana do Jacaré;4716
+MG;Santana do Manhuaçu;8353
+MG;Santana do Paraíso;24695
+MG;Santana do Riacho;4405
+MG;Santana dos Montes;4134
+MG;Santo Antônio do Amparo;18125
+MG;Santo Antônio do Aventureiro;3600
+MG;Santo Antônio do Grama;4349
+MG;Santo Antônio do Itambé;4651
+MG;Santo Antônio do Jacinto;11458
+MG;Santo Antônio do Monte;25899
+MG;Santo Antônio do Retiro;7087
+MG;Santo Antônio do Rio Abaixo;1794
+MG;Santo Hipólito;3673
+MG;Santos Dumont;47244
+MG;São Bento Abade;4715
+MG;São Brás do Suaçuí;3657
+MG;São Domingos das Dores;5418
+MG;São Domingos do Prata;17857
+MG;São Félix de Minas;3484
+MG;São Francisco;55141
+MG;São Francisco de Paula;6384
+MG;São Francisco de Sales;5314
+MG;São Francisco do Glória;5685
+MG;São Geraldo;9846
+MG;São Geraldo da Piedade;4865
+MG;São Geraldo do Baixio;3461
+MG;São Gonçalo do Abaeté;6546
+MG;São Gonçalo do Pará;11246
+MG;São Gonçalo do Rio Abaixo;9738
+MG;São Gonçalo do Rio Preto;3269
+MG;São Gonçalo do Sapucaí;23627
+MG;São Gotardo;32580
+MG;São João da Lagoa;4971
+MG;São João da Mata;2981
+MG;São João da Ponte;26983
+MG;São João das Missões;11267
+MG;São João del Rei;85503
+MG;São João do Manhuaçu;9881
+MG;São João do Manteninha;5132
+MG;São João do Oriente;8128
+MG;São João do Pacuí;4223
+MG;São João do Paraíso;22782
+MG;São João Batista do Glória;7198
+MG;São João Evangelista;16254
+MG;São João Nepomuceno;26160
+MG;São Joaquim de Bicas;23986
+MG;São José da Barra;7090
+MG;São José da Lapa;19234
+MG;São José da Safira;4069
+MG;São José da Varginha;4070
+MG;São José do Alegre;4066
+MG;São José do Divino;3881
+MG;São José do Goiabal;5743
+MG;São José do Jacuri;7234
+MG;São José do Mantimento;2579
+MG;São Lourenço;42688
+MG;São Miguel do Anta;7094
+MG;São Pedro da União;5386
+MG;São Pedro do Suaçuí;5925
+MG;São Pedro dos Ferros;9087
+MG;São Romão;9713
+MG;São Roque de Minas;6301
+MG;São Sebastião da Bela Vista;5193
+MG;São Sebastião da Vargem Alegre;2877
+MG;São Sebastião do Anta;5723
+MG;São Sebastião do Maranhão;12099
+MG;São Sebastião do Oeste;5689
+MG;São Sebastião do Paraíso;64800
+MG;São Sebastião do Rio Preto;1737
+MG;São Sebastião do Rio Verde;2292
+MG;São Thomé das Letras;6943
+MG;São Tiago;10645
+MG;São Tomás de Aquino;7073
+MG;São Vicente de Minas;6525
+MG;Sapucaí-Mirim;6046
+MG;Sardoá;5477
+MG;Sarzedo;25583
+MG;Sem-Peixe;2993
+MG;Senador Amaral;5201
+MG;Senador Cortes;2082
+MG;Senador Firmino;7361
+MG;Senador José Bento;1855
+MG;Senador Modestino Gonçalves;5105
+MG;Senhora de Oliveira;5873
+MG;Senhora do Porto;3635
+MG;Senhora dos Remédios;10588
+MG;Sericita;7345
+MG;Seritinga;1818
+MG;Serra da Saudade;890
+MG;Serra do Salitre;10778
+MG;Serra dos Aimorés;8667
+MG;Serra Azul de Minas;4479
+MG;Serrania;7584
+MG;Serranópolis de Minas;4787
+MG;Serranos;2130
+MG;Serro;21525
+MG;Sete Lagoas;225358
+MG;Setubinha;11588
+MG;Silveirânia;2193
+MG;Silvianópolis;6261
+MG;Simão Pereira;2594
+MG;Simonésia;17933
+MG;Sobrália;6116
+MG;Soledade de Minas;5795
+MG;Tabuleiro;4068
+MG;Taiobeiras;31333
+MG;Taparuba;3357
+MG;Tapira;3757
+MG;Tapiraí;1888
+MG;Taquaraçu de Minas;3950
+MG;Tarumirim;14585
+MG;Teixeiras;12187
+MG;Teófilo Otoni;130517
+MG;Timóteo;79813
+MG;Tiradentes;6966
+MG;Tiros;7626
+MG;Tocantins;16408
+MG;Tocos do Moji;4084
+MG;Toledo;6038
+MG;Tombos;8881
+MG;Três Corações;75776
+MG;Três Marias;28042
+MG;Três Pontas;54149
+MG;Tumiritinga;6198
+MG;Tupaciguara;23841
+MG;Turmalina;18134
+MG;Turvolândia;5020
+MG;Ubá;99708
+MG;Ubaí;12499
+MG;Ubaporanga;12561
+MG;Uberaba;296261
+MG;Uberlândia;634345
+MG;Umburatiba;2844
+MG;Unaí;78125
+MG;União de Minas;4735
+MG;Uruana de Minas;2747
+MG;Urucânia;10502
+MG;Urucuia;12203
+MG;Vargem Alegre;6829
+MG;Vargem Bonita;2140
+MG;Vargem Grande do Rio Pardo;4924
+MG;Varginha;121785
+MG;Varjão de Minas;6520
+MG;Várzea da Palma;36314
+MG;Varzelândia;19771
+MG;Vazante;20042
+MG;Verdelândia;8514
+MG;Veredinha;6045
+MG;Veríssimo;3991
+MG;Vermelho Novo;4698
+MG;Vespasiano;101846
+MG;Viçosa;74171
+MG;Vieiras;3899
+MG;Virgem da Lapa;14685
+MG;Virgínia;8544
+MG;Virginópolis;11273
+MG;Virgolândia;5819
+MG;Visconde do Rio Branco;37228
+MG;Volta Grande;5402
+MG;Wenceslau Braz;2571
+ES;Afonso Cláudio;31384
+ES;Água Doce do Norte;12091
+ES;Águia Branca;9503
+ES;Alegre;31143
+ES;Alfredo Chaves;14585
+ES;Alto Rio Novo;6172
+ES;Anchieta;20226
+ES;Apiacá;7883
+ES;Aracruz;78658
+ES;Atilio Vivacqua;9361
+ES;Baixo Guandu;29891
+ES;Barra de São Francisco;41645
+ES;Boa Esperança;13119
+ES;Bom Jesus do Norte;9672
+ES;Brejetuba;11097
+ES;Cachoeiro de Itapemirim;201259
+ES;Cariacica;365859
+ES;Castelo;33212
+ES;Colatina;111365
+ES;Conceição da Barra;27059
+ES;Conceição do Castelo;11851
+ES;Divino de São Lourenço;5011
+ES;Domingos Martins;32455
+ES;Dores do Rio Preto;6293
+ES;Ecoporanga;23891
+ES;Fundão;16431
+ES;Governador Lindenberg;10420
+ES;Guaçuí;26743
+ES;Guarapari;104534
+ES;Ibatiba;20471
+ES;Ibiraçu;10724
+ES;Ibitirama;9238
+ES;Iconha;11901
+ES;Irupi;10735
+ES;Itaguaçu;14171
+ES;Itapemirim;32761
+ES;Itarana;10667
+ES;Iúna;26239
+ES;Jaguaré;23472
+ES;Jerônimo Monteiro;11235
+ES;João Neiva;14621
+ES;Laranja da Terra;11136
+ES;Linhares;132664
+ES;Mantenópolis;11630
+ES;Marataízes;32502
+ES;Marechal Floriano;13302
+ES;Marilândia;10676
+ES;Mimoso do Sul;27124
+ES;Montanha;18856
+ES;Mucurici;5910
+ES;Muniz Freire;18358
+ES;Muqui;14377
+ES;Nova Venécia;46354
+ES;Pancas;18497
+ES;Pedro Canário;24404
+ES;Pinheiros;23874
+ES;Piúma;17212
+ES;Ponto Belo;7247
+ES;Presidente Kennedy;10903
+ES;Rio Bananal;17247
+ES;Rio Novo do Sul;11447
+ES;Santa Leopoldina;12743
+ES;Santa Maria de Jetibá;33921
+ES;Santa Teresa;20742
+ES;São Domingos do Norte;8205
+ES;São Gabriel da Palha;30604
+ES;São José do Calçado;10965
+ES;São Mateus;101613
+ES;São Roque do Canaã;10817
+ES;Serra;404688
+ES;Sooretama;23761
+ES;Vargem Alta;18637
+ES;Venda Nova do Imigrante;20028
+ES;Viana;60829
+ES;Vila Pavão;9126
+ES;Vila Valério;14048
+ES;Vila Velha;413548
+ES;Vitória;320156
+RJ;Angra dos Reis;168664
+RJ;Aperibé;9556
+RJ;Araruama;109705
+RJ;Areal;11982
+RJ;Armação dos Búzios;28653
+RJ;Arraial do Cabo;26896
+RJ;Barra do Piraí;103833
+RJ;Barra Mansa;176899
+RJ;Belford Roxo;501544
+RJ;Bom Jardim;26549
+RJ;Bom Jesus do Itabapoana;35303
+RJ;Cabo Frio;186004
+RJ;Cachoeiras de Macacu;57300
+RJ;Cambuci;14770
+RJ;Campos dos Goytacazes;434008
+RJ;Cantagalo;20540
+RJ;Carapebus;11939
+RJ;Cardoso Moreira;12481
+RJ;Carmo;18024
+RJ;Casimiro de Abreu;30572
+RJ;Comendador Levy Gasparian;8839
+RJ;Conceição de Macabu;20687
+RJ;Cordeiro;19902
+RJ;Duas Barras;10891
+RJ;Duque de Caxias;872762
+RJ;Engenheiro Paulo de Frontin;13214
+RJ;Guapimirim;49748
+RJ;Iguaba Grande;22947
+RJ;Itaboraí;228996
+RJ;Itaguaí;105633
+RJ;Italva;14676
+RJ;Itaocara;22452
+RJ;Itaperuna;99454
+RJ;Itatiaia;35577
+RJ;Japeri;101690
+RJ;Laje do Muriaé;7997
+RJ;Macaé;194413
+RJ;Macuco;5626
+RJ;Magé;244334
+RJ;Mangaratiba;32533
+RJ;Maricá;123492
+RJ;Mendes;17880
+RJ;Mesquita;190056
+RJ;Miguel Pereira;25866
+RJ;Miracema;26824
+RJ;Natividade;15406
+RJ;Nilópolis;159408
+RJ;Niterói;479384
+RJ;Nova Friburgo;178653
+RJ;Nova Iguaçu;865089
+RJ;Paracambi;45016
+RJ;Paraíba do Sul;41679
+RJ;Parati;35730
+RJ;Paty do Alferes;26196
+RJ;Petrópolis;315119
+RJ;Pinheiral;22382
+RJ;Piraí;26114
+RJ;Porciúncula;18444
+RJ;Porto Real;16253
+RJ;Quatis;13137
+RJ;Queimados;139378
+RJ;Quissamã;19878
+RJ;Resende;130035
+RJ;Rio das Flores;8787
+RJ;Rio das Ostras;96622
+RJ;Rio de Janeiro;6186710
+RJ;Rio Bonito;55051
+RJ;Rio Claro;18366
+RJ;Santa Maria Madalena;10775
+RJ;Santo Antônio de Pádua;42405
+RJ;São Fidélis;39256
+RJ;São Francisco de Itabapoana;47832
+RJ;São Gonçalo;991382
+RJ;São João da Barra;30595
+RJ;São João de Meriti;469827
+RJ;São José de Ubá;7297
+RJ;São José do Vale do Rio Preto;20574
+RJ;São Pedro da Aldeia;84866
+RJ;São Sebastião do Alto;9052
+RJ;Sapucaia;17356
+RJ;Saquarema;69374
+RJ;Seropédica;78819
+RJ;Silva Jardim;22230
+RJ;Sumidouro;15313
+RJ;Tanguá;30531
+RJ;Teresópolis;162075
+RJ;Trajano de Morais;9914
+RJ;Três Rios;76075
+RJ;Valença;75819
+RJ;Varre-Sai;8852
+RJ;Vassouras;34259
+RJ;Volta Redonda;261403
+SP;Adamantina;34424
+SP;Adolfo;3710
+SP;Aguaí;32101
+SP;Águas da Prata;7734
+SP;Águas de Lindóia;16341
+SP;Águas de Santa Bárbara;5612
+SP;Águas de São Pedro;2613
+SP;Agudos;36188
+SP;Alambari;4391
+SP;Alfredo Marcondes;4055
+SP;Altair;3287
+SP;Altinópolis;15554
+SP;Alto Alegre;4267
+SP;Alumínio;16427
+SP;Álvares Florence;3876
+SP;Álvares Machado;23779
+SP;Álvaro de Carvalho;4984
+SP;Alvinlândia;2869
+SP;Americana;205229
+SP;Américo de Campos;5488
+SP;Américo Brasiliense;33255
+SP;Amparo;65928
+SP;Analândia;4558
+SP;Andradina;56593
+SP;Angatuba;23225
+SP;Anhembi;5766
+SP;Anhumas;3947
+SP;Aparecida;37629
+SP;Aparecida d'Oeste;4598
+SP;Apiaí;25700
+SP;Araçariguama;13208
+SP;Araçatuba;182204
+SP;Araçoiaba da Serra;26626
+SP;Aramina;5308
+SP;Arandu;6212
+SP;Arapeí;2582
+SP;Araraquara;200666
+SP;Araras;114515
+SP;Arco-Íris;2010
+SP;Arealva;7886
+SP;Areias;3690
+SP;Areiópolis;11157
+SP;Ariranha;8876
+SP;Artur Nogueira;43499
+SP;Arujá;80922
+SP;Aspásia;1826
+SP;Assis;98715
+SP;Atibaia;126757
+SP;Auriflama;14366
+SP;Avaí;5170
+SP;Avanhandava;12112
+SP;Avaré;84416
+SP;Bady Bassitt;14127
+SP;Balbinos;4697
+SP;Bálsamo;8227
+SP;Bananal;10822
+SP;Barão de Antonina;2835
+SP;Barbosa;6944
+SP;Bariri;33267
+SP;Barra do Chapéu;5358
+SP;Barra do Turvo;7699
+SP;Barra Bonita;36214
+SP;Barretos;113618
+SP;Barrinha;27169
+SP;Barueri;270173
+SP;Bastos;21380
+SP;Batatais;56476
+SP;Bauru;359429
+SP;Bebedouro;77630
+SP;Bento de Abreu;2982
+SP;Bernardino de Campos;10776
+SP;Bertioga;44233
+SP;Bilac;7494
+SP;Birigui;110911
+SP;Biritiba-Mirim;29650
+SP;Boa Esperança do Sul;13953
+SP;Bocaina;11028
+SP;Bofete;9375
+SP;Boituva;44906
+SP;Bom Jesus dos Perdões;17993
+SP;Bom Sucesso de Itararé;3968
+SP;Borá;837
+SP;Boracéia;4439
+SP;Borborema;14485
+SP;Borebi;2349
+SP;Botucatu;130348
+SP;Bragança Paulista;145894
+SP;Braúna;5043
+SP;Brejo Alegre;2573
+SP;Brodowski;20485
+SP;Brotas;22631
+SP;Buri;18146
+SP;Buritama;15636
+SP;Buritizal;4096
+SP;Cabrália Paulista;4369
+SP;Cabreúva;42700
+SP;Caçapava;85181
+SP;Cachoeira Paulista;34666
+SP;Caconde;19304
+SP;Cafelândia;16778
+SP;Caiabu;4131
+SP;Caieiras;88212
+SP;Caiuá;5447
+SP;Cajamar;63675
+SP;Cajati;28936
+SP;Cajobi;10009
+SP;Cajuru;24313
+SP;Campina do Monte Alegre;5560
+SP;Campinas;1064669
+SP;Campo Limpo Paulista;74863
+SP;Campos do Jordão;46505
+SP;Campos Novos Paulista;5014
+SP;Cananéia;12374
+SP;Canas;4765
+SP;Cândido Mota;30776
+SP;Cândido Rodrigues;2770
+SP;Canitar;4743
+SP;Capão Bonito;46338
+SP;Capela do Alto;17232
+SP;Capivari;46331
+SP;Caraguatatuba;96125
+SP;Carapicuíba;392701
+SP;Cardoso;11624
+SP;Casa Branca;28189
+SP;Cássia dos Coqueiros;2737
+SP;Castilho;16165
+SP;Catanduva;114812
+SP;Catiguá;7250
+SP;Cedral;8258
+SP;Cerqueira César;17337
+SP;Cerquilho;38199
+SP;Cesário Lange;14979
+SP;Charqueada;15423
+SP;Chavantes;12688
+SP;Clementina;6582
+SP;Colina;17745
+SP;Colômbia;6345
+SP;Conchal;24485
+SP;Conchas;16274
+SP;Cordeirópolis;20720
+SP;Coroados;5250
+SP;Coronel Macedo;5343
+SP;Corumbataí;4138
+SP;Cosmópolis;59297
+SP;Cosmorama;7033
+SP;Cotia;182045
+SP;Cravinhos;30849
+SP;Cristais Paulista;7436
+SP;Cruzália;2356
+SP;Cruzeiro;79957
+SP;Cubatão;129582
+SP;Cunha;23735
+SP;Descalvado;30867
+SP;Diadema;397738
+SP;Dirce Reis;1623
+SP;Divinolândia;11343
+SP;Dobrada;8214
+SP;Dois Córregos;26040
+SP;Dolcinópolis;2272
+SP;Dourado;9131
+SP;Dracena;44309
+SP;Duartina;12796
+SP;Dumont;8346
+SP;Echaporã;6239
+SP;Eldorado;14514
+SP;Elias Fausto;15312
+SP;Elisiário;3317
+SP;Embaúba;2442
+SP;Embu;248722
+SP;Embu-Guaçu;62137
+SP;Emilianópolis;3184
+SP;Engenheiro Coelho;14300
+SP;Espírito Santo do Pinhal;42260
+SP;Espírito Santo do Turvo;4428
+SP;Estiva Gerbi;9657
+SP;Estrela d'Oeste;9042
+SP;Estrela do Norte;2474
+SP;Euclides da Cunha Paulista;10168
+SP;Fartura;14969
+SP;Fernando Prestes;5312
+SP;Fernandópolis;63539
+SP;Fernão;1521
+SP;Ferraz de Vasconcelos;179231
+SP;Flora Rica;2029
+SP;Floreal;2884
+SP;Flórida Paulista;13761
+SP;Florínia;2856
+SP;Franca;330938
+SP;Francisco Morato;157294
+SP;Franco da Rocha;131366
+SP;Gabriel Monteiro;2698
+SP;Gália;6635
+SP;Garça;43380
+SP;Gastão Vidigal;4118
+SP;Gavião Peixoto;4244
+SP;General Salgado;10934
+SP;Getulina;10960
+SP;Glicério;4547
+SP;Guaiçara;11206
+SP;Guaimbê;4740
+SP;Guaíra;38676
+SP;Guapiaçu;17938
+SP;Guapiara;20927
+SP;Guará;19168
+SP;Guaraçaí;8657
+SP;Guaraci;9459
+SP;Guarani d'Oeste;2017
+SP;Guarantã;6680
+SP;Guararapes;29639
+SP;Guararema;26974
+SP;Guaratinguetá;113357
+SP;Guareí;14918
+SP;Guariba;34508
+SP;Guarujá;308058
+SP;Guarulhos;1299283
+SP;Guatapará;6382
+SP;Guzolândia;4917
+SP;Herculândia;9125
+SP;Holambra;10224
+SP;Hortolândia;205856
+SP;Iacanga;9732
+SP;Iacri;6879
+SP;Iaras;5658
+SP;Ibaté;29714
+SP;Ibirá;11141
+SP;Ibirarema;7235
+SP;Ibitinga;53148
+SP;Ibiúna;67392
+SP;Icém;6524
+SP;Iepê;7856
+SP;Igaraçu do Tietê;24124
+SP;Igarapava;28230
+SP;Igaratá;8950
+SP;Iguape;30675
+SP;Ilha Comprida;10090
+SP;Ilha Solteira;25144
+SP;Ilhabela;26011
+SP;Indaiatuba;183803
+SP;Indiana;4751
+SP;Indiaporã;3949
+SP;Inúbia Paulista;3841
+SP;Ipaussu;13608
+SP;Iperó;27526
+SP;Ipeúna;5691
+SP;Ipiguá;4253
+SP;Iporanga;4789
+SP;Ipuã;15883
+SP;Iracemápolis;19700
+SP;Irapuã;6978
+SP;Irapuru;7874
+SP;Itaberá;17674
+SP;Itaí;24093
+SP;Itajobi;14683
+SP;Itaju;2714
+SP;Itanhaém;87338
+SP;Itaóca;3143
+SP;Itapecerica da Serra;161983
+SP;Itapetininga;148808
+SP;Itapeva;89768
+SP;Itapevi;205881
+SP;Itapira;72657
+SP;Itapirapuã Paulista;3919
+SP;Itápolis;40411
+SP;Itaporanga;14780
+SP;Itapuí;12536
+SP;Itapura;3941
+SP;Itaquaquecetuba;359253
+SP;Itararé;51412
+SP;Itariri;16284
+SP;Itatiba;99047
+SP;Itatinga;19085
+SP;Itirapina;14829
+SP;Itirapuã;5903
+SP;Itobi;7708
+SP;Itu;157384
+SP;Itupeva;42458
+SP;Ituverava;40882
+SP;Jaborandi;6715
+SP;Jaboticabal;73084
+SP;Jacareí;212824
+SP;Jaci;5556
+SP;Jacupiranga;16322
+SP;Jaguariúna;41107
+SP;Jales;49996
+SP;Jambeiro;5550
+SP;Jandira;112130
+SP;Jardinópolis;37471
+SP;Jarinu;22822
+SP;Jaú;135546
+SP;Jeriquara;3216
+SP;Joanópolis;11169
+SP;João Ramalho;4344
+SP;José Bonifácio;32551
+SP;Júlio Mesquita;4539
+SP;Jumirim;2290
+SP;Jundiaí;349929
+SP;Junqueirópolis;19976
+SP;Juquiá;19585
+SP;Juquitiba;29335
+SP;Lagoinha;4909
+SP;Laranjal Paulista;26296
+SP;Lavínia;9445
+SP;Lavrinhas;7002
+SP;Leme;88995
+SP;Lençóis Paulista;63314
+SP;Limeira;281583
+SP;Lindóia;5974
+SP;Lins;73183
+SP;Lorena;82770
+SP;Lourdes;2032
+SP;Louveira;33251
+SP;Lucélia;20284
+SP;Lucianópolis;2443
+SP;Luís Antônio;11924
+SP;Luiziânia;5138
+SP;Lupércio;4396
+SP;Lutécia;2855
+SP;Macatuba;16939
+SP;Macaubal;7672
+SP;Macedônia;3393
+SP;Magda;3160
+SP;Mairinque;43658
+SP;Mairiporã;79155
+SP;Manduri;9123
+SP;Marabá Paulista;5996
+SP;Maracaí;13710
+SP;Marapoama;2780
+SP;Mariápolis;3896
+SP;Marília;225938
+SP;Marinópolis;2158
+SP;Martinópolis;25533
+SP;Matão;78222
+SP;Mauá;417458
+SP;Mendonça;4217
+SP;Meridiano;3929
+SP;Mesópolis;1767
+SP;Miguelópolis;21095
+SP;Mineiros do Tietê;12334
+SP;Mira Estrela;2663
+SP;Miracatu;23801
+SP;Mirandópolis;26761
+SP;Mirante do Paranapanema;18131
+SP;Mirassol;54920
+SP;Mirassolândia;4396
+SP;Mococa;68718
+SP;Mogi das Cruzes;375268
+SP;Mogi Guaçu;139836
+SP;Moji Mirim;88373
+SP;Mombuca;3471
+SP;Monções;2129
+SP;Mongaguá;44087
+SP;Monte Alegre do Sul;7473
+SP;Monte Alto;45895
+SP;Monte Aprazível;21015
+SP;Monte Azul Paulista;19741
+SP;Monte Castelo;4131
+SP;Monte Mor;46641
+SP;Monteiro Lobato;4295
+SP;Morro Agudo;26305
+SP;Morungaba;13305
+SP;Motuca;4691
+SP;Murutinga do Sul;4290
+SP;Nantes;2662
+SP;Narandiba;4167
+SP;Natividade da Serra;7674
+SP;Nazaré Paulista;15232
+SP;Neves Paulista;9114
+SP;Nhandeara;10771
+SP;Nipoã;4103
+SP;Nova Aliança;5140
+SP;Nova Campina;9267
+SP;Nova Canaã Paulista;2172
+SP;Nova Castilho;1122
+SP;Nova Europa;10092
+SP;Nova Granada;18683
+SP;Nova Guataporanga;2184
+SP;Nova Independência;2742
+SP;Nova Luzitânia;3795
+SP;Nova Odessa;48754
+SP;Novais;3974
+SP;Novo Horizonte;36271
+SP;Nuporanga;7004
+SP;Ocauçu;4341
+SP;Óleo;2699
+SP;Olímpia;50602
+SP;Onda Verde;4005
+SP;Oriente;6382
+SP;Orindiúva;5406
+SP;Orlândia;37534
+SP;Osasco;718646
+SP;Oscar Bressane;2536
+SP;Osvaldo Cruz;31461
+SP;Ourinhos;104542
+SP;Ouro Verde;8162
+SP;Ouroeste;7598
+SP;Pacaembu;13778
+SP;Palestina;11354
+SP;Palmares Paulista;11742
+SP;Palmeira d'Oeste;9706
+SP;Palmital;22323
+SP;Panorama;14577
+SP;Paraguaçu Paulista;44685
+SP;Paraibuna;16833
+SP;Paraíso;5816
+SP;Paranapanema;17752
+SP;Paranapuã;3739
+SP;Parapuã;11402
+SP;Pardinho;5337
+SP;Pariquera-Açu;18918
+SP;Parisi;2149
+SP;Patrocínio Paulista;12943
+SP;Paulicéia;5791
+SP;Paulínia;84577
+SP;Paulistânia;1909
+SP;Paulo de Faria;9463
+SP;Pederneiras;43245
+SP;Pedra Bela;6142
+SP;Pedranópolis;2834
+SP;Pedregulho;15777
+SP;Pedreira;40752
+SP;Pedrinhas Paulista;2927
+SP;Pedro de Toledo;10254
+SP;Penápolis;59597
+SP;Pereira Barreto;24777
+SP;Pereiras;8076
+SP;Peruíbe;57686
+SP;Piacatu;5472
+SP;Piedade;49508
+SP;Pilar do Sul;28455
+SP;Pindamonhangaba;144613
+SP;Pindorama;15377
+SP;Pinhalzinho;12591
+SP;Piquerobi;3781
+SP;Piquete;14709
+SP;Piracaia;22740
+SP;Piracicaba;368843
+SP;Piraju;29398
+SP;Pirajuí;22192
+SP;Pirangi;10807
+SP;Pirapora do Bom Jesus;15706
+SP;Pirapozinho;25236
+SP;Pirassununga;71470
+SP;Piratininga;11989
+SP;Pitangueiras;35441
+SP;Planalto;4302
+SP;Platina;3407
+SP;Poá;112481
+SP;Poloni;5100
+SP;Pompéia;20168
+SP;Pongaí;3510
+SP;Pontal;39272
+SP;Pontalinda;4200
+SP;Pontes Gestal;2557
+SP;Populina;4253
+SP;Porangaba;8946
+SP;Porto Feliz;47964
+SP;Porto Ferreira;51090
+SP;Potim;20668
+SP;Potirendaba;15128
+SP;Pracinha;3271
+SP;Pradópolis;16619
+SP;Praia Grande;249551
+SP;Pratânia;4614
+SP;Presidente Alves;4517
+SP;Presidente Bernardes;15382
+SP;Presidente Epitácio;40891
+SP;Presidente Prudente;207725
+SP;Presidente Venceslau;38439
+SP;Promissão;37570
+SP;Quadra;2789
+SP;Quatá;12539
+SP;Queiroz;2875
+SP;Queluz;11197
+SP;Quintana;5948
+SP;Rafard;8364
+SP;Rancharia;29149
+SP;Redenção da Serra;4245
+SP;Regente Feijó;17725
+SP;Reginópolis;8172
+SP;Registro;55168
+SP;Restinga;6897
+SP;Ribeira;3545
+SP;Ribeirão do Sul;4663
+SP;Ribeirão dos Índios;2317
+SP;Ribeirão Bonito;11857
+SP;Ribeirão Branco;18607
+SP;Ribeirão Corrente;4216
+SP;Ribeirão Grande;6992
+SP;Ribeirão Pires;112011
+SP;Ribeirão Preto;563107
+SP;Rifaina;3826
+SP;Rincão;10846
+SP;Rinópolis;9385
+SP;Rio das Pedras;28478
+SP;Rio Claro;191886
+SP;Rio Grande da Serra;41602
+SP;Riolândia;10542
+SP;Riversul;6520
+SP;Rosana;18918
+SP;Roseira;9527
+SP;Rubiácea;2661
+SP;Rubinéia;2611
+SP;Sabino;5420
+SP;Sagres;2338
+SP;Sales;5399
+SP;Sales Oliveira;8021
+SP;Salesópolis;16041
+SP;Salmourão;4779
+SP;Saltinho;7149
+SP;Salto;109948
+SP;Salto de Pirapora;39616
+SP;Salto Grande;8968
+SP;Sandovalina;3387
+SP;Santa Adélia;14537
+SP;Santa Albertina;4992
+SP;Santa Bárbara d'Oeste;189573
+SP;Santa Branca;13881
+SP;Santa Clara d'Oeste;2141
+SP;Santa Cruz da Conceição;4154
+SP;Santa Cruz da Esperança;1733
+SP;Santa Cruz das Palmeiras;33583
+SP;Santa Cruz do Rio Pardo;43483
+SP;Santa Ernestina;5618
+SP;Santa Fé do Sul;29192
+SP;Santa Gertrudes;21028
+SP;Santa Isabel;46902
+SP;Santa Lúcia;8154
+SP;Santa Maria da Serra;5920
+SP;Santa Mercedes;2596
+SP;Santa Rita d'Oeste;2501
+SP;Santa Rita do Passa Quatro;27557
+SP;Santa Rosa de Viterbo;24049
+SP;Santa Salete;1446
+SP;Santana da Ponte Pensa;1616
+SP;Santana de Parnaíba;114321
+SP;Santo Anastácio;21222
+SP;Santo André;673396
+SP;Santo Antônio da Alegria;6346
+SP;Santo Antônio de Posse;21247
+SP;Santo Antônio do Aracanguá;7335
+SP;Santo Antônio do Jardim;5785
+SP;Santo Antônio do Pinhal;6896
+SP;Santo Expedito;2956
+SP;Santópolis do Aguapeí;4234
+SP;Santos;417098
+SP;São Bento do Sapucaí;10966
+SP;São Bernardo do Campo;810979
+SP;São Caetano do Sul;152093
+SP;São Carlos;220463
+SP;São Francisco;2894
+SP;São João da Boa Vista;83909
+SP;São João das Duas Pontes;2630
+SP;São João de Iracema;1810
+SP;São João do Pau d'Alho;2191
+SP;São Joaquim da Barra;46172
+SP;São José da Bela Vista;8513
+SP;São José do Barreiro;4490
+SP;São José do Rio Pardo;53281
+SP;São José do Rio Preto;419632
+SP;São José dos Campos;615871
+SP;São Lourenço da Serra;18319
+SP;São Luís do Paraitinga;10908
+SP;São Manuel;39696
+SP;São Miguel Arcanjo;31329
+SP;São Paulo;11037593
+SP;São Pedro;31575
+SP;São Pedro do Turvo;7439
+SP;São Roque;67715
+SP;São Sebastião;73631
+SP;São Sebastião da Grama;12990
+SP;São Simão;14329
+SP;São Vicente;330795
+SP;Sarapuí;8601
+SP;Sarutaiá;3790
+SP;Sebastianópolis do Sul;3109
+SP;Serra Azul;10121
+SP;Serra Negra;25912
+SP;Serrana;39574
+SP;Sertãozinho;110999
+SP;Sete Barras;13148
+SP;Severínia;15707
+SP;Silveiras;5841
+SP;Socorro;34447
+SP;Sorocaba;584313
+SP;Sud Mennucci;8141
+SP;Sumaré;241077
+SP;Suzanápolis;3805
+SP;Suzano;284356
+SP;Tabapuã;11980
+SP;Tabatinga;14876
+SP;Taboão da Serra;227343
+SP;Taciba;5675
+SP;Taguaí;10849
+SP;Taiaçu;6093
+SP;Taiúva;5505
+SP;Tambaú;22575
+SP;Tanabi;24591
+SP;Tapiraí;7991
+SP;Tapiratiba;12410
+SP;Taquaral;2974
+SP;Taquaritinga;55662
+SP;Taquarituba;23060
+SP;Taquarivaí;5541
+SP;Tarabai;6464
+SP;Tarumã;13386
+SP;Tatuí;109017
+SP;Taubaté;273426
+SP;Tejupá;5067
+SP;Teodoro Sampaio;21202
+SP;Terra Roxa;8619
+SP;Tietê;36211
+SP;Timburi;2548
+SP;Torre de Pedra;3149
+SP;Torrinha;9278
+SP;Trabiju;1519
+SP;Tremembé;41159
+SP;Três Fronteiras;5163
+SP;Tuiuti;6284
+SP;Tupã;64098
+SP;Tupi Paulista;14389
+SP;Turiúba;2040
+SP;Turmalina;1958
+SP;Ubarana;4855
+SP;Ubatuba;81096
+SP;Ubirajara;4472
+SP;Uchoa;9818
+SP;União Paulista;1522
+SP;Urânia;9007
+SP;Uru;1395
+SP;Urupês;12388
+SP;Valentim Gentil;10082
+SP;Valinhos;107481
+SP;Valparaíso;22514
+SP;Vargem;7098
+SP;Vargem Grande do Sul;39160
+SP;Vargem Grande Paulista;44754
+SP;Várzea Paulista;107211
+SP;Vera Cruz;9952
+SP;Vinhedo;63729
+SP;Viradouro;18110
+SP;Vista Alegre do Alto;6874
+SP;Vitória Brasil;1662
+SP;Votorantim;105193
+SP;Votuporanga;81279
+SP;Zacarias;2427
+PR;Abatiá;7928
+PR;Adrianópolis;6856
+PR;Agudos do Sul;8735
+PR;Almirante Tamandaré;97523
+PR;Altamira do Paraná;3799
+PR;Alto Paraíso;3217
+PR;Alto Paraná;13435
+PR;Alto Piquiri;10406
+PR;Altônia;20764
+PR;Alvorada do Sul;9255
+PR;Amaporã;5447
+PR;Ampére;18041
+PR;Anahy;2926
+PR;Andirá;21964
+PR;Ângulo;2893
+PR;Antonina;17743
+PR;Antônio Olinto;7750
+PR;Apucarana;121290
+PR;Arapongas;103025
+PR;Arapoti;26998
+PR;Arapuã;4017
+PR;Araruna;12962
+PR;Araucária;117964
+PR;Ariranha do Ivaí;2533
+PR;Assaí;16112
+PR;Assis Chateaubriand;33023
+PR;Astorga;25164
+PR;Atalaia;3645
+PR;Balsa Nova;11252
+PR;Bandeirantes;32994
+PR;Barbosa Ferraz;13995
+PR;Barra do Jacaré;2860
+PR;Barracão;9267
+PR;Bela Vista da Caroba;4176
+PR;Bela Vista do Paraíso;15496
+PR;Bituruna;16803
+PR;Boa Esperança;4742
+PR;Boa Esperança do Iguaçu;2898
+PR;Boa Ventura de São Roque;6964
+PR;Boa Vista da Aparecida;7919
+PR;Bocaiúva do Sul;9989
+PR;Bom Jesus do Sul;3879
+PR;Bom Sucesso;6676
+PR;Bom Sucesso do Sul;3075
+PR;Borrazópolis;8235
+PR;Braganey;6209
+PR;Brasilândia do Sul;3260
+PR;Cafeara;2853
+PR;Cafelândia;14034
+PR;Cafezal do Sul;4313
+PR;Califórnia;7767
+PR;Cambará;25102
+PR;Cambé;97329
+PR;Cambira;7142
+PR;Campina da Lagoa;16243
+PR;Campina do Simão;4272
+PR;Campina Grande do Sul;36825
+PR;Campo do Tenente;6715
+PR;Campo Bonito;4385
+PR;Campo Largo;112548
+PR;Campo Magro;23607
+PR;Campo Mourão;85896
+PR;Cândido de Abreu;18100
+PR;Candói;16271
+PR;Cantagalo;12733
+PR;Capanema;18681
+PR;Capitão Leônidas Marques;13870
+PR;Carambeí;17537
+PR;Carlópolis;13581
+PR;Cascavel;296254
+PR;Castro;68071
+PR;Catanduvas;9673
+PR;Centenário do Sul;11474
+PR;Cerro Azul;18660
+PR;Céu Azul;11413
+PR;Chopinzinho;19517
+PR;Cianorte;68629
+PR;Cidade Gaúcha;11079
+PR;Clevelândia;17995
+PR;Colombo;247268
+PR;Colorado;21789
+PR;Congonhinhas;9035
+PR;Conselheiro Mairinck;3700
+PR;Contenda;15728
+PR;Corbélia;15850
+PR;Cornélio Procópio;48544
+PR;Coronel Domingos Soares;7864
+PR;Coronel Vivida;21830
+PR;Corumbataí do Sul;4220
+PR;Cruz Machado;19132
+PR;Cruzeiro do Iguaçu;4225
+PR;Cruzeiro do Oeste;20856
+PR;Cruzeiro do Sul;4574
+PR;Cruzmaltina;3128
+PR;Curitiba;1851215
+PR;Curiúva;15217
+PR;Diamante do Norte;5668
+PR;Diamante do Sul;3791
+PR;Diamante D'Oeste;5129
+PR;Dois Vizinhos;35707
+PR;Douradina;6853
+PR;Doutor Camargo;5753
+PR;Doutor Ulysses;6145
+PR;Enéas Marques;6066
+PR;Engenheiro Beltrão;14280
+PR;Entre Rios do Oeste;4113
+PR;Esperança Nova;1836
+PR;Espigão Alto do Iguaçu;5200
+PR;Farol;3354
+PR;Faxinal;16032
+PR;Fazenda Rio Grande;80868
+PR;Fênix;5017
+PR;Fernandes Pinheiro;5696
+PR;Figueira;8485
+PR;Flor da Serra do Sul;4742
+PR;Floraí;5158
+PR;Floresta;5417
+PR;Florestópolis;11795
+PR;Flórida;2535
+PR;Formosa do Oeste;7453
+PR;Foz do Iguaçu;325137
+PR;Foz do Jordão;5881
+PR;Francisco Alves;6389
+PR;Francisco Beltrão;76311
+PR;General Carneiro;15275
+PR;Godoy Moreira;3616
+PR;Goioerê;29704
+PR;Goioxim;8240
+PR;Grandes Rios;7839
+PR;Guaíra;29664
+PR;Guairaçá;5867
+PR;Guamiranga;7918
+PR;Guapirama;3645
+PR;Guaporema;2250
+PR;Guaraci;5183
+PR;Guaraniaçu;16161
+PR;Guarapuava;172728
+PR;Guaraqueçaba;7843
+PR;Guaratuba;32806
+PR;Honório Serpa;6180
+PR;Ibaiti;29441
+PR;Ibema;6144
+PR;Ibiporã;47514
+PR;Icaraíma;9296
+PR;Iguaraçu;3907
+PR;Iguatu;2372
+PR;Imbaú;12040
+PR;Imbituva;28660
+PR;Inácio Martins;11431
+PR;Inajá;2876
+PR;Indianópolis;4258
+PR;Ipiranga;14655
+PR;Iporã;15227
+PR;Iracema do Oeste;2567
+PR;Irati;56483
+PR;Iretama;11510
+PR;Itaguajé;4589
+PR;Itaipulândia;9349
+PR;Itambaracá;7128
+PR;Itambé;6082
+PR;Itapejara d'Oeste;11270
+PR;Itaperuçu;23501
+PR;Itaúna do Sul;3621
+PR;Ivaí;13533
+PR;Ivaiporã;32157
+PR;Ivaté;8294
+PR;Ivatuba;2786
+PR;Jaboti;5307
+PR;Jacarezinho;40582
+PR;Jaguapitã;12414
+PR;Jaguariaíva;33244
+PR;Jandaia do Sul;20159
+PR;Janiópolis;6983
+PR;Japira;4797
+PR;Japurá;8663
+PR;Jardim Alegre;14976
+PR;Jardim Olinda;1494
+PR;Jataizinho;11604
+PR;Jesuítas;8849
+PR;Joaquim Távora;10755
+PR;Jundiaí do Sul;3777
+PR;Juranda;7822
+PR;Jussara;6240
+PR;Kaloré;4718
+PR;Lapa;42933
+PR;Laranjal;6339
+PR;Laranjeiras do Sul;31641
+PR;Leópolis;4316
+PR;Lidianópolis;4083
+PR;Lindoeste;5419
+PR;Loanda;20103
+PR;Lobato;4405
+PR;Londrina;510707
+PR;Luiziana;7357
+PR;Lunardelli;5094
+PR;Lupionópolis;4538
+PR;Mallet;12784
+PR;Mamborê;14332
+PR;Mandaguaçu;19270
+PR;Mandaguari;33109
+PR;Mandirituba;21885
+PR;Manfrinópolis;3283
+PR;Mangueirinha;17526
+PR;Manoel Ribas;13113
+PR;Marechal Cândido Rondon;47048
+PR;Maria Helena;6115
+PR;Marialva;31397
+PR;Marilândia do Sul;9197
+PR;Marilena;6704
+PR;Mariluz;10861
+PR;Maringá;335511
+PR;Mariópolis;5944
+PR;Maripá;5673
+PR;Marmeleiro;13463
+PR;Marquinho;5258
+PR;Marumbi;4154
+PR;Matelândia;16217
+PR;Matinhos;23925
+PR;Mato Rico;4205
+PR;Mauá da Serra;8446
+PR;Medianeira;39857
+PR;Mercedes;4902
+PR;Mirador;2371
+PR;Miraselva;1946
+PR;Missal;10760
+PR;Moreira Sales;13238
+PR;Morretes;17000
+PR;Munhoz de Melo;3714
+PR;Nossa Senhora das Graças;4055
+PR;Nova Aliança do Ivaí;1434
+PR;Nova América da Colina;3331
+PR;Nova Aurora;11636
+PR;Nova Cantu;7481
+PR;Nova Esperança;26591
+PR;Nova Esperança do Sudoeste;5337
+PR;Nova Fátima;8259
+PR;Nova Laranjeiras;11577
+PR;Nova Londrina;12898
+PR;Nova Olímpia;5391
+PR;Nova Prata do Iguaçu;10822
+PR;Nova Santa Bárbara;3984
+PR;Nova Santa Rosa;7965
+PR;Nova Tebas;8283
+PR;Novo Itacolomi;2808
+PR;Ortigueira;25002
+PR;Ourizona;3380
+PR;Ouro Verde do Oeste;5648
+PR;Paiçandu;36876
+PR;Palmas;43409
+PR;Palmeira;32401
+PR;Palmital;15548
+PR;Palotina;28966
+PR;Paraíso do Norte;11939
+PR;Paranacity;9946
+PR;Paranaguá;139796
+PR;Paranapoema;2818
+PR;Paranavaí;82716
+PR;Pato Bragado;4947
+PR;Pato Branco;70160
+PR;Paula Freitas;5751
+PR;Paulo Frontin;7398
+PR;Peabiru;13347
+PR;Perobal;5163
+PR;Pérola;9665
+PR;Pérola d'Oeste;7202
+PR;Piên;11811
+PR;Pinhais;118319
+PR;Pinhal de São Bento;2600
+PR;Pinhalão;6005
+PR;Pinhão;30295
+PR;Piraí do Sul;24374
+PR;Piraquara;87285
+PR;Pitanga;35052
+PR;Pitangueiras;2822
+PR;Planaltina do Paraná;3864
+PR;Planalto;13983
+PR;Ponta Grossa;314681
+PR;Pontal do Paraná;17820
+PR;Porecatu;14189
+PR;Porto Amazonas;4348
+PR;Porto Barreiro;3768
+PR;Porto Rico;2521
+PR;Porto Vitória;3833
+PR;Prado Ferreira;3510
+PR;Pranchita;5885
+PR;Presidente Castelo Branco;4934
+PR;Primeiro de Maio;11126
+PR;Prudentópolis;51008
+PR;Quarto Centenário;4881
+PR;Quatiguá;7148
+PR;Quatro Barras;19277
+PR;Quatro Pontes;3800
+PR;Quedas do Iguaçu;31976
+PR;Querência do Norte;12306
+PR;Quinta do Sol;5189
+PR;Quitandinha;16608
+PR;Ramilândia;4365
+PR;Rancho Alegre;4083
+PR;Rancho Alegre D'Oeste;2976
+PR;Realeza;16288
+PR;Rebouças;14637
+PR;Renascença;6937
+PR;Reserva;25148
+PR;Reserva do Iguaçu;7449
+PR;Ribeirão do Pinhal;13584
+PR;Ribeirão Claro;11246
+PR;Rio Azul;13760
+PR;Rio Bom;3292
+PR;Rio Bonito do Iguaçu;15121
+PR;Rio Branco do Ivaí;4006
+PR;Rio Branco do Sul;33142
+PR;Rio Negro;31191
+PR;Rolândia;56352
+PR;Roncador;12309
+PR;Rondon;9465
+PR;Rosário do Ivaí;5813
+PR;Sabáudia;5642
+PR;Salgado Filho;4640
+PR;Salto do Itararé;5134
+PR;Salto do Lontra;12828
+PR;Santa Amélia;4105
+PR;Santa Cecília do Pavão;3695
+PR;Santa Cruz de Monte Castelo;8015
+PR;Santa Fé;10354
+PR;Santa Helena;24198
+PR;Santa Inês;1882
+PR;Santa Isabel do Ivaí;8621
+PR;Santa Izabel do Oeste;11747
+PR;Santa Lúcia;3743
+PR;Santa Maria do Oeste;11369
+PR;Santa Mariana;11996
+PR;Santa Mônica;3642
+PR;Santa Tereza do Oeste;9320
+PR;Santa Terezinha de Itaipu;20539
+PR;Santana do Itararé;5697
+PR;Santo Antônio da Platina;42002
+PR;Santo Antônio do Caiuá;2733
+PR;Santo Antônio do Paraíso;2315
+PR;Santo Antônio do Sudoeste;19386
+PR;Santo Inácio;4956
+PR;São Carlos do Ivaí;5990
+PR;São Jerônimo da Serra;11905
+PR;São João;11187
+PR;São João do Caiuá;6152
+PR;São João do Ivaí;11890
+PR;São João do Triunfo;14399
+PR;São Jorge d'Oeste;9195
+PR;São Jorge do Ivaí;5382
+PR;São Jorge do Patrocínio;6080
+PR;São José da Boa Vista;6320
+PR;São José das Palmeiras;3942
+PR;São José dos Pinhais;279297
+PR;São Manoel do Paraná;2170
+PR;São Mateus do Sul;41188
+PR;São Miguel do Iguaçu;26451
+PR;São Pedro do Iguaçu;6561
+PR;São Pedro do Ivaí;9921
+PR;São Pedro do Paraná;2561
+PR;São Sebastião da Amoreira;9012
+PR;São Tomé;5522
+PR;Sapopema;6800
+PR;Sarandi;84651
+PR;Saudade do Iguaçu;5187
+PR;Sengés;20445
+PR;Serranópolis do Iguaçu;4362
+PR;Sertaneja;5924
+PR;Sertanópolis;16103
+PR;Siqueira Campos;17411
+PR;Sulina;3434
+PR;Tamarana;11577
+PR;Tamboara;4804
+PR;Tapejara;15367
+PR;Tapira;5904
+PR;Teixeira Soares;10548
+PR;Telêmaco Borba;69278
+PR;Terra Boa;15069
+PR;Terra Rica;15060
+PR;Terra Roxa;16734
+PR;Tibagi;19421
+PR;Tijucas do Sul;13762
+PR;Toledo;116774
+PR;Tomazina;8808
+PR;Três Barras do Paraná;12088
+PR;Tunas do Paraná;6753
+PR;Tuneiras do Oeste;8777
+PR;Tupãssi;7947
+PR;Turvo;14363
+PR;Ubiratã;21558
+PR;Umuarama;99606
+PR;União da Vitória;53466
+PR;Uniflor;2495
+PR;Uraí;11774
+PR;Ventania;11239
+PR;Vera Cruz do Oeste;9257
+PR;Verê;8078
+PR;Virmond;4181
+PR;Vitorino;6531
+PR;Wenceslau Braz;19090
+PR;Xambrê;5829
+SC;Abdon Batista;2805
+SC;Abelardo Luz;16899
+SC;Agrolândia;9661
+SC;Agronômica;4925
+SC;Água Doce;6959
+SC;Águas de Chapecó;6354
+SC;Águas Frias;2641
+SC;Águas Mornas;4503
+SC;Alfredo Wagner;10274
+SC;Alto Bela Vista;2071
+SC;Anchieta;6683
+SC;Angelina;5396
+SC;Anita Garibaldi;9191
+SC;Anitápolis;3267
+SC;Antônio Carlos;7466
+SC;Apiúna;10996
+SC;Arabutã;4048
+SC;Araquari;23080
+SC;Araranguá;59537
+SC;Armazém;7650
+SC;Arroio Trinta;3638
+SC;Arvoredo;2241
+SC;Ascurra;6945
+SC;Atalanta;3402
+SC;Aurora;5560
+SC;Balneário Arroio do Silva;8808
+SC;Balneário Barra do Sul;7791
+SC;Balneário Camboriú;102081
+SC;Balneário Gaivota;7959
+SC;Balneário Piçarras;14845
+SC;Bandeirante;3095
+SC;Barra Bonita;2120
+SC;Barra Velha;19861
+SC;Bela Vista do Toldo;6145
+SC;Belmonte;2790
+SC;Benedito Novo;10335
+SC;Biguaçu;56395
+SC;Blumenau;299416
+SC;Bocaina do Sul;3128
+SC;Bom Jardim da Serra;4383
+SC;Bom Jesus;2427
+SC;Bom Jesus do Oeste;2065
+SC;Bom Retiro;8594
+SC;Bombinhas;13695
+SC;Botuverá;4345
+SC;Braço do Norte;29317
+SC;Braço do Trombudo;3419
+SC;Brunópolis;2943
+SC;Brusque;102280
+SC;Caçador;70720
+SC;Caibi;6392
+SC;Calmon;4265
+SC;Camboriú;57793
+SC;Campo Alegre;11713
+SC;Campo Belo do Sul;8212
+SC;Campo Erê;9737
+SC;Campos Novos;29133
+SC;Canelinha;10168
+SC;Canoinhas;54645
+SC;Capão Alto;3358
+SC;Capinzal;18996
+SC;Capivari de Baixo;21059
+SC;Catanduvas;9119
+SC;Caxambu do Sul;4963
+SC;Celso Ramos;2720
+SC;Cerro Negro;4045
+SC;Chapadão do Lageado;2882
+SC;Chapecó;174187
+SC;Cocal do Sul;15229
+SC;Concórdia;70393
+SC;Cordilheira Alta;3531
+SC;Coronel Freitas;10520
+SC;Coronel Martins;2583
+SC;Correia Pinto;14842
+SC;Corupá;13380
+SC;Criciúma;188557
+SC;Cunha Porã;11079
+SC;Cunhataí;1948
+SC;Curitibanos;39045
+SC;Descanso;8898
+SC;Dionísio Cerqueira;15399
+SC;Dona Emma;3583
+SC;Doutor Pedrinho;3432
+SC;Entre Rios;3104
+SC;Ermo;1857
+SC;Erval Velho;4195
+SC;Faxinal dos Guedes;10585
+SC;Flor do Sertão;1700
+SC;Florianópolis;408161
+SC;Formosa do Sul;2683
+SC;Forquilhinha;21928
+SC;Fraiburgo;36469
+SC;Frei Rogério;2673
+SC;Galvão;3444
+SC;Garopaba;16710
+SC;Garuva;14281
+SC;Gaspar;55489
+SC;Governador Celso Ramos;12704
+SC;Grão Pará;6278
+SC;Gravatal;10793
+SC;Guabiruba;17316
+SC;Guaraciaba;10857
+SC;Guaramirim;31910
+SC;Guarujá do Sul;4870
+SC;Guatambú;4610
+SC;Herval d'Oeste;19323
+SC;Ibiam;2060
+SC;Ibicaré;3458
+SC;Ibirama;17469
+SC;Içara;57103
+SC;Ilhota;12149
+SC;Imaruí;11677
+SC;Imbituba;38882
+SC;Imbuia;5738
+SC;Indaial;50917
+SC;Iomerê;2643
+SC;Ipira;4771
+SC;Iporã do Oeste;8405
+SC;Ipuaçu;6881
+SC;Ipumirim;7400
+SC;Iraceminha;4328
+SC;Irani;9754
+SC;Irati;2033
+SC;Irineópolis;10748
+SC;Itá;6552
+SC;Itaiópolis;20551
+SC;Itajaí;172081
+SC;Itapema;36629
+SC;Itapiranga;16015
+SC;Itapoá;11489
+SC;Ituporanga;21496
+SC;Jaborá;4129
+SC;Jacinto Machado;11051
+SC;Jaguaruna;16418
+SC;Jaraguá do Sul;139017
+SC;Jardinópolis;1881
+SC;Joaçaba;25322
+SC;Joinville;497331
+SC;José Boiteux;5054
+SC;Jupiá;2185
+SC;Lacerdópolis;2266
+SC;Lages;167805
+SC;Laguna;51691
+SC;Lajeado Grande;1485
+SC;Laurentino;5757
+SC;Lauro Muller;14173
+SC;Lebon Régis;12134
+SC;Leoberto Leal;3674
+SC;Lindóia do Sul;4662
+SC;Lontras;9660
+SC;Luiz Alves;9506
+SC;Luzerna;5528
+SC;Macieira;1787
+SC;Mafra;52933
+SC;Major Gercino;2869
+SC;Major Vieira;7675
+SC;Maracajá;6185
+SC;Maravilha;23099
+SC;Marema;2275
+SC;Massaranduba;14500
+SC;Matos Costa;2826
+SC;Meleiro;7063
+SC;Mirim Doce;2583
+SC;Modelo;3862
+SC;Mondaí;9515
+SC;Monte Carlo;9144
+SC;Monte Castelo;8328
+SC;Morro da Fumaça;16128
+SC;Morro Grande;2775
+SC;Navegantes;57324
+SC;Nova Erechim;4381
+SC;Nova Itaberaba;4222
+SC;Nova Trento;12025
+SC;Nova Veneza;13177
+SC;Novo Horizonte;2954
+SC;Orleans;21731
+SC;Otacílio Costa;16587
+SC;Ouro;7231
+SC;Ouro Verde;2179
+SC;Paial;1830
+SC;Painel;2357
+SC;Palhoça;130878
+SC;Palma Sola;8145
+SC;Palmeira;2456
+SC;Palmitos;16596
+SC;Papanduva;17670
+SC;Paraíso;4200
+SC;Passo de Torres;5690
+SC;Passos Maia;4555
+SC;Paulo Lopes;7255
+SC;Pedras Grandes;4515
+SC;Penha;22263
+SC;Peritiba;2977
+SC;Petrolândia;6188
+SC;Pinhalzinho;15692
+SC;Pinheiro Preto;3048
+SC;Piratuba;4446
+SC;Planalto Alegre;2767
+SC;Pomerode;26788
+SC;Ponte Alta;5228
+SC;Ponte Alta do Norte;3677
+SC;Ponte Serrada;11724
+SC;Porto Belo;14228
+SC;Porto União;33408
+SC;Pouso Redondo;14510
+SC;Praia Grande;7318
+SC;Presidente Castello Branco;1779
+SC;Presidente Getúlio;14392
+SC;Presidente Nereu;2324
+SC;Princesa;2687
+SC;Quilombo;11259
+SC;Rancho Queimado;2893
+SC;Rio das Antas;6237
+SC;Rio do Campo;6135
+SC;Rio do Oeste;7033
+SC;Rio do Sul;59962
+SC;Rio dos Cedros;10170
+SC;Rio Fortuna;4648
+SC;Rio Negrinho;44633
+SC;Rio Rufino;2518
+SC;Riqueza;5126
+SC;Rodeio;11215
+SC;Romelândia;5760
+SC;Salete;7737
+SC;Saltinho;4178
+SC;Salto Veloso;4367
+SC;Sangão;11121
+SC;Santa Cecília;15928
+SC;Santa Helena;2484
+SC;Santa Rosa de Lima;2103
+SC;Santa Rosa do Sul;8241
+SC;Santa Terezinha;9363
+SC;Santa Terezinha do Progresso;3062
+SC;Santiago do Sul;1443
+SC;Santo Amaro da Imperatriz;18436
+SC;São Bento do Sul;76514
+SC;São Bernardino;2633
+SC;São Bonifácio;3274
+SC;São Carlos;10938
+SC;São Cristovão do Sul;5087
+SC;São Domingos;9611
+SC;São Francisco do Sul;40030
+SC;São João do Itaperiú;3426
+SC;São João do Oeste;6269
+SC;São João do Sul;7174
+SC;São João Batista;24419
+SC;São Joaquim;25122
+SC;São José;201746
+SC;São José do Cedro;14155
+SC;São José do Cerrito;10624
+SC;São Lourenço do Oeste;23015
+SC;São Ludgero;10951
+SC;São Martinho;3281
+SC;São Miguel da Boa Vista;2026
+SC;São Miguel do Oeste;35249
+SC;São Pedro de Alcântara;5183
+SC;Saudades;8929
+SC;Schroeder;14000
+SC;Seara;17827
+SC;Serra Alta;3277
+SC;Siderópolis;12967
+SC;Sombrio;25553
+SC;Sul Brasil;3150
+SC;Taió;17522
+SC;Tangará;8611
+SC;Tigrinhos;1768
+SC;Tijucas;29674
+SC;Timbé do Sul;5260
+SC;Timbó;35303
+SC;Timbó Grande;7315
+SC;Três Barras;18708
+SC;Treviso;3692
+SC;Treze de Maio;6791
+SC;Treze Tílias;6004
+SC;Trombudo Central;6520
+SC;Tubarão;96529
+SC;Tunápolis;4775
+SC;Turvo;11427
+SC;União do Oeste;3084
+SC;Urubici;10825
+SC;Urupema;2578
+SC;Urussanga;19936
+SC;Vargeão;3685
+SC;Vargem;3187
+SC;Vargem Bonita;4279
+SC;Vidal Ramos;6112
+SC;Videira;46585
+SC;Vitor Meireles;5756
+SC;Witmarsum;3584
+SC;Xanxerê;42174
+SC;Xavantina;4316
+SC;Xaxim;25444
+SC;Zortéa;3015
+RS;Aceguá;4347
+RS;Água Santa;3619
+RS;Agudo;17063
+RS;Ajuricaba;7374
+RS;Alecrim;7259
+RS;Alegrete;78984
+RS;Alegria;4775
+RS;Almirante Tamandaré do Sul;2208
+RS;Alpestre;8880
+RS;Alto Alegre;1945
+RS;Alto Feliz;3067
+RS;Alvorada;213894
+RS;Amaral Ferrador;6602
+RS;Ametista do Sul;8538
+RS;André da Rocha;1276
+RS;Anta Gorda;6326
+RS;Antônio Prado;14274
+RS;Arambaré;3929
+RS;Araricá;5181
+RS;Aratiba;6690
+RS;Arroio do Meio;19059
+RS;Arroio do Padre;2882
+RS;Arroio do Sal;7291
+RS;Arroio do Tigre;13208
+RS;Arroio dos Ratos;14181
+RS;Arroio Grande;18748
+RS;Arvorezinha;10548
+RS;Augusto Pestana;7361
+RS;Áurea;3789
+RS;Bagé;115745
+RS;Balneário Pinhal;11840
+RS;Barão;5444
+RS;Barão de Cotegipe;6724
+RS;Barão do Triunfo;7246
+RS;Barra do Guarita;3067
+RS;Barra do Quaraí;3873
+RS;Barra do Ribeiro;11762
+RS;Barra do Rio Azul;1978
+RS;Barra Funda;2453
+RS;Barracão;5401
+RS;Barros Cassal;11879
+RS;Benjamin Constant do Sul;2188
+RS;Bento Gonçalves;106999
+RS;Boa Vista das Missões;2100
+RS;Boa Vista do Buricá;6655
+RS;Boa Vista do Cadeado;2525
+RS;Boa Vista do Incra;2583
+RS;Boa Vista do Sul;2700
+RS;Bom Jesus;12201
+RS;Bom Princípio;11731
+RS;Bom Progresso;2404
+RS;Bom Retiro do Sul;11623
+RS;Boqueirão do Leão;8097
+RS;Bossoroca;7885
+RS;Bozano;2361
+RS;Braga;3842
+RS;Brochier;4876
+RS;Butiá;20213
+RS;Caçapava do Sul;33060
+RS;Cacequi;13578
+RS;Cachoeira do Sul;86557
+RS;Cachoeirinha;118089
+RS;Cacique Doble;5008
+RS;Caibaté;5212
+RS;Caiçara;5240
+RS;Camaquã;62723
+RS;Camargo;2549
+RS;Cambará do Sul;7238
+RS;Campestre da Serra;3328
+RS;Campina das Missões;6352
+RS;Campinas do Sul;5745
+RS;Campo Bom;59366
+RS;Campo Novo;5419
+RS;Campos Borges;3693
+RS;Candelária;30423
+RS;Cândido Godói;6722
+RS;Candiota;8576
+RS;Canela;41115
+RS;Canguçu;56064
+RS;Canoas;332056
+RS;Canudos do Vale;2004
+RS;Capão da Canoa;40861
+RS;Capão do Cipó;3485
+RS;Capão do Leão;24458
+RS;Capão Bonito do Sul;1877
+RS;Capela de Santana;11617
+RS;Capitão;2694
+RS;Capivari do Sul;3528
+RS;Caraá;7606
+RS;Carazinho;60388
+RS;Carlos Barbosa;25866
+RS;Carlos Gomes;1718
+RS;Casca;8654
+RS;Caseiros;3132
+RS;Catuípe;9611
+RS;Caxias do Sul;410166
+RS;Centenário;3100
+RS;Cerrito;6767
+RS;Cerro Branco;4673
+RS;Cerro Grande;2659
+RS;Cerro Grande do Sul;9854
+RS;Cerro Largo;12861
+RS;Chapada;9673
+RS;Charqueadas;36045
+RS;Charrua;3642
+RS;Chiapetta;4094
+RS;Chuí;5496
+RS;Chuvisca;5159
+RS;Cidreira;11885
+RS;Ciríaco;5020
+RS;Colinas;2470
+RS;Colorado;3771
+RS;Condor;6873
+RS;Constantina;10191
+RS;Coqueiro Baixo;1610
+RS;Coqueiros do Sul;3342
+RS;Coronel Barros;2522
+RS;Coronel Bicaco;7971
+RS;Coronel Pilar;1645
+RS;Cotiporã;4887
+RS;Coxilha;2997
+RS;Crissiumal;15096
+RS;Cristal;7393
+RS;Cristal do Sul;3099
+RS;Cruz Alta;64438
+RS;Cruzaltense;2266
+RS;Cruzeiro do Sul;12752
+RS;David Canabarro;4857
+RS;Derrubadas;3391
+RS;Dezesseis de Novembro;2923
+RS;Dilermando de Aguiar;3215
+RS;Dois Irmãos;26421
+RS;Dois Irmãos das Missões;2444
+RS;Dois Lajeados;3484
+RS;Dom Feliciano;15300
+RS;Dom Pedrito;38767
+RS;Dom Pedro de Alcântara;2851
+RS;Dona Francisca;3593
+RS;Doutor Maurício Cardoso;5424
+RS;Doutor Ricardo;2101
+RS;Eldorado do Sul;33668
+RS;Encantado;20530
+RS;Encruzilhada do Sul;25154
+RS;Engenho Velho;1467
+RS;Entre Rios do Sul;3087
+RS;Entre-Ijuís;9263
+RS;Erebango;2936
+RS;Erechim;97916
+RS;Ernestina;3094
+RS;Erval Grande;5367
+RS;Erval Seco;8196
+RS;Esmeralda;3383
+RS;Esperança do Sul;3468
+RS;Espumoso;15435
+RS;Estação;6253
+RS;Estância Velha;43906
+RS;Esteio;81170
+RS;Estrela;30603
+RS;Estrela Velha;3777
+RS;Eugênio de Castro;3083
+RS;Fagundes Varela;2607
+RS;Farroupilha;63375
+RS;Faxinal do Soturno;6407
+RS;Faxinalzinho;2607
+RS;Fazenda Vilanova;3248
+RS;Feliz;12198
+RS;Flores da Cunha;26695
+RS;Floriano Peixoto;2155
+RS;Fontoura Xavier;11335
+RS;Formigueiro;7214
+RS;Forquetinha;2614
+RS;Fortaleza dos Valos;4635
+RS;Frederico Westphalen;28428
+RS;Garibaldi;30518
+RS;Garruchos;3509
+RS;Gaurama;6232
+RS;General Câmara;9101
+RS;Gentil;1574
+RS;Getúlio Vargas;16345
+RS;Giruá;17139
+RS;Glorinha;7531
+RS;Gramado;33706
+RS;Gramado dos Loureiros;2399
+RS;Gramado Xavier;4124
+RS;Gravataí;269446
+RS;Guabiju;1702
+RS;Guaíba;96603
+RS;Guaporé;22589
+RS;Guarani das Missões;8414
+RS;Harmonia;3785
+RS;Herval;7120
+RS;Herveiras;2882
+RS;Horizontina;19131
+RS;Hulha Negra;6448
+RS;Humaitá;4999
+RS;Ibarama;4443
+RS;Ibiaçá;4796
+RS;Ibiraiaras;7319
+RS;Ibirapuitã;4315
+RS;Ibirubá;19358
+RS;Igrejinha;33551
+RS;Ijuí;79719
+RS;Ilópolis;4331
+RS;Imbé;16301
+RS;Imigrante;3125
+RS;Independência;6715
+RS;Inhacorá;2341
+RS;Ipê;6210
+RS;Ipiranga do Sul;2029
+RS;Iraí;8518
+RS;Itaara;4812
+RS;Itacurubi;3712
+RS;Itapuca;2465
+RS;Itaqui;36560
+RS;Itati;2720
+RS;Itatiba do Sul;4521
+RS;Ivorá;2424
+RS;Ivoti;20160
+RS;Jaboticaba;4204
+RS;Jacuizinho;2765
+RS;Jacutinga;3615
+RS;Jaguarão;28244
+RS;Jaguari;11762
+RS;Jaquirana;4429
+RS;Jari;3802
+RS;Jóia;8566
+RS;Júlio de Castilhos;19947
+RS;Lagoa dos Três Cantos;1633
+RS;Lagoa Bonita do Sul;2759
+RS;Lagoa Vermelha;28236
+RS;Lagoão;6702
+RS;Lajeado;72208
+RS;Lajeado do Bugre;2647
+RS;Lavras do Sul;8399
+RS;Liberato Salzano;6167
+RS;Lindolfo Collor;5732
+RS;Linha Nova;1516
+RS;Maçambara;4375
+RS;Machadinho;5623
+RS;Mampituba;2972
+RS;Manoel Viana;6954
+RS;Maquiné;7652
+RS;Maratá;2542
+RS;Marau;36643
+RS;Marcelino Ramos;5329
+RS;Mariana Pimentel;4173
+RS;Mariano Moro;2304
+RS;Marques de Souza;4122
+RS;Mata;5386
+RS;Mato Castelhano;2747
+RS;Mato Leitão;3827
+RS;Mato Queimado;1880
+RS;Maximiliano de Almeida;5050
+RS;Minas do Leão;8124
+RS;Miraguaí;4986
+RS;Montauri;1606
+RS;Monte Alegre dos Campos;3256
+RS;Monte Belo do Sul;2826
+RS;Montenegro;59557
+RS;Mormaço;2713
+RS;Morrinhos do Sul;3263
+RS;Morro Redondo;6477
+RS;Morro Reuter;5985
+RS;Mostardas;12392
+RS;Muçum;4685
+RS;Muitos Capões;3104
+RS;Muliterno;1872
+RS;Não-Me-Toque;16012
+RS;Nicolau Vergueiro;1803
+RS;Nonoai;12601
+RS;Nova Alvorada;3258
+RS;Nova Araçá;4075
+RS;Nova Bassano;9249
+RS;Nova Boa Vista;2113
+RS;Nova Bréscia;3291
+RS;Nova Candelária;2789
+RS;Nova Esperança do Sul;5180
+RS;Nova Hartz;17772
+RS;Nova Pádua;2598
+RS;Nova Palma;6693
+RS;Nova Petrópolis;18631
+RS;Nova Prata;24252
+RS;Nova Ramada;2464
+RS;Nova Roma do Sul;3754
+RS;Nova Santa Rita;22818
+RS;Novo Barreiro;3989
+RS;Novo Cabrais;3960
+RS;Novo Hamburgo;257746
+RS;Novo Machado;4246
+RS;Novo Tiradentes;2387
+RS;Novo Xingu;1926
+RS;Osório;41642
+RS;Paim Filho;4526
+RS;Palmares do Sul;11998
+RS;Palmeira das Missões;34225
+RS;Palmitinho;7134
+RS;Panambi;38794
+RS;Pantano Grande;9794
+RS;Paraí;6979
+RS;Paraíso do Sul;7643
+RS;Pareci Novo;3232
+RS;Parobé;51634
+RS;Passa Sete;5280
+RS;Passo do Sobrado;6300
+RS;Passo Fundo;187507
+RS;Paulo Bento;2149
+RS;Paverama;7841
+RS;Pedras Altas;2638
+RS;Pedro Osório;8297
+RS;Pejuçara;3946
+RS;Pelotas;345181
+RS;Picada Café;5039
+RS;Pinhal;2401
+RS;Pinhal da Serra;2022
+RS;Pinhal Grande;4581
+RS;Pinheirinho do Vale;4635
+RS;Pinheiro Machado;13152
+RS;Pirapó;2979
+RS;Piratini;21180
+RS;Planalto;10734
+RS;Poço das Antas;2098
+RS;Pontão;4040
+RS;Ponte Preta;1846
+RS;Portão;30802
+RS;Porto Alegre;1436123
+RS;Porto Lucena;5587
+RS;Porto Mauá;2580
+RS;Porto Vera Cruz;2038
+RS;Porto Xavier;11131
+RS;Pouso Novo;1998
+RS;Presidente Lucena;2526
+RS;Progresso;6420
+RS;Protásio Alves;2188
+RS;Putinga;4242
+RS;Quaraí;22883
+RS;Quatro Irmãos;1791
+RS;Quevedos;2839
+RS;Quinze de Novembro;3678
+RS;Redentora;10170
+RS;Relvado;2244
+RS;Restinga Seca;15885
+RS;Rio dos Índios;4192
+RS;Rio Grande;196337
+RS;Rio Pardo;38989
+RS;Riozinho;4664
+RS;Roca Sales;10468
+RS;Rodeio Bonito;5880
+RS;Rolador;2869
+RS;Rolante;20306
+RS;Ronda Alta;9865
+RS;Rondinha;5736
+RS;Roque Gonzales;7394
+RS;Rosário do Sul;41746
+RS;Sagrada Família;2668
+RS;Saldanha Marinho;3019
+RS;Salto do Jacuí;12770
+RS;Salvador das Missões;2671
+RS;Salvador do Sul;7165
+RS;Sananduva;15216
+RS;Santa Bárbara do Sul;9164
+RS;Santa Cecília do Sul;1776
+RS;Santa Clara do Sul;5868
+RS;Santa Cruz do Sul;122451
+RS;Santa Margarida do Sul;2235
+RS;Santa Maria;268969
+RS;Santa Maria do Herval;6476
+RS;Santa Rosa;66059
+RS;Santa Tereza;1893
+RS;Santa Vitória do Palmar;31605
+RS;Santana da Boa Vista;8891
+RS;Santana do Livramento;84079
+RS;Santiago;51160
+RS;Santo Ângelo;75445
+RS;Santo Antônio da Patrulha;39500
+RS;Santo Antônio das Missões;12016
+RS;Santo Antônio do Palma;2295
+RS;Santo Antônio do Planalto;2108
+RS;Santo Augusto;13845
+RS;Santo Cristo;14585
+RS;Santo Expedito do Sul;2684
+RS;São Borja;63035
+RS;São Domingos do Sul;2961
+RS;São Francisco de Assis;19799
+RS;São Francisco de Paula;22503
+RS;São Gabriel;59337
+RS;São Jerônimo;21289
+RS;São João da Urtiga;5123
+RS;São João do Polêsine;2782
+RS;São Jorge;2825
+RS;São José das Missões;3039
+RS;São José do Herval;2549
+RS;São José do Hortêncio;4173
+RS;São José do Inhacorá;2122
+RS;São José do Norte;26116
+RS;São José do Ouro;7190
+RS;São José do Sul;2010
+RS;São José dos Ausentes;3314
+RS;São Leopoldo;211663
+RS;São Lourenço do Sul;43388
+RS;São Luiz Gonzaga;34999
+RS;São Marcos;20537
+RS;São Martinho;5910
+RS;São Martinho da Serra;3579
+RS;São Miguel das Missões;7656
+RS;São Nicolau;5959
+RS;São Paulo das Missões;6767
+RS;São Pedro da Serra;3311
+RS;São Pedro das Missões;2051
+RS;São Pedro do Butiá;2802
+RS;São Pedro do Sul;17073
+RS;São Sebastião do Caí;21272
+RS;São Sepé;24353
+RS;São Valentim;3996
+RS;São Valentim do Sul;2336
+RS;São Valério do Sul;2729
+RS;São Vendelino;1891
+RS;São Vicente do Sul;8659
+RS;Sapiranga;78045
+RS;Sapucaia do Sul;126316
+RS;Sarandi;21828
+RS;Seberi;11098
+RS;Sede Nova;2996
+RS;Segredo;7301
+RS;Selbach;4912
+RS;Senador Salgado Filho;2940
+RS;Sentinela do Sul;5598
+RS;Serafina Corrêa;14733
+RS;Sério;2387
+RS;Sertão;6644
+RS;Sertão Santana;6155
+RS;Sete de Setembro;2134
+RS;Severiano de Almeida;3966
+RS;Silveira Martins;2537
+RS;Sinimbu;10706
+RS;Sobradinho;14744
+RS;Soledade;31028
+RS;Tabaí;4338
+RS;Tapejara;19147
+RS;Tapera;10787
+RS;Tapes;17216
+RS;Taquara;55473
+RS;Taquari;26626
+RS;Taquaruçu do Sul;2925
+RS;Tavares;5283
+RS;Tenente Portela;14253
+RS;Terra de Areia;10389
+RS;Teutônia;27215
+RS;Tio Hugo;2730
+RS;Tiradentes do Sul;6991
+RS;Toropi;3138
+RS;Torres;33944
+RS;Tramandaí;44040
+RS;Travesseiro;2471
+RS;Três de Maio;23893
+RS;Três Arroios;3079
+RS;Três Cachoeiras;11022
+RS;Três Coroas;24786
+RS;Três Forquilhas;3128
+RS;Três Palmeiras;4469
+RS;Três Passos;23911
+RS;Trindade do Sul;6105
+RS;Triunfo;25374
+RS;Tucunduva;5988
+RS;Tunas;4551
+RS;Tupanci do Sul;1781
+RS;Tupanciretã;23842
+RS;Tupandi;3931
+RS;Tuparendi;8866
+RS;Turuçu;4000
+RS;Ubiretama;2451
+RS;União da Serra;1649
+RS;Unistalda;2396
+RS;Uruguaiana;127045
+RS;Vacaria;62831
+RS;Vale do Sol;11273
+RS;Vale Real;5031
+RS;Vale Verde;3392
+RS;Vanini;2045
+RS;Venâncio Aires;67682
+RS;Vera Cruz;23928
+RS;Veranópolis;26121
+RS;Vespasiano Correa;1967
+RS;Viadutos;5728
+RS;Viamão;260740
+RS;Vicente Dutra;5587
+RS;Victor Graeff;3120
+RS;Vila Flores;3305
+RS;Vila Lângaro;2293
+RS;Vila Maria;4299
+RS;Vila Nova do Sul;4401
+RS;Vista Alegre;2932
+RS;Vista Alegre do Prata;1505
+RS;Vista Gaúcha;2804
+RS;Vitória das Missões;3676
+RS;Westfalia;2843
+RS;Xangri-lá;11721
+MS;Água Clara;13879
+MS;Alcinópolis;4515
+MS;Amambaí;34986
+MS;Anastácio;23047
+MS;Anaurilândia;8697
+MS;Angélica;7465
+MS;Antônio João;8734
+MS;Aparecida do Taboado;20623
+MS;Aquidauana;46515
+MS;Aral Moreira;9679
+MS;Bandeirantes;6001
+MS;Bataguassu;19596
+MS;Batayporã;10885
+MS;Bela Vista;23726
+MS;Bodoquena;8397
+MS;Bonito;17856
+MS;Brasilândia;12538
+MS;Caarapó;23696
+MS;Camapuã;13532
+MS;Campo Grande;755107
+MS;Caracol;5320
+MS;Cassilândia;21677
+MS;Chapadão do Sul;17293
+MS;Corguinho;4370
+MS;Coronel Sapucaia;14569
+MS;Corumbá;99467
+MS;Costa Rica;19228
+MS;Coxim;32933
+MS;Deodápolis;11600
+MS;Dois Irmãos do Buriti;9643
+MS;Douradina;5075
+MS;Dourados;189762
+MS;Eldorado;12421
+MS;Fátima do Sul;19332
+MS;Figueirão;3443
+MS;Glória de Dourados;9894
+MS;Guia Lopes da Laguna;10407
+MS;Iguatemi;15222
+MS;Inocência;7501
+MS;Itaporã;19390
+MS;Itaquiraí;17603
+MS;Ivinhema;21067
+MS;Japorã;7752
+MS;Jaraguari;5776
+MS;Jardim;24174
+MS;Jateí;3895
+MS;Juti;5569
+MS;Ladário;18805
+MS;Laguna Carapã;6031
+MS;Maracaju;32492
+MS;Miranda;24838
+MS;Mundo Novo;16506
+MS;Naviraí;45627
+MS;Nioaque;15693
+MS;Nova Alvorada do Sul;12673
+MS;Nova Andradina;45916
+MS;Novo Horizonte do Sul;4932
+MS;Paranaíba;40259
+MS;Paranhos;11553
+MS;Pedro Gomes;8537
+MS;Ponta Porã;75941
+MS;Porto Murtinho;15527
+MS;Ribas do Rio Pardo;20077
+MS;Rio Brilhante;27903
+MS;Rio Negro;5054
+MS;Rio Verde de Mato Grosso;19216
+MS;Rochedo;4480
+MS;Santa Rita do Pardo;7454
+MS;São Gabriel do Oeste;21650
+MS;Selvíria;6656
+MS;Sete Quedas;10955
+MS;Sidrolândia;41261
+MS;Sonora;13334
+MS;Tacuru;9554
+MS;Taquarussu;3165
+MS;Terenos;15276
+MS;Três Lagoas;89493
+MS;Vicentina;5783
+MT;Acorizal;5659
+MT;Água Boa;20276
+MT;Alta Floresta;51414
+MT;Alto Araguaia;14611
+MT;Alto Boa Vista;5475
+MT;Alto Garças;9550
+MT;Alto Paraguai;8329
+MT;Alto Taquari;6505
+MT;Apiacás;8381
+MT;Araguaiana;2996
+MT;Araguainha;1115
+MT;Araputanga;16090
+MT;Arenápolis;9903
+MT;Aripuanã;20511
+MT;Barão de Melgaço;7851
+MT;Barra do Bugres;34349
+MT;Barra do Garças;55120
+MT;Bom Jesus do Araguaia;4792
+MT;Brasnorte;15089
+MT;Cáceres;87261
+MT;Campinápolis;14301
+MT;Campo Novo do Parecis;23784
+MT;Campo Verde;28147
+MT;Campos de Júlio;5223
+MT;Canabrava do Norte;5563
+MT;Canarana;18014
+MT;Carlinda;12097
+MT;Castanheira;8059
+MT;Chapada dos Guimarães;18190
+MT;Cláudia;11148
+MT;Cocalinho;6103
+MT;Colíder;32096
+MT;Colniza;31597
+MT;Comodoro;18974
+MT;Confresa;22606
+MT;Conquista D'Oeste;3289
+MT;Cotriguaçu;14965
+MT;Cuiabá;550562
+MT;Curvelândia;5039
+MT;Denise;11142
+MT;Diamantino;18989
+MT;Dom Aquino;8498
+MT;Feliz Natal;11170
+MT;Figueirópolis D'Oeste;3656
+MT;Gaúcha do Norte;6195
+MT;General Carneiro;5028
+MT;Glória D'Oeste;3185
+MT;Guarantã do Norte;32142
+MT;Guiratinga;14523
+MT;Indiavaí;2679
+MT;Ipiranga do Norte;4641
+MT;Itanhangá;5061
+MT;Itaúba;4585
+MT;Itiquira;13022
+MT;Jaciara;25922
+MT;Jangada;8462
+MT;Jauru;10748
+MT;Juara;33246
+MT;Juína;39708
+MT;Juruena;9595
+MT;Juscimeira;12168
+MT;Lambari D'Oeste;5060
+MT;Lucas do Rio Verde;33556
+MT;Luciára;2467
+MT;Marcelândia;14473
+MT;Matupá;15170
+MT;Mirassol d'Oeste;25605
+MT;Nobres;15315
+MT;Nortelândia;6272
+MT;Nossa Senhora do Livramento;12819
+MT;Nova Bandeirantes;14078
+MT;Nova Brasilândia;4902
+MT;Nova Canaã do Norte;13237
+MT;Nova Guarita;4907
+MT;Nova Lacerda;5252
+MT;Nova Marilândia;2345
+MT;Nova Maringá;5989
+MT;Nova Monte Verde;8602
+MT;Nova Mutum;26874
+MT;Nova Nazaré;2955
+MT;Nova Olímpia;20944
+MT;Nova Santa Helena;3473
+MT;Nova Ubiratã;8372
+MT;Nova Xavantina;19398
+MT;Novo Horizonte do Norte;3970
+MT;Novo Mundo;7216
+MT;Novo Santo Antônio;2325
+MT;Novo São Joaquim;6985
+MT;Paranaíta;12113
+MT;Paranatinga;21424
+MT;Pedra Preta;16461
+MT;Peixoto de Azevedo;30363
+MT;Planalto da Serra;2797
+MT;Poconé;32162
+MT;Pontal do Araguaia;5322
+MT;Ponte Branca;1804
+MT;Pontes e Lacerda;39228
+MT;Porto dos Gaúchos;6383
+MT;Porto Alegre do Norte;10109
+MT;Porto Esperidião;9850
+MT;Porto Estrela;4027
+MT;Poxoréo;17758
+MT;Primavera do Leste;46933
+MT;Querência;11570
+MT;Reserva do Cabaçal;2598
+MT;Ribeirão Cascalheira;9172
+MT;Ribeirãozinho;2194
+MT;Rio Branco;5208
+MT;Rondolândia;3484
+MT;Rondonópolis;181902
+MT;Rosário Oeste;18497
+MT;Salto do Céu;3584
+MT;Santa Carmem;4573
+MT;Santa Cruz do Xingu;2357
+MT;Santa Rita do Trivelato;2751
+MT;Santa Terezinha;7690
+MT;Santo Afonso;2944
+MT;Santo Antônio do Leste;3573
+MT;Santo Antônio do Leverger;20412
+MT;São Félix do Araguaia;11257
+MT;São José do Povo;3451
+MT;São José do Rio Claro;18637
+MT;São José do Xingu;4218
+MT;São José dos Quatro Marcos;19493
+MT;São Pedro da Cipa;4241
+MT;Sapezal;15735
+MT;Serra Nova Dourada;1447
+MT;Sinop;114051
+MT;Sorriso;60028
+MT;Tabaporã;10760
+MT;Tangará da Serra;81960
+MT;Tapurah;11517
+MT;Terra Nova do Norte;15190
+MT;Tesouro;3205
+MT;Torixoréu;4113
+MT;União do Sul;4093
+MT;Vale de São Domingos;2955
+MT;Várzea Grande;240038
+MT;Vera;9502
+MT;Vila Bela da Santíssima Trindade;14523
+MT;Vila Rica;20075
+GO;Abadia de Goiás;6301
+GO;Abadiânia;13378
+GO;Acreúna;19246
+GO;Adelândia;2608
+GO;Água Fria de Goiás;5318
+GO;Água Limpa;2111
+GO;Águas Lindas de Goiás;143179
+GO;Alexânia;20706
+GO;Aloândia;2118
+GO;Alto Horizonte;3392
+GO;Alto Paraíso de Goiás;6982
+GO;Alvorada do Norte;8666
+GO;Amaralina;3719
+GO;Americano do Brasil;4795
+GO;Amorinópolis;3484
+GO;Anápolis;335960
+GO;Anhanguera;1018
+GO;Anicuns;18027
+GO;Aparecida de Goiânia;510770
+GO;Aparecida do Rio Doce;2871
+GO;Aporé;3708
+GO;Araçu;3946
+GO;Aragarças;17883
+GO;Aragoiânia;7702
+GO;Araguapaz;7780
+GO;Arenópolis;3481
+GO;Aruanã;7056
+GO;Aurilândia;3709
+GO;Avelinópolis;2421
+GO;Baliza;3679
+GO;Barro Alto;6714
+GO;Bela Vista de Goiás;21679
+GO;Bom Jardim de Goiás;8734
+GO;Bom Jesus de Goiás;21103
+GO;Bonfinópolis;7336
+GO;Bonópolis;3413
+GO;Brazabrantes;3345
+GO;Britânia;5190
+GO;Buriti de Goiás;2203
+GO;Buriti Alegre;8454
+GO;Buritinópolis;3573
+GO;Cabeceiras;6794
+GO;Cachoeira de Goiás;1434
+GO;Cachoeira Alta;8235
+GO;Cachoeira Dourada;7571
+GO;Caçu;11343
+GO;Caiapônia;16559
+GO;Caldas Novas;67588
+GO;Caldazinha;3341
+GO;Campestre de Goiás;3591
+GO;Campinaçu;3908
+GO;Campinorte;10039
+GO;Campo Alegre de Goiás;6286
+GO;Campo Limpo de Goiás;6022
+GO;Campos Belos;19166
+GO;Campos Verdes;6093
+GO;Carmo do Rio Verde;9481
+GO;Castelândia;3557
+GO;Catalão;81109
+GO;Caturaí;4667
+GO;Cavalcante;10398
+GO;Ceres;19069
+GO;Cezarina;7832
+GO;Chapadão do Céu;5863
+GO;Cidade Ocidental;52380
+GO;Cocalzinho de Goiás;15296
+GO;Colinas do Sul;4026
+GO;Córrego do Ouro;2632
+GO;Corumbá de Goiás;9372
+GO;Corumbaíba;8624
+GO;Cristalina;38504
+GO;Cristianópolis;3174
+GO;Crixás;15005
+GO;Cromínia;3729
+GO;Cumari;3145
+GO;Damianópolis;3678
+GO;Damolândia;2809
+GO;Davinópolis;2075
+GO;Diorama;2243
+GO;Divinópolis de Goiás;5570
+GO;Doverlândia;8570
+GO;Edealina;3821
+GO;Edéia;10604
+GO;Estrela do Norte;3223
+GO;Faina;7020
+GO;Fazenda Nova;6399
+GO;Firminópolis;10732
+GO;Flores de Goiás;11483
+GO;Formosa;96284
+GO;Formoso;5327
+GO;Gameleira de Goiás;3582
+GO;Goianápolis;11663
+GO;Goiandira;5081
+GO;Goianésia;56839
+GO;Goiânia;1281975
+GO;Goianira;26336
+GO;Goiás;24605
+GO;Goiatuba;32304
+GO;Gouvelândia;4790
+GO;Guapó;13973
+GO;Guaraíta;2370
+GO;Guarani de Goiás;4093
+GO;Guarinos;2379
+GO;Heitoraí;3706
+GO;Hidrolândia;14718
+GO;Hidrolina;4195
+GO;Iaciara;12855
+GO;Inaciolândia;5949
+GO;Indiara;13364
+GO;Inhumas;46786
+GO;Ipameri;24021
+GO;Ipiranga de Goiás;2906
+GO;Iporá;32045
+GO;Israelândia;2876
+GO;Itaberaí;32356
+GO;Itaguari;4364
+GO;Itaguaru;5591
+GO;Itajá;5528
+GO;Itapaci;17086
+GO;Itapirapuã;7792
+GO;Itapuranga;25170
+GO;Itarumã;5490
+GO;Itauçu;9117
+GO;Itumbiara;92832
+GO;Ivolândia;2738
+GO;Jandaia;6596
+GO;Jaraguá;41772
+GO;Jataí;86447
+GO;Jaupaci;3059
+GO;Jesúpolis;2296
+GO;Joviânia;6914
+GO;Jussara;19130
+GO;Lagoa Santa;1346
+GO;Leopoldo de Bulhões;9518
+GO;Luziânia;210064
+GO;Mairipotaba;2811
+GO;Mambaí;7096
+GO;Mara Rosa;10360
+GO;Marzagão;2157
+GO;Matrinchã;4420
+GO;Maurilândia;11604
+GO;Mimoso de Goiás;2941
+GO;Minaçu;31417
+GO;Mineiros;48329
+GO;Moiporá;1865
+GO;Monte Alegre de Goiás;7466
+GO;Montes Claros de Goiás;8070
+GO;Montividiu;9965
+GO;Montividiu do Norte;4702
+GO;Morrinhos;40838
+GO;Morro Agudo de Goiás;2379
+GO;Mossâmedes;4901
+GO;Mozarlândia;14073
+GO;Mundo Novo;6787
+GO;Mutunópolis;4086
+GO;Nazário;7622
+GO;Nerópolis;20260
+GO;Niquelândia;39803
+GO;Nova América;2278
+GO;Nova Aurora;2209
+GO;Nova Crixás;13432
+GO;Nova Glória;8632
+GO;Nova Iguaçu de Goiás;2678
+GO;Nova Roma;3633
+GO;Nova Veneza;7240
+GO;Novo Brasil;3377
+GO;Novo Gama;88835
+GO;Novo Planalto;4266
+GO;Orizona;15201
+GO;Ouro Verde de Goiás;4599
+GO;Ouvidor;5017
+GO;Padre Bernardo;28012
+GO;Palestina de Goiás;3317
+GO;Palmeiras de Goiás;22798
+GO;Palmelo;2324
+GO;Palminópolis;3761
+GO;Panamá;2665
+GO;Paranaiguara;7862
+GO;Paraúna;11319
+GO;Perolândia;2830
+GO;Petrolina de Goiás;10061
+GO;Pilar de Goiás;2821
+GO;Piracanjuba;24033
+GO;Piranhas;11215
+GO;Pirenópolis;20945
+GO;Pires do Rio;27928
+GO;Planaltina;79651
+GO;Pontalina;16687
+GO;Porangatu;40469
+GO;Porteirão;3158
+GO;Portelândia;3321
+GO;Posse;31257
+GO;Professor Jamil;3381
+GO;Quirinópolis;39756
+GO;Rialma;10911
+GO;Rianápolis;4256
+GO;Rio Quente;3285
+GO;Rio Verde;163021
+GO;Rubiataba;18618
+GO;Sanclerlândia;7936
+GO;Santa Bárbara de Goiás;6031
+GO;Santa Cruz de Goiás;3680
+GO;Santa Fé de Goiás;4882
+GO;Santa Helena de Goiás;36336
+GO;Santa Isabel;3575
+GO;Santa Rita do Araguaia;6277
+GO;Santa Rita do Novo Destino;3576
+GO;Santa Rosa de Goiás;2765
+GO;Santa Tereza de Goiás;4141
+GO;Santa Terezinha de Goiás;11829
+GO;Santo Antônio da Barra;4295
+GO;Santo Antônio de Goiás;4230
+GO;Santo Antônio do Descoberto;58474
+GO;São Domingos;10156
+GO;São Francisco de Goiás;5823
+GO;São João d'Aliança;8830
+GO;São João da Paraúna;1672
+GO;São Luís de Montes Belos;27793
+GO;São Luíz do Norte;4456
+GO;São Miguel do Araguaia;23142
+GO;São Miguel do Passa Quatro;3856
+GO;São Patrício;2144
+GO;São Simão;14373
+GO;Senador Canedo;77511
+GO;Serranópolis;7813
+GO;Silvânia;19154
+GO;Simolândia;7331
+GO;Sítio d'Abadia;3510
+GO;Taquaral de Goiás;3471
+GO;Teresina de Goiás;2915
+GO;Terezópolis de Goiás;5951
+GO;Três Ranchos;2967
+GO;Trindade;104979
+GO;Trombas;3683
+GO;Turvânia;5085
+GO;Turvelândia;4068
+GO;Uirapuru;3117
+GO;Uruaçu;34470
+GO;Uruana;14115
+GO;Urutaí;2720
+GO;Valparaíso de Goiás;123444
+GO;Varjão;3806
+GO;Vianópolis;12831
+GO;Vicentinópolis;6093
+GO;Vila Boa;4578
+GO;Vila Propício;5359
+DF;Brasília;2606885
