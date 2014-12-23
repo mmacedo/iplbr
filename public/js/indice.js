@@ -1024,15 +1024,16 @@
       });
     };
 
-    Eleicoes.prototype.dadosPorSigla = function(nome, ano) {
+    Eleicoes.prototype.dadosPorSigla = function(nome, tipo, ano) {
 
       if (!(ano in this.json)) {
         return {};
       }
 
       var _this = this;
-      return this.obter(nome + ano, function() {
-        return _this.json[ano][nome + '_por_sigla'];
+      var chave = nome + '_por_sigla' + (tipo == null ? '' : ('_' + tipo));
+      return this.obter(chave + ano, function() {
+        return _this.json[ano][chave];
       });
     };
 
@@ -1073,15 +1074,15 @@
     };
 
     EleicoesFederais.prototype.deputadosFederais = function(ano, sigla) {
-      return this.dadosPorSigla('deputados_federais', ano)[sigla] || 0;
+      return this.dadosPorSigla('deputados_federais', null, ano)[sigla] || 0;
     };
 
     EleicoesFederais.prototype.senadores = function(ano, sigla) {
-      return this.dadosPorSigla('senadores', ano)[sigla] || 0;
+      return this.dadosPorSigla('senadores', null, ano)[sigla] || 0;
     };
 
     EleicoesFederais.prototype.presidentes = function(ano, sigla) {
-      return this.dadosPorSigla('presidentes', ano)[sigla] || 0;
+      return this.dadosPorSigla('presidentes', null, ano)[sigla] || 0;
     };
 
     return EleicoesFederais;
@@ -1113,15 +1114,15 @@
     };
 
     EleicoesEstaduais.prototype.deputadosEstaduais = function(ano, sigla) {
-      return this.dadosPorSigla('deputados_estaduais', ano)[sigla] || 0;
+      return this.dadosPorSigla('deputados_estaduais', null, ano)[sigla] || 0;
     };
 
     EleicoesEstaduais.prototype.governadores = function(ano, sigla) {
-      return this.dadosPorSigla('governadores', ano)[sigla] || 0;
+      return this.dadosPorSigla('governadores', null, ano)[sigla] || 0;
     };
 
     EleicoesEstaduais.prototype.pesosDosGovernadores = function(ano, sigla) {
-      return this.dadosPorSigla('peso_dos_governadores', ano)[sigla] || 0;
+      return this.dadosPorSigla('governadores', 'peso_legislativo', ano)[sigla] || 0;
     };
 
     return EleicoesEstaduais;
@@ -1153,15 +1154,15 @@
     };
 
     EleicoesMunicipais.prototype.vereadores = function(ano, sigla) {
-      return this.dadosPorSigla('vereadores', ano)[sigla] || 0;
+      return this.dadosPorSigla('vereadores', null, ano)[sigla] || 0;
     };
 
     EleicoesMunicipais.prototype.prefeitos = function(ano, sigla) {
-      return this.dadosPorSigla('prefeitos', ano)[sigla] || 0;
+      return this.dadosPorSigla('prefeitos', null, ano)[sigla] || 0;
     };
 
     EleicoesMunicipais.prototype.pesosDosPrefeitos = function(ano, sigla) {
-      return this.dadosPorSigla('peso_dos_prefeitos', ano)[sigla] || 0;
+      return this.dadosPorSigla('prefeitos', 'peso_legislativo', ano)[sigla] || 0;
     };
 
     return EleicoesMunicipais;
