@@ -29,13 +29,15 @@
 
     Configuracao.tabelaDePartidos = [
       { sigla: 'PRB',     numero: 10, fundado: 2005 },
-      { sigla: 'PPB',     numero: 11, fundado: 1993, extinto: 2003, renomeado: 'PP' },
+      { sigla: 'PPR',     numero: 11, fundado: 1993, extinto: 1995, fusao: 'PPB' },
+      { sigla: 'PPB',     numero: 11, fundado: 1995, extinto: 2003, renomeado: 'PP' },
       { sigla: 'PP',      numero: 11, fundado: 2003 },
       { sigla: 'PDT',     numero: 12, fundado: 1979 },
       { sigla: 'PT',      numero: 13, fundado: 1980 },
       { sigla: 'PTB',     numero: 14, fundado: 1980 },
       { sigla: 'PMDB',    numero: 15, fundado: 1980 },
       { sigla: 'PSTU',    numero: 16, fundado: 1993 },
+      { sigla: 'PTRB',    numero: 17, fundado: 1993, extinto: 1995, renomeado: 'PRTB' },
       { sigla: 'PSL',     numero: 17, fundado: 1994 },
       { sigla: 'PST',     numero: 18, fundado: 1996, extinto: 2003, incorporado: 'PL' },
       { sigla: 'PTN',     numero: 19, fundado: 1995 },
@@ -56,6 +58,7 @@
       { sigla: 'PMN',     numero: 33, fundado: 1984 },
       { sigla: 'PRN',     numero: 36, fundado: 1989, extinto: 2000, renomeado: 'PTC' },
       { sigla: 'PTC',     numero: 36, fundado: 2000 },
+      { sigla: 'PP',      numero: 39, fundado: 1993, extinto: 1995, fusao: 'PPB' },
       { sigla: 'PSB',     numero: 40, fundado: 1988 },
       { sigla: 'PSD',     numero: 41, fundado: 1987, extinto: 2003, incorporado: 'PTB' },
       { sigla: 'PV',      numero: 43, fundado: 1993 },
@@ -81,6 +84,8 @@
         { de: { sigla: 'PSB',     numero: 40 }, para: 'PSB' },
         { de: { sigla: 'PFL',     numero: 25 }, para: 'DEM' },
         { de: { sigla: 'DEM',     numero: 25 }, para: 'DEM' },
+        { de: { sigla: 'PP',      numero: 39 }, para: 'PP' },
+        { de: { sigla: 'PPR',     numero: 11 }, para: 'PP' },
         { de: { sigla: 'PPB',     numero: 11 }, para: 'PP' },
         { de: { sigla: 'PP',      numero: 11 }, para: 'PP' },
         { de: { sigla: 'PSD',     numero: 55 }, para: 'PSD' },
@@ -104,6 +109,7 @@
 
     Configuracao.tabelaDePartidosAntigos = {
       mapear: [
+        { de: { sigla: 'PPR',     numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PPB',     numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PP',      numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PFL',     numero: 25 }, para: 'ARENA' },
@@ -229,9 +235,27 @@
             migrouUmPartido = true;
 
             configDestino = Lazy(Configuracao.tabelaDePartidos).find(function(configDestino) {
-              return mesclarCom  === configDestino.sigla &&
-                     configDestino.fundado <= config.extinto &&
-                     (configDestino.extinto == null || configDestino.extinto >= config.extinto);
+
+              if (mesclarCom !== configDestino.sigla) {
+                return false;
+              }
+
+              if (configDestino.extinto != null && configDestino.extinto < config.extinto) {
+                return false;
+              }
+
+              if (config.incorporado != null) {
+                if (configDestino.fundado > config.extinto) {
+                  return false;
+                }
+              } else {
+                if (configDestino.fundado < config.extinto) {
+                  return false;
+                }
+              }
+
+              return true;
+
             });
 
           }
