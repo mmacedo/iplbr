@@ -72,17 +72,31 @@
     <h1>Índice de Poder Legislativo</h1>
 
     <div class="well well-sm">
+
       <div class="btn-group btn-group-justified" data-toggle="buttons">
         <label class="btn btn-primary">
-          <input type="radio" name="peso_indice" id="peso_nominal" autocomplete="off"> Não usa peso
+          <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Não usa peso
         </label>
         <label class="btn btn-primary active" aria-pressed="true">
-          <input type="radio" name="peso_indice" id="peso_populacao" autocomplete="off" checked> Usa população como peso
+          <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> Usa população como peso
         </label>
         <label class="btn btn-primary">
-          <input type="radio" name="peso_indice" id="peso_legislativo" autocomplete="off"> Usa tamanho do legislativo como peso
+          <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Usa tamanho do legislativo como peso
         </label>
       </div>
+
+      <div class="btn-group btn-group-justified" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Peso mínimo com quórum de 50% (zero)
+        </label>
+        <label class="btn btn-primary active" aria-pressed="true">
+          <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Peso máximo com quórum de 25% (50%)
+        </label>
+      </div>
+
     </div>
 
     <div class="well well-sm">
@@ -285,7 +299,7 @@
     $(function() {
 
       // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_indice"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
         if ($(this).is('#tipo_spline')) {
           $('#step').bootstrapToggle('disable');
@@ -317,7 +331,7 @@
 
         var configuracao = new Configuracao();
         var indices = new GeradorDeIndices(json, configuracao);
-        var peso;
+        var pesoUe, pesoExecutivo;
 
         $(document)
           .on('shown.bs.tab', '#tabpanel_graficos a[data-toggle="tab"]', function() {
@@ -328,11 +342,19 @@
             configuracao.completaExtremos = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
 
             if ($('#peso_nominal').is(':checked')) {
-              peso = 'nominal';
+              pesoUe = 'nominal';
             } else if ($('#peso_legislativo').is(':checked')) {
-              peso = 'legislativo';
+              pesoUe = 'legislativo';
             } else if ($('#peso_populacao').is(':checked')) {
-              peso = 'populacao';
+              pesoUe = 'populacao';
+            }
+
+            if ($('#peso_zero').is(':checked')) {
+              pesoExecutivo = 0.00;
+            } else if ($('#peso_media').is(':checked')) {
+              pesoExecutivo = 0.25;
+            } else if ($('#peso_metade').is(':checked')) {
+              pesoExecutivo = 0.50;
             }
 
             if ($('#configuracao_todos').is(':checked')) {
@@ -351,7 +373,7 @@
               return;
             }
 
-            criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', indices.indiceNacional(peso));
+            criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', indices.indiceNacional(pesoUe, pesoExecutivo));
           })
           .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
 
@@ -359,11 +381,14 @@
               return;
             }
 
-            criaGrafico("#indice_federal", 'Índice Federal', 'deputados federais = 75% e presidentes = 25%', indices.indiceFederal(peso));
-            criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, indices.deputadosFederais(peso));
-            criaGrafico("#senadores", 'Senado Federal', null, indices.senadores(peso));
-            criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', indices.congressoNacional(peso));
-            criaGrafico("#presidentes", 'Presidência da República', null, indices.presidentes(peso));
+            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
+            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+
+            criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', indices.indiceFederal(pesoUe, pesoExecutivo));
+            criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, indices.deputadosFederais(pesoUe, pesoExecutivo));
+            criaGrafico("#senadores", 'Senado Federal', null, indices.senadores(pesoUe, pesoExecutivo));
+            criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', indices.congressoNacional(pesoUe, pesoExecutivo));
+            criaGrafico("#presidentes", 'Presidência da República', null, indices.presidentes(pesoUe, pesoExecutivo));
           })
           .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_estadual"]', function() {
 
@@ -371,9 +396,12 @@
               return;
             }
 
-            criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = 75% e governadores = 25%', indices.indiceEstadual(peso));
-            criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, indices.deputadosEstaduais(peso));
-            criaGrafico("#governadores", 'Governos Estaduais', null, indices.governadores(peso));
+            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
+            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+
+            criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', indices.indiceEstadual(pesoUe, pesoExecutivo));
+            criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, indices.deputadosEstaduais(pesoUe, pesoExecutivo));
+            criaGrafico("#governadores", 'Governos Estaduais', null, indices.governadores(pesoUe, pesoExecutivo));
           })
           .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_municipal"]', function() {
 
@@ -381,9 +409,12 @@
               return;
             }
 
-            criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = 75% e prefeitos = 25%', indices.indiceMunicipal(peso));
-            criaGrafico("#vereadores", 'Câmaras Municipais', null, indices.vereadores(peso));
-            criaGrafico("#prefeitos", 'Prefeituras', null, indices.prefeitos(peso));
+            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
+            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+
+            criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', indices.indiceMunicipal(pesoUe, pesoExecutivo));
+            criaGrafico("#vereadores", 'Câmaras Municipais', null, indices.vereadores(pesoUe, pesoExecutivo));
+            criaGrafico("#prefeitos", 'Prefeituras', null, indices.prefeitos(pesoUe, pesoExecutivo));
           });
 
         $('#tabpanel_graficos .active > a[data-toggle="tab"]').trigger('shown.bs.tab');
