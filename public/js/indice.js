@@ -25,6 +25,9 @@
 
       // Ex.: Configuracao.tabelaDePartidosAntigos
       this.tabelaDeReescrita = null;
+
+      // Faz correções específicas para gráficos de área
+      this.ehGraficoArea = false;
     }
 
     Configuracao.tabelaDePartidos = [
@@ -460,11 +463,27 @@
 
       // Converte para formato esperado pelo Highcharts
       indicesPorSigla = indicesPorSigla.map(function(linha) {
-        return {
+
+        // Índices ordenados por ano (Highcharts faz a linha dar voltas se não tiver ordenado)
+        var indicesOrdenados = linha.indices.sortBy(function(linha) { return linha[0]; }).toArray();
+
+        var result = {
           name: linha.sigla,
-          // Índices ordenados por ano (Highcharts faz a linha dar voltas se não tiver ordenado)
-          data: linha.indices.sortBy(function(linha) { return linha[0]; }).toArray()
+          data: indicesOrdenados
         };
+
+        if (configuracao.tabelaDeReescrita != null && linha.sigla === configuracao.tabelaDeReescrita.resto) {
+
+          result.color = '#333';
+
+          if (configuracao.ehGraficoArea === false) {
+            result.dashStyle = 'dash';
+          }
+
+        }
+
+        return result;
+
       });
 
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
