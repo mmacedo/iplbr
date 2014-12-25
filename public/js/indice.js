@@ -21,7 +21,7 @@
       this.fusoes         = true;
 
       // Deixa gráficos de linha mais bonitos, mas estraga gráficos empilhados
-      this.completaExtremos = true;
+      this.mostraFundacaoEDissolucao = true;
 
       // Ex.: Configuracao.tabelaDePartidosAntigos
       this.tabelaDeReescrita = null;
@@ -143,60 +143,45 @@
         anos = anos.concat([ anos.max() + 1 ]);
       }
 
-      // Partido novo
-      if ((fundado - 1) > anos.min()) {
+      if (this.mostraFundacaoEDissolucao === true && this.tabelaDeReescrita == null) {
 
-        if (this.completaExtremos === true && this.tabelaDeReescrita == null) {
+        // Partido novo
+        if ((fundado - 1) > anos.min()) {
 
           // Remove anos antes da fundação
           anos = anos.filter(function(ano) {
             return ano >= fundado;
           });
 
-          // Adiciona 1 anterior a fundação (= zero em 01/01 do ano da fundação)
+          // Adiciona ano da fundação
           anos = anos.concat([ fundado - 1 ]);
-
-        } else {
-
-          var ultimaEleicaoAntesDaFundacao = anos.filter(function(ano) { return ano < fundado; }).max();
-
-          // Remove anos antes da fundação
-          anos = anos.filter(function(ano) {
-            return ano >= fundado;
-          });
-
-          // Readiciona última eleição para fechar os gráficos de área
-          if (isFinite(ultimaEleicaoAntesDaFundacao)) {
-            anos = anos.concat([ ultimaEleicaoAntesDaFundacao ]);
-          }
 
         }
 
-      }
+        // Partido morto
+        if (extinto != null) {
 
-      // Partido morto
-      if (extinto != null) {
+          // Se o partido foi extinto antes do primeiro ano do gráfico
+          if (extinto < anos.min()) {
 
-        // Se o partido foi extinto antes do primeiro ano do gráfico
-        if (extinto < anos.min()) {
+            anos = Lazy([]);
 
-          anos = Lazy([]);
+          } else {
 
-        } else {
+            // Remove anos depois da dissolução
+            anos = anos.filter(function(ano) {
+              return ano <= extinto;
+            });
 
-          // Remove anos depois da dissolução
-          anos = anos.filter(function(ano) {
-            return ano <= extinto;
-          });
-
-          if (this.completaExtremos === true && this.tabelaDeReescrita == null) {
             // Adiciona ano da dissolução, normalmente iria até a última eleição
             if ((extinto - 1) > anos.max()) {
               anos = anos.concat([ extinto - 1 ]);
             }
+
           }
 
         }
+
       }
 
       return anos;
