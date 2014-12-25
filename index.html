@@ -335,11 +335,11 @@
 
         $(document)
           .on('shown.bs.tab', '#tabpanel_graficos a[data-toggle="tab"]', function() {
-            configuracao.passos           = $('#step').is(':checked:enabled');
-            configuracao.mudancasDeNome   = $('#mudancas_de_nome').is(':checked:enabled');
-            configuracao.incorporacoes    = $('#incorporacoes').is(':checked:enabled');
-            configuracao.fusoes           = $('#fusoes').is(':checked:enabled');
-            configuracao.completaExtremos = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
+            configuracao.passos                    = $('#step').is(':checked:enabled');
+            configuracao.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
+            configuracao.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
+            configuracao.fusoes                    = $('#fusoes').is(':checked:enabled');
+            configuracao.mostraFundacaoEDissolucao = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
 
             if ($('#peso_nominal').is(':checked')) {
               pesoUe = 'nominal';
