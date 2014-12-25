@@ -168,16 +168,16 @@
           <div class="col-md-9">
             <div class="btn-group btn-group-justified" data-toggle="buttons">
               <label class="btn btn-primary active" aria-pressed="true">
-                <input type="radio" name="tipo_de_grafico" id="tipo_spline" autocomplete="off" checked> Spline
+                <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off" checked> Curvas
               </label>
               <label class="btn btn-primary">
-                <input type="radio" name="tipo_de_grafico" id="tipo_line" autocomplete="off"> Linha
+                <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
               </label>
               <label class="btn btn-primary">
                 <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
               </label>
               <label class="btn btn-primary">
-                <input type="radio" name="tipo_de_grafico" id="tipo_percent" autocomplete="off"> Área (%)
+                <input type="radio" name="tipo_de_grafico" id="tipo_area_porcentagem" autocomplete="off"> Área (%)
               </label>
             </div>
           </div>
@@ -262,35 +262,46 @@
   <script type="text/javascript">
     function criaGrafico(id, titulo, subtitulo, serie) {
 
-      var stepChecked = $('#step').is(':checked:enabled');
+      var passosSelecionado = $('#step').is(':checked:enabled');
 
-      var splineChecked  = $('#tipo_spline').is(':checked'),
-          lineChecked    = $('#tipo_line').is(':checked'),
-          areaChecked    = $('#tipo_area').is(':checked'),
-          percentChecked = $('#tipo_percent').is(':checked');
+      var curvasSelecionado          = $('#tipo_curvas').is(':checked'),
+          linhasSelectionado         = $('#tipo_linhas').is(':checked'),
+          areaSelecionado            = $('#tipo_area').is(':checked'),
+          areaPorcentagemSelecionado = $('#tipo_area_porcentagem').is(':checked');
 
-      var chartType = splineChecked?'spline':lineChecked?'line':'area';
-      var stacking  = areaChecked?'normal':percentChecked?'percent':null;
+      var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
+      var stacking  = areaSelecionado?'normal':areaPorcentagemSelecionado?'percent':null;
 
       $(id).highcharts({
         chart: { type: chartType },
         title: { text: titulo },
         subtitle: { text: subtitulo },
-        yAxis: {
-          title: { text: '%' },
-          floor: 0,
-          ceiling: 100,
-          reversedStacks: false
+        yAxis: [
+          {
+            title: { text: '%' },
+            tickInterval: 5,
+            minorTickInterval: 1,
+            floor: 0,
+            ceiling: 100,
+            reversedStacks: false
+          }, {
+            title: { text: '%' },
+            linkedTo: 0,
+            opposite: true
+          }
+        ],
+        xAxis: {
+          type: 'datetime',
+          tickInterval: 2 * 24 * 3600 * 1000 * 365,
+          minorTickInterval: 1 * 24 * 3600 * 1000 * 365
         },
-        xAxis: { type: 'datetime' },
         tooltip: {
-          crosshairs: true,
           shared: true,
-          valueDecimals: 2
+          valueDecimals: 3
         },
         series: serie,
         plotOptions: {
-          series: { marker: { enabled: false }, step: stepChecked?'left':false },
+          series: { marker: { enabled: false }, step: passosSelecionado?'left':false },
           area: { stacking: stacking, fillOpacity: 1 }
         }
       });
@@ -301,7 +312,7 @@
       // Atualiza os gráficos quando o usuário muda o tipo
       $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
-        if ($(this).is('#tipo_spline')) {
+        if ($(this).is('#tipo_curvas')) {
           $('#step').bootstrapToggle('disable');
         } else {
           $('#step').bootstrapToggle('enable');
@@ -339,7 +350,8 @@
             configuracao.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
             configuracao.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
             configuracao.fusoes                    = $('#fusoes').is(':checked:enabled');
-            configuracao.mostraFundacaoEDissolucao = $('#tipo_spline').is(':checked') || $('#tipo_line').is(':checked');
+            configuracao.ehGraficoArea             = $('#tipo_area').is(':checked') || $('#tipo_area_porcentagem').is(':checked');
+            configuracao.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
 
             if ($('#peso_nominal').is(':checked')) {
               pesoUe = 'nominal';
