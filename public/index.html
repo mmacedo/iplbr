@@ -279,8 +279,9 @@
         yAxis: [
           {
             title: { text: '%' },
-            floor: 0,
             tickInterval: 5,
+            minorTickInterval: 1,
+            floor: 0,
             ceiling: 100,
             reversedStacks: false
           }, {
@@ -289,7 +290,11 @@
             opposite: true
           }
         ],
-        xAxis: { type: 'datetime' },
+        xAxis: {
+          type: 'datetime',
+          tickInterval: 2 * 24 * 3600 * 1000 * 365,
+          minorTickInterval: 1 * 24 * 3600 * 1000 * 365
+        },
         tooltip: {
           shared: true,
           valueDecimals: 3

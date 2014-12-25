@@ -23,23 +23,7 @@ def normaliza_municipio(municipio, uf)
   municipio = municipio.gsub("da a", "d'a").gsub("do o", "d'o").gsub(" d ", " d'").gsub(" dagua", " d'agua")
   # Elimina hífen
   municipio = municipio.gsub('-', ' ')
-  # Januário Cicco foi renomeada em 02/02/1991, IBGE!
-  municipio = 'boa saude' if municipio == 'januario cicco' && uf == 'RN'
-  # Augusto Severo foi renomeada em 06/12/1991, IBGE!
-  municipio = 'campo grande' if municipio == 'augusto severo' && uf == 'RN'
-  # Presidente Juscelino foi renomeada em plebiscito de 07/10/2012, TSE!
-  municipio = 'serra caiada' if municipio == 'presidente juscelino' && uf == 'RN'
-  # Governador Lomanto Júnior voltou ao nome original por ação do MPE/BA em 2009 (já consta nas estimativas do IBGE de 2008)
-  municipio = 'barro preto' if municipio == 'governador lomanto junior' && uf == 'BA'
-  # É São Vicente do Seridó desde 1968, IBGE!
-  municipio = 'sao vicente do serido' if municipio == 'serido' && uf == 'PB'
-  # Foi renomeado para Érico Cardoso em 1991 (já consta nas eleições de 2008)
-  municipio = 'erico cardoso' if municipio == 'agua quente' && uf == 'BA'
-  # Foi renomeado (já consta nas eleições de 2008)
-  municipio = 'caem' if municipio == 'anselmo da fonseca' && uf == 'BA'
-  # Não chegou a ser renomeado para Ouro Branco (já consta nas eleições de 2004)
-  municipio = 'pindai' if municipio == 'ouro branco' && uf == 'BA'
-  # Erros
+  # Atualiza nomes errados ou desatualizados
   municipio = 'agua doce do maranhao' if municipio == 'agua doce' && uf == 'MA'
   municipio = 'aguas lindas de goias' if municipio == 'aguas lindas' && uf == 'GO'
   municipio = 'alagoinha do piaui' if municipio == 'alagoinha' && uf == 'PI'
@@ -55,17 +39,24 @@ def normaliza_municipio(municipio, uf)
   municipio = 'balneario camboriu' if municipio == 'balneario de camboriu' && uf == 'SC'
   municipio = 'bandeirantes do tocantins' if municipio == 'bandeirante' && uf == 'TO'
   municipio = 'barauna' if municipio == 'baraunas' && uf == 'PB'
+  municipio = 'barro preto' if municipio == 'governador lomanto junior' && uf == 'BA'
   municipio = 'bataguassu' if municipio == 'bataguacu' && uf == 'MS'
   municipio = 'bataypora' if municipio == 'bataipora' && uf == 'MS'
   municipio = 'bela vista do maranhao' if municipio == 'bela vista' && uf == 'MA'
   municipio = 'bernardino de campos' if municipio == 'bernadino de campos' && uf == 'SP'
+  municipio = 'boa vista do sul' if municipio == 'vinte e sete da boa vista' && uf == 'RS'
+  municipio = 'boa saude' if municipio == 'januario cicco' && uf == 'RN'
   municipio = 'boa vista do ramos' if municipio == 'boa vista de ramos' && uf == 'AM'
   municipio = 'bom jesus de goias' if municipio == 'bom jesus' && uf == 'GO'
   municipio = 'brasopolis' if municipio == 'brazopolis' && uf == 'MG'
+  municipio = 'brodowski' if municipio == 'brodosqui' && uf == 'SP'
   municipio = 'cabo de santo agostinho' if municipio == 'cabo' && uf == 'PE'
+  municipio = 'caem' if municipio == 'anselmo da fonseca' && uf == 'BA'
+  municipio = 'campo grande' if municipio == 'augusto severo' && uf == 'RN'
   municipio = 'campos dos goytacazes' if municipio == 'campos' && uf == 'RJ'
   municipio = 'caninde de sao francisco' if municipio == 'caninde do sao francisco' && uf == 'SE'
   municipio = 'catunda' if municipio == 'senador catunda' && uf == 'CE'
+  municipio = 'cezarina' if municipio == 'cesarina' && uf == 'GO'
   municipio = 'chapada de areia' if municipio == "chapada d'areia" && uf == 'TO'
   municipio = 'chiapetta' if municipio == 'chiapeta' && uf == 'RS'
   municipio = 'conceicao das pedras' if municipio == 'conceicao da pedra' && uf == 'MG'
@@ -74,6 +65,7 @@ def normaliza_municipio(municipio, uf)
   municipio = 'deputado irapuan pinheiro' if municipio == 'dep irapuan pinheiro' && uf == 'CE'
   municipio = 'divinopolis do tocantins' if municipio == 'divinopolis' && uf == 'TO'
   municipio = 'eldorado dos carajas' if municipio == 'eldorado do carajas' && uf == 'PA'
+  municipio = 'erico cardoso' if municipio == 'agua quente' && uf == 'BA'
   municipio = 'espirito santo' if municipio == "espirito santo d'oeste" && uf == 'RN'
   municipio = 'eusebio' if municipio == 'euzebio' && uf == 'CE'
   municipio = 'fernando pedroza' if municipio == 'fernando pedrosa' && uf == 'RN'
@@ -83,11 +75,13 @@ def normaliza_municipio(municipio, uf)
   municipio = 'granjeiro' if municipio == 'grangeiro' && uf == 'CE'
   municipio = 'gouveia' if municipio == 'gouvea' && uf == 'MG'
   municipio = 'governador edison lobao' if municipio == 'governador edson lobao' && uf == 'MA'
+  municipio = 'herval' if municipio == 'erval' && uf == 'RS'
   municipio = 'ilha de itamaraca' if municipio == 'itamaraca' && uf == 'PE'
   municipio = 'ipaussu' if municipio == 'ipaucu' && uf == 'SP'
   municipio = 'itabirinha de mantena' if municipio == 'itabirinha' && uf == 'MG'
   municipio = 'itaguaje' if municipio == 'itaguage' && uf == 'PR'
   municipio = 'itamogi' if municipio == 'itamoji' && uf == 'MG'
+  municipio = "itapua d'oeste" if municipio == 'jamari' && uf == 'RO'
   municipio = 'jaboatao dos guararapes' if municipio == 'jaboatao' && uf == 'PE'
   municipio = 'juti' if municipio == 'juty' && uf == 'MS'
   municipio = 'lagoa de itaenga' if municipio == 'lagoa do itaenga' && uf == 'PE'
@@ -106,17 +100,22 @@ def normaliza_municipio(municipio, uf)
   municipio = 'muquem do sao francisco' if municipio == 'muquem de sao francisco' && uf == 'BA'
   municipio = 'mundo novo' if municipio == 'mundo novo de goias' && uf == 'GO'
   municipio = 'munhoz de melo' if municipio == 'munhoz de mello' && uf == 'PR'
+  municipio = 'nova santa rita' if municipio == 'petronio portela' && uf == 'PI'
   municipio = 'novo airao' if municipio == 'novo ayrao' && uf == 'AM'
   municipio = 'nova bandeirantes' if municipio == 'nova bandeirante' && uf == 'MT'
   municipio = "nova brasilandia d'oeste" if municipio == 'nova brasilandia' && uf == 'RO'
   municipio = 'oliveira de fatima' if municipio == 'oliveira do tocantins' && uf == 'TO'
+  municipio = 'palmeiras do tocantins' if municipio == 'mosquito' && uf == 'TO'
   municipio = 'paraty' if municipio == 'parati' && uf == 'RJ'
   municipio = 'paty do alferes' if municipio == 'pati do alferes' && uf == 'RJ'
   municipio = "pau d'arco do piaui" if municipio == 'pau darco do piaui' && uf == 'PI'
   municipio = 'pedra branca do amapari' if (municipio == 'agua branca do amapari' || municipio == 'amapari') && uf == 'AP'
+  municipio = 'pedro regis' if municipio == 'retiro' && uf == 'PB'
   municipio = 'picarras' if municipio == 'balneario picarras' && uf == 'SC'
+  municipio = 'pindai' if municipio == 'ouro branco' && uf == 'BA'
   municipio = 'pindorama do tocantins' if municipio == 'pindorama de goias' && uf == 'TO'
   municipio = 'pirassununga' if municipio == 'piracununga' && uf == 'SP'
+  municipio = 'piumhi' if municipio == 'pium i' && uf == 'MG'
   municipio = 'porto esperidiao' if municipio == 'porto esperediao' && uf == 'MT'
   municipio = 'poxoreu' if municipio == 'poxoreo' && uf == 'MT'
   municipio = 'presidente castello branco' if municipio == 'presidente castelo branco' && uf == 'SC'
@@ -134,24 +133,31 @@ def normaliza_municipio(municipio, uf)
   municipio = 'santa teresinha' if municipio == 'santa terezinha' && uf == 'BA'
   municipio = 'santana do itarare' if municipio == 'santa ana do itarare' && uf == 'PR'
   municipio = 'santo antonio de posse' if municipio == 'santo antonio da posse' && uf == 'SP'
-  municipio = 'senador la rocque' if municipio == 'senador la roque' && uf == 'MA'
+  municipio = 'sao bentinho' if municipio == 'sao bento de pombal' && uf == 'PB'
   municipio = 'sao caitano' if municipio == 'sao caetano' && uf == 'PE'
+  municipio = 'sao domingos do cariri' if municipio == 'sao domingos de cabaceiras' && uf == 'PB'
   municipio = 'sao domingos do norte' if municipio == 'sao domingos' && uf == 'ES'
+  municipio = 'sao jose da lapa' if municipio == 'sao jose do lapa' && uf == 'MG'
   municipio = 'sao jose do brejo do cruz' if municipio == 'sao jose do brejo cruz' && uf == 'PB'
   municipio = 'sao jose do campestre' if municipio == 'sao jose de campestre' && uf == 'RN'
+  municipio = 'sao luis de montes belos' if municipio == 'sao luis dos montes belos' && uf == 'GO'
   municipio = 'sao luiz' if municipio == 'sao luiz do anaua' && uf == 'RR'
   municipio = 'sao luiz gonzaga' if municipio == 'sao luis gonzaga' && uf == 'RS'
   municipio = 'sao raimundo do doca bezerra' if municipio == 'sao raimundo da doca bezerra' && uf == 'MA'
   municipio = 'sao sebastiao de lagoa de roca' if municipio == 'sao seb. de lagoa de roca' && uf == 'PB'
   municipio = 'sao thome das letras' if municipio == 'sao tome das letras' && uf == 'MG'
   municipio = 'sao valerio da natividade' if municipio == 'sao valerio do tocantins' && uf == 'TO'
+  municipio = 'sao vicente do serido' if municipio == 'serido' && uf == 'PB'
+  municipio = 'senador la rocque' if municipio == 'senador la roque' && uf == 'MA'
+  municipio = 'serra caiada' if municipio == 'presidente juscelino' && uf == 'RN'
   municipio = 'suzanapolis' if municipio == 'suzanopolis' && uf == 'SP'
   municipio = 'tapurah' if municipio == 'tapura' && uf == 'MT'
   municipio = 'tejucuoca' if municipio == 'tejussuoca' && uf == 'CE'
   municipio = 'teotonio vilela' if municipio == 'senador teotonio vilela' && uf == 'AL'
+  municipio = 'teresina de goias' if municipio == 'terezinha de goias' && uf == 'GO'
   municipio = 'trindade do sul' if municipio == 'trindade' && uf == 'RS'
   municipio = 'valparaiso' if municipio == 'valparaizo' && uf == 'SP'
-  municipio = 'valparaiso de goias' if municipio == 'valparaiso' && uf == 'GO'
+  municipio = 'valparaiso de goias' if (municipio == 'valparaiso' || municipio == 'valparaizo') && uf == 'GO'
   municipio = 'varre sai' if municipio == 'varre e sai' && uf == 'RJ'
   municipio = 'vila bela da santissima trindade' if municipio == 'vila bela stssma trindade' && uf == 'MT'
   municipio = 'viseu' if municipio == 'vizeu' && uf == 'PA'
@@ -170,7 +176,7 @@ def populacao(lista, uf, municipio, ano)
   else
     primeiro_ano_com_municipio = lista.keys.select { |i| lista[i][uf].has_key? municipio }.min
 
-    puts "Não encontrado #{municipio}/#{uf} em #{ano}" unless lista.has_key? primeiro_ano_com_municipio
+    raise "Não encontrado '#{municipio}' / #{uf} em #{ano}" unless lista.has_key? primeiro_ano_com_municipio
     lista[primeiro_ano_com_municipio][uf][municipio]
   end
 end
