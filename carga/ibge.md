@@ -31,7 +31,7 @@ Realizar download:
     wget ftp://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2013/estimativa_2013_dou_ods.zip -O tmp.zip; and unzip tmp.zip; and rm tmp.zip; and mv estimativa_2013_dou_ods.ods 2013.ods
     wget ftp://ftp.ibge.gov.br/Estimativas_de_Populacao/Estimativas_2014/estimativa_dou_2014_ods.zip -O tmp.zip; and unzip tmp.zip; and rm tmp.zip; and mv estimativas_dou_2014_ods.ods 2014.ods
 
-    # This was not working, I had to do it manually
+    # Converter os xls para ods (não estava funcionando, tive que fazer manualmente)
     localc --headless --convert-to ods {2001,2002,2003,2004,2005,2006,2008,2009,2011}.xls; and rm {2001,2002,2003,2004,2005,2006,2008,2009,2011}.xls
 
 Os arquivos são bastante irregulares, é necessário fazer a importação manualmente.
