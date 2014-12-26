@@ -2,7 +2,7 @@
 
 # http://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1996/resultados-das-eleicoes
 
-ano = 2004
+ano = 2008
 
 require 'set'
 require 'fileutils'
@@ -26,24 +26,28 @@ partidos = SortedSet.new(ja_carregados.to_a)
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
 
 tabela_de_partidos = {
-  "PP"      => 11, # 2004
+  "PRB"     => 10, # 2008
+  "PP"      => 11, # 2004, 2008
   # "PPB"     => 11, # 1996, 2000
   "PDT"     => 12,
   "PT"      => 13,
   "PTB"     => 14,
   "PMDB"    => 15,
-  "PSTU"    => 16, # 2000, 2004
+  # "PSTU"    => 16, # 2000, 2004
   "PSL"     => 17,
   # "PST"     => 18,
   "PTN"     => 19,
   "PSC"     => 20,
-  "PCB"     => 21, # 2000, 2004
-  "PL"      => 22,
+  "PCB"     => 21, # 2000, 2004, 2008
+  # "PL"      => 22, # 1996, 2000, 2004
+  "PR"      => 22, # 2008
   "PPS"     => 23,
-  "PFL"     => 25,
-  "PAN"     => 26,
+  # "PFL"     => 25, # 1996, 2000, 2004
+  "DEM"     => 25, # 2008
+  # "PAN"     => 26,
+  "PSDC"    => 27,
   "PRTB"    => 28,
-  "PCO"     => 29, # 2004
+  # "PCO"     => 29, # 2004
   # "PGT"     => 30, # 1996, 2000
   # "PSN"     => 31, # 1996
   "PHS"     => 31, # 2000, 2004
@@ -55,8 +59,8 @@ tabela_de_partidos = {
   "PRP"     => 44,
   # "PSD"     => 41, # 1996, 20000
   "PSDB"    => 45,
-  "PSDC"    => 27,
-  "PRONA"   => 56, # 2000, 2004
+  "PSOL"    => 50, # 2008
+  # "PRONA"   => 56, # 2000, 2004
   "PC do B" => 65,
   "PT do B" => 70
 }
