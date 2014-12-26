@@ -252,103 +252,138 @@ end
 
 json = { municipais:{}, estaduais:{}, federais:{} }
 
-municipais.each do |ano, ufs|
-
-  json[:municipais][ano] = {
+def criaHashMunicipal(populacao)
+  {
     total_prefeitos:                      0,
     total_vereadores:                     0,
-    total_populacao:                      populacao(populacao_brasil, nil, nil, ano),
+    total_populacao:                      populacao,
     prefeitos_por_sigla:                  Hash.new(0),
     prefeitos_por_sigla_peso_legislativo: Hash.new(0),
     prefeitos_por_sigla_peso_populacao:   Hash.new(0),
     vereadores_por_sigla:                 Hash.new(0),
     vereadores_por_sigla_peso_populacao:  Hash.new(0)
   }
+end
+
+municipais.each do |ano, ufs|
+
+  json[:municipais][ano] = { :_BR => criaHashMunicipal(populacao(populacao_brasil, nil, nil, ano)) }
 
   ufs.each do |uf, municipios|
+
+    total_populacao_uf = populacao(populacao_ufs, uf, nil, ano)
+
+    json[:municipais][ano][uf] = criaHashMunicipal(total_populacao_uf)
+
     municipios.each do |municipio, cargos|
 
       # Ignora cidades que não tem os dados dos vereadores
       next unless cargos.has_key? 'VEREADOR'
 
-      total_vereadores = cargos['VEREADOR'].map { |sigla, vereadores| vereadores }.reduce(:+)
-      total_populacao  = populacao(populacao_municipios, uf, municipio, ano)
+      total_vereadores          = cargos['VEREADOR'].map { |sigla, vereadores| vereadores }.reduce(:+)
+      total_populacao_municipio = populacao(populacao_municipios, uf, municipio, ano)
 
-      json[:municipais][ano][:total_prefeitos]  += 1
-      json[:municipais][ano][:total_vereadores] += total_vereadores
+      json[:municipais][ano][:_BR][:total_prefeitos]  += 1
+      json[:municipais][ano][uf][:total_prefeitos]    += 1
+      json[:municipais][ano][:_BR][:total_vereadores] += total_vereadores
+      json[:municipais][ano][uf][:total_vereadores]   += total_vereadores
 
       if cargos.has_key? 'PREFEITO'
         cargos['PREFEITO'].each do |sigla, prefeitos|
-          json[:municipais][ano][:prefeitos_por_sigla][sigla]                  += 1
-          json[:municipais][ano][:prefeitos_por_sigla_peso_legislativo][sigla] += total_vereadores
-          json[:municipais][ano][:prefeitos_por_sigla_peso_populacao][sigla]   += total_populacao
+          json[:municipais][ano][:_BR][:prefeitos_por_sigla][sigla]                  += 1
+          json[:municipais][ano][uf][:prefeitos_por_sigla][sigla]                    += 1
+          json[:municipais][ano][:_BR][:prefeitos_por_sigla_peso_legislativo][sigla] += total_vereadores
+          json[:municipais][ano][uf][:prefeitos_por_sigla_peso_legislativo][sigla]   += total_vereadores
+          json[:municipais][ano][:_BR][:prefeitos_por_sigla_peso_populacao][sigla]   += total_populacao_municipio
+          json[:municipais][ano][uf][:prefeitos_por_sigla_peso_populacao][sigla]     += total_populacao_municipio
         end
       end
 
       cargos['VEREADOR'].each do |sigla, vereadores|
-        json[:municipais][ano][:vereadores_por_sigla][sigla]                += vereadores
-        json[:municipais][ano][:vereadores_por_sigla_peso_populacao][sigla] += vereadores * (total_populacao / total_vereadores)
+        json[:municipais][ano][:_BR][:vereadores_por_sigla][sigla]                += vereadores
+        json[:municipais][ano][uf][:vereadores_por_sigla][sigla]                  += vereadores
+        json[:municipais][ano][:_BR][:vereadores_por_sigla_peso_populacao][sigla] += vereadores * (total_populacao_municipio / total_vereadores)
+        json[:municipais][ano][uf][:vereadores_por_sigla_peso_populacao][sigla]   += vereadores * (total_populacao_municipio / total_vereadores)
       end
     end
   end
 end
 
-estaduais.each do |ano, ufs|
-
-  json[:estaduais][ano] = {
+def criaHashEstadual(populacao)
+  {
     total_governadores:                           0,
     total_deputados_estaduais:                    0,
-    total_populacao:                              populacao(populacao_brasil, nil, nil, ano),
+    total_populacao:                              populacao,
     governadores_por_sigla:                       Hash.new(0),
     governadores_por_sigla_peso_legislativo:      Hash.new(0),
     governadores_por_sigla_peso_populacao:        Hash.new(0),
     deputados_estaduais_por_sigla:                Hash.new(0),
     deputados_estaduais_por_sigla_peso_populacao: Hash.new(0)
   }
+end
+
+estaduais.each do |ano, ufs|
+
+  json[:estaduais][ano] = { :_BR => criaHashEstadual(populacao(populacao_brasil, nil, nil, ano)) }
 
   ufs.each do |uf, cargos|
 
-    total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
-    total_populacao           = populacao(populacao_ufs, uf, nil, ano)
+    total_populacao_uf = populacao(populacao_ufs, uf, nil, ano)
 
-    json[:estaduais][ano][:total_governadores]        += 1
-    json[:estaduais][ano][:total_deputados_estaduais] += total_deputados_estaduais
+    json[:estaduais][ano][uf] = criaHashEstadual(total_populacao_uf)
+
+    total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
+
+    json[:estaduais][ano][:_BR][:total_governadores]        += 1
+    json[:estaduais][ano][uf][:total_governadores]          += 1
+    json[:estaduais][ano][:_BR][:total_deputados_estaduais] += total_deputados_estaduais
+    json[:estaduais][ano][uf][:total_deputados_estaduais]   += total_deputados_estaduais
 
     cargos['GOVERNADOR'].each do |sigla, governadores|
-      json[:estaduais][ano][:governadores_por_sigla][sigla]                  += 1
-      json[:estaduais][ano][:governadores_por_sigla_peso_legislativo][sigla] += total_deputados_estaduais
-      json[:estaduais][ano][:governadores_por_sigla_peso_populacao][sigla]   += total_populacao
+      json[:estaduais][ano][:_BR][:governadores_por_sigla][sigla]                  += 1
+      json[:estaduais][ano][uf][:governadores_por_sigla][sigla]                    += 1
+      json[:estaduais][ano][:_BR][:governadores_por_sigla_peso_legislativo][sigla] += total_deputados_estaduais
+      json[:estaduais][ano][uf][:governadores_por_sigla_peso_legislativo][sigla]   += total_deputados_estaduais
+      json[:estaduais][ano][:_BR][:governadores_por_sigla_peso_populacao][sigla]   += total_populacao_uf
+      json[:estaduais][ano][uf][:governadores_por_sigla_peso_populacao][sigla]     += total_populacao_uf
     end
 
     cargos['DEPUTADO ESTADUAL OU DISTRITAL'].each do |sigla, deputados_estaduais|
-      json[:estaduais][ano][:deputados_estaduais_por_sigla][sigla]                += deputados_estaduais
-      json[:estaduais][ano][:deputados_estaduais_por_sigla_peso_populacao][sigla] += deputados_estaduais * (total_populacao / total_deputados_estaduais)
+      json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla][sigla]                += deputados_estaduais
+      json[:estaduais][ano][uf][:deputados_estaduais_por_sigla][sigla]                  += deputados_estaduais
+      json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla_peso_populacao][sigla] += deputados_estaduais * (total_populacao_uf / total_deputados_estaduais)
+      json[:estaduais][ano][uf][:deputados_estaduais_por_sigla_peso_populacao][sigla]   += deputados_estaduais * (total_populacao_uf / total_deputados_estaduais)
     end
   end
 end
 
-federais.each do |ano, cargos|
-
-  json[:federais][ano] = {
+def criaHashFederal(populacao)
+  {
     total_presidentes:            1,
     total_deputados_federais:     0,
     total_senadores:              0,
+    total_populacao:              populacao,
     presidentes_por_sigla:        Hash.new(0),
     deputados_federais_por_sigla: Hash.new(0),
     senadores_por_sigla:          Hash.new(0)
   }
+end
 
-  json[:federais][ano][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
-  json[:federais][ano][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
+federais.each do |ano, cargos|
 
-  cargos['PRESIDENTE'].each { |sigla, presidentes| json[:federais][ano][:presidentes_por_sigla][sigla] = 1 }
+  json[:federais][ano] = { :_BR => criaHashFederal(populacao(populacao_brasil, nil, nil, ano)) }
+
+  json[:federais][ano][:_BR][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
+  json[:federais][ano][:_BR][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
+
+  cargos['PRESIDENTE'].each { |sigla, presidentes| json[:federais][ano][:_BR][:presidentes_por_sigla][sigla] = 1 }
 
   cargos['DEPUTADO FEDERAL'].each do |sigla, deputados_federais|
-    json[:federais][ano][:deputados_federais_por_sigla][sigla] += deputados_federais
+    json[:federais][ano][:_BR][:deputados_federais_por_sigla][sigla] += deputados_federais
   end
 
   cargos['SENADOR'].each do |sigla, senadores|
-    json[:federais][ano][:senadores_por_sigla][sigla] += senadores
+    json[:federais][ano][:_BR][:senadores_por_sigla][sigla] += senadores
   end
 end
 
