@@ -2,7 +2,7 @@
 
 # http://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1996/resultados-das-eleicoes
 
-ano = 2000
+ano = 2004
 
 require 'set'
 require 'fileutils'
@@ -26,46 +26,52 @@ partidos = SortedSet.new(ja_carregados.to_a)
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
 
 tabela_de_partidos = {
-  "PPB"     => 11,
+  "PP"      => 11, # 2004
+  # "PPB"     => 11, # 1996, 2000
   "PDT"     => 12,
   "PT"      => 13,
   "PTB"     => 14,
   "PMDB"    => 15,
-  "PSTU"    => 16, # 2000
+  "PSTU"    => 16, # 2000, 2004
   "PSL"     => 17,
-  "PST"     => 18,
+  # "PST"     => 18,
   "PTN"     => 19,
   "PSC"     => 20,
-  "PCB"     => 21, # 2000
+  "PCB"     => 21, # 2000, 2004
   "PL"      => 22,
   "PPS"     => 23,
   "PFL"     => 25,
   "PAN"     => 26,
   "PRTB"    => 28,
-  "PGT"     => 30,
+  "PCO"     => 29, # 2004
+  # "PGT"     => 30, # 1996, 2000
   # "PSN"     => 31, # 1996
-  "PHS"     => 31, # 2000
+  "PHS"     => 31, # 2000, 2004
   "PMN"     => 33,
-  "PRN"     => 36,
+  # "PRN"     => 36, # 1996, 2000
+  "PTC"     => 36, # 2004
   "PSB"     => 40,
   "PV"      => 43,
   "PRP"     => 44,
-  "PSD"     => 41,
+  # "PSD"     => 41, # 1996, 20000
   "PSDB"    => 45,
   "PSDC"    => 27,
-  "PRONA"   => 56, # 2000
+  "PRONA"   => 56, # 2000, 2004
   "PC do B" => 65,
   "PT do B" => 70
 }
 
-linhas = IO.readlines(arquivo_de_entrada).map do |linha|
+linhas = IO.readlines(arquivo_de_entrada).uniq.map do |linha|
   cargo, uf, municipio, sigla, nome = linha.chomp.split(',')
 
   sigla = 'PPB' if sigla == 'PP' and ano == 2000
   nome = Unicode::upcase(nome)
   numero = tabela_de_partidos[sigla]
 
-  puts sigla unless tabela_de_partidos.has_key? sigla
+  unless tabela_de_partidos.has_key? sigla
+    puts sigla
+    exit
+  end
 
   [ ano.to_s, uf, municipio, cargo.upcase, numero.to_s, sigla, nome ]
 end
