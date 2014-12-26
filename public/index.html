@@ -176,9 +176,6 @@
               <label class="btn btn-primary">
                 <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
               </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="tipo_de_grafico" id="tipo_area_porcentagem" autocomplete="off"> Área (%)
-              </label>
             </div>
           </div>
 
@@ -264,13 +261,12 @@
 
       var passosSelecionado = $('#step').is(':checked:enabled');
 
-      var curvasSelecionado          = $('#tipo_curvas').is(':checked'),
-          linhasSelectionado         = $('#tipo_linhas').is(':checked'),
-          areaSelecionado            = $('#tipo_area').is(':checked'),
-          areaPorcentagemSelecionado = $('#tipo_area_porcentagem').is(':checked');
+      var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
+          linhasSelectionado = $('#tipo_linhas').is(':checked'),
+          areaSelecionado    = $('#tipo_area').is(':checked');
 
       var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
-      var stacking  = areaSelecionado?'normal':areaPorcentagemSelecionado?'percent':null;
+      var stacking  = areaSelecionado?'normal':null;
 
       $(id).highcharts({
         chart: { type: chartType },
@@ -350,7 +346,7 @@
             configuracao.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
             configuracao.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
             configuracao.fusoes                    = $('#fusoes').is(':checked:enabled');
-            configuracao.ehGraficoArea             = $('#tipo_area').is(':checked') || $('#tipo_area_porcentagem').is(':checked');
+            configuracao.ehGraficoArea             = $('#tipo_area').is(':checked');
             configuracao.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
 
             if ($('#peso_nominal').is(':checked')) {
