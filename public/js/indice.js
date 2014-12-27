@@ -1011,8 +1011,6 @@
 
     IndiceMunicipal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
 
-      console.log("IndiceMunicipal.prototype.temDados", ano, this.vereadores.temDados(ano, ufs, metodoPesoUe, pesoExecutivo), this.prefeitos.temDados(ano, ufs, metodoPesoUe, pesoExecutivo));
-
       return this.vereadores.temDados(ano, ufs, metodoPesoUe, pesoExecutivo) &&
              this.prefeitos.temDados(ano, ufs, metodoPesoUe, pesoExecutivo);
 
@@ -1021,8 +1019,6 @@
     IndiceMunicipal.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) {
 
       var pesoLegislativo = 1 - pesoExecutivo;
-
-      console.log("IndiceMunicipal.prototype.calculaIndice", ano, sigla, this.vereadores.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo), this.prefeitos.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo));
 
       return this.vereadores.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) * pesoLegislativo +
              this.prefeitos.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo)  * pesoExecutivo;
@@ -1134,10 +1130,6 @@
 
       var chave = "total_" + nome;
       if (uf != null) {
-        if (this.json[ano][uf] == null) {
-          console.log(this.constructor.name, ano, uf, chave, Lazy(this.json[ano]).keys().toArray().toString());
-        }
-
         return this.json[ano][uf][chave];
       } else {
         return this.json[ano]._BR[chave];
