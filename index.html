@@ -71,59 +71,102 @@
 
     <h1>Índice de Poder Legislativo</h1>
 
-    <div class="well well-sm">
+    <div class="panel-group" role="tablist" aria-multiselectable="true">
 
-      <div class="btn-group btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Não usa peso
-        </label>
-        <label class="btn btn-primary active" aria-pressed="true">
-          <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> Usa população como peso
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Usa tamanho do legislativo como peso
-        </label>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_cfg_indice">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="true" aria-controls="panel_cfg_indice">Configurar variáveis</a>
+          </h4>
+        </div>
+        <div id="panel_cfg_indice" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_indice">
+          <div class="panel-body">
+
+            <form>
+              <div class="form-group">
+                <label for="peso_ue">Método de peso da UE</label>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Nominal
+                  </label>
+                  <label class="btn btn-default active" aria-pressed="true">
+                    <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> População
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Legislativo
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="peso_executivo">Peso do executivo</label>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Mínimo (zero)
+                  </label>
+                  <label class="btn btn-default active" aria-pressed="true">
+                    <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Máximo (50%)
+                  </label>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
       </div>
 
-      <div class="btn-group btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Peso mínimo com quórum de 50% (zero)
-        </label>
-        <label class="btn btn-primary active" aria-pressed="true">
-          <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Peso máximo com quórum de 25% (50%)
-        </label>
-      </div>
 
-    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_cfg_partidos">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Configurar partidos</a>
+          </h4>
+        </div>
+        <div id="panel_cfg_partidos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_partidos">
+          <div class="panel-body">
 
-    <div class="well well-sm">
+            <form>
+              <div class="form-group">
+                <label for="configuracao_predefinida">Pré-definição</label>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Nenhuma
+                  </label>
+                  <label class="btn btn-default active" aria-pressed="true">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
+                  </label>
+                </div>
+              </div>
+            </form>
 
-      <div class="container-fluid">
-
-        <div class="row">
-
-          <div class="col-md-3">
             <div class="panel panel-default">
               <div class="panel-heading">Aplicar retroativo</div>
               <div class="panel-body">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="mudancas_de_nome" data-toggle="toggle" checked>
+                    <input type="checkbox" id="mudancas_de_nome" data-toggle="delayed-toggle" checked>
                     Mudanças de nome
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="incorporacoes" data-toggle="toggle" checked>
+                    <input type="checkbox" id="incorporacoes" data-toggle="delayed-toggle" checked>
                     Incorporações
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="fusoes" data-toggle="toggle" checked>
+                    <input type="checkbox" id="fusoes" data-toggle="delayed-toggle" checked>
                     Fusões
                   </label>
                 </div>
@@ -131,61 +174,52 @@
             </div>
           </div>
 
-          <div class="col-md-9">
-            <div class="panel panel-default">
-              <div class="panel-heading">Configuração de partidos</div>
-              <div class="panel-body">
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-primary active" aria-pressed="true">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off" checked> Todos
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off"> Top 10
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
-                  </label>
+        </div>
+      </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_cfg_grafico">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_grafico" aria-expanded="false" aria-controls="panel_cfg_grafico">Configurar gráfico</a>
+          </h4>
+        </div>
+        <div id="panel_cfg_grafico" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_grafico">
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+
+              <div class="container-fluid">
+
+                <div class="row">
+
+                  <div class="col-xs-9">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                      <label class="btn btn-default">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
+                      </label>
+                      <label class="btn btn-default">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
+                      </label>
+                      <label class="btn btn-default active" aria-pressed="true">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-3">
+                    <input type="checkbox" id="passos" data-toggle="delayed-toggle" data-on="Com passos" data-off="Sem passos">
+                  </div>
+
                 </div>
+
               </div>
             </div>
+          </form>
           </div>
-
         </div>
-
       </div>
 
-    </div>
-
-    <div class="well well-sm">
-
-      <div class="container-fluid">
-
-        <div class="row">
-
-          <div class="col-md-9">
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-primary active" aria-pressed="true">
-                <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off" checked> Curvas
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off"> Área
-              </label>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <input type="checkbox" id="step" data-toggle="toggle" data-on="Com passos" data-off="Sem passos" disabled>
-          </div>
-
-        </div>
-
-      </div>
 
     </div>
 
@@ -259,7 +293,7 @@
   <script type="text/javascript">
     function criaGrafico(id, titulo, subtitulo, serie) {
 
-      var passosSelecionado = $('#step').is(':checked:enabled');
+      var passosSelecionado = $('#passos').is(':checked:enabled');
 
       var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
           linhasSelectionado = $('#tipo_linhas').is(':checked'),
@@ -305,13 +339,17 @@
 
     $(function() {
 
+      $('.collapse').one('shown.bs.collapse', function () {
+        $(this).find(':visible[data-toggle="delayed-toggle"]').bootstrapToggle();
+      });
+
       // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #step, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
         if ($(this).is('#tipo_curvas')) {
-          $('#step').bootstrapToggle('disable');
+          $('#passos').bootstrapToggle('disable');
         } else {
-          $('#step').bootstrapToggle('enable');
+          $('#passos').bootstrapToggle('enable');
         }
 
         // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
@@ -342,7 +380,7 @@
 
         $(document)
           .on('shown.bs.tab', '#tabpanel_graficos a[data-toggle="tab"]', function() {
-            configuracao.passos                    = $('#step').is(':checked:enabled');
+            configuracao.passos                    = $('#passos').is(':checked:enabled');
             configuracao.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
             configuracao.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
             configuracao.fusoes                    = $('#fusoes').is(':checked:enabled');

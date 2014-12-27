@@ -500,22 +500,6 @@
 
       });
 
-      // indicesPorSigla = Lazy(indicesPorSigla.toArray())
-      // total = {
-      //   name: "Total",
-      //   color: 'transparent',
-      //   data: indicesPorSigla.map(function(i) {
-      //     return i.data;
-      //   }).flatten().chunk(2).groupBy(function(i) {
-      //     return i[0];
-      //   }).pairs().map(function(i) {
-      //     return [ parseInt(i[0], 10), Lazy(i[1]).sum(function(i) {
-      //       return i[1];
-      //     }) ];
-      //   }).sortBy(function(linha) { return linha[0]; }).toArray()
-      // };
-      // indicesPorSigla = indicesPorSigla.concat([ total ]);
-
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
       indicesPorSigla = indicesPorSigla.sortBy(function(linha) {
 
