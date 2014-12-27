@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
   <meta name="author" content="Michel Pavan Macedo">
@@ -306,6 +306,7 @@
         chart: { type: chartType },
         title: { text: titulo },
         subtitle: { text: subtitulo },
+        credits: { enabled: false },
         yAxis: [
           {
             title: { text: '%' },
@@ -331,8 +332,16 @@
         },
         series: serie,
         plotOptions: {
-          series: { marker: { enabled: false }, step: passosSelecionado?'left':false },
-          area: { stacking: stacking, fillOpacity: 1 }
+          series: {
+            marker: { enabled: false },
+            step: passosSelecionado?'left':false
+          },
+          area: {
+            stacking: stacking,
+            fillOpacity: 1,
+            lineWidth: 1,
+            states: { hover: { enabled: false } },
+          }
         }
       });
     }
