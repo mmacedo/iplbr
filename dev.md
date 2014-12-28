@@ -76,7 +76,7 @@ Contém a lógica de cálculo dos índices.
 
 #### Outras
 
-Últimas versões de [jQuery](https://jquery.com/) e [Lazy.js](http://danieltao.com/lazy.js/).
+Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/).
 
 ### Desenvolvimento
 

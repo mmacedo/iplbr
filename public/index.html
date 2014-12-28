@@ -289,12 +289,14 @@
   <script src="js/exporting.js"></script>
   <script src="js/grid-light.js"></script>
 
-  <!-- Lazy.js -->
-  <script src="js/lazy.min.js"></script>
+  <!-- Lo-Dash -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <script>!_ && document.write(unescape('%3Cscript src="js/lodash.min.js"%3E%3C/script%3E'))</script>
+
   <script src="js/indice.js"></script>
 
   <script type="text/javascript">
-    function criaGrafico(id, titulo, subtitulo, serie) {
+    function criaGrafico(id, titulo, subtitulo, series) {
 
       var passosSelecionado = $('#passos').is(':checked:enabled');
 
@@ -333,7 +335,7 @@
           shared: true,
           valueDecimals: 3
         },
-        series: serie,
+        series: series,
         plotOptions: {
           series: {
             marker: { enabled: false },
@@ -367,7 +369,7 @@
         }
 
         // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
-        Lazy(Highcharts.charts).each(function(chart) {
+        _.each(Highcharts.charts, function(chart) {
           if (chart != null) {
             chart.destroy();
           }

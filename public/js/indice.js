@@ -7,11 +7,6 @@
     child.prototype = new ctor();
   }
 
-  // Para função map, converte todos os itens para inteiros
-  var toInt = function(s) {
-    return parseInt(s, 10);
-  };
-
   window.Configuracao = (function() {
 
     function Configuracao() {
@@ -36,13 +31,13 @@
     Configuracao.regiaoNorte       = [ 'AC', 'AM', 'AP', 'PA', 'RO', 'RR', 'TO' ];
     Configuracao.regiaoNordeste    = [ 'AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE' ];
 
-    Configuracao.tabelaDeUfs = Lazy([
+    Configuracao.tabelaDeUfs = _.flatten([
       Configuracao.regiaoSul,
       Configuracao.regiaoSudeste,
       Configuracao.regiaoCentroOeste,
       Configuracao.regiaoNorte,
       Configuracao.regiaoNordeste
-    ]).flatten().sort().toArray();
+    ]).sort();
 
     Configuracao.tabelaDePartidos = [
       { sigla: 'PRB',     numero: 10, fundado: 2005 },
@@ -151,52 +146,38 @@
       resto: 'Resto'
     };
 
-    Configuracao.prototype.filtrarAnos = function(anos, fundado, extinto) {
+    Configuracao.prototype.filtrarAnos = function(anos, fundado, extinto, manterTodosAnos) {
 
-      var anos = anos.map(toInt);
+      var anos = anos.slice();
 
       // Adiciona um ano depois da última eleição para o último passo ficar visível
       if (this.passos === true) {
-        anos = anos.concat([ anos.max() + 1 ]);
+        anos.push(_.max(anos) + 1);
       }
 
       if (this.mostraFundacaoEDissolucao === true && this.tabelaDeReescrita == null) {
 
         // Partido novo
-        if ((fundado - 1) > anos.min()) {
-
+        if ((fundado - 1) > _.min(anos)) {
           // Remove anos antes da fundação
-          anos = anos.filter(function(ano) {
-            return ano >= fundado;
-          });
-
+          manterTodosAnos || (anos = _.filter(anos, function(ano) { return ano >= fundado }));
           // Adiciona ano da fundação
-          anos = anos.concat([ fundado - 1 ]);
-
+          anos.push(fundado - 1);
         }
 
         // Partido morto
         if (extinto != null) {
-
-          // Se o partido foi extinto antes do primeiro ano do gráfico
-          if (extinto < anos.min()) {
-
-            anos = Lazy([]);
-
+          // O partido nem chega a aparecer no gráfico
+          if (extinto < _.min(anos)) {
+            manterTodosAnos || (anos = []);
           } else {
-
             // Remove anos depois da dissolução
-            anos = anos.filter(function(ano) {
-              return ano <= extinto;
-            });
-
+            manterTodosAnos || (anos = _.filter(anos, function(ano) { return ano <= extinto }));
             // Adiciona ano da dissolução, normalmente iria até a última eleição
-            if ((extinto - 1) > anos.max()) {
-              anos = anos.concat([ extinto - 1 ]);
+            if ((extinto - 1) > _.max(anos)) {
+              anos.push(extinto - 1);
             }
-
           }
-
         }
 
       }
@@ -205,59 +186,63 @@
 
     }
 
+    var mesclarESomarIndices = function(dados, mapFunction) {
+      return _.map(dados, function(partidos) {
+        if (partidos.length == 1) {
+          return partidos[0];
+        }
+
+        var todosOsIndices = _.flatten(_.pluck(partidos, 'indices'), true);
+
+        var indicesPorAno = _.groupBy(todosOsIndices, function(i) { return i[0] });
+
+        var somasDosIndicesPorAno = _.map(_.values(indicesPorAno), function(indices) {
+          var ano = indices[0][0];
+          var somaDosIndices = _.reduce(indices, function(memo, i) { return memo + i[1] }, 0);
+          return [ ano, somaDosIndices ];
+        });
+
+        return mapFunction(partidos, somasDosIndicesPorAno);
+      });
+    };
+
     Configuracao.prototype.corrigirDados = function(dados) {
 
       var _this = this;
       var migrouUmPartido = false;
 
       // Realiza migrações
-      var dadosCorrigidos = dados.map(function(partido) {
+      var migrados = _.map(dados, function(partido) {
 
-        var config = Lazy(Configuracao.tabelaDePartidos).find(function(config) {
-          return partido.sigla  === config.sigla &&
-                 partido.numero === config.numero;
+        var info = _.find(Configuracao.tabelaDePartidos, function(info) {
+          return partido.sigla  === info.sigla &&
+                 partido.numero === info.numero;
         });
 
-        var configDestino = config;
+        var infoDestino = info;
 
         // Apenas partidos extintos podem ser migrados
-        if (config.extinto != null) {
+        if (info.extinto != null) {
 
           var mesclarCom = null;
-          if (_this.mudancasDeNome === true && config.renomeado != null) {
-            mesclarCom = config.renomeado;
-          } else if (_this.incorporacoes === true && config.incorporado != null) {
-            mesclarCom = config.incorporado;
-          } else if (_this.fusoes === true && config.fusao != null) {
-            mesclarCom = config.fusao;
+          if (_this.mudancasDeNome === true && info.renomeado != null) {
+            mesclarCom = info.renomeado;
+          } else if (_this.incorporacoes === true && info.incorporado != null) {
+            mesclarCom = info.incorporado;
+          } else if (_this.fusoes === true && info.fusao != null) {
+            mesclarCom = info.fusao;
           }
 
           if (mesclarCom != null) {
 
             migrouUmPartido = true;
 
-            configDestino = Lazy(Configuracao.tabelaDePartidos).find(function(configDestino) {
-
-              if (mesclarCom !== configDestino.sigla) {
-                return false;
-              }
-
-              if (configDestino.extinto != null && configDestino.extinto < config.extinto) {
-                return false;
-              }
-
-              if (config.incorporado != null) {
-                if (configDestino.fundado > config.extinto) {
-                  return false;
-                }
-              } else {
-                if (configDestino.fundado < config.extinto) {
-                  return false;
-                }
-              }
-
-              return true;
-
+            infoDestino = _.find(Configuracao.tabelaDePartidos, function(infoDestino) {
+              return (
+                (mesclarCom === infoDestino.sigla) &&
+                (infoDestino.extinto == null                    || infoDestino.extinto >= info.extinto) &&
+                (info.incorporado == null                       || infoDestino.fundado <= info.extinto) &&
+                ((info.renomeado == null && info.fusao == null) || infoDestino.fundado >= info.extinto));
             });
 
           }
@@ -265,64 +250,39 @@
         }
 
         return {
-          sigla:   configDestino.sigla,
-          numero:  configDestino.numero,
-          fundado: partido.fundado == null ? config.fundado : partido.fundado,
-          extinto: configDestino.extinto,
+          sigla:   infoDestino.sigla,
+          numero:  infoDestino.numero,
+          fundado: partido.fundado == null ? info.fundado : partido.fundado,
+          extinto: infoDestino.extinto,
           indices: partido.indices
         };
 
       });
 
-      // Força execução do Lazy para definir flag migrouUmPartido
-      dadosCorrigidos = Lazy(dadosCorrigidos.toArray());
-
       if (migrouUmPartido === true) {
 
-        // Agrupa partidos repetidos para mesclar
-        var dadosAgrupados = dadosCorrigidos.groupBy(function(partido) {
-          return partido.sigla + partido.numero;
-        }).values();
-
-        // Mescla partidos somando os índices
-        var dadosMesclados = dadosAgrupados.map(function(partidos) {
-          if (partidos.length == 1) {
-            return partidos[0];
-          }
-
-          var todosOsIndices = Lazy(partidos).map(function(partido) {
-            return partido.indices;
-          }).flatten().chunk(2); // flatten 1 nível
-
-          var indicesAgrupadosPorAno = todosOsIndices.groupBy(function(lista) {
-            var ano = lista[0];
-            return 'ano' + ano.toString();
-          }).values();
-
-          var somasDosIndicesPorAno = indicesAgrupadosPorAno.map(function(listas) {
-            var ano = listas[0][0];
-            var indicesNoMesmoAno = Lazy(listas).map(function(lista) { return lista[1]; });
-            return [ ano, indicesNoMesmoAno.sum() ];
-          });
-
-          return {
-            sigla:   partidos[0].sigla,
-            numero:  partidos[0].numero,
-            fundado: Lazy(partidos).pluck('fundado').min(),
-            extinto: partidos[0].extinto,
-            indices: somasDosIndicesPorAno
-          };
+        // Agrupa repetidos
+        var porSigla = _.groupBy(migrados, function(partido) {
+          return partido.sigla + partido.numero
         });
 
-        // Força execução do Lazy para chamar função recursiva
-        dadosMesclados = Lazy(dadosMesclados.toArray());
+        // Soma índices
+        var mesclados = mesclarESomarIndices(_.values(porSigla), function(lista, somas) {
+          return {
+            sigla:   lista[0].sigla,
+            numero:  lista[0].numero,
+            fundado: _.min(lista, function(p) { return p.fundado }),
+            extinto: lista[0].extinto,
+            indices: somas
+          }
+        });
 
         // Reaplica migrações nos novos dados
-        return this.corrigirDados(dadosMesclados);
+        return this.corrigirDados(mesclados);
 
       }
 
-      return dadosCorrigidos;
+      return migrados;
     }
 
     Configuracao.prototype.reescreverSiglas = function(dados) {
@@ -334,51 +294,28 @@
       }
 
       // Realiza migrações
-      var dadosCorrigidos = dados.map(function(partido) {
-
-        var config = Lazy(_this.tabelaDeReescrita.mapear).find(function(config) {
+      var migrados = _.map(dados, function(partido) {
+        var config = _.find(_this.tabelaDeReescrita.mapear, function(config) {
           return partido.sigla  === config.de.sigla &&
                  partido.numero === config.de.numero;
         });
-
-        if (config == null) {
-          return { sigla: _this.tabelaDeReescrita.resto, indices: partido.indices };
-        }
-
-        return { sigla: config.para, indices: partido.indices };
-
-      }).compact();
-
-      // Agrupa partidos repetidos para mesclar
-      var dadosAgrupados = dadosCorrigidos.groupBy(function(partido) {
-        return partido.sigla;
-      }).values();
-
-      // Mescla partidos somando os índices
-      var dadosMesclados = dadosAgrupados.map(function(partidos) {
-        if (partidos.length == 1) {
-          return partidos[0];
-        }
-
-        var todosOsIndices = Lazy(partidos).map(function(partido) {
-          return partido.indices;
-        }).flatten().chunk(2); // flatten 1 nível
-
-        var indicesAgrupadosPorAno = todosOsIndices.groupBy(function(lista) {
-          var ano = lista[0];
-          return 'ano' + ano.toString();
-        }).values();
-
-        var somasDosIndicesPorAno = indicesAgrupadosPorAno.map(function(listas) {
-          var ano = listas[0][0];
-          var indicesNoMesmoAno = Lazy(listas).map(function(lista) { return lista[1]; });
-          return [ ano, indicesNoMesmoAno.sum() ];
-        });
-
-        return { sigla: partidos[0].sigla, indices: somasDosIndicesPorAno };
+        return {
+          sigla: config != null ? config.para : _this.tabelaDeReescrita.resto,
+          indices: partido.indices
+        };
       });
 
-      return dadosMesclados;
+      // Agrupa repetidos
+      var porSigla = _.groupBy(migrados, function(partido) {
+        return partido.sigla
+      });
+
+      // Soma índices
+      var mesclados = mesclarESomarIndices(_.values(porSigla), function(lista, somas) {
+        return { sigla: lista[0].sigla, indices: somas }
+      });
+
+      return mesclados;
 
     };
 
@@ -390,64 +327,54 @@
 
     function Indice() {}
 
-    Indice.prototype.anos = function() { return Lazy([]); };
-    Indice.prototype.siglas = function() { return Lazy([]); };
-    Indice.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) { return false; };
-    Indice.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) { return 0.0; };
+    Indice.prototype.anos = function() { return [] };
+    Indice.prototype.siglas = function() { return [] };
+    Indice.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) { return false };
+    Indice.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) { return 0.0 };
 
     Indice.prototype.series = function(configuracao, ufs, metodoPesoUe, pesoExecutivo) {
 
       var _this = this;
 
       // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
-      var anosComDados = _this.anos().filter(function(ano) {
+      var anosComDados = _.filter(this.anos(), function(ano) {
         return _this.temDados(ano, ufs, metodoPesoUe, pesoExecutivo);
       });
 
-      // Calcula para cada sigla os índices por ano
-      var indicesPorSigla = _this.siglas().map(function(sigla) {
+      // Calcula para cada partido os índices por ano
+      var indicesPorSigla = _.map(_this.siglas(), function(sigla) {
 
-        var config = Lazy(Configuracao.tabelaDePartidos).find(function(config) {
-          return sigla === (config.sigla + config.numero.toString());
+        // Carrega informações do partido
+        var info = _.find(Configuracao.tabelaDePartidos, function(info) {
+          return sigla === (info.sigla + info.numero.toString());
         });
 
-        // Filtra anos que o partido existe
-        var anosComDadosParaSigla = configuracao.filtrarAnos(anosComDados, config.fundado, config.extinto);
+        // Adiciona todos anos necessários
+        var anos = configuracao.filtrarAnos(anosComDados, info.fundado, info.extinto, true);
 
-        // Mantém todas as possibilidades, realiza o filtro de novo depois de corrigir siglas
-        anosComDadosParaSigla = Lazy([ anosComDados, anosComDadosParaSigla ]).flatten().map(toInt).uniq();
-
-        var indicePorAno = anosComDadosParaSigla.map(function(ano) {
-          return [ parseInt(ano, 10), _this.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) ];
+        // Calcula índices
+        var indicePorAno = _.map(anos, function(ano) {
+          return [ ano, _this.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) ];
         });
 
-        return { sigla: sigla, indices: indicePorAno };
+        // Extrai siglas e números dos partidos
+        var matches = sigla.match(/(.*?)([0-9]{2})/);
+        var sigla = matches[1], numero = parseInt(matches[2], 10);
+
+        return { sigla: sigla, numero: numero, indices: indicePorAno };
 
       });
-
-      // Extrai siglas e números dos partidos
-      indicesPorSigla = indicesPorSigla.map(function(partido) {
-        var matches = partido.sigla.match(/(.*?)([0-9]{2})/);
-        return {
-          sigla: matches[1],
-          numero: parseInt(matches[2], 10),
-          indices: partido.indices
-        };
-      });
-
-      // Força execução do Lazy pra poder chamar função recursiva (corrigirDados) sem executar várias vezes
-      indicesPorSigla = Lazy(indicesPorSigla.toArray());
 
       // Aplica configuração de partidos (parte 1)
       indicesPorSigla = configuracao.corrigirDados(indicesPorSigla);
 
       // Filtra anos que o partido existe
-      indicesPorSigla = indicesPorSigla.map(function(partido) {
+      indicesPorSigla = _.map(indicesPorSigla, function(partido) {
 
-        var anosComDadosParaSigla = configuracao.filtrarAnos(anosComDados, partido.fundado, partido.extinto);
+        var anos = configuracao.filtrarAnos(anosComDados, partido.fundado, partido.extinto, false);
 
-        var indicesPorAno = anosComDadosParaSigla.map(function(ano) {
-          var indice = partido.indices.find(function(indice) { return ano == indice[0]; })[1];
+        var indicesPorAno = _.map(anos, function(ano) {
+          var indice = _.find(partido.indices, function(i) { return ano === i[0] })[1];
           return [ ano, indice ];
         });
 
@@ -459,62 +386,47 @@
       indicesPorSigla = configuracao.reescreverSiglas(indicesPorSigla);
 
       // Filtra partidos que não tem dados para nenhum ano
-      indicesPorSigla = indicesPorSigla.filter(function(partido) {
-        return partido.indices.some();
-      });
+      indicesPorSigla = _.filter(indicesPorSigla, function(p) { return p.indices.length > 0 });
 
-      // Converte anos dos índices em datas
-      indicesPorSigla = indicesPorSigla.map(function(partido) {
+      // Converte para formato esperado pelo Highcharts
+      var series = _.map(indicesPorSigla, function(linha) {
 
-        var indices = partido.indices.map(function(tupla) {
+        // Converte anos em datas
+        var indices = _.map(linha.indices, function(tupla) {
           var ano = tupla[0], indice = tupla[1];
           return [ Date.UTC(ano + 1, 0, 1), indice ];
         });
 
-        return { sigla: partido.sigla, indices: indices };
+        // Ordena índices por data (Highcharts precisa deles ordenados)
+        var indicesOrdenados = _.sortBy(indices, function(linha) { return linha[0] });
 
-      });
+        var serie = { name: linha.sigla, data: indicesOrdenados };
 
-      // Converte para formato esperado pelo Highcharts
-      indicesPorSigla = indicesPorSigla.map(function(linha) {
-
-        // Índices ordenados por ano (Highcharts faz a linha dar voltas se não tiver ordenado)
-        var indicesOrdenados = linha.indices.sortBy(function(linha) { return linha[0]; }).toArray();
-
-        var result = {
-          name: linha.sigla,
-          data: indicesOrdenados
-        };
-
+        // Resto
         if (configuracao.tabelaDeReescrita != null && linha.sigla === configuracao.tabelaDeReescrita.resto) {
-
-          result.color = '#333';
-
-          if (configuracao.ehGraficoArea === false) {
-            result.dashStyle = 'dash';
-          }
-
+          serie.color = '#333';
+          if (configuracao.ehGraficoArea === false) { serie.dashStyle = 'dash'; }
         }
 
-        return result;
+        return serie;
 
       });
 
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
-      indicesPorSigla = indicesPorSigla.sortBy(function(linha) {
+      series = _.sortBy(series, function(linha) {
 
-        var somaDosIndices = Lazy(linha.data).sum(function(tupla) { return tupla[1]; });
+        var somaDosIndices = _.reduce(linha.data, function(memo, i) { return memo + i[1] }, 0);
 
-        // Faz ajusta na ordenação para manter o resto em último
+        // Mantem o resto em último (menor)
         if (configuracao.tabelaDeReescrita != null) {
           somaDosIndices += (configuracao.tabelaDeReescrita.resto == linha.name) ? 0 : 9999;
         }
 
         return somaDosIndices;
 
-      }, true);
+      }).reverse();
 
-      return indicesPorSigla.toArray();
+      return series;
     };
 
     return Indice;
@@ -532,14 +444,14 @@
 
     MandatoQuatroAnos.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
 
-      var _this = this, _ano = parseInt(ano, 10);
+      var _this = this;
 
       // Eleições que ainda teria mandato
-      var mandato = Lazy.range(_ano, _ano - 4, -1);
+      var anos = _.range(ano, ano - 4, -1);
 
-      return mandato.some(function(ano) {
-        return Lazy(ufs).some(function(uf) {
-          return _this.valorTotal(ano.toString(), uf, metodoPesoUe, pesoExecutivo) > 0;
+      return _.some(anos, function(ano) {
+        return _.some(ufs, function(uf) {
+          return _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo) > 0;
         });
       });
 
@@ -547,20 +459,16 @@
 
     MandatoQuatroAnos.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) {
 
-      var _this = this, _ano = parseInt(ano, 10);
+      var _this = this;
 
       // Eleições que ainda teria mandato
-      var mandato = Lazy.range(_ano, _ano - 4, -1);
+      var anos = _.range(ano, ano - 4, -1);
 
-      var eleitos = mandato.sum(function(ano) {
-        return Lazy(ufs).sum(function(uf) {
-          return _this.valorPorSigla(ano.toString(), uf, sigla, metodoPesoUe, pesoExecutivo);
-        });
-      });
-
-      var total = mandato.sum(function(ano) {
-        return Lazy(ufs).sum(function(uf) {
-          return _this.valorTotal(ano.toString(), uf, metodoPesoUe, pesoExecutivo);
+      var eleitos = 0, total = 0;
+      _.each(anos, function(ano) {
+        _.each(ufs, function(uf) {
+          total   += _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo);
+          eleitos += _this.valorPorSigla(ano, uf, sigla, metodoPesoUe, pesoExecutivo);
         });
       });
 
@@ -583,18 +491,18 @@
 
     MandatoOitoAnos.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
 
-      var _this = this, _ano = parseInt(ano, 10);
+      var _this = this;
 
       // Eleições que ainda teria mandato
-      var metade1 = Lazy.range(_ano, _ano - 4, -1);
-      var metade2 = Lazy.range(_ano - 4, _ano - 8, -1);
+      var metade1 = _.range(ano,     ano - 4, -1);
+      var metade2 = _.range(ano - 4, ano - 8, -1);
 
       // Precisa de dados de duas eleições
-      return Lazy([ metade1, metade2 ]).every(function(metadeDoMandato) {
-        return metadeDoMandato.some(function(ano) {
-            return Lazy(ufs).some(function(uf) {
-              return _this.valorTotal(ano.toString(), uf, metodoPesoUe, pesoExecutivo) > 0;
-            });
+      return _.every([ metade1, metade2 ], function(anos) {
+        return _.some(anos, function(ano) {
+          return _.some(ufs, function(uf) {
+            return _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo) > 0;
+          });
         });
       });
 
@@ -602,20 +510,16 @@
 
     MandatoOitoAnos.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) {
 
-      var _this = this, _ano = parseInt(ano, 10);
+      var _this = this;
 
       // Eleições que ainda teria mandato
-      var mandato = Lazy.range(_ano, _ano - 8, -1);
+      var anos = _.range(ano, ano - 8, -1);
 
-      var eleitos = mandato.sum(function(ano) {
-        return Lazy(ufs).sum(function(uf) {
-          return _this.valorPorSigla(ano.toString(), uf, sigla, metodoPesoUe, pesoExecutivo);
-        });
-      });
-
-      var total = mandato.sum(function(ano) {
-        return Lazy(ufs).sum(function(uf) {
-          return _this.valorTotal(ano.toString(), uf, metodoPesoUe, pesoExecutivo);
+      var eleitos = 0, total = 0;
+      _.each(anos, function(ano) {
+        _.each(ufs, function(uf) {
+          total   += _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo);
+          eleitos += _this.valorPorSigla(ano, uf, sigla, metodoPesoUe, pesoExecutivo);
         });
       });
 
@@ -699,7 +603,7 @@
     };
 
     LegislativoFederal.prototype.siglas = function() {
-      return Lazy([ this.deputadosFederais.siglas(), this.senadores.siglas() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.deputadosFederais.siglas(), this.senadores.siglas() ]));
     };
 
     LegislativoFederal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
@@ -762,7 +666,7 @@
     };
 
     IndiceFederal.prototype.siglas = function() {
-      return Lazy([ this.congressoNacional.siglas(), this.presidentes.siglas() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.congressoNacional.siglas(), this.presidentes.siglas() ]));
     };
 
     IndiceFederal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
@@ -877,7 +781,7 @@
     };
 
     IndiceEstadual.prototype.siglas = function() {
-      return Lazy([ this.deputadosEstaduais.siglas(), this.governadores.siglas() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.deputadosEstaduais.siglas(), this.governadores.siglas() ]));
     };
 
     IndiceEstadual.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
@@ -914,7 +818,7 @@
     };
 
     LegislativoMunicipal.prototype.siglas = function() {
-      return Lazy([ this.eleicoes.siglasVereadores(), this.distritais.siglasDeputadosEstaduais() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.eleicoes.siglasVereadores(), this.distritais.siglasDeputadosEstaduais() ]));
     };
 
     LegislativoMunicipal.prototype.valorTotal = function(ano, uf, metodoPesoUe, pesoExecutivo) {
@@ -959,7 +863,7 @@
     };
 
     ExecutivoMunicipal.prototype.siglas = function() {
-      return Lazy([ this.eleicoes.siglasPrefeitos(), this.distritais.siglasGovernadores() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.eleicoes.siglasPrefeitos(), this.distritais.siglasGovernadores() ]));
     };
 
     ExecutivoMunicipal.prototype.valorTotal = function(ano, uf, metodoPesoUe, pesoExecutivo) {
@@ -1006,7 +910,7 @@
     };
 
     IndiceMunicipal.prototype.siglas = function() {
-      return Lazy([ this.vereadores.siglas(), this.prefeitos.siglas() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.vereadores.siglas(), this.prefeitos.siglas() ]));
     };
 
     IndiceMunicipal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
@@ -1044,11 +948,11 @@
     }
 
     IndiceNacional.prototype.anos = function() {
-      return Lazy([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
     };
 
     IndiceNacional.prototype.siglas = function() {
-      return Lazy([ this.indiceFederal.siglas(), this.indiceEstadual.siglas(), this.indiceMunicipal.siglas() ]).flatten().uniq();
+      return _.uniq(_.flatten([ this.indiceFederal.siglas(), this.indiceEstadual.siglas(), this.indiceMunicipal.siglas() ]));
     };
 
     IndiceNacional.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
@@ -1075,22 +979,11 @@
 
     function Eleicoes(json) {
       this.json = json;
-      this.banco = {};
     }
 
-    Eleicoes.prototype.obter = function(chave, fn) {
-      if (!(chave in this.banco)) {
-        this.banco[chave] = fn.call(this);
-      }
-      return this.banco[chave];
-    };
-
     Eleicoes.prototype.anos = function() {
-
-      var _this = this;
-
-      return _this.obter('anos', function() {
-        return Lazy(_this.json).keys();
+      return _.map(_.keys(this.json), function(ano) {
+        return parseInt(ano, 10);
       });
     };
 
@@ -1098,41 +991,39 @@
 
       var _this = this;
 
-      return _this.obter(cargo, function () {
-        return _this.anos().map(function(ano) {
-          return Lazy(_this.json[ano]._BR[cargo + "_por_sigla"]).keys();
-        }).flatten().uniq();
+      var siglasPorAno = _.map(_.keys(this.json), function(ano) {
+        return _.keys(_this.json[ano]._BR[cargo + '_por_sigla']);
       });
+
+      return _.uniq(_.flatten(siglasPorAno));
     };
 
     Eleicoes.prototype.dadosPorSigla = function(nome, tipo, ano, uf) {
 
-      if (!(ano in this.json)) {
+      if (!(ano.toString() in this.json)) {
         return {};
       }
 
-      var _this = this;
-      var chave = nome + '_por_sigla' + (tipo == null ? '' : ('_' + tipo));
-      return this.obter(chave + ano + (uf || ''), function() {
-        if (uf != null) {
-          return _this.json[ano][uf][chave];
-        } else {
-          return _this.json[ano]._BR[chave];
-        }
-      });
+      var chave = nome + '_por_sigla' + (tipo != null ? ('_' + tipo) : '');
+      if (uf != null) {
+        return this.json[ano.toString()][uf][chave];
+      } else {
+        return this.json[ano.toString()]._BR[chave];
+      }
+
     };
 
     Eleicoes.prototype.total = function(nome, ano, uf) {
 
-      if (!(ano in this.json)) {
+      if (!(ano.toString() in this.json)) {
         return 0;
       }
 
       var chave = "total_" + nome;
       if (uf != null) {
-        return this.json[ano][uf][chave];
+        return this.json[ano.toString()][uf][chave];
       } else {
-        return this.json[ano]._BR[chave];
+        return this.json[ano.toString()]._BR[chave];
       }
 
     };
