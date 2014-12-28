@@ -40,7 +40,6 @@
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -154,19 +153,19 @@
               <div class="panel-body">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="mudancas_de_nome" data-toggle="delayed-toggle" checked>
+                    <input type="checkbox" id="mudancas_de_nome" checked>
                     Mudanças de nome
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="incorporacoes" data-toggle="delayed-toggle" checked>
+                    <input type="checkbox" id="incorporacoes" checked>
                     Incorporações
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="fusoes" data-toggle="delayed-toggle" checked>
+                    <input type="checkbox" id="fusoes" checked>
                     Fusões
                   </label>
                 </div>
@@ -208,7 +207,12 @@
                   </div>
 
                   <div class="col-xs-3">
-                    <input type="checkbox" id="passos" data-toggle="delayed-toggle" data-on="Com passos" data-off="Sem passos">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="passos">
+                        Em incrementos
+                      </label>
+                    </div>
                   </div>
 
                 </div>
@@ -275,7 +279,6 @@
 
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/bootstrap-toggle.min.js"></script>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="js/ie10-viewport-bug-workaround.js"></script>
@@ -348,17 +351,19 @@
 
     $(function() {
 
-      $('.collapse').one('shown.bs.collapse', function () {
-        $(this).find(':visible[data-toggle="delayed-toggle"]').bootstrapToggle();
-      });
-
       // Atualiza os gráficos quando o usuário muda o tipo
       $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
 
-        if ($(this).is('#tipo_curvas')) {
-          $('#passos').bootstrapToggle('disable');
+        if ($('#tipo_curvas').is(':checked')) {
+          $('#passos')
+            .prop('disabled', true)
+            .closest('.checkbox')
+            .addClass('disabled')
         } else {
-          $('#passos').bootstrapToggle('enable');
+          $('#passos')
+            .prop('disabled', false)
+            .closest('.checkbox')
+            .removeClass('disabled')
         }
 
         // Destrói todos os gráficos (update tá com bug quando muda para tipo area)

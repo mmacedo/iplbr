@@ -66,11 +66,6 @@ Contém a lógica de cálculo dos índices.
 - pulic/js/boostrap.min.js
 - pulic/js/ie10-viewport-bug-workaround.js
 
-Plugin [Bootstrap Toggle](http://www.bootstraptoggle.com/) contendo os seguintes arquivos:
-
-- public/css/bootstrap-toggle.min.css
-- public/js/bootstrap-toggle.min.js
-
 #### [Highcharts](http://www.highcharts.com/)
 
 Última versão não paga contendo os seguintes arquivos:
