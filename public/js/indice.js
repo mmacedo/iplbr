@@ -16,103 +16,6 @@
     Indice.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) { return false };
     Indice.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) { return 0.0 };
 
-    Indice.prototype.series = function(configuracao, ufs) {
-
-      var _this = this;
-
-      // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
-      var anosComDados = _.filter(this.anos(), function(ano) {
-        return _this.temDados(ano, ufs, configuracao.metodoPesoUe, configuracao.pesoExecutivo);
-      });
-
-      // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(_this.siglas(), function(sigla) {
-
-        // Carrega informações do partido
-        var info = _.find(Configuracao.tabelaDePartidos, function(info) {
-          return sigla === (info.sigla + info.numero.toString());
-        });
-
-        // Adiciona todos anos necessários
-        var anos = configuracao.filtrarAnos(anosComDados, info.fundado, info.extinto, true);
-
-        // Calcula índices
-        var indicePorAno = _.map(anos, function(ano) {
-          return [ ano, _this.calculaIndice(ano, ufs, sigla, configuracao.metodoPesoUe, configuracao.pesoExecutivo) ];
-        });
-
-        // Extrai siglas e números dos partidos
-        var matches = sigla.match(/(.*?)([0-9]{2})/);
-        var sigla = matches[1], numero = parseInt(matches[2], 10);
-
-        return { sigla: sigla, numero: numero, indices: indicePorAno };
-
-      });
-
-      // Aplica configuração de partidos (parte 1)
-      indicesPorSigla = configuracao.corrigirDados(indicesPorSigla);
-
-      // Filtra anos que o partido existe
-      indicesPorSigla = _.map(indicesPorSigla, function(partido) {
-
-        var anos = configuracao.filtrarAnos(anosComDados, partido.fundado, partido.extinto, false);
-
-        var indicesPorAno = _.map(anos, function(ano) {
-          var indice = _.find(partido.indices, function(i) { return ano === i[0] })[1];
-          return [ ano, indice ];
-        });
-
-        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno };
-
-      });
-
-      // Aplica configuração de partidos (parte 2)
-      indicesPorSigla = configuracao.reescreverSiglas(indicesPorSigla);
-
-      // Filtra partidos que não tem dados para nenhum ano
-      indicesPorSigla = _.filter(indicesPorSigla, function(p) { return p.indices.length > 0 });
-
-      // Converte para formato esperado pelo Highcharts
-      var series = _.map(indicesPorSigla, function(linha) {
-
-        // Converte anos em datas
-        var indices = _.map(linha.indices, function(tupla) {
-          var ano = tupla[0], indice = tupla[1];
-          return [ Date.UTC(ano + 1, 0, 1), indice ];
-        });
-
-        // Ordena índices por data (Highcharts precisa deles ordenados)
-        var indicesOrdenados = _.sortBy(indices, function(linha) { return linha[0] });
-
-        var serie = { name: linha.sigla, data: indicesOrdenados };
-
-        // Resto
-        if (configuracao.tabelaDeReescrita != null && linha.sigla === configuracao.tabelaDeReescrita.resto) {
-          serie.color = '#333';
-          if (configuracao.ehGraficoArea === false) { serie.dashStyle = 'dash'; }
-        }
-
-        return serie;
-
-      });
-
-      // Ordena pela "importância do partido", isto é, a soma de todos os índices
-      series = _.sortBy(series, function(linha) {
-
-        var somaDosIndices = _.reduce(linha.data, function(memo, i) { return memo + i[1] }, 0);
-
-        // Mantem o resto em último (menor)
-        if (configuracao.tabelaDeReescrita != null) {
-          somaDosIndices += (configuracao.tabelaDeReescrita.resto == linha.name) ? 0 : 9999;
-        }
-
-        return somaDosIndices;
-
-      }).reverse();
-
-      return series;
-    };
-
     return Indice;
 
   })();
@@ -1024,83 +927,68 @@
 
   window.GeradorDeIndices = (function() {
 
-    function GeradorDeIndices(eleitos, configuracao) {
+    function GeradorDeIndices(eleitos) {
       this.eleitos      = eleitos;
-      this.configuracao = configuracao;
 
       this.federais   = new EleicoesFederais(this.eleitos.federais);
       this.estaduais  = new EleicoesEstaduais(this.eleitos.estaduais);
       this.municipais = new EleicoesMunicipais(this.eleitos.municipais);
     }
 
-    GeradorDeIndices.prototype.camaraDosDeputados = function(ufs) {
-      var indice = new CamaraDosDeputados(this.federais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.camaraDosDeputados = function() {
+      return this._camaraDosDeputados || (this._camaraDosDeputados = new CamaraDosDeputados(this.federais));
     };
 
-    GeradorDeIndices.prototype.senadoFederal = function(ufs) {
-      var indice = new SenadoFederal(this.federais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.senadoFederal = function() {
+      return this._senadores || (this._senadores = new SenadoFederal(this.federais));
     };
 
-    GeradorDeIndices.prototype.legislativoFederal = function(ufs) {
-      var indice = new LegislativoFederal(this.federais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.legislativoFederal = function() {
+      return this._legislativoFederal || (this._legislativoFederal = new LegislativoFederal(this.federais));
     };
 
-    GeradorDeIndices.prototype.executivoFederal = function(ufs) {
-      var indice = new ExecutivoFederal(this.federais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.executivoFederal = function() {
+      return this._executivoFederal || (this._executivoFederal = new ExecutivoFederal(this.federais));
     };
 
-    GeradorDeIndices.prototype.indiceFederal = function(ufs) {
-      var indice = new IndiceFederal(this.federais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.indiceFederal = function() {
+      return this._indiceFederal || (this._indiceFederal = new IndiceFederal(this.federais));
     };
 
-    GeradorDeIndices.prototype.legislativoEstadual = function(ufs) {
-      var indice = new LegislativoEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.legislativoEstadual = function() {
+      return this._legislativoEstadual || (this._legislativoEstadual = new LegislativoEstadual(this.estaduais));
     };
 
-    GeradorDeIndices.prototype.executivoEstadual = function(ufs) {
-      var indice = new ExecutivoEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.executivoEstadual = function() {
+      return this._executivoEstadual || (this._executivoEstadual = new ExecutivoEstadual(this.estaduais));
     };
 
-    GeradorDeIndices.prototype.indiceEstadual = function(ufs) {
-      var indice = new IndiceEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.indiceEstadual = function() {
+      return this._indiceEstadual || (this._indiceEstadual = new IndiceEstadual(this.estaduais));
     };
 
-    GeradorDeIndices.prototype.legislativoMunicipal = function(ufs) {
-      var indice = new LegislativoMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.legislativoMunicipal = function() {
+      return this._legislativoMunicipal || (this._legislativoMunicipal = new LegislativoMunicipal(this.municipais, this.estaduais));
     };
 
-    GeradorDeIndices.prototype.executivoMunicipal = function(ufs) {
-      var indice = new ExecutivoMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.executivoMunicipal = function() {
+      return this._executivoMunicipal || (this._executivoMunicipal = new ExecutivoMunicipal(this.municipais, this.estaduais));
     };
 
-    GeradorDeIndices.prototype.indiceMunicipal = function(ufs) {
-      var indice = new IndiceMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.indiceMunicipal = function() {
+      return this._indiceMunicipal || (this._indiceMunicipal = new IndiceMunicipal(this.municipais, this.estaduais));
     };
 
-    GeradorDeIndices.prototype.legislativoNacional = function(ufs) {
-      var indice = new LegislativoNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.legislativoNacional = function() {
+      return this._legislativoMunicipal || (this._legislativoMunicipal = new LegislativoNacional(this.federais, this.estaduais, this.municipais));
     };
 
-    GeradorDeIndices.prototype.executivoNacional = function(ufs) {
-      var indice = new ExecutivoNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.executivoNacional = function() {
+      return this._executivoNacional || (this._executivoNacional = new ExecutivoNacional(this.federais, this.estaduais, this.municipais));
     };
 
-    GeradorDeIndices.prototype.indiceNacional = function(ufs) {
-      var indice = new IndiceNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs);
+    GeradorDeIndices.prototype.indiceNacional = function() {
+      return this._indiceNacional || (this._indiceNacional = new IndiceNacional(this.federais, this.estaduais, this.municipais));
     };
 
     return GeradorDeIndices;

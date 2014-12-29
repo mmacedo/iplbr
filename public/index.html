@@ -376,6 +376,7 @@
 
   <script src="js/configuracao.js"></script>
   <script src="js/indice.js"></script>
+  <script src="js/serie.js"></script>
 
   <script type="text/javascript">
     function atualizaConfiguracao(cfg) {
@@ -555,8 +556,9 @@
 
       $.getJSON('eleitos.json').done(function(json) {
 
-        var cfg = new Configuracao();
-        var g   = new GeradorDeIndices(json, cfg);
+        var cfg     = new Configuracao();
+        var serie   = new Serie(cfg);
+        var indices = new GeradorDeIndices(json);
 
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
 
@@ -565,7 +567,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', g.indiceNacional(Configuracao.tabelaDeUfs));
+          criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie.series(indices.indiceNacional(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
@@ -575,7 +577,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#legislativo_nacional", 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', g.legislativoNacional(Configuracao.tabelaDeUfs));
+          criaGrafico("#legislativo_nacional", 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie.series(indices.legislativoNacional(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
@@ -585,7 +587,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#executivo_nacional", 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', g.executivoNacional(Configuracao.tabelaDeUfs));
+          criaGrafico("#executivo_nacional", 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie.series(indices.executivoNacional(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
@@ -599,7 +601,7 @@
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', g.indiceFederal(Configuracao.tabelaDeUfs));
+          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', serie.series(indices.indiceFederal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
@@ -609,9 +611,9 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, g.camaraDosDeputados(Configuracao.tabelaDeUfs));
-          criaGrafico("#senadores", 'Senado Federal', null, g.senadoFederal(Configuracao.tabelaDeUfs));
-          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', g.legislativoFederal(Configuracao.tabelaDeUfs));
+          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, serie.series(indices.camaraDosDeputados(), Configuracao.tabelaDeUfs));
+          criaGrafico("#senadores", 'Senado Federal', null, serie.series(indices.senadoFederal(), Configuracao.tabelaDeUfs));
+          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', serie.series(indices.legislativoFederal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
@@ -621,7 +623,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#presidentes", 'Presidência da República', null, g.executivoFederal(Configuracao.tabelaDeUfs));
+          criaGrafico("#presidentes", 'Presidência da República', null, serie.series(indices.executivoFederal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
@@ -635,7 +637,7 @@
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', g.indiceEstadual(Configuracao.tabelaDeUfs));
+          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', serie.series(indices.indiceEstadual(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
@@ -645,7 +647,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, g.legislativoEstadual(Configuracao.tabelaDeUfs));
+          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie.series(indices.legislativoEstadual(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
@@ -655,7 +657,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#governadores", 'Governos Estaduais', null, g.executivoEstadual(Configuracao.tabelaDeUfs));
+          criaGrafico("#governadores", 'Governos Estaduais', null, serie.series(indices.executivoEstadual(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
@@ -669,7 +671,7 @@
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', g.indiceMunicipal(Configuracao.tabelaDeUfs));
+          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', serie.series(indices.indiceMunicipal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {
@@ -679,7 +681,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#vereadores", 'Câmaras Municipais', null, g.legislativoMunicipal(Configuracao.tabelaDeUfs));
+          criaGrafico("#vereadores", 'Câmaras Municipais', null, serie.series(indices.legislativoMunicipal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
@@ -689,7 +691,7 @@
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#prefeitos", 'Prefeituras', null, g.executivoMunicipal(Configuracao.tabelaDeUfs));
+          criaGrafico("#prefeitos", 'Prefeituras', null, serie.series(indices.executivoMunicipal(), Configuracao.tabelaDeUfs));
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {

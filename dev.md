@@ -58,6 +58,10 @@ Contém a lógica de configuração dos índices.
 
 Contém a lógica de cálculo dos índices.
 
+#### public/js/serie.js
+
+Contém a lógica de geração das séries para os gráficos.
+
 ### Bibliotecas
 
 #### [Twitter Boostrap](http://getbootstrap.com/)
