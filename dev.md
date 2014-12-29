@@ -50,6 +50,10 @@ Ver **Carga de dados**.
 
 O ícone é o [escudo de armas do Brasil](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Brazil.svg), gerado utilizando [gerador de favicon](http://realfavicongenerator.net/).
 
+#### public/js/configuracao.js
+
+Contém a lógica de configuração dos índices.
+
 #### public/js/indice.js
 
 Contém a lógica de cálculo dos índices.
