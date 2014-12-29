@@ -10,19 +10,24 @@
   window.Configuracao = (function() {
 
     function Configuracao() {
-      this.passos         = false;
-      this.mudancasDeNome = true;
-      this.incorporacoes  = true;
-      this.fusoes         = true;
+      // Variáveis para calcular o índice
+      this.metodoPesoUe   = 'populacao';
+      this.pesoExecutivo  = 0.25;
+
+      // Variáveis para configurar partidos
+      this.mudancasDeNome    = true;
+      this.incorporacoes     = true;
+      this.fusoes            = true;
+      this.tabelaDeReescrita = null;
+
+      // Faz correções para gráficos em passos
+      this.ehGraficoEmPassos = false;
+
+      // Faz correções para gráficos de área
+      this.ehGraficoDeArea = false;
 
       // Deixa gráficos de linha mais bonitos, mas estraga gráficos empilhados
       this.mostraFundacaoEDissolucao = true;
-
-      // Ex.: Configuracao.tabelaDePartidosAntigos
-      this.tabelaDeReescrita = null;
-
-      // Faz correções específicas para gráficos de área
-      this.ehGraficoArea = false;
     }
 
     Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
@@ -271,7 +276,7 @@
           return {
             sigla:   lista[0].sigla,
             numero:  lista[0].numero,
-            fundado: _.min(lista, function(p) { return p.fundado }),
+            fundado: _.min(lista, function(p) { return p.fundado }).fundado,
             extinto: lista[0].extinto,
             indices: somas
           }
@@ -332,13 +337,13 @@
     Indice.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) { return false };
     Indice.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) { return 0.0 };
 
-    Indice.prototype.series = function(configuracao, ufs, metodoPesoUe, pesoExecutivo) {
+    Indice.prototype.series = function(configuracao, ufs) {
 
       var _this = this;
 
       // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
       var anosComDados = _.filter(this.anos(), function(ano) {
-        return _this.temDados(ano, ufs, metodoPesoUe, pesoExecutivo);
+        return _this.temDados(ano, ufs, configuracao.metodoPesoUe, configuracao.pesoExecutivo);
       });
 
       // Calcula para cada partido os índices por ano
@@ -354,7 +359,7 @@
 
         // Calcula índices
         var indicePorAno = _.map(anos, function(ano) {
-          return [ ano, _this.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) ];
+          return [ ano, _this.calculaIndice(ano, ufs, sigla, configuracao.metodoPesoUe, configuracao.pesoExecutivo) ];
         });
 
         // Extrai siglas e números dos partidos
@@ -1275,74 +1280,74 @@
       this.municipais = new EleicoesMunicipais(this.eleitos.municipais);
     }
 
-    GeradorDeIndices.prototype.camaraDosDeputados = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.camaraDosDeputados = function(ufs) {
       var indice = new CamaraDosDeputados(this.federais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.senadoFederal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.senadoFederal = function(ufs) {
       var indice = new SenadoFederal(this.federais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.legislativoFederal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.legislativoFederal = function(ufs) {
       var indice = new LegislativoFederal(this.federais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.executivoFederal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.executivoFederal = function(ufs) {
       var indice = new ExecutivoFederal(this.federais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.indiceFederal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.indiceFederal = function(ufs) {
       var indice = new IndiceFederal(this.federais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.legislativoEstadual = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.legislativoEstadual = function(ufs) {
       var indice = new LegislativoEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.executivoEstadual = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.executivoEstadual = function(ufs) {
       var indice = new ExecutivoEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.indiceEstadual = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.indiceEstadual = function(ufs) {
       var indice = new IndiceEstadual(this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.legislativoMunicipal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.legislativoMunicipal = function(ufs) {
       var indice = new LegislativoMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.executivoMunicipal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.executivoMunicipal = function(ufs) {
       var indice = new ExecutivoMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.indiceMunicipal = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.indiceMunicipal = function(ufs) {
       var indice = new IndiceMunicipal(this.municipais, this.estaduais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.legislativoNacional = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.legislativoNacional = function(ufs) {
       var indice = new LegislativoNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.executivoNacional = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.executivoNacional = function(ufs) {
       var indice = new ExecutivoNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
-    GeradorDeIndices.prototype.indiceNacional = function(ufs, metodoPesoUe, pesoExecutivo) {
+    GeradorDeIndices.prototype.indiceNacional = function(ufs) {
       var indice = new IndiceNacional(this.federais, this.estaduais, this.municipais);
-      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+      return indice.series(this.configuracao, ufs);
     };
 
     return GeradorDeIndices;
