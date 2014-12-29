@@ -133,7 +133,7 @@
                 <label for="configuracao_predefinida">Pré-definição</label>
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <label class="btn btn-default">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Nenhuma
+                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Personalizar
                   </label>
                   <label class="btn btn-default active" aria-pressed="true">
                     <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
@@ -148,31 +148,41 @@
               </div>
             </form>
 
-            <div class="panel panel-default">
-              <div class="panel-heading">Aplicar retroativo</div>
-              <div class="panel-body">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="mudancas_de_nome" checked>
-                    Mudanças de nome
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="incorporacoes" checked>
-                    Incorporações
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="fusoes" checked>
-                    Fusões
-                  </label>
+            <div id="panel_personalizar" class="collapse">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Aplicar retroativo</div>
+                      <div class="panel-body">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" id="mudancas_de_nome" checked>
+                            Mudanças de nome
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" id="incorporacoes" checked>
+                            Incorporações
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" id="fusoes" checked>
+                            Fusões
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
 
@@ -184,42 +194,32 @@
           </h4>
         </div>
         <div id="panel_cfg_grafico" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_grafico">
-        <div class="panel-body">
-          <form>
-            <div class="form-group">
-
-              <div class="container-fluid">
-
-                <div class="row">
-
-                  <div class="col-xs-9">
-                    <div class="btn-group btn-group-justified" data-toggle="buttons">
-                      <label class="btn btn-default">
-                        <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
-                      </label>
-                      <label class="btn btn-default">
-                        <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
-                      </label>
-                      <label class="btn btn-default active" aria-pressed="true">
-                        <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
-                      </label>
-                    </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-9">
+                  <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-default">
+                      <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
+                    </label>
+                    <label class="btn btn-default">
+                      <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
+                    </label>
+                    <label class="btn btn-default active" aria-pressed="true">
+                      <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
+                    </label>
                   </div>
-
-                  <div class="col-xs-3">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" id="passos">
-                        Em incrementos
-                      </label>
-                    </div>
-                  </div>
-
                 </div>
-
+                <div class="col-xs-3">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="passos">
+                      Em passos
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
-          </form>
           </div>
         </div>
       </div>
@@ -352,6 +352,14 @@
     }
 
     $(function() {
+
+      $(document).on('change', '#configuracao_todos', function(e) {
+        if ($(e.currentTarget).is(':checked')) {
+          $('#panel_personalizar').addClass('in');
+        } else {
+          $('#panel_personalizar').removeClass('in');
+        }
+      });
 
       // Atualiza os gráficos quando o usuário muda o tipo
       $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
