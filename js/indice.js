@@ -933,6 +933,90 @@
 
   })();
 
+  var LegislativoNacional = (function() {
+
+    _extends(LegislativoNacional, Indice);
+
+    function LegislativoNacional(federais, estaduais, municipais) {
+      this.federais   = federais;
+      this.estaduais  = estaduais;
+      this.municipais = municipais;
+
+      this.legislativoFederal   = new LegislativoFederal(federais);
+      this.legislativoEstadual  = new LegislativoEstadual(estaduais);
+      this.legislativoMunicipal = new LegislativoMunicipal(municipais, estaduais);
+    }
+
+    LegislativoNacional.prototype.anos = function() {
+      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
+    };
+
+    LegislativoNacional.prototype.siglas = function() {
+      return _.uniq(_.flatten([ this.legislativoFederal.siglas(), this.legislativoEstadual.siglas(), this.legislativoMunicipal.siglas() ]));
+    };
+
+    LegislativoNacional.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
+
+      return this.legislativoFederal.temDados(ano, ufs, metodoPesoUe, pesoExecutivo) &&
+             this.legislativoEstadual.temDados(ano, ufs, metodoPesoUe, pesoExecutivo) &&
+             this.legislativoMunicipal.temDados(ano, ufs, metodoPesoUe, pesoExecutivo);
+
+    };
+
+    LegislativoNacional.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) {
+
+      return this.legislativoFederal.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3 +
+             this.legislativoEstadual.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3 +
+             this.legislativoMunicipal.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3;
+
+    };
+
+    return LegislativoNacional;
+
+  })();
+
+  var ExecutivoNacional = (function() {
+
+    _extends(ExecutivoNacional, Indice);
+
+    function ExecutivoNacional(federais, estaduais, municipais) {
+      this.federais   = federais;
+      this.estaduais  = estaduais;
+      this.municipais = municipais;
+
+      this.executivoFederal   = new ExecutivoFederal(federais);
+      this.executivoEstadual  = new ExecutivoEstadual(estaduais);
+      this.executivoMunicipal = new ExecutivoMunicipal(municipais, estaduais);
+    }
+
+    ExecutivoNacional.prototype.anos = function() {
+      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
+    };
+
+    ExecutivoNacional.prototype.siglas = function() {
+      return _.uniq(_.flatten([ this.executivoFederal.siglas(), this.executivoEstadual.siglas(), this.executivoMunicipal.siglas() ]));
+    };
+
+    ExecutivoNacional.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
+
+      return this.executivoFederal.temDados(ano, ufs, metodoPesoUe, pesoExecutivo) &&
+             this.executivoEstadual.temDados(ano, ufs, metodoPesoUe, pesoExecutivo) &&
+             this.executivoMunicipal.temDados(ano, ufs, metodoPesoUe, pesoExecutivo);
+
+    };
+
+    ExecutivoNacional.prototype.calculaIndice = function(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) {
+
+      return this.executivoFederal.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3 +
+             this.executivoEstadual.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3 +
+             this.executivoMunicipal.calculaIndice(ano, ufs, sigla, metodoPesoUe, pesoExecutivo) / 3;
+
+    };
+
+    return ExecutivoNacional;
+
+  })();
+
   var IndiceNacional = (function() {
 
     _extends(IndiceNacional, Indice);
@@ -1243,6 +1327,16 @@
 
     GeradorDeIndices.prototype.indiceMunicipal = function(ufs, metodoPesoUe, pesoExecutivo) {
       var indice = new IndiceMunicipal(this.municipais, this.estaduais);
+      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+    };
+
+    GeradorDeIndices.prototype.legislativoNacional = function(ufs, metodoPesoUe, pesoExecutivo) {
+      var indice = new LegislativoNacional(this.federais, this.estaduais, this.municipais);
+      return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
+    };
+
+    GeradorDeIndices.prototype.executivoNacional = function(ufs, metodoPesoUe, pesoExecutivo) {
+      var indice = new ExecutivoNacional(this.federais, this.estaduais, this.municipais);
       return indice.series(this.configuracao, ufs, metodoPesoUe, pesoExecutivo);
     };
 
