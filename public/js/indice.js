@@ -507,7 +507,11 @@
 
     LegislativoMunicipal.prototype.valorTotal = function(ano, uf, metodoPesoUe, pesoExecutivo) {
       if (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo') {
-        return this.eleicoes.totalVereadores(ano, uf);
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.totalVereadores(ano, uf);
+        }
       } else if (metodoPesoUe === 'populacao') {
         if (uf == 'DF') {
           return this.distritais.totalPopulacao(ano, uf);
@@ -519,7 +523,11 @@
 
     LegislativoMunicipal.prototype.valorPorSigla = function(ano, uf, sigla, metodoPesoUe, pesoExecutivo) {
       if (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo') {
-        return this.eleicoes.vereadores(ano, uf, sigla);
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.vereadores(ano, uf, sigla);
+        }
       } else if (metodoPesoUe === 'populacao') {
         if (uf == 'DF') {
           return this.distritais.deputadosEstaduaisProporcionalAPopulacao(ano, uf, sigla);
@@ -527,6 +535,29 @@
           return this.eleicoes.vereadoresProporcionalAPopulacao(ano, uf, sigla);
         }
       }
+    };
+
+    LegislativoMunicipal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
+
+      var _this = this;
+
+      // Eleições que ainda teria mandato
+      var anos = _.range(ano, ano - 4, -1);
+
+      var ignoraDf = (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo' || !_.contains(ufs, 'DF'));
+
+      var temDadosDf = ignoraDf || _.some(anos, function(ano) {
+        return _this.valorTotal(ano, 'DF', metodoPesoUe, pesoExecutivo) > 0;
+      });
+
+      var ufsMenosDf = _.difference(ufs, ['DF']);
+
+      return temDadosDf && _.some(anos, function(ano) {
+        return _.some(ufsMenosDf, function(uf) {
+          return _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo) > 0;
+        });
+      });
+
     };
 
     return LegislativoMunicipal;
@@ -551,8 +582,18 @@
     };
 
     ExecutivoMunicipal.prototype.valorTotal = function(ano, uf, metodoPesoUe, pesoExecutivo) {
-      if (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo') {
-        return this.eleicoes.totalPrefeitos(ano, uf);
+      if (metodoPesoUe === 'nominal') {
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.totalPrefeitos(ano, uf);
+        }
+      } else if (metodoPesoUe === 'legislativo') {
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.totalVereadores(ano, uf);
+        }
       } else if (metodoPesoUe === 'populacao') {
         if (uf == 'DF') {
           return this.distritais.totalPopulacao(ano, uf);
@@ -563,8 +604,18 @@
     };
 
     ExecutivoMunicipal.prototype.valorPorSigla = function(ano, uf, sigla, metodoPesoUe, pesoExecutivo) {
-      if (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo') {
-        return this.eleicoes.prefeitos(ano, uf, sigla);
+      if (metodoPesoUe === 'nominal') {
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.prefeitos(ano, uf, sigla);
+        }
+      } else if (metodoPesoUe === 'legislativo') {
+        if (uf == 'DF') {
+          return 0;
+        } else {
+          return this.eleicoes.prefeitosProporcionalAosVereadores(ano, uf, sigla);
+        }
       } else if (metodoPesoUe === 'populacao') {
         if (uf == 'DF') {
           return this.distritais.governadoresProporcionalAPopulacao(ano, uf, sigla);
@@ -572,6 +623,29 @@
           return this.eleicoes.prefeitosProporcionalAPopulacao(ano, uf, sigla);
         }
       }
+    };
+
+    ExecutivoMunicipal.prototype.temDados = function(ano, ufs, metodoPesoUe, pesoExecutivo) {
+
+      var _this = this;
+
+      // Eleições que ainda teria mandato
+      var anos = _.range(ano, ano - 4, -1);
+
+      var ignoraDf = (metodoPesoUe === 'nominal' || metodoPesoUe === 'legislativo' || !_.contains(ufs, 'DF'));
+
+      var temDadosDf = ignoraDf || _.some(anos, function(ano) {
+        return _this.valorTotal(ano, 'DF', metodoPesoUe, pesoExecutivo) > 0;
+      });
+
+      var ufsMenosDf = _.difference(ufs, ['DF']);
+
+      return temDadosDf && _.some(anos, function(ano) {
+        return _.some(ufsMenosDf, function(uf) {
+          return _this.valorTotal(ano, uf, metodoPesoUe, pesoExecutivo) > 0;
+        });
+      });
+
     };
 
     return ExecutivoMunicipal;
