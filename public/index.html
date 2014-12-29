@@ -372,7 +372,7 @@
 
   <!-- Lo-Dash -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
-  <script>!_ && document.write(unescape('%3Cscript src="js/lodash.min.js"%3E%3C/script%3E'))</script>
+  <script>!window._ && document.write(unescape('%3Cscript src="js/lodash.min.js"%3E%3C/script%3E'))</script>
 
   <script src="js/configuracao.js"></script>
   <script src="js/indice.js"></script>
@@ -482,12 +482,15 @@
     $(function() {
 
       $(document).on('click', '#cfg_partidos > a.cfg_remover', function() {
-        $('#configuracao_todos').trigger('click');
+        fazerMudancas(function() {
+          $('#configuracao_todos').trigger('click');
+          $('#mudancas_de_nome, #incorporacoes, #fusoes').prop('checked', true);
+        });
         return false;
       });
 
-      $(document).on('change', '#configuracao_todos', function(e) {
-        if ($(e.currentTarget).is(':checked')) {
+      $(document).on('change', '[name="configuracao_predefinida"]', function(e) {
+        if ($('#configuracao_todos').is(':checked')) {
           $('#panel_personalizar').addClass('in');
         } else {
           $('#panel_personalizar').removeClass('in');
@@ -591,10 +594,11 @@
             return;
           }
 
+          atualizaConfiguracao(cfg);
+
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          atualizaConfiguracao(cfg);
           criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', g.indiceFederal(Configuracao.tabelaDeUfs));
 
         });
@@ -626,10 +630,11 @@
             return;
           }
 
+          atualizaConfiguracao(cfg);
+
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          atualizaConfiguracao(cfg);
           criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', g.indiceEstadual(Configuracao.tabelaDeUfs));
 
         });
@@ -659,10 +664,11 @@
             return;
           }
 
+          atualizaConfiguracao(cfg);
+
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          atualizaConfiguracao(cfg);
           criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', g.indiceMunicipal(Configuracao.tabelaDeUfs));
 
         });
