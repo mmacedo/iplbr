@@ -70,10 +70,108 @@
 
 
       <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_metodologia">
+          <h2 class="panel-title">
+            <a data-toggle="collapse" href="#panel_metodologia" aria-expanded="false" aria-controls="panel_metodologia">Metodologia</a>
+          </h2>
+        </div>
+        <div id="panel_metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_metodologia">
+          <div class="panel-body">
+            <h3>O que é</h3>
+            <p>Uma tentativa de mensurar o poder de cada partido, analisando os resultados das eleições e o poder relativo de aprovar legislação de cada representante eleito.</p>
+            <h3>Esferas</h3>
+            <p>No Brasil há três esferas:</p>
+            <ul>
+              <li>A esfera federal, também conhecida como União;</li>
+              <li>A esfera estadual, que compreende os estados e o Distrito Federal;</li>
+              <li>A esfera municipal, que compreende os municípios, com exceção de Brasília onde o Distrito Federal acumula as funções do seu único município.</li>
+            </ul>
+            <p>O índice dá um peso igual para cada esfera:</p>
+            <pre>IPL-Nacional = (IPL-Federal / 3) + (IPL-Estadual / 3) + (IPL-Municipal / 3)</pre>
+            <h3>Poderes</h3>
+            <p>No Brasil há três poderes oficiais:</p>
+            <ul>
+              <li>O judiciário deve ser imparcial e apartidário;</li>
+              <li>O legislativo é encarregado de aprovar legislação;</li>
+              <li>O executivo que não tem poder independente de aprovar legislação (governo por decreto é possível apenas em estado de exceção), mas pode influenciar a sua aprovação através do poder de veto.</li>
+            </ul>
+            <h4>Poder de veto</h4>
+            <p>O processo de aprovação de leis no Brasil usa as seguintes regras:</p>
+            <ul>
+              <li>Para aprovar legislação é necessário maioria simples, que é 50% + 1 dos presentes;</li>
+              <li>Para realizar votação é necessário quórum de 50% + 1 dos membros da casa;</li>
+              <li>Uma vez aprovada no legislativo, o executivo da respectiva esfera tem o poder de vetar essa legislação;</li>
+              <li>O legislativo tem a chance de sobrescrever o veto, para tanto é necessário aprovar o projeto com maioria absoluta, que é 50% + 1 dos membros da casa.</li>
+            </ul>
+            <p>Se o projeto for sancionado pelo executivo, o mínimo de votos necessários para aprovar a legislação é de aproximadamente 25%:</p>
+            <pre>Quórum  = Número de membros da casa * 50% + 1
+Maioria = Quórum * 50% + 1 = ~ 25%
+
+Ex.: Para uma casa de 513 membros
+Quórum  = 513 * 50% + 1 = 257
+Maioria = 257 * 50% + 1 = 129 = ~ 25,1462% do total e ~ 50,1946% dos presentes</pre>
+            <p>Se o projeto for vetado e apenas 50% + 1 estiver presente, serão necessários 50% + 1 dos votos da casa ou 100% dos votos presentes. Aumentando o número de presentes a porcentagem de votos necessários para aprovação cai chegando a 50% + 1 quando toda a casa estiver presente. Logo, o executivo tem o poder de elevar o requisito de votos através do veto de zero à 50% - 1 dos membros da casa, dependendo do número de presentes.</p>
+            <p>Levando isso em consideração o executivo é dado nesse índice o peso de 25% (média aproximada dos dois extremos):</p>
+            <pre>IPL-esfera = (IPL-esfera-legislativo * 0,75) + (IPL-esfera-executivo * 0,25)</pre>
+            <h4>IPL-Federal</h4>
+            <p>Na esfera federal, o poder executivo é realizado pelo presidente e o poder legislativo é realizado pelo Congresso Nacional, que é composto pela Câmara dos Deputados e o Senado Federal. Todas as votação de projetos de lei e vetos devem passar pelas duas casas.</p>
+            <pre>IPL-executivo   =   Presidentes        / Total de Presidentes
+IPL-legislativo = ((Deputados Federais / Total de Deputados Federais) / 2) +
+                  ((Senadores          / Total de Senadores)          / 2)</pre>
+            <h4>IPL-Estadual</h4>
+            <p>Na esfera estadual, o poder executivo é realizado pelo governador e o poder legislativo é realizado pelas assembléias legislativas.</p>
+            <pre>IPL-executivo   = Governadores                      / Total de Governadores
+IPL-legislativo = Deputados Estaduais ou Distritais / Total de Deputados Estaduais ou Distritais</pre>
+            <h4>IPL-Municipal</h4>
+            <p>Na esfera municipal, o poder executivo é realizado pelo prefeito e o poder legislativo é realizado pelas câmaras de vereadores.</p>
+            <pre>IPL-executivo   = Prefeitos  / Total de Prefeitos
+IPL-legislativo = Vereadores / Total de Vereadores</pre>
+            <h3>Distrito Federal</h3>
+            <p>Para o Distrito Federal, o índice municipal é apenas uma cópia do índice estadual, já que apesar de se assemelhar a um estado, os poderes distritais acumulam as funções dadas aos estados e aos municípios.</p>
+            <h3>Unidades da Federação e Municípios</h3>
+            <p>O índice federal de um estado ou município é sempre o mesmo, assim como o índice estadual para municípios da mesma <abbr title="Unidade da Federação">UF</abbr>.</p>
+            <p>Para calcular o índice estadual ou municipal do país é necessário juntar os índices de todas as UFs e municípios, respectivamente. Há várias formas para realizar esse cálculo:</p>
+            <ul>
+              <li>O método nominal é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo todos os vereadores no país teriam o mesmo peso e todos os prefeitos no país teriam o mesmo peso. O problema desse método é que o número de vereadores de um município variam, enquanto o prefeito de São Paulo receberia o peso 1/5.566*0,25, a câmara de vereadores de São Paulo receberia 55/57.239*0,75 ou aproximadamente 1/1.040,71*0,75.</li>
+              <li>O método legislativo dá ao executivo o mesmo peso do legislativo, portanto o prefeito de São Paulo receberia o peso de 55/57.239*0,25 ao invés de 1/5.566*0,25. O problema é que dar peso igual para todos os membros do legislativo dá ao município o peso relativo ao tamanho da casa, que pode não ser uma medida justa. Em 2012, São Paulo com uma população de 11.376.685 tinha o peso de 1/1.040 e Blumenau com uma população de 316.139 tinha o peso de 1/3.815,93, 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
+              <li>No método população é dado o peso para determinada <abbr title="Unidade Eleitoral">UE</abbr> proporcional a última estimativa de população dada pelo IBGE antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685/193.917.083 ou 1/17,05 e Blumenau teria o peso 316.139/193.917.083 ou 1/613,39. Esse é o método utilizado para o cálculo desse índice.</li>
+            </ul>
+            <h3>Problemas</h3>
+            <p>A soma total dos índices dos partidos está entre 99% e 101%, quando deveria ser exatamente 100%. Há vários problemas que impedem de fechar o resultado correto:</p>
+            <ul>
+              <li>A soma das estimativas de população dadas pelo IBGE podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
+              <li>Alguns municípios recém emancipados tiverem eleição em ano em que o IBGE ainda não tinha dado estimativa, portanto estimativa do próximo ano foi utilizada.</li>
+              <li>Histórico das eleições municipais dado pelo TSE é bastante faltoso.</li>
+            </ul>
+            <h3>Fórmula</h3>
+            Para realizar o índice nacional:
+            <pre>Executivo Federal   = Presidentes / 1
+Legislativo Federal = (Deputados Federais / Total de Deputados Federais / 2) +
+                      (Senadores          / Total de Senadores          / 2)
+Esfera Federal = Executivo Federal * 0,25 + Legislativo Federal * 0,75
+
+Executivo Estadual   = ⅀(UF)((Governadores na UF / 1) *
+                              (População da UF / População do Brasil))
+Legislativo Estadual = ⅀(UF)((Deputados Estaduais e Distritais na UF / Total de Deputados Estaduais e Distritais na UF) *
+                              (População da UF / População do Brasil))
+Esfera Estadual = Executivo Estadual * 0,25 + Legislativo Estadual * 0,75
+
+Executivo Municipal   = ⅀(Município)((Prefeitos no Município ou Governadores do DF / 1) *
+                                      (População do Município / População do Brasil))
+Legislativo Municipal = ⅀(Município)((Vereadores no Município ou Deputados Distritais no DF / Total de Vereadores no Município ou Total de Deputados Federais no DF) *
+                                      (População do Município / População do Brasil))
+Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
+
+Índice = Esfera Federal / 3 + Esfera Estadual / 3 + Esfera Municipal / 3</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_indice">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="true" aria-controls="panel_cfg_indice">Configurar variáveis</a>
-          </h4>
+          <h2 class="panel-title">
+            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="false" aria-controls="panel_cfg_indice">Configurar variáveis</a>
+          </h2>
         </div>
         <div id="panel_cfg_indice" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_indice">
           <div class="panel-body">
@@ -117,13 +215,13 @@
 
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_partidos">
-          <h4 class="panel-title">
+          <h2 class="panel-title">
             <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Configurar partidos</a>
             <small id="cfg_partidos" class="pull-right">
               <span class="cfg_label">Pré-definição: Top 10</span>
               <a class="cfg_remover" href="">(remover)</a>
             </small>
-          </h4>
+          </h2>
         </div>
         <div id="panel_cfg_partidos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_partidos">
           <div class="panel-body">
@@ -189,9 +287,9 @@
 
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_grafico">
-          <h4 class="panel-title">
+          <h2 class="panel-title">
             <a class="collapsed" data-toggle="collapse" href="#panel_cfg_grafico" aria-expanded="false" aria-controls="panel_cfg_grafico">Configurar gráfico</a>
-          </h4>
+          </h2>
         </div>
         <div id="panel_cfg_grafico" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_grafico">
           <div class="panel-body">
