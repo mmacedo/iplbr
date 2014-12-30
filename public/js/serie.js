@@ -6,17 +6,12 @@
       this.configuracao = configuracao;
     }
 
-    Serie.prototype.geraIndices = function(indice, ufs) {
+    Serie.prototype.geraIndices = function(indice, anos, ufs) {
 
       var _this = this;
 
-      // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
-      var anosComDados = _.filter(indice.anos(), function(ano) {
-        return indice.temDados(ano, ufs, _this.configuracao.metodoPesoUe, _this.configuracao.pesoExecutivo);
-      });
-
       // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(indice.siglas(), function(sigla) {
+      var indicesPorSigla = _.map(indice.siglas(ufs), function(sigla) {
 
         // Carrega informações do partido
         var info = _.find(Configuracao.tabelaDePartidos, function(info) {
@@ -24,10 +19,10 @@
         });
 
         // Adiciona todos anos necessários
-        var anos = _this.configuracao.filtrarAnos(anosComDados, info.fundado, info.extinto, true);
+        var anosParaCalcular = _this.configuracao.filtrarAnos(anos, info.fundado, info.extinto, true);
 
         // Calcula índices
-        var indicePorAno = _.map(anos, function(ano) {
+        var indicePorAno = _.map(anosParaCalcular, function(ano) {
           return [ ano, indice.calculaIndice(ano, ufs, sigla, _this.configuracao.metodoPesoUe, _this.configuracao.pesoExecutivo) ];
         });
 
@@ -43,11 +38,9 @@
 
     };
 
-    Serie.prototype.aplicaConfiguracoes = function(indicesPorSigla) {
+    Serie.prototype.aplicaConfiguracoes = function(anosComDados, indicesPorSigla) {
 
       var _this = this;
-
-      var anosComDados = _.uniq(_.flatten(_.map(indicesPorSigla, function(p) { return _.map(p.indices, function(i) { return i[0] }) }), true));
 
       // Aplica configuração de partidos (parte 1)
       var indicesPorSigla = _this.configuracao.corrigirDados(indicesPorSigla);
@@ -123,10 +116,20 @@
     };
 
     Serie.prototype.series = function(indice, ufs) {
-      var indicesPorSigla = this.geraIndices(indice, ufs);
-      var indicesMigrados = this.aplicaConfiguracoes(indicesPorSigla);
+
+      var _this = this;
+
+      // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
+      var anosComDados = _.filter(indice.anos(), function(ano) {
+        return indice.temDados(ano, ufs, _this.configuracao.metodoPesoUe, _this.configuracao.pesoExecutivo);
+      });
+
+      var indicesPorSigla = this.geraIndices(indice, anosComDados, ufs);
+      var indicesMigrados = this.aplicaConfiguracoes(anosComDados, indicesPorSigla);
       var series = this.formataParaHighcharts(indicesMigrados);
+
       return series;
+
     };
 
     return Serie;
