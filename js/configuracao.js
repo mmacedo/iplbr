@@ -76,7 +76,6 @@
       { sigla: 'PSDB',    numero: 45, fundado: 1988 },
       { sigla: 'PSOL',    numero: 50, fundado: 2004 },
       { sigla: 'PEN',     numero: 51, fundado: 2011 },
-      { sigla: 'PEN',     numero: 51, fundado: 2011 },
       { sigla: 'PPL',     numero: 54, fundado: 2009 },
       { sigla: 'PSD',     numero: 55, fundado: 2011 },
       { sigla: 'PRONA',   numero: 56, fundado: 1989, extinto: 2006, fusao: 'PR' },
@@ -144,7 +143,7 @@
       resto: 'Resto'
     };
 
-    Configuracao.prototype.filtrarAnos = function(anos, fundado, extinto, manterTodosAnos) {
+    Configuracao.prototype.anosComIndice = function(anos, fundado, extinto, manterTodosAnos) {
 
       var anos = anos.slice();
 
@@ -184,7 +183,7 @@
 
     }
 
-    var mesclarESomarIndices = function(dados, mapFunction) {
+    var somarIndicesDosRepetidos = function(dados, mapFunction) {
       return _.map(dados, function(partidos) {
         if (partidos.length == 1) {
           return partidos[0];
@@ -204,7 +203,7 @@
       });
     };
 
-    Configuracao.prototype.corrigirDados = function(dados) {
+    Configuracao.prototype.mesclarPartidosExtintos = function(dados) {
 
       var _this = this;
       var migrouUmPartido = false;
@@ -250,7 +249,7 @@
         return {
           sigla:   infoDestino.sigla,
           numero:  infoDestino.numero,
-          fundado: partido.fundado == null ? info.fundado : partido.fundado,
+          fundado: partido.fundado || info.fundado,
           extinto: infoDestino.extinto,
           indices: partido.indices
         };
@@ -265,7 +264,7 @@
         });
 
         // Soma índices
-        var mesclados = mesclarESomarIndices(_.values(porSigla), function(lista, somas) {
+        var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(lista, somas) {
           return {
             sigla:   lista[0].sigla,
             numero:  lista[0].numero,
@@ -276,7 +275,7 @@
         });
 
         // Reaplica migrações nos novos dados
-        return this.corrigirDados(mesclados);
+        return this.mesclarPartidosExtintos(mesclados);
 
       }
 
@@ -309,7 +308,7 @@
       });
 
       // Soma índices
-      var mesclados = mesclarESomarIndices(_.values(porSigla), function(lista, somas) {
+      var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(lista, somas) {
         return { sigla: lista[0].sigla, indices: somas }
       });
 
