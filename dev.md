@@ -80,7 +80,8 @@ Contém a lógica de geração das séries para os gráficos.
 
 - public/js/highcharts.js
 - public/js/exporting.js (módulo de exportação)
-- public/js/grid-light.js (tema Grid Light)
+- public/js/no-data-to-display.js (módulo para mostrar texto quando não há dados)
+- public/js/grid-light.js (tema Grid Light, removido webfonts)
 
 #### Outras
 

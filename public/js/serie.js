@@ -19,7 +19,7 @@
         });
 
         // Adiciona todos anos necessários
-        var anosParaCalcular = _this.configuracao.filtrarAnos(anos, info.fundado, info.extinto, true);
+        var anosParaCalcular = _this.configuracao.anosComIndice(anos, info.fundado, info.extinto, true);
 
         // Calcula índices
         var indicePorAno = _.map(anosParaCalcular, function(ano) {
@@ -43,12 +43,12 @@
       var _this = this;
 
       // Aplica configuração de partidos (parte 1)
-      var indicesPorSigla = _this.configuracao.corrigirDados(indicesPorSigla);
+      var indicesPorSigla = _this.configuracao.mesclarPartidosExtintos(indicesPorSigla);
 
       // Filtra anos que o partido existe
       indicesPorSigla = _.map(indicesPorSigla, function(partido) {
 
-        var anos = _this.configuracao.filtrarAnos(anosComDados, partido.fundado, partido.extinto, false);
+        var anos = _this.configuracao.anosComIndice(anosComDados, partido.fundado, partido.extinto, false);
 
         var indicesPorAno = _.map(anos, function(ano) {
           var indice = _.find(partido.indices, function(i) { return ano === i[0] })[1];
@@ -177,11 +177,15 @@
 
     Serie.prototype.seriesPorAno = function(indice, ufs, ano) {
 
-      var _this = this;
+      var series;
 
-      var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
-      var indicesMigrados = this.aplicaConfiguracoes([ano], indicesPorSigla);
-      var series = this.formataParaHighchartsPorAno(indicesMigrados);
+      if (indice.temDados(ano, ufs, this.configuracao.metodoPesoUe, this.configuracao.pesoExecutivo)) {
+        var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
+        var indicesMigrados = this.aplicaConfiguracoes([ano], indicesPorSigla);
+        series = this.formataParaHighchartsPorAno(indicesMigrados);
+      } else {
+        series = this.formataParaHighchartsPorAno([]);
+      }
 
       return series;
 
