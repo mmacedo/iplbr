@@ -33,10 +33,6 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.min.css" rel="stylesheet">
@@ -63,6 +59,9 @@
       width: 100%;
       height: 600px;
     }
+    #jurisdicao, #ano {
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -74,45 +73,141 @@
 
 
       <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_metodologia">
+          <h2 class="panel-title">
+            <a data-toggle="collapse" href="#panel_metodologia" aria-expanded="false" aria-controls="panel_metodologia">Metodologia</a>
+          </h2>
+        </div>
+        <div id="panel_metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_metodologia">
+          <div class="panel-body">
+            <h3>O que é</h3>
+            <p>Uma tentativa de mensurar o poder de cada partido, analisando os resultados das eleições e o poder relativo de aprovar legislação de cada representante eleito.</p>
+            <h3>Esferas</h3>
+            <p>No Brasil há três esferas:</p>
+            <ul>
+              <li>A esfera federal, também conhecida como União;</li>
+              <li>A esfera estadual, que compreende os estados e o Distrito Federal;</li>
+              <li>A esfera municipal, que compreende os municípios, com exceção de Brasília onde o Distrito Federal acumula as funções do seu único município.</li>
+            </ul>
+            <p>O índice dá um peso igual para cada esfera:</p>
+            <pre>IPL-Nacional = (IPL-Federal / 3) + (IPL-Estadual / 3) + (IPL-Municipal / 3)</pre>
+            <h3>Poderes</h3>
+            <p>No Brasil há três poderes oficiais:</p>
+            <ul>
+              <li>O judiciário deve ser imparcial e apartidário;</li>
+              <li>O legislativo é encarregado de aprovar legislação;</li>
+              <li>O executivo que não tem poder independente de aprovar legislação (governo por decreto é possível apenas em estado de exceção), mas pode influenciar a sua aprovação através do poder de veto.</li>
+            </ul>
+            <h4>Poder de veto</h4>
+            <p>O processo de aprovação de leis no Brasil usa as seguintes regras:</p>
+            <ul>
+              <li>Para aprovar legislação é necessário maioria simples, que é 50% + 1 dos presentes;</li>
+              <li>Para realizar votação é necessário quórum de 50% + 1 dos membros da casa;</li>
+              <li>Uma vez aprovada no legislativo, o executivo da respectiva esfera tem o poder de vetar essa legislação;</li>
+              <li>O legislativo tem a chance de sobrescrever o veto, para tanto é necessário aprovar o projeto com maioria absoluta, que é 50% + 1 dos membros da casa.</li>
+            </ul>
+            <p>Se o projeto for sancionado pelo executivo, o mínimo de votos necessários para aprovar a legislação é de aproximadamente 25%:</p>
+            <pre>Quórum  = Número de membros da casa * 50% + 1
+Maioria = Quórum * 50% + 1 = ~ 25%
+
+Ex.: Para uma casa de 513 membros
+Quórum  = 513 * 50% + 1 = 257
+Maioria = 257 * 50% + 1 = 129 = ~ 25,1462% do total e ~ 50,1946% dos presentes</pre>
+            <p>Se o projeto for vetado e apenas 50% + 1 estiver presente, serão necessários 50% + 1 dos votos da casa ou 100% dos votos presentes. Aumentando o número de presentes a porcentagem de votos necessários para aprovação cai chegando a 50% + 1 quando toda a casa estiver presente. Logo, o executivo tem o poder de elevar o requisito de votos através do veto de zero à 50% - 1 dos membros da casa, dependendo do número de presentes.</p>
+            <p>Levando isso em consideração o executivo é dado nesse índice o peso de 25% (média aproximada dos dois extremos):</p>
+            <pre>IPL-esfera = (IPL-esfera-legislativo * 0,75) + (IPL-esfera-executivo * 0,25)</pre>
+            <h4>IPL-Federal</h4>
+            <p>Na esfera federal, o poder executivo é realizado pelo presidente e o poder legislativo é realizado pelo Congresso Nacional, que é composto pela Câmara dos Deputados e o Senado Federal. Todas as votação de projetos de lei e vetos devem passar pelas duas casas.</p>
+            <pre>IPL-executivo   =   Presidentes        / Total de Presidentes
+IPL-legislativo = ((Deputados Federais / Total de Deputados Federais) / 2) +
+                  ((Senadores          / Total de Senadores)          / 2)</pre>
+            <h4>IPL-Estadual</h4>
+            <p>Na esfera estadual, o poder executivo é realizado pelo governador e o poder legislativo é realizado pelas assembléias legislativas.</p>
+            <pre>IPL-executivo   = Governadores                      / Total de Governadores
+IPL-legislativo = Deputados Estaduais ou Distritais / Total de Deputados Estaduais ou Distritais</pre>
+            <h4>IPL-Municipal</h4>
+            <p>Na esfera municipal, o poder executivo é realizado pelo prefeito e o poder legislativo é realizado pelas câmaras de vereadores.</p>
+            <pre>IPL-executivo   = Prefeitos  / Total de Prefeitos
+IPL-legislativo = Vereadores / Total de Vereadores</pre>
+            <h3>Distrito Federal</h3>
+            <p>Para o Distrito Federal, o índice municipal é apenas uma cópia do índice estadual, já que apesar de se assemelhar a um estado, os poderes distritais acumulam as funções dadas aos estados e aos municípios.</p>
+            <h3>Unidades da Federação e Municípios</h3>
+            <p>O índice federal de um estado ou município é sempre o mesmo, assim como o índice estadual para municípios da mesma <abbr title="Unidade da Federação">UF</abbr>.</p>
+            <p>Para calcular o índice estadual ou municipal do país é necessário juntar os índices de todas as UFs e municípios, respectivamente. Há várias formas para realizar esse cálculo:</p>
+            <ul>
+              <li>O método nominal é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo todos os vereadores no país teriam o mesmo peso e todos os prefeitos no país teriam o mesmo peso. O problema desse método é que o número de vereadores de um município variam, enquanto o prefeito de São Paulo receberia o peso 1/5.566*0,25, a câmara de vereadores de São Paulo receberia 55/57.239*0,75 ou aproximadamente 1/1.040,71*0,75.</li>
+              <li>O método legislativo dá ao executivo o mesmo peso do legislativo, portanto o prefeito de São Paulo receberia o peso de 55/57.239*0,25 ao invés de 1/5.566*0,25. O problema é que dar peso igual para todos os membros do legislativo dá ao município o peso relativo ao tamanho da casa, que pode não ser uma medida justa. Em 2012, São Paulo com uma população de 11.376.685 tinha o peso de 1/1.040 e Blumenau com uma população de 316.139 tinha o peso de 1/3.815,93, 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
+              <li>No método população é dado o peso para determinada <abbr title="Unidade Eleitoral">UE</abbr> proporcional a última estimativa de população dada pelo IBGE antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685/193.917.083 ou 1/17,05 e Blumenau teria o peso 316.139/193.917.083 ou 1/613,39. Esse é o método utilizado para o cálculo desse índice.</li>
+            </ul>
+            <h3>Problemas</h3>
+            <p>A soma total dos índices dos partidos está entre 99% e 101%, quando deveria ser exatamente 100%. Há vários problemas que impedem de fechar o resultado correto:</p>
+            <ul>
+              <li>A soma das estimativas de população dadas pelo IBGE podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
+              <li>Alguns municípios recém emancipados tiverem eleição em ano em que o IBGE ainda não tinha dado estimativa, portanto estimativa do próximo ano foi utilizada.</li>
+              <li>Histórico das eleições municipais dado pelo TSE é bastante faltoso.</li>
+            </ul>
+            <h3>Fórmula</h3>
+            Para realizar o índice nacional:
+            <pre>Executivo Federal   = Presidentes / 1
+Legislativo Federal = (Deputados Federais / Total de Deputados Federais / 2) +
+                      (Senadores          / Total de Senadores          / 2)
+Esfera Federal = Executivo Federal * 0,25 + Legislativo Federal * 0,75
+
+Executivo Estadual   = ⅀(UF)((Governadores na UF / 1) *
+                              (População da UF / População do Brasil))
+Legislativo Estadual = ⅀(UF)((Deputados Estaduais e Distritais na UF / Total de Deputados Estaduais e Distritais na UF) *
+                              (População da UF / População do Brasil))
+Esfera Estadual = Executivo Estadual * 0,25 + Legislativo Estadual * 0,75
+
+Executivo Municipal   = ⅀(Município)((Prefeitos no Município ou Governadores do DF / 1) *
+                                      (População do Município / População do Brasil))
+Legislativo Municipal = ⅀(Município)((Vereadores no Município ou Deputados Distritais no DF / Total de Vereadores no Município ou Total de Deputados Federais no DF) *
+                                      (População do Município / População do Brasil))
+Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
+
+Índice = Esfera Federal / 3 + Esfera Estadual / 3 + Esfera Municipal / 3</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_indice">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="true" aria-controls="panel_cfg_indice">Configurar variáveis</a>
-          </h4>
+          <h2 class="panel-title">
+            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="false" aria-controls="panel_cfg_indice">Configurar variáveis</a>
+          </h2>
         </div>
         <div id="panel_cfg_indice" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_indice">
           <div class="panel-body">
 
-            <form>
-              <div class="form-group">
-                <label for="peso_ue">Método de peso da UE</label>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Nominal
-                  </label>
-                  <label class="btn btn-default active" aria-pressed="true">
-                    <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> População
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Legislativo
-                  </label>
-                </div>
+            <div class="form-group">
+              <label for="peso_ue">Método de peso da UE</label>
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default">
+                  <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Nominal
+                </label>
+                <label class="btn btn-default active" aria-pressed="true">
+                  <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> População
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Legislativo
+                </label>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="peso_executivo">Peso do executivo</label>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Mínimo (zero)
-                  </label>
-                  <label class="btn btn-default active" aria-pressed="true">
-                    <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Máximo (50%)
-                  </label>
-                </div>
+            <div class="form-group">
+              <label for="peso_executivo">Peso do executivo</label>
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default">
+                  <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Mínimo (zero)
+                </label>
+                <label class="btn btn-default active" aria-pressed="true">
+                  <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Máximo (50%)
+                </label>
               </div>
-            </form>
+            </div>
 
           </div>
         </div>
@@ -121,32 +216,34 @@
 
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_partidos">
-          <h4 class="panel-title">
+          <h2 class="panel-title">
             <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Configurar partidos</a>
-          </h4>
+            <small id="cfg_partidos" class="pull-right">
+              <span class="cfg_label">Pré-definição: Top 10</span>
+              <a class="cfg_remover" href="">(remover)</a>
+            </small>
+          </h2>
         </div>
         <div id="panel_cfg_partidos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_partidos">
           <div class="panel-body">
 
-            <form>
-              <div class="form-group">
-                <label for="configuracao_predefinida">Pré-definição</label>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Personalizar
-                  </label>
-                  <label class="btn btn-default active" aria-pressed="true">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
-                  </label>
-                </div>
+            <div class="form-group">
+              <label for="configuracao_predefinida">Pré-definição</label>
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default">
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Personalizar
+                </label>
+                <label class="btn btn-default active" aria-pressed="true">
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
+                </label>
               </div>
-            </form>
+            </div>
 
             <div id="panel_personalizar" class="collapse">
               <div class="container-fluid">
@@ -185,173 +282,236 @@
           </div>
         </div>
       </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_cfg_grafico">
-          <h4 class="panel-title">
-            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_grafico" aria-expanded="false" aria-controls="panel_cfg_grafico">Configurar gráfico</a>
-          </h4>
-        </div>
-        <div id="panel_cfg_grafico" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_grafico">
-          <div class="panel-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-xs-9">
-                  <div class="btn-group btn-group-justified" data-toggle="buttons">
-                    <label class="btn btn-default">
-                      <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
-                    </label>
-                    <label class="btn btn-default">
-                      <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
-                    </label>
-                    <label class="btn btn-default active" aria-pressed="true">
-                      <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
-                    </label>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" id="passos">
-                      Em passos
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
     </div>
+
 
     <div role="tabpanel">
 
-      <ul id="tablist_graficos" class="nav nav-tabs nav-justified" role="tablist">
+      <ul id="tablist_tipo" class="nav nav-tabs nav-justified" role="tablist">
         <li role="presentation" class="active">
-          <a href="#tab_nacional" aria-controls="tab_nacional" role="tab" data-toggle="tab">Nacional</a>
+          <a href="#tab_por_jurisdicao" aria-controls="tab_por_jurisdicao" role="tab" data-toggle="tab">Por jurisdição</a>
         </li>
         <li role="presentation">
-          <a href="#tab_federal" aria-controls="tab_federal" role="tab" data-toggle="tab">Federal</a>
-        </li>
-        <li role="presentation">
-          <a href="#tab_estadual" aria-controls="tab_estadual" role="tab" data-toggle="tab">Estadual</a>
-        </li>
-        <li role="presentation">
-          <a href="#tab_municipal" aria-controls="tab_municipal" role="tab" data-toggle="tab">Municipal</a>
+          <a href="#tab_por_ano" aria-controls="tab_por_ano" role="tab" data-toggle="tab">Por ano</a>
         </li>
       </ul>
 
       <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane active" id="tab_nacional">
-          <ul id="tablist_nacional" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_nacional" aria-controls="tab_indice_nacional" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_nacional" aria-controls="tab_legislativo_nacional" role="tab" data-toggle="tab">Legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_nacional" aria-controls="tab_executivo_nacional" role="tab" data-toggle="tab">Executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_nacional">
-              <div id="indice_nacional" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_nacional">
-              <div id="legislativo_nacional" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_nacional">
-              <div id="executivo_nacional" class="grafico"></div>
+
+        <div role="tabpanel" class="tab-pane active" id="tab_por_jurisdicao">
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <select id="jurisdicao" class="input-lg">
+                <optgroup>
+                  <option value="pais">Brasil</option>
+                </optgroup>
+                <optgroup>
+                  <option value="regiao-co">Região Centro-Oeste</option>
+                  <option value="regiao-ne">Região Nordeste</option>
+                  <option value="regiao-n">Região Norte</option>
+                  <option value="regiao-se">Região Sudeste</option>
+                  <option value="regiao-s">Região Sul</option>
+                </optgroup>
+                <optgroup>
+                  <option value="uf-ac">Acre</option>
+                  <option value="uf-al">Alagoas</option>
+                  <option value="uf-ap">Amapá</option>
+                  <option value="uf-am">Amazonas</option>
+                  <option value="uf-ba">Bahia</option>
+                  <option value="uf-ce">Ceará</option>
+                  <option value="uf-df">Distrito Federal</option>
+                  <option value="uf-es">Espírito Santo</option>
+                  <option value="uf-go">Goiás</option>
+                  <option value="uf-ma">Maranhão</option>
+                  <option value="uf-mg">Minas Gerais</option>
+                  <option value="uf-mt">Mato Grosso</option>
+                  <option value="uf-ms">Mato Grosso do Sul</option>
+                  <option value="uf-pa">Pará</option>
+                  <option value="uf-pb">Paraíba</option>
+                  <option value="uf-pr">Paraná</option>
+                  <option value="uf-pe">Pernambuco</option>
+                  <option value="uf-pi">Piauí</option>
+                  <option value="uf-rj">Rio de Janeiro</option>
+                  <option value="uf-rn">Rio Grande do Norte</option>
+                  <option value="uf-rs">Rio Grande do Sul</option>
+                  <option value="uf-ro">Rondônia</option>
+                  <option value="uf-rr">Roraima</option>
+                  <option value="uf-sc">Santa Catarina</option>
+                  <option value="uf-sp">São Paulo</option>
+                  <option value="uf-se">Sergipe</option>
+                  <option value="uf-to">Tocantins</option>
+                </optgroup>
+              </select>
             </div>
           </div>
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-xs-9">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                      <label class="btn btn-default">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
+                      </label>
+                      <label class="btn btn-default">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
+                      </label>
+                      <label class="btn btn-default active" aria-pressed="true">
+                        <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="passos">
+                        Em passos
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div role="tabpanel">
+            <ul id="tablist_graficos_por_jurisdicao" class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_nacional" aria-controls="tab_nacional" role="tab" data-toggle="tab">Nacional</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_federal" aria-controls="tab_federal" role="tab" data-toggle="tab">Federal</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_estadual" aria-controls="tab_estadual" role="tab" data-toggle="tab">Estadual</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_municipal" aria-controls="tab_municipal" role="tab" data-toggle="tab">Municipal</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab_nacional">
+                <ul id="tablist_nacional" class="nav nav-tabs nav-justified" role="tablist">
+                  <li role="presentation" class="active">
+                    <a href="#tab_indice_nacional" aria-controls="tab_indice_nacional" role="tab" data-toggle="tab">Índice</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_legislativo_nacional" aria-controls="tab_legislativo_nacional" role="tab" data-toggle="tab">Legislativo</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_executivo_nacional" aria-controls="tab_executivo_nacional" role="tab" data-toggle="tab">Executivo</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="tab_indice_nacional">
+                    <div id="indice_nacional" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_legislativo_nacional">
+                    <div id="legislativo_nacional" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_executivo_nacional">
+                    <div id="executivo_nacional" class="grafico"></div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_federal">
+                <ul id="tablist_federal" class="nav nav-tabs nav-justified" role="tablist">
+                  <li role="presentation" class="active">
+                    <a href="#tab_indice_federal" aria-controls="tab_indice_federal" role="tab" data-toggle="tab">Índice</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_legislativo_federal" aria-controls="tab_legislativo_federal" role="tab" data-toggle="tab">Legislativo</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_executivo_federal" aria-controls="tab_executivo_federal" role="tab" data-toggle="tab">Executivo</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="tab_indice_federal">
+                    <div id="indice_federal" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
+                    <div id="deputados_federais" class="grafico"></div>
+                    <div id="senadores" class="grafico"></div>
+                    <div id="congresso_nacional" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
+                    <div id="presidentes" class="grafico"></div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_estadual">
+                <ul id="tablist_estadual" class="nav nav-tabs nav-justified" role="tablist">
+                  <li role="presentation" class="active">
+                    <a href="#tab_indice_estadual" aria-controls="tab_indice_estadual" role="tab" data-toggle="tab">Índice</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_legislativo_estadual" aria-controls="tab_legislativo_estadual" role="tab" data-toggle="tab">Legislativo</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_executivo_estadual" aria-controls="tab_executivo_estadual" role="tab" data-toggle="tab">Executivo</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="tab_indice_estadual">
+                    <div id="indice_estadual" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_legislativo_estadual">
+                    <div id="deputados_estaduais" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_executivo_estadual">
+                    <div id="governadores" class="grafico"></div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_municipal">
+                <ul id="tablist_municipal" class="nav nav-tabs nav-justified" role="tablist">
+                  <li role="presentation" class="active">
+                    <a href="#tab_indice_municipal" aria-controls="tab_indice_municipal" role="tab" data-toggle="tab">Índice</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_legislativo_municipal" aria-controls="tab_legislativo_municipal" role="tab" data-toggle="tab">Legislativo</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab_executivo_municipal" aria-controls="tab_executivo_municipal" role="tab" data-toggle="tab">Executivo</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="tab_indice_municipal">
+                    <div id="indice_municipal" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_legislativo_municipal">
+                    <div id="vereadores" class="grafico"></div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tab_executivo_municipal">
+                    <div id="prefeitos" class="grafico"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab_federal">
-          <ul id="tablist_federal" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_federal" aria-controls="tab_indice_federal" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_federal" aria-controls="tab_legislativo_federal" role="tab" data-toggle="tab">Legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_federal" aria-controls="tab_executivo_federal" role="tab" data-toggle="tab">Executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_federal">
-              <div id="indice_federal" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
-              <div id="deputados_federais" class="grafico"></div>
-              <div id="senadores" class="grafico"></div>
-              <div id="congresso_nacional" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
-              <div id="presidentes" class="grafico"></div>
+
+        <div role="tabpanel" class="tab-pane" id="tab_por_ano">
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <select id="ano" class="input-lg">
+                <option value="1999">1999</option>
+              </select>
             </div>
           </div>
+
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab_estadual">
-          <ul id="tablist_estadual" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_estadual" aria-controls="tab_indice_estadual" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_estadual" aria-controls="tab_legislativo_estadual" role="tab" data-toggle="tab">Legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_estadual" aria-controls="tab_executivo_estadual" role="tab" data-toggle="tab">Executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_estadual">
-              <div id="indice_estadual" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_estadual">
-              <div id="deputados_estaduais" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_estadual">
-              <div id="governadores" class="grafico"></div>
-            </div>
-          </div>
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="tab_municipal">
-          <ul id="tablist_municipal" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_municipal" aria-controls="tab_indice_municipal" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_municipal" aria-controls="tab_legislativo_municipal" role="tab" data-toggle="tab">Legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_municipal" aria-controls="tab_executivo_municipal" role="tab" data-toggle="tab">Executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_municipal">
-              <div id="indice_municipal" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_municipal">
-              <div id="vereadores" class="grafico"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_municipal">
-              <div id="prefeitos" class="grafico"></div>
-            </div>
-          </div>
-        </div>
 
       </div>
-
     </div>
-
   </div>
 
   <!-- jQuery -->
@@ -372,11 +532,69 @@
 
   <!-- Lo-Dash -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
-  <script>!_ && document.write(unescape('%3Cscript src="js/lodash.min.js"%3E%3C/script%3E'))</script>
+  <script>!window._ && document.write(unescape('%3Cscript src="js/lodash.min.js"%3E%3C/script%3E'))</script>
 
+  <script src="js/configuracao.js"></script>
   <script src="js/indice.js"></script>
+  <script src="js/serie.js"></script>
 
   <script type="text/javascript">
+    function atualizaConfiguracao(cfg) {
+      cfg.passos                    = $('#passos').is(':checked:enabled');
+      cfg.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
+      cfg.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
+      cfg.fusoes                    = $('#fusoes').is(':checked:enabled');
+      cfg.ehGraficoArea             = $('#tipo_area').is(':checked');
+      cfg.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
+
+      if ($('#peso_nominal').is(':checked')) {
+        cfg.metodoPesoUe = 'nominal';
+      } else if ($('#peso_legislativo').is(':checked')) {
+        cfg.metodoPesoUe = 'legislativo';
+      } else if ($('#peso_populacao').is(':checked')) {
+        cfg.metodoPesoUe = 'populacao';
+      }
+
+      if ($('#peso_zero').is(':checked')) {
+        cfg.pesoExecutivo = 0.00;
+      } else if ($('#peso_media').is(':checked')) {
+        cfg.pesoExecutivo = 0.25;
+      } else if ($('#peso_metade').is(':checked')) {
+        cfg.pesoExecutivo = 0.50;
+      }
+
+      if ($('#configuracao_todos').is(':checked')) {
+        cfg.tabelaDeReescrita = null;
+      } else if ($('#configuracao_top10').is(':checked')) {
+        cfg.tabelaDeReescrita = Configuracao.tabelaTop10;
+      } else if ($('#configuracao_top3').is(':checked')) {
+        cfg.tabelaDeReescrita = Configuracao.tabelaTop3;
+      } else if ($('#configuracao_antigos').is(':checked')) {
+        cfg.tabelaDeReescrita = Configuracao.tabelaDePartidosAntigos;
+      }
+    }
+
+    function filtroJurisdicao() {
+      var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
+      if (matches[5] === 'pais') {
+        return Configuracao.tabelaDeUfs;
+      } else if (matches[3] === 'regiao') {
+        if (matches[4] === 'co') {
+          return Configuracao.regiaoCentroOeste;
+        } else if (matches[4] === 'ne') {
+          return Configuracao.regiaoNordeste;
+        } else if (matches[4] === 'n') {
+          return Configuracao.regiaoNorte;
+        } else if (matches[4] === 'se') {
+          return Configuracao.regiaoSudeste;
+        } else {
+          return Configuracao.regiaoSul;
+        }
+      } else {
+        return [ matches[2].toUpperCase() ];
+      }
+    }
+
     function criaGrafico(id, titulo, subtitulo, series) {
 
       var passosSelecionado = $('#passos').is(':checked:enabled');
@@ -432,19 +650,65 @@
       });
     }
 
+    function recriaGraficosDaGuiaAtual() {
+
+      if (window.fazendoMudancas === true) {
+        return;
+      }
+
+      // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
+      _.each(Highcharts.charts, function(chart) {
+        if (chart != null) {
+          chart.destroy();
+        }
+      });
+
+      $('#tablist_tipo > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+
+    }
+
+    function fazerMudancas(mudancas) {
+      window.fazendoMudancas = true;
+      mudancas();
+      window.fazendoMudancas = false;
+      recriaGraficosDaGuiaAtual();
+    }
+
     $(function() {
 
-      $(document).on('change', '#configuracao_todos', function(e) {
-        if ($(e.currentTarget).is(':checked')) {
+      $(document).on('click', '#cfg_partidos > a.cfg_remover', function() {
+        fazerMudancas(function() {
+          $('#configuracao_todos').trigger('click');
+          $('#mudancas_de_nome, #incorporacoes, #fusoes').prop('checked', true);
+        });
+        return false;
+      });
+
+      $(document).on('change', '[name="configuracao_predefinida"]', function(e) {
+        if ($('#configuracao_todos').is(':checked')) {
           $('#panel_personalizar').addClass('in');
         } else {
           $('#panel_personalizar').removeClass('in');
         }
       });
 
-      // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+      $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+        if ($('#configuracao_todos').is(':checked')) {
+          $('#cfg_partidos').hide();
+          $('#cfg_partidos .cfg_label').text('');
+        } else if ($('#configuracao_top10').is(':checked')) {
+          $('#cfg_partidos').show();
+          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 10');
+        } else if ($('#configuracao_top3').is(':checked')) {
+          $('#cfg_partidos').show();
+          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 3');
+        } else if ($('#configuracao_antigos').is(':checked')) {
+          $('#cfg_partidos').show();
+          $('#cfg_partidos .cfg_label').text('Pré-definição: Antigos');
+        }
+      });
 
+      $(document).on('change', '[name="tipo_de_grafico"]', function() {
         if ($('#tipo_curvas').is(':checked')) {
           $('#passos')
             .prop('disabled', true)
@@ -456,19 +720,14 @@
             .closest('.checkbox')
             .removeClass('disabled')
         }
-
-        // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
-        _.each(Highcharts.charts, function(chart) {
-          if (chart != null) {
-            chart.destroy();
-          }
-        });
-
-        // Recria charts da tab atual
-        $('#tablist_graficos > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
 
-      // fix dimensions of chart that was in a hidden element
+      // Atualiza os gráficos quando o usuário muda o tipo
+      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
+        recriaGraficosDaGuiaAtual();
+      });
+
+      // Redesenha gráficos que estavam em elementos escondidos
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
         var panel_id = $(this).attr('aria-controls');
         $("#" + panel_id + " [data-highcharts-chart]").each(function() {
@@ -477,181 +736,164 @@
         });
       });
 
-      $.getJSON("eleitos.json").done(function(json) {
+      $.getJSON('eleitos.json').done(function(json) {
 
-        var configuracao = new Configuracao();
-        var indices = new GeradorDeIndices(json, configuracao);
-        var metodoPesoUe, pesoExecutivo;
+        var cfg     = new Configuracao();
+        var serie   = new Serie(cfg);
+        var indices = new GeradorDeIndices(json);
 
-        $(document)
-          .on('shown.bs.tab', '#tablist_graficos > li > a[data-toggle="tab"]', function() {
-            configuracao.passos                    = $('#passos').is(':checked:enabled');
-            configuracao.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
-            configuracao.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
-            configuracao.fusoes                    = $('#fusoes').is(':checked:enabled');
-            configuracao.ehGraficoArea             = $('#tipo_area').is(':checked');
-            configuracao.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
 
-            if ($('#peso_nominal').is(':checked')) {
-              metodoPesoUe = 'nominal';
-            } else if ($('#peso_legislativo').is(':checked')) {
-              metodoPesoUe = 'legislativo';
-            } else if ($('#peso_populacao').is(':checked')) {
-              metodoPesoUe = 'populacao';
-            }
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
 
-            if ($('#peso_zero').is(':checked')) {
-              pesoExecutivo = 0.00;
-            } else if ($('#peso_media').is(':checked')) {
-              pesoExecutivo = 0.25;
-            } else if ($('#peso_metade').is(':checked')) {
-              pesoExecutivo = 0.50;
-            }
+          if ($("#indice_nacional").highcharts() != null) {
+            return;
+          }
 
-            if ($('#configuracao_todos').is(':checked')) {
-              configuracao.tabelaDeReescrita = null;
-            } else if ($('#configuracao_top10').is(':checked')) {
-              configuracao.tabelaDeReescrita = Configuracao.tabelaTop10;
-            } else if ($('#configuracao_top3').is(':checked')) {
-              configuracao.tabelaDeReescrita = Configuracao.tabelaTop3;
-            } else if ($('#configuracao_antigos').is(':checked')) {
-              configuracao.tabelaDeReescrita = Configuracao.tabelaDePartidosAntigos;
-            }
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
+          atualizaConfiguracao(cfg);
+          criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie.series(indices.indiceNacional(), filtroJurisdicao()));
 
-            if ($("#indice_nacional").highcharts() != null) {
-              return;
-            }
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
 
-            criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', indices.indiceNacional(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          if ($("#legislativo_nacional").highcharts() != null) {
+            return;
+          }
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
+          atualizaConfiguracao(cfg);
+          criaGrafico("#legislativo_nacional", 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie.series(indices.legislativoNacional(), filtroJurisdicao()));
 
-            if ($("#legislativo_nacional").highcharts() != null) {
-              return;
-            }
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
 
-            criaGrafico("#legislativo_nacional", 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', indices.legislativoNacional(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          if ($("#executivo_nacional").highcharts() != null) {
+            return;
+          }
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
+          atualizaConfiguracao(cfg);
+          criaGrafico("#executivo_nacional", 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie.series(indices.executivoNacional(), filtroJurisdicao()));
 
-            if ($("#executivo_nacional").highcharts() != null) {
-              return;
-            }
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
 
-            criaGrafico("#executivo_nacional", 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', indices.executivoNacional(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          if ($("#indice_federal").highcharts() != null) {
+            return;
+          }
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
+          atualizaConfiguracao(cfg);
 
-            if ($("#indice_federal").highcharts() != null) {
-              return;
-            }
+          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
+          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
-            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', serie.series(indices.indiceFederal(), filtroJurisdicao()));
 
-            criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', indices.indiceFederal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
+          if ($("#legislativo_federal").highcharts() != null) {
+            return;
+          }
 
-            if ($("#legislativo_federal").highcharts() != null) {
-              return;
-            }
+          atualizaConfiguracao(cfg);
+          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, serie.series(indices.camaraDosDeputados(), filtroJurisdicao()));
+          criaGrafico("#senadores", 'Senado Federal', null, serie.series(indices.senadoFederal(), filtroJurisdicao()));
+          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', serie.series(indices.legislativoFederal(), filtroJurisdicao()));
 
-            criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, indices.camaraDosDeputados(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
-            criaGrafico("#senadores", 'Senado Federal', null, indices.senadoFederal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
-            criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', indices.legislativoFederal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
+          if ($("#executivo_federal").highcharts() != null) {
+            return;
+          }
 
-            if ($("#executivo_federal").highcharts() != null) {
-              return;
-            }
+          atualizaConfiguracao(cfg);
+          criaGrafico("#presidentes", 'Presidência da República', null, serie.series(indices.executivoFederal(), filtroJurisdicao()));
 
-            criaGrafico("#presidentes", 'Presidência da República', null, indices.executivoFederal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
+          if ($("#indice_estadual").highcharts() != null) {
+            return;
+          }
 
-            if ($("#indice_estadual").highcharts() != null) {
-              return;
-            }
+          atualizaConfiguracao(cfg);
 
-            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
-            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
+          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-            criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', indices.indiceEstadual(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', serie.series(indices.indiceEstadual(), filtroJurisdicao()));
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
 
-            if ($("#legislativo_estadual").highcharts() != null) {
-              return;
-            }
+          if ($("#legislativo_estadual").highcharts() != null) {
+            return;
+          }
 
-            criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, indices.legislativoEstadual(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          atualizaConfiguracao(cfg);
+          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie.series(indices.legislativoEstadual(), filtroJurisdicao()));
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
 
-            if ($("#executivo_estadual").highcharts() != null) {
-              return;
-            }
+          if ($("#executivo_estadual").highcharts() != null) {
+            return;
+          }
 
-            criaGrafico("#governadores", 'Governos Estaduais', null, indices.executivoEstadual(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          atualizaConfiguracao(cfg);
+          criaGrafico("#governadores", 'Governos Estaduais', null, serie.series(indices.executivoEstadual(), filtroJurisdicao()));
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
 
-            if ($("#indice_municipal").highcharts() != null) {
-              return;
-            }
+          if ($("#indice_municipal").highcharts() != null) {
+            return;
+          }
 
-            var executivo = parseInt(pesoExecutivo * 100, 10).toString();
-            var legislativo = parseInt(100 - pesoExecutivo * 100, 10).toString();
+          atualizaConfiguracao(cfg);
 
-            criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', indices.indiceMunicipal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
+          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {
+          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', serie.series(indices.indiceMunicipal(), filtroJurisdicao()));
 
-            if ($("#legislativo_municipal").highcharts() != null) {
-              return;
-            }
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {
 
-            criaGrafico("#vereadores", 'Câmaras Municipais', null, indices.legislativoMunicipal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          if ($("#legislativo_municipal").highcharts() != null) {
+            return;
+          }
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
+          atualizaConfiguracao(cfg);
+          criaGrafico("#vereadores", 'Câmaras Municipais', null, serie.series(indices.legislativoMunicipal(), filtroJurisdicao()));
 
-            if ($("#executivo_municipal").highcharts() != null) {
-              return;
-            }
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
 
-            criaGrafico("#prefeitos", 'Prefeituras', null, indices.executivoMunicipal(Configuracao.tabelaDeUfs, metodoPesoUe, pesoExecutivo));
+          if ($("#executivo_municipal").highcharts() != null) {
+            return;
+          }
 
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
-            $('#tablist_nacional > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
-            $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_estadual"]', function() {
-            $('#tablist_estadual > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-          })
-          .on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_municipal"]', function() {
-            $('#tablist_municipal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-          });
+          atualizaConfiguracao(cfg);
+          criaGrafico("#prefeitos", 'Prefeituras', null, serie.series(indices.executivoMunicipal(), filtroJurisdicao()));
 
-        $('#tablist_graficos > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
+          $('#tablist_nacional > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
+          $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_estadual"]', function() {
+          $('#tablist_estadual > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_municipal"]', function() {
+          $('#tablist_municipal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_por_jurisdicao"]', function() {
+          $('#tablist_graficos_por_jurisdicao > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+        });
 
+        recriaGraficosDaGuiaAtual();
       });
     });
   </script>
