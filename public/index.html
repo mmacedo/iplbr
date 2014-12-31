@@ -59,7 +59,7 @@
       width: 100%;
       height: 600px;
     }
-    #jurisdicao {
+    #jurisdicao, #ano {
       width: 100%;
     }
   </style>
@@ -282,90 +282,104 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           </div>
         </div>
       </div>
+    </div>
 
-
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <select id="jurisdicao" class="input-lg">
-            <optgroup>
-              <option value="pais">Brasil</option>
-            </optgroup>
-            <optgroup>
-              <option value="regiao-co">Região Centro-Oeste</option>
-              <option value="regiao-ne">Região Nordeste</option>
-              <option value="regiao-n">Região Norte</option>
-              <option value="regiao-se">Região Sudeste</option>
-              <option value="regiao-s">Região Sul</option>
-            </optgroup>
-            <optgroup>
-              <option value="uf-ac">Acre</option>
-              <option value="uf-al">Alagoas</option>
-              <option value="uf-ap">Amapá</option>
-              <option value="uf-am">Amazonas</option>
-              <option value="uf-ba">Bahia</option>
-              <option value="uf-ce">Ceará</option>
-              <option value="uf-df">Distrito Federal</option>
-              <option value="uf-es">Espírito Santo</option>
-              <option value="uf-go">Goiás</option>
-              <option value="uf-ma">Maranhão</option>
-              <option value="uf-mg">Minas Gerais</option>
-              <option value="uf-mt">Mato Grosso</option>
-              <option value="uf-ms">Mato Grosso do Sul</option>
-              <option value="uf-pa">Pará</option>
-              <option value="uf-pb">Paraíba</option>
-              <option value="uf-pr">Paraná</option>
-              <option value="uf-pe">Pernambuco</option>
-              <option value="uf-pi">Piauí</option>
-              <option value="uf-rj">Rio de Janeiro</option>
-              <option value="uf-rn">Rio Grande do Norte</option>
-              <option value="uf-rs">Rio Grande do Sul</option>
-              <option value="uf-ro">Rondônia</option>
-              <option value="uf-rr">Roraima</option>
-              <option value="uf-sc">Santa Catarina</option>
-              <option value="uf-sp">São Paulo</option>
-              <option value="uf-se">Sergipe</option>
-              <option value="uf-to">Tocantins</option>
-            </optgroup>
-          </select>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <select id="jurisdicao" class="input-lg">
+          <optgroup>
+            <option value="pais">Brasil</option>
+          </optgroup>
+          <optgroup>
+            <option value="regiao-co">Região Centro-Oeste</option>
+            <option value="regiao-ne">Região Nordeste</option>
+            <option value="regiao-n">Região Norte</option>
+            <option value="regiao-se">Região Sudeste</option>
+            <option value="regiao-s">Região Sul</option>
+          </optgroup>
+          <optgroup>
+            <option value="uf-ac">Acre</option>
+            <option value="uf-al">Alagoas</option>
+            <option value="uf-ap">Amapá</option>
+            <option value="uf-am">Amazonas</option>
+            <option value="uf-ba">Bahia</option>
+            <option value="uf-ce">Ceará</option>
+            <option value="uf-df">Distrito Federal</option>
+            <option value="uf-es">Espírito Santo</option>
+            <option value="uf-go">Goiás</option>
+            <option value="uf-ma">Maranhão</option>
+            <option value="uf-mg">Minas Gerais</option>
+            <option value="uf-mt">Mato Grosso</option>
+            <option value="uf-ms">Mato Grosso do Sul</option>
+            <option value="uf-pa">Pará</option>
+            <option value="uf-pb">Paraíba</option>
+            <option value="uf-pr">Paraná</option>
+            <option value="uf-pe">Pernambuco</option>
+            <option value="uf-pi">Piauí</option>
+            <option value="uf-rj">Rio de Janeiro</option>
+            <option value="uf-rn">Rio Grande do Norte</option>
+            <option value="uf-rs">Rio Grande do Sul</option>
+            <option value="uf-ro">Rondônia</option>
+            <option value="uf-rr">Roraima</option>
+            <option value="uf-sc">Santa Catarina</option>
+            <option value="uf-sp">São Paulo</option>
+            <option value="uf-se">Sergipe</option>
+            <option value="uf-to">Tocantins</option>
+          </optgroup>
+        </select>
       </div>
+    </div>
 
+    <div class="panel panel-default">
+      <div class="panel-body">
+      <select id="ano" class="input-lg">
+        <option value="TODOS">Todos</option>
+        <option value="1995">1995</option>
+        <option value="1997">1997</option>
+        <option value="1999">1999</option>
+        <option value="2001">2001</option>
+        <option value="2003">2003</option>
+        <option value="2005">2005</option>
+        <option value="2007">2007</option>
+        <option value="2009">2009</option>
+        <option value="2011">2011</option>
+        <option value="2013">2013</option>
+        <option value="2015">2015</option>
+      </select>
+      </div>
+    </div>
 
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-xs-9">
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
-                  </label>
-                  <label class="btn btn-default active" aria-pressed="true">
-                    <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
-                  </label>
-                </div>
+    <div id="panel_tipo_de_grafico" class="panel panel-default collapse in">
+      <div class="panel-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
+                </label>
+                <label class="btn btn-default active" aria-pressed="true">
+                  <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
+                </label>
               </div>
-              <div class="col-xs-3">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="passos">
-                    Em passos
-                  </label>
-                </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="passos">
+                  Em passos
+                </label>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
 
     <div role="tabpanel">
-
       <ul id="tablist_graficos" class="nav nav-tabs nav-justified" role="tablist">
         <li role="presentation" class="active">
           <a href="#tab_nacional" aria-controls="tab_nacional" role="tab" data-toggle="tab">Nacional</a>
@@ -380,9 +394,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <a href="#tab_municipal" aria-controls="tab_municipal" role="tab" data-toggle="tab">Municipal</a>
         </li>
       </ul>
-
       <div class="tab-content">
-
         <div role="tabpanel" class="tab-pane active" id="tab_nacional">
           <ul id="tablist_nacional" class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
@@ -407,7 +419,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             </div>
           </div>
         </div>
-
         <div role="tabpanel" class="tab-pane" id="tab_federal">
           <ul id="tablist_federal" class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
@@ -434,7 +445,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             </div>
           </div>
         </div>
-
         <div role="tabpanel" class="tab-pane" id="tab_estadual">
           <ul id="tablist_estadual" class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
@@ -459,7 +469,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             </div>
           </div>
         </div>
-
         <div role="tabpanel" class="tab-pane" id="tab_municipal">
           <ul id="tablist_municipal" class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
@@ -484,9 +493,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
 
   </div>
@@ -572,59 +579,82 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       }
     }
 
-    function criaGrafico(id, titulo, subtitulo, series) {
+    function criaGrafico(id, titulo, subtitulo, serie, indice) {
 
-      var passosSelecionado = $('#passos').is(':checked:enabled');
+      var ufs = filtroJurisdicao(), ano = $('#ano').val();
 
-      var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
-          linhasSelectionado = $('#tipo_linhas').is(':checked'),
-          areaSelecionado    = $('#tipo_area').is(':checked');
+      if (ano === 'TODOS') {
 
-      var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
-      var stacking  = areaSelecionado?'normal':null;
+        var passosSelecionado = $('#passos').is(':checked:enabled');
 
-      $(id).highcharts({
-        chart: { type: chartType },
-        title: { text: titulo },
-        subtitle: { text: subtitulo },
-        credits: { enabled: false },
-        yAxis: [
-          {
-            title: { text: '%' },
-            tickInterval: 5,
-            minorTickInterval: 1,
-            floor: 0,
-            ceiling: 100,
-            reversedStacks: false
-          }, {
-            title: { text: '%' },
-            linkedTo: 0,
-            opposite: true
-          }
-        ],
-        xAxis: {
-          type: 'datetime',
-          tickInterval: 2 * 24 * 3600 * 1000 * 365,
-          minorTickInterval: 1 * 24 * 3600 * 1000 * 365
-        },
-        tooltip: {
-          shared: true,
-          valueDecimals: 3
-        },
-        series: series,
-        plotOptions: {
-          series: {
-            marker: { enabled: false },
-            step: passosSelecionado?'left':false
+        var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
+            linhasSelectionado = $('#tipo_linhas').is(':checked'),
+            areaSelecionado    = $('#tipo_area').is(':checked');
+
+        var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
+        var stacking  = areaSelecionado?'normal':null;
+
+        $(id).highcharts({
+          chart: { type: chartType },
+          title: { text: titulo },
+          subtitle: { text: subtitulo },
+          credits: { enabled: false },
+          yAxis: [
+            {
+              title: { text: '%' },
+              tickInterval: 5,
+              minorTickInterval: 1,
+              floor: 0,
+              ceiling: 100,
+              reversedStacks: false
+            }, {
+              title: { text: '%' },
+              linkedTo: 0,
+              opposite: true
+            }
+          ],
+          xAxis: {
+            type: 'datetime',
+            tickInterval: 2 * 24 * 3600 * 1000 * 365,
+            minorTickInterval: 1 * 24 * 3600 * 1000 * 365
           },
-          area: {
-            stacking: stacking,
-            fillOpacity: 1,
-            lineWidth: 1,
-            states: { hover: { enabled: false } },
+          tooltip: {
+            shared: true,
+            valueDecimals: 3
+          },
+          series: serie.seriesPorJurisdicao(indice, ufs),
+          plotOptions: {
+            series: {
+              marker: { enabled: false },
+              step: passosSelecionado?'left':false
+            },
+            area: {
+              stacking: stacking,
+              fillOpacity: 1,
+              lineWidth: 1,
+              states: { hover: { enabled: false } },
+            }
           }
-        }
-      });
+        });
+
+      } else {
+
+        $(id).highcharts({
+          chart: { type: 'pie' },
+          title: { text: titulo },
+          subtitle: { text: subtitulo },
+          credits: { enabled: false },
+          tooltip: {
+            shared: true,
+            valueDecimals: 3
+          },
+          series: serie.seriesPorAno(indice, ufs, parseInt(ano, 10)),
+          plotOptions: {
+            dataLabels: { enabled: true }
+          }
+        });
+
+      }
     }
 
     function recriaGraficosDaGuiaAtual() {
@@ -669,6 +699,15 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
         }
       });
 
+
+      $(document).on('change', '#ano', function(e) {
+        if ($('#ano').val() === 'TODOS') {
+          $('#panel_tipo_de_grafico').addClass('in');
+        } else {
+          $('#panel_tipo_de_grafico').removeClass('in');
+        }
+      });
+
       $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
         if ($('#configuracao_todos').is(':checked')) {
           $('#cfg_partidos').hide();
@@ -700,7 +739,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       });
 
       // Atualiza os gráficos quando o usuário muda o tipo
-      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
+      $(document).on('change', '[name="tipo_de_grafico"], [name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #passos, #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao, #ano', function() {
         recriaGraficosDaGuiaAtual();
       });
 
@@ -719,7 +758,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
         var serie   = new Serie(cfg);
         var indices = new GeradorDeIndices(json);
 
-
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
 
           if ($("#indice_nacional").highcharts() != null) {
@@ -727,7 +765,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#indice_nacional", 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie.series(indices.indiceNacional(), filtroJurisdicao()));
+
+          criaGrafico('#indice_nacional', 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceNacional());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
@@ -737,7 +776,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#legislativo_nacional", 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie.series(indices.legislativoNacional(), filtroJurisdicao()));
+
+          criaGrafico('#legislativo_nacional', 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoNacional());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
@@ -747,7 +787,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#executivo_nacional", 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie.series(indices.executivoNacional(), filtroJurisdicao()));
+
+          criaGrafico('#executivo_nacional', 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoNacional());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
@@ -761,7 +802,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', serie.series(indices.indiceFederal(), filtroJurisdicao()));
+          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', serie, indices.indiceFederal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
@@ -771,9 +812,12 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, serie.series(indices.camaraDosDeputados(), filtroJurisdicao()));
-          criaGrafico("#senadores", 'Senado Federal', null, serie.series(indices.senadoFederal(), filtroJurisdicao()));
-          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', serie.series(indices.legislativoFederal(), filtroJurisdicao()));
+
+          criaGrafico("#deputados_federais", 'Câmara dos Deputados', null, serie, indices.camaraDosDeputados());
+
+          criaGrafico("#senadores", 'Senado Federal', null, serie, indices.senadoFederal());
+
+          criaGrafico("#congresso_nacional", 'Congresso Nacional', 'Câmara dos Deputados + Senado Federal', serie, indices.legislativoFederal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
@@ -783,7 +827,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#presidentes", 'Presidência da República', null, serie.series(indices.executivoFederal(), filtroJurisdicao()));
+
+          criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
@@ -797,7 +842,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', serie.series(indices.indiceEstadual(), filtroJurisdicao()));
+          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', serie, indices.indiceEstadual());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
@@ -807,7 +852,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie.series(indices.legislativoEstadual(), filtroJurisdicao()));
+
+          criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie, indices.legislativoEstadual());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
@@ -817,7 +863,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#governadores", 'Governos Estaduais', null, serie.series(indices.executivoEstadual(), filtroJurisdicao()));
+          criaGrafico("#governadores", 'Governos Estaduais', null, serie, indices.executivoEstadual());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
@@ -831,7 +877,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
           var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
 
-          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', serie.series(indices.indiceMunicipal(), filtroJurisdicao()));
+          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', serie, indices.indiceMunicipal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {
@@ -841,7 +887,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#vereadores", 'Câmaras Municipais', null, serie.series(indices.legislativoMunicipal(), filtroJurisdicao()));
+
+          criaGrafico("#vereadores", 'Câmaras Municipais', null, serie, indices.legislativoMunicipal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
@@ -851,7 +898,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           }
 
           atualizaConfiguracao(cfg);
-          criaGrafico("#prefeitos", 'Prefeituras', null, serie.series(indices.executivoMunicipal(), filtroJurisdicao()));
+
+          criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {

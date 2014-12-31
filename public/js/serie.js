@@ -69,7 +69,7 @@
 
     };
 
-    Serie.prototype.formataParaHighcharts = function(indicesPorSigla) {
+    Serie.prototype.formataParaHighchartsPorJurisdicao = function(indicesPorSigla) {
 
       var _this = this;
 
@@ -115,7 +115,50 @@
 
     };
 
-    Serie.prototype.series = function(indice, ufs) {
+    Serie.prototype.formataParaHighchartsPorAno = function(indicesPorSigla) {
+
+      var _this = this;
+
+      // Converte para formato esperado pelo Highcharts
+      var series = _.map(indicesPorSigla, function(linha) {
+
+        var serie = {
+          name: linha.sigla,
+          y:    linha.indices[0][1]
+        };
+
+        // Resto
+        if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
+          serie.color = '#333';
+        }
+
+        return serie;
+
+      });
+
+      // Ordena pela "importância do partido", isto é, a soma de todos os índices
+      series = _.sortBy(series, function(linha) {
+
+        var indice = linha.y;
+
+        // Mantem o resto em último (menor)
+        if (_this.configuracao.tabelaDeReescrita != null) {
+          indice += (_this.configuracao.tabelaDeReescrita.resto == linha.name) ? 0 : 9999;
+        }
+
+        return indice;
+
+      }).reverse();
+
+      return [{
+        type: 'pie',
+        name: 'Índice',
+        data: series
+      }];
+
+    };
+
+    Serie.prototype.seriesPorJurisdicao = function(indice, ufs) {
 
       var _this = this;
 
@@ -126,7 +169,19 @@
 
       var indicesPorSigla = this.geraIndices(indice, anosComDados, ufs);
       var indicesMigrados = this.aplicaConfiguracoes(anosComDados, indicesPorSigla);
-      var series = this.formataParaHighcharts(indicesMigrados);
+      var series = this.formataParaHighchartsPorJurisdicao(indicesMigrados);
+
+      return series;
+
+    };
+
+    Serie.prototype.seriesPorAno = function(indice, ufs, ano) {
+
+      var _this = this;
+
+      var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
+      var indicesMigrados = this.aplicaConfiguracoes([ano], indicesPorSigla);
+      var series = this.formataParaHighchartsPorAno(indicesMigrados);
 
       return series;
 
