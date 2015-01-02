@@ -488,6 +488,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
   <script type="text/javascript">
     Highcharts.setOptions({
       lang: {
+        decimalPoint: ',',
+        thousandsSep: '.',
         noData:       'Sem dados para exibir',
         printChart:   'Imprimir gráfico',
         downloadPNG:  'Baixar como imagem PNG',
@@ -583,7 +585,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             },
             tooltip: {
               shared: true,
-              valueDecimals: 3
+              valueDecimals: 4
             },
             plotOptions: {
               series: {
@@ -626,13 +628,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             credits: { enabled: false },
             tooltip: {
               headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
-              pointFormat:  '{point.name}: <b>{point.y:.3f}%</b> of total<br/>'
+              pointFormat:  '{point.name}: <b>{point.y:.4f}%</b> do total<br/>'
             },
             plotOptions: {
               series: {
                 dataLabels: {
                   enabled: true,
-                  format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.3f}%'
+                  format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.4f}%'
                 }
               }
             }
