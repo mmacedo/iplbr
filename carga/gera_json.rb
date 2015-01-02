@@ -373,17 +373,24 @@ federais.each do |ano, cargos|
 
   json[:federais][ano] = { :_BR => criaHashFederal(populacao(populacao_brasil, nil, nil, ano)) }
 
-  json[:federais][ano][:_BR][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
-  json[:federais][ano][:_BR][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
-
-  cargos['PRESIDENTE'].each { |sigla, presidentes| json[:federais][ano][:_BR][:presidentes_por_sigla][sigla] = 1 }
-
-  cargos['DEPUTADO FEDERAL'].each do |sigla, deputados_federais|
-    json[:federais][ano][:_BR][:deputados_federais_por_sigla][sigla] += deputados_federais
+  if cargos.has_key? 'PRESIDENTE'
+    cargos['PRESIDENTE'].each { |sigla, presidentes| json[:federais][ano][:_BR][:presidentes_por_sigla][sigla] = 1 }
   end
 
-  cargos['SENADOR'].each do |sigla, senadores|
-    json[:federais][ano][:_BR][:senadores_por_sigla][sigla] += senadores
+  if cargos.has_key? 'DEPUTADO FEDERAL'
+    json[:federais][ano][:_BR][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
+
+    cargos['DEPUTADO FEDERAL'].each do |sigla, deputados_federais|
+      json[:federais][ano][:_BR][:deputados_federais_por_sigla][sigla] += deputados_federais
+    end
+  end
+
+  if cargos.has_key? 'SENADOR'
+    json[:federais][ano][:_BR][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
+
+    cargos['SENADOR'].each do |sigla, senadores|
+      json[:federais][ano][:_BR][:senadores_por_sigla][sigla] += senadores
+    end
   end
 end
 
