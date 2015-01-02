@@ -18,7 +18,7 @@ FileUtils.mkdir_p(pasta_de_saida)
 partidos = SortedSet.new
 
 # Quais pastas extrair (para 1994 e 1996 faltam estados)
-anos = [ 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
+anos = [ 1990, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
 
 # Quais arquivos extrair
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
@@ -85,6 +85,8 @@ anos.each do |ano|
         sigla     = candidato[sigla_partido]
         nome      = nome_completo
         municipio = if cargo.match(%r{\APREFEITO|VEREADOR\z}) then candidato[nome_municipio] else "" end
+
+        sigla = 'PC do B' if sigla === 'PCdoB'
 
         visao << [ ano, uf, municipio, cargo, numero, sigla, nome ]
 

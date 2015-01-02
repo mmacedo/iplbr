@@ -173,7 +173,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <h2 class="panel-title">
             <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Partidos</a>
             <small id="cfg_partidos" class="pull-right">
-              <span class="cfg_label">Pré-definição: Top 10</span>
+              <span class="cfg_label">Pré-definição: Top 9</span>
               <a class="cfg_remover" href="">(remover)</a>
             </small>
           </h2>
@@ -188,7 +188,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
                   <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Personalizar
                 </label>
                 <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top9" autocomplete="off" checked> Top 9
                 </label>
                 <label class="btn btn-default">
                   <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
@@ -510,8 +510,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
       if ($('#configuracao_todos').is(':checked')) {
         cfg.tabelaDeReescrita = null;
-      } else if ($('#configuracao_top10').is(':checked')) {
-        cfg.tabelaDeReescrita = Configuracao.tabelaTop10;
+      } else if ($('#configuracao_top9').is(':checked')) {
+        cfg.tabelaDeReescrita = Configuracao.tabelaTop9;
       } else if ($('#configuracao_top3').is(':checked')) {
         cfg.tabelaDeReescrita = Configuracao.tabelaTop3;
       } else if ($('#configuracao_antigos').is(':checked')) {
@@ -720,9 +720,9 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
         if ($('#configuracao_todos').is(':checked')) {
           $('#cfg_partidos').hide();
           $('#cfg_partidos .cfg_label').text('');
-        } else if ($('#configuracao_top10').is(':checked')) {
+        } else if ($('#configuracao_top9').is(':checked')) {
           $('#cfg_partidos').show();
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 10');
+          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 9');
         } else if ($('#configuracao_top3').is(':checked')) {
           $('#cfg_partidos').show();
           $('#cfg_partidos .cfg_label').text('Pré-definição: Top 3');

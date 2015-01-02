@@ -166,7 +166,7 @@ def normaliza_municipio(municipio, uf)
 end
 
 def populacao(lista, uf, municipio, ano)
-  ultimo_ano_com_dados = lista.keys.select { |i| i <= ano }.max
+  ultimo_ano_com_dados = lista.keys.select { |i| i <= ano }.max || lista.keys.min
   if uf.nil?
     lista[ultimo_ano_com_dados]
   elsif municipio.nil?
