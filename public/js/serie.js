@@ -11,7 +11,7 @@
       var _this = this;
 
       // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(indice.siglas(ufs), function(sigla) {
+      var indicesPorSigla = _.map(indice.siglas(ufs, anos), function(sigla) {
 
         // Carrega informações do partido
         var info = _.find(Configuracao.tabelaDePartidos, function(info) {
@@ -177,7 +177,7 @@
 
     Serie.prototype.seriesPorAno = function(indice, ufs, ano) {
 
-      var series;
+      var ano = ano - 1, series;
 
       if (indice.temDados(ano, ufs)) {
         var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
