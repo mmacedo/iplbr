@@ -684,11 +684,16 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             subtitle: { text: subtitulo },
             credits: { enabled: false },
             tooltip: {
-              shared: true,
-              valueDecimals: 3
+              headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
+              pointFormat:  '{point.name}: <b>{point.y:.3f}%</b> of total<br/>'
             },
             plotOptions: {
-              dataLabels: { enabled: true }
+              series: {
+                dataLabels: {
+                  enabled: true,
+                  format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.3f}%'
+                }
+              }
             }
           }).highcharts();
         }
