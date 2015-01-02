@@ -224,7 +224,7 @@ Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
     ano = ano.to_i
     municipio = normaliza_municipio(municipio, uf)
-    partido   = "#{sigla}#{numero}"
+    partido   = if numero.to_i >= 10 then "#{sigla}#{numero}" else "#{sigla}#{numero.to_i+10}" end
 
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
 

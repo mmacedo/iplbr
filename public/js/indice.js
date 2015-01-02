@@ -719,7 +719,11 @@
 
       var chave = "total_" + nome;
       if (uf != null) {
-        return this.json[ano.toString()][uf][chave];
+        if (uf in this.json[ano.toString()]) {
+          return this.json[ano.toString()][uf][chave];
+        } else {
+          return 0.0;
+        }
       } else {
         return this.json[ano.toString()]._BR[chave];
       }

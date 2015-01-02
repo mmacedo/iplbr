@@ -2,7 +2,7 @@
 
 # http://inter04.tse.jus.br/ords/dwtse/f?p=1945:2:3073111975378812::NO:RP:P0_HID_MOSTRA%2CP0_SLS_DS_CARGO%2CP0_SLS_NR_ANO%2CP0_SLS_SG_PARTIDO%2CP0_SLS_SG_UF%2CP0_TXT_NM_CANDIDATO:N%2C%27TODOS%27%2C%27TODOS%27%2C%27TODOS%27%2C%27TODAS%27%2C
 
-ano = 1990
+ano = 1986
 
 require 'set'
 require 'fileutils'
@@ -25,38 +25,58 @@ partidos = SortedSet.new(ja_carregados.to_a)
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
 
 tabela_de_partidos = {
-  "PDS"   => 11,
-  "PDT"   => 12,
-  "PT"    => 13,
-  "PTB"   => 14,
-  "PMDB"  => 15,
-  "PDC"   => 17,
-  "PSC"   => 20,
-  "PL"    => 22,
-  "PCB"   => 23,
-  "PFL"   => 25,
-  "PTR"   => 28,
-  "PCN"   => 31,
-  "PMN"   => 33,
-  "PRN"   => 36,
-  "PSB"   => 40,
-  "PSD"   => 41,
-  "PRP"   => 44,
-  "PSDB"  => 45,
-  "PST"   => 52,
-  "PSL"   => 59,
-  "PCDOB" => 65,
-  "PNT"   => 67,
-  "PRS"   => 71,
+  '1986' => {
+    "PDS"    => 11,
+    "PDT"    => 12,
+    "PT"     => 13,
+    "PTB"    => 14,
+    "PMDB"   => 15,
+    "PDC"    => 17,
+    "PSC"    => 20,
+    "PTN"    => 21,
+    "PL"     => 22,
+    "PCB"    => 23,
+    "PFL"    => 25,
+    "PMB"    => 26,
+    "PTR"    => 28,
+    "PASART" => 30,
+    "PMN"    => 33,
+    "PSB"    => 40,
+    "PCDOB"  => 65,
+  }, '1990' => {
+    "PDS"   => 11,
+    "PDT"   => 12,
+    "PT"    => 13,
+    "PTB"   => 14,
+    "PMDB"  => 15,
+    "PDC"   => 17,
+    "PSC"   => 20,
+    "PL"    => 22,
+    "PCB"   => 23,
+    "PFL"   => 25,
+    "PTR"   => 28,
+    "PCN"   => 31,
+    "PMN"   => 33,
+    "PRN"   => 36,
+    "PSB"   => 40,
+    "PSD"   => 41,
+    "PRP"   => 44,
+    "PSDB"  => 45,
+    "PST"   => 52,
+    "PSL"   => 59,
+    "PCDOB" => 65,
+    "PNT"   => 67,
+    "PRS"   => 71,
+  }
 }
 
 linhas = IO.readlines(arquivo_de_entrada).uniq.map do |linha|
   nome_e_cargo, uf, sigla = linha.chomp.split(';')
 
   nome, cargo = nome_e_cargo.split(' - ')
-  numero = tabela_de_partidos[sigla]
+  numero = tabela_de_partidos[ano.to_s][sigla]
 
-  unless tabela_de_partidos.has_key? sigla
+  unless tabela_de_partidos[ano.to_s].has_key? sigla
     puts sigla
     exit
   end

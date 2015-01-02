@@ -18,7 +18,7 @@ FileUtils.mkdir_p(pasta_de_saida)
 partidos = SortedSet.new
 
 # Quais pastas extrair (para 1994 e 1996 faltam estados)
-anos = [ 1990, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
+anos = [ 1982, 1986, 1990, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014 ]
 
 # Quais arquivos extrair
 ufs = %w{ AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO }
@@ -76,7 +76,7 @@ anos.each do |ano|
         next unless candidato[desc_sit_cand_tot].match(%r{\AELEITO|M[ÉE]DIA\z})
 
         # Verifica se não é um plebiscito
-        next unless candidato[descricao_eleicao].match(%r{\A(ELEI[ÇC][ÕO]ES|ELEI[ÇC][ÕO]ES GERAIS|ELEI[ÇC][ÃA]O MUNICIPAL) #{ano}\z})
+        next unless candidato[descricao_eleicao].match(%r{\A(ELEI[ÇC][ÃA]O|ELEI[ÇC][ÕO]ES|ELEI[ÇC][ÕO]ES GERAIS|ELEI[ÇC][ÃA]O MUNICIPAL) #{ano}\z})
 
         sequenciais << nome_completo
 
