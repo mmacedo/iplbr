@@ -72,7 +72,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_metodologia">
           <h2 class="panel-title">
-            <a data-toggle="collapse" href="#panel_metodologia" aria-expanded="false" aria-controls="panel_metodologia">Metodologia</a>
+            <a data-toggle="collapse" href="#panel_metodologia" aria-expanded="false" aria-controls="panel_metodologia">O que é</a>
           </h2>
         </div>
         <div id="panel_metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_metodologia">
@@ -167,54 +167,11 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_cfg_indice">
-          <h2 class="panel-title">
-            <a data-toggle="collapse" href="#panel_cfg_indice" aria-expanded="false" aria-controls="panel_cfg_indice">Configurar variáveis</a>
-          </h2>
-        </div>
-        <div id="panel_cfg_indice" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_indice">
-          <div class="panel-body">
-
-            <div class="form-group">
-              <label for="peso_ue">Método de peso da UE</label>
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="peso_ue" id="peso_nominal" autocomplete="off"> Nominal
-                </label>
-                <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="peso_ue" id="peso_populacao" autocomplete="off" checked> População
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="peso_ue" id="peso_legislativo" autocomplete="off"> Legislativo
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="peso_executivo">Peso do executivo</label>
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="peso_executivo" id="peso_zero" autocomplete="off"> Mínimo (zero)
-                </label>
-                <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="peso_executivo" id="peso_media" autocomplete="off" checked> Média (25%)
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="peso_executivo" id="peso_metade" autocomplete="off"> Máximo (50%)
-                </label>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
 
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="cabecalho_cfg_partidos">
           <h2 class="panel-title">
-            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Configurar partidos</a>
+            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Partidos</a>
             <small id="cfg_partidos" class="pull-right">
               <span class="cfg_label">Pré-definição: Top 10</span>
               <a class="cfg_remover" href="">(remover)</a>
@@ -549,22 +506,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       cfg.ehGraficoArea             = $('#tipo_area').is(':checked');
       cfg.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
 
-      if ($('#peso_nominal').is(':checked')) {
-        cfg.metodoPesoUe = 'nominal';
-      } else if ($('#peso_legislativo').is(':checked')) {
-        cfg.metodoPesoUe = 'legislativo';
-      } else if ($('#peso_populacao').is(':checked')) {
-        cfg.metodoPesoUe = 'populacao';
-      }
-
-      if ($('#peso_zero').is(':checked')) {
-        cfg.pesoExecutivo = 0.00;
-      } else if ($('#peso_media').is(':checked')) {
-        cfg.pesoExecutivo = 0.25;
-      } else if ($('#peso_metade').is(':checked')) {
-        cfg.pesoExecutivo = 0.50;
-      }
-
       if ($('#configuracao_todos').is(':checked')) {
         cfg.tabelaDeReescrita = null;
       } else if ($('#configuracao_top10').is(':checked')) {
@@ -805,7 +746,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       });
 
       // Precisa atualizar séries (remove série e readiciona)
-      $(document).on('change', '[name="configuracao_predefinida"], [name="peso_ue"], [name="peso_executivo"], #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
+      $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
         recriaGraficosDaGuiaAtual(false);
       });
 
@@ -854,10 +795,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
           atualizaConfiguracao(cfg);
 
-          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
-          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
-
-          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = ' + legislativo + '% e presidente = ' + executivo + '%', serie, indices.indiceFederal());
+          criaGrafico("#indice_federal", 'Índice Federal', 'congresso = 75% e presidente = 25%', serie, indices.indiceFederal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
@@ -882,10 +820,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
           atualizaConfiguracao(cfg);
 
-          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
-          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
-
-          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = ' + legislativo + '% e governadores = ' + executivo + '%', serie, indices.indiceEstadual());
+          criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = 75% e governadores = 25%', serie, indices.indiceEstadual());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
@@ -906,10 +841,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
           atualizaConfiguracao(cfg);
 
-          var executivo = parseInt(cfg.pesoExecutivo * 100, 10).toString();
-          var legislativo = parseInt(100 - cfg.pesoExecutivo * 100, 10).toString();
-
-          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = ' + legislativo + '% e prefeitos = ' + executivo + '%', serie, indices.indiceMunicipal());
+          criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = 75% e prefeitos = 25%', serie, indices.indiceMunicipal());
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {

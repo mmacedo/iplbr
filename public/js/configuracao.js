@@ -3,10 +3,6 @@
   window.Configuracao = (function() {
 
     function Configuracao() {
-      // Variáveis para calcular o índice
-      this.metodoPesoUe   = 'populacao';
-      this.pesoExecutivo  = 0.25;
-
       // Variáveis para configurar partidos
       this.mudancasDeNome    = true;
       this.incorporacoes     = true;
