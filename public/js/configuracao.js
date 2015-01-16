@@ -188,6 +188,7 @@
 
     Configuracao.tabelaDePartidosAntigos = {
       mapear: [
+        { de: { sigla: 'PDS',     numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PPR',     numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PPB',     numero: 11 }, para: 'ARENA' },
         { de: { sigla: 'PP',      numero: 11 }, para: 'ARENA' },

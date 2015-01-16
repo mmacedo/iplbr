@@ -704,7 +704,11 @@
 
       var chave = nome + '_por_sigla' + (tipo != null ? ('_' + tipo) : '');
       if (uf != null) {
-        return this.json[ano.toString()][uf][chave];
+        if (uf in this.json[ano.toString()]) {
+          return this.json[ano.toString()][uf][chave];
+        } else {
+          return 0.0;
+        }
       } else {
         return this.json[ano.toString()]._BR[chave];
       }
@@ -822,10 +826,6 @@
       return this.dadosPorSigla('deputados_estaduais', 'peso_populacao', ano, uf)[sigla] || 0;
     };
 
-    EleicoesEstaduais.prototype.governadoresProporcionalAosDeputados = function(ano, uf, sigla) {
-      return this.dadosPorSigla('governadores', 'peso_legislativo', ano, uf)[sigla] || 0;
-    };
-
     EleicoesEstaduais.prototype.governadoresProporcionalAPopulacao = function(ano, uf, sigla) {
       return this.dadosPorSigla('governadores', 'peso_populacao', ano, uf)[sigla] || 0;
     };
@@ -868,10 +868,6 @@
 
     EleicoesMunicipais.prototype.vereadoresProporcionalAPopulacao = function(ano, uf, sigla) {
       return this.dadosPorSigla('vereadores', 'peso_populacao', ano, uf)[sigla] || 0;
-    };
-
-    EleicoesMunicipais.prototype.prefeitosProporcionalAosVereadores = function(ano, uf, sigla) {
-      return this.dadosPorSigla('prefeitos', 'peso_legislativo', ano, uf)[sigla] || 0;
     };
 
     EleicoesMunicipais.prototype.prefeitosProporcionalAPopulacao = function(ano, uf, sigla) {
