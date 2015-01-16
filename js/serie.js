@@ -11,7 +11,7 @@
       var _this = this;
 
       // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(indice.siglas(ufs), function(sigla) {
+      var indicesPorSigla = _.map(indice.siglas(ufs, anos), function(sigla) {
 
         // Carrega informações do partido
         var info = _.find(Configuracao.tabelaDePartidos, function(info) {
@@ -23,7 +23,7 @@
 
         // Calcula índices
         var indicePorAno = _.map(anosParaCalcular, function(ano) {
-          return [ ano, indice.calculaIndice(ano, ufs, sigla, _this.configuracao.metodoPesoUe, _this.configuracao.pesoExecutivo) ];
+          return [ ano, indice.calculaIndice(ano, ufs, sigla) ];
         });
 
         // Extrai siglas e números dos partidos
@@ -164,7 +164,7 @@
 
       // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
       var anosComDados = _.filter(indice.anos(), function(ano) {
-        return indice.temDados(ano, ufs, _this.configuracao.metodoPesoUe, _this.configuracao.pesoExecutivo);
+        return indice.temDados(ano, ufs);
       });
 
       var indicesPorSigla = this.geraIndices(indice, anosComDados, ufs);
@@ -177,9 +177,9 @@
 
     Serie.prototype.seriesPorAno = function(indice, ufs, ano) {
 
-      var series;
+      var ano = ano - 1, series;
 
-      if (indice.temDados(ano, ufs, this.configuracao.metodoPesoUe, this.configuracao.pesoExecutivo)) {
+      if (indice.temDados(ano, ufs)) {
         var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
         var indicesMigrados = this.aplicaConfiguracoes([ano], indicesPorSigla);
         series = this.formataParaHighchartsPorAno(indicesMigrados);
