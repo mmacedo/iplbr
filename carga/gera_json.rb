@@ -214,7 +214,7 @@ end
 # Processa eleitos/*.txt e carrega os totais por partido
 # ------------------------------------------------------
 
-municipais, estaduais, federais = {}, {}, {}
+municipais, estaduais, federais, presidente = {}, {}, {}, {}
 
 Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
@@ -222,8 +222,9 @@ Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
     ano, uf, municipio, cargo, numero, sigla, nome = linha.chomp.split(';')
 
-    ano = ano.to_i
+    ano       = ano.to_i
     municipio = normaliza_municipio(municipio, uf)
+    sigla     = sigla.gsub(/ /, '')
     partido   = if numero.to_i >= 10 then "#{sigla}#{numero}" else "#{sigla}#{numero.to_i+10}" end
 
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
@@ -237,9 +238,13 @@ Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
       (((estaduais[ano] ||= {})[uf] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
 
-    else
+    elsif cargo.match(%r{\ADEPUTADO FEDERAL|SENADOR\z})
 
       ((federais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+
+    else
+
+      presidente[ano] = partido
 
     end
   end
@@ -250,7 +255,7 @@ end
 # Processa totais por partido e populações e gera os dados necessários
 # --------------------------------------------------------------------
 
-json = { municipais:{}, estaduais:{}, federais:{} }
+json = { municipais:{}, estaduais:{}, federais:{}, presidente:{} }
 
 def criaHashMunicipal(populacao)
   {
@@ -382,11 +387,9 @@ end
 
 def criaHashFederal(populacao)
   {
-    total_presidentes:            0,
     total_deputados_federais:     0,
     total_senadores:              0,
     total_populacao:              populacao,
-    presidentes_por_sigla:        Hash.new(0),
     deputados_federais_por_sigla: Hash.new(0),
     senadores_por_sigla:          Hash.new(0)
   }
@@ -395,14 +398,6 @@ end
 federais.each do |ano, cargos|
 
   json[:federais][ano] = { :_BR => criaHashFederal(populacao(populacao_brasil, nil, nil, ano)) }
-
-  if cargos.has_key? 'PRESIDENTE'
-    json[:federais][ano][:_BR][:total_presidentes] = cargos['PRESIDENTE'].map { |sigla, presidentes| presidentes }.reduce(:+)
-
-    cargos['PRESIDENTE'].each do |sigla, presidentes|
-      json[:federais][ano][:_BR][:presidentes_por_sigla][sigla] += presidentes
-    end
-  end
 
   if cargos.has_key? 'DEPUTADO FEDERAL'
     json[:federais][ano][:_BR][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
@@ -419,6 +414,10 @@ federais.each do |ano, cargos|
       json[:federais][ano][:_BR][:senadores_por_sigla][sigla] += senadores
     end
   end
+end
+
+presidente.each do |ano, sigla|
+  json[:presidente][ano] = sigla;
 end
 
 IO.write(arquivo_de_saida, json.to_json)
