@@ -1,4 +1,6 @@
-;(function() {
+"use strict";
+
+(function(_) {
 
   // Realiza herança, copiado do CoffeeScript
   var _extends = function(child, parent) {
@@ -948,4 +950,4 @@
 
   })();
 
-})();
+})(_);

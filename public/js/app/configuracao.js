@@ -1,4 +1,6 @@
-;(function() {
+"use strict";
+
+(function(_) {
 
   window.Configuracao = (function() {
 
@@ -404,4 +406,4 @@
 
   })();
 
-})();
+})(_);

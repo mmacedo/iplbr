@@ -1,4 +1,6 @@
-;(function() {
+"use strict";
+
+(function(_) {
 
   window.Serie = (function() {
 
@@ -195,4 +197,4 @@
 
   })();
 
-})();
+})(_);
