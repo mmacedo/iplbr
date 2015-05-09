@@ -1,4 +1,6 @@
-;(function() {
+"use strict";
+
+(function(_) {
 
   // Realiza herança, copiado do CoffeeScript
   var _extends = function(child, parent) {
@@ -251,15 +253,16 @@
 
     _extends(IndiceFederal, Indice);
 
-    function IndiceFederal(eleicoes) {
-      this.eleicoes = eleicoes;
+    function IndiceFederal(presidente, federais) {
+      this.presidente = presidente;
+      this.federais   = federais;
 
-      this.congressoNacional = new LegislativoFederal(eleicoes);
-      this.presidentes       = new ExecutivoFederal(eleicoes);
+      this.congressoNacional = new LegislativoFederal(federais);
+      this.presidentes       = new ExecutivoFederal(presidente);
     }
 
     IndiceFederal.prototype.anos = function() {
-      return this.eleicoes.anos();
+      return _.uniq(_.flatten([ this.presidente.anos(), this.federais.anos() ])).sort();
     };
 
     IndiceFederal.prototype.siglas = function(ufs, anos) {
@@ -545,7 +548,7 @@
     }
 
     LegislativoNacional.prototype.anos = function() {
-      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
+      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ])).sort();
     };
 
     LegislativoNacional.prototype.siglas = function(ufs, anos) {
@@ -576,18 +579,18 @@
 
     _extends(ExecutivoNacional, Indice);
 
-    function ExecutivoNacional(federais, estaduais, municipais) {
-      this.federais   = federais;
+    function ExecutivoNacional(presidente, estaduais, municipais) {
+      this.presidente = presidente;
       this.estaduais  = estaduais;
       this.municipais = municipais;
 
-      this.executivoFederal   = new ExecutivoFederal(federais);
+      this.executivoFederal   = new ExecutivoFederal(presidente);
       this.executivoEstadual  = new ExecutivoEstadual(estaduais);
       this.executivoMunicipal = new ExecutivoMunicipal(municipais, estaduais);
     }
 
     ExecutivoNacional.prototype.anos = function() {
-      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
+      return _.uniq(_.flatten([ this.presidente.anos(), this.estaduais.anos(), this.municipais.anos() ])).sort();
     };
 
     ExecutivoNacional.prototype.siglas = function(ufs, anos) {
@@ -618,18 +621,19 @@
 
     _extends(IndiceNacional, Indice);
 
-    function IndiceNacional(federais, estaduais, municipais) {
+    function IndiceNacional(presidente, federais, estaduais, municipais) {
+      this.presidente = presidente;
       this.federais   = federais;
       this.estaduais  = estaduais;
       this.municipais = municipais;
 
-      this.indiceFederal   = new IndiceFederal(federais);
+      this.indiceFederal   = new IndiceFederal(presidente, federais);
       this.indiceEstadual  = new IndiceEstadual(estaduais);
       this.indiceMunicipal = new IndiceMunicipal(municipais, estaduais);
     }
 
     IndiceNacional.prototype.anos = function() {
-      return _.uniq(_.flatten([ this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ]));
+      return _.uniq(_.flatten([ this.presidente.anos(), this.federais.anos(), this.estaduais.anos(), this.municipais.anos() ])).sort();
     };
 
     IndiceNacional.prototype.siglas = function(ufs, anos) {
@@ -742,6 +746,31 @@
 
   })();
 
+  var EleicoesPresidente = (function() {
+
+    _extends(EleicoesPresidente, Eleicoes);
+
+    function EleicoesPresidente() {
+      Eleicoes.prototype.constructor.apply(this, arguments);
+    }
+
+    EleicoesPresidente.prototype.siglasPresidentes = function(anos) {
+      var json = this.json;
+      return _.uniq(_.compact(_.map(anos, function(ano) { return json[ano.toString()]; })));
+    };
+
+    EleicoesPresidente.prototype.totalPresidentes = function(ano) {
+      return ano.toString() in this.json ? 1 : 0;
+    };
+
+    EleicoesPresidente.prototype.presidentes = function(ano, sigla) {
+      return this.json[ano.toString()] === sigla ? 1 : 0;
+    };
+
+    return EleicoesPresidente;
+
+  })();
+
   var EleicoesFederais = (function() {
 
     _extends(EleicoesFederais, Eleicoes);
@@ -758,20 +787,12 @@
       return this.siglas('senadores', null, anos);
     };
 
-    EleicoesFederais.prototype.siglasPresidentes = function(anos) {
-      return this.siglas('presidentes', null, anos);
-    };
-
     EleicoesFederais.prototype.totalDeputadosFederais = function(ano) {
       return this.total('deputados_federais', ano);
     };
 
     EleicoesFederais.prototype.totalSenadores = function(ano) {
       return this.total('senadores', ano);
-    };
-
-    EleicoesFederais.prototype.totalPresidentes = function(ano) {
-      return this.total('presidentes', ano);
     };
 
     EleicoesFederais.prototype.deputadosFederais = function(ano, sigla) {
@@ -881,8 +902,9 @@
   window.GeradorDeIndices = (function() {
 
     function GeradorDeIndices(eleitos) {
-      this.eleitos      = eleitos;
+      this.eleitos = eleitos;
 
+      this.presidente = new EleicoesPresidente(this.eleitos.presidente);
       this.federais   = new EleicoesFederais(this.eleitos.federais);
       this.estaduais  = new EleicoesEstaduais(this.eleitos.estaduais);
       this.municipais = new EleicoesMunicipais(this.eleitos.municipais);
@@ -901,11 +923,11 @@
     };
 
     GeradorDeIndices.prototype.executivoFederal = function() {
-      return this._executivoFederal || (this._executivoFederal = new ExecutivoFederal(this.federais));
+      return this._executivoFederal || (this._executivoFederal = new ExecutivoFederal(this.presidente));
     };
 
     GeradorDeIndices.prototype.indiceFederal = function() {
-      return this._indiceFederal || (this._indiceFederal = new IndiceFederal(this.federais));
+      return this._indiceFederal || (this._indiceFederal = new IndiceFederal(this.presidente, this.federais));
     };
 
     GeradorDeIndices.prototype.legislativoEstadual = function() {
@@ -937,15 +959,15 @@
     };
 
     GeradorDeIndices.prototype.executivoNacional = function() {
-      return this._executivoNacional || (this._executivoNacional = new ExecutivoNacional(this.federais, this.estaduais, this.municipais));
+      return this._executivoNacional || (this._executivoNacional = new ExecutivoNacional(this.presidente, this.estaduais, this.municipais));
     };
 
     GeradorDeIndices.prototype.indiceNacional = function() {
-      return this._indiceNacional || (this._indiceNacional = new IndiceNacional(this.federais, this.estaduais, this.municipais));
+      return this._indiceNacional || (this._indiceNacional = new IndiceNacional(this.presidente, this.federais, this.estaduais, this.municipais));
     };
 
     return GeradorDeIndices;
 
   })();
 
-})();
+})(_);
