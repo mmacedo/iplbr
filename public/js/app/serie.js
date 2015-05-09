@@ -16,7 +16,7 @@
       var indicesPorSigla = _.map(indice.siglas(ufs, anos), function(sigla) {
 
         // Carrega informações do partido
-        var info = _.find(Configuracao.tabelaDePartidos, function(info) {
+        var info = _.find(Configuracao.partidos, function(info) {
           return sigla === (info.sigla + info.numero.toString());
         });
 

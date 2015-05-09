@@ -513,18 +513,18 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       if ($('#configuracao_todos').is(':checked')) {
         cfg.tabelaDeReescrita = null;
       } else if ($('#configuracao_top9').is(':checked')) {
-        cfg.tabelaDeReescrita = Configuracao.tabelaTop9;
+        cfg.tabelaDeReescrita = Configuracao.top9;
       } else if ($('#configuracao_top3').is(':checked')) {
-        cfg.tabelaDeReescrita = Configuracao.tabelaTop3;
+        cfg.tabelaDeReescrita = Configuracao.top3;
       } else if ($('#configuracao_antigos').is(':checked')) {
-        cfg.tabelaDeReescrita = Configuracao.tabelaDePartidosAntigos;
+        cfg.tabelaDeReescrita = Configuracao.partidosAntigos;
       }
     }
 
     function filtroJurisdicao() {
       var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
       if (matches[5] === 'pais') {
-        return Configuracao.tabelaDeUfs;
+        return Configuracao.brasil;
       } else if (matches[3] === 'regiao') {
         if (matches[4] === 'co') {
           return Configuracao.regiaoCentroOeste;
