@@ -16,9 +16,6 @@
 
       // Faz correções para gráficos de área
       this.ehGraficoDeArea = false;
-
-      // Deixa gráficos de linha mais bonitos, mas estraga gráficos empilhados
-      this.mostraFundacaoEDissolucao = true;
     }
 
     Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
@@ -89,7 +86,7 @@
         { sigla: 'PRN',    numero: 36, fundado: 1989, extinto: 2000, renomeado: 'PTC',  nome: 'Partido da Reconstrução Nacional' },
         { sigla: 'PSN',    numero: 31, fundado: 1997, extinto: 2000, renomeado: 'PHS',  nome: 'Partido da Solidariedade Nacional' },
         { sigla: 'PPB',    numero: 11, fundado: 1995, extinto: 2003, renomeado: 'PP',   nome: 'Partido Progressista Brasileiro' },
-        { sigla: 'PFL',    numero: 25, fundado: 1988, extinto: 2007, renomeado: 'DEM',  nome: 'Partido da Frente Liberal' },
+        { sigla: 'PFL',    numero: 25, fundado: 1985, extinto: 2007, renomeado: 'DEM',  nome: 'Partido da Frente Liberal' },
       ],
       incorporacoes: [
         { sigla: 'PASART', numero: 30, fundado: 1985, extinto: 1990, incorporado: 'PTdoB', nome: 'Partido Socialista Agrário Renovador Trabalhista' },
@@ -192,14 +189,12 @@
         anos.push(_.max(anos) + 1);
       }
 
-      if (this.mostraFundacaoEDissolucao === true && this.tabelaDeReescrita == null) {
+      if (this.ehGraficoDeArea === false && this.tabelaDeReescrita == null) {
 
         // Partido novo
         if ((fundado - 1) > _.min(anos)) {
           // Remove anos antes da fundação
           manterTodosAnos || (anos = _.filter(anos, function(ano) { return ano >= fundado }));
-          // Adiciona ano da fundação
-          anos.push(fundado - 1);
         }
 
         // Partido morto
@@ -210,10 +205,6 @@
           } else {
             // Remove anos depois da dissolução
             manterTodosAnos || (anos = _.filter(anos, function(ano) { return ano <= extinto }));
-            // Adiciona ano da dissolução, normalmente iria até a última eleição
-            if ((extinto - 1) > _.max(anos)) {
-              anos.push(extinto - 1);
-            }
           }
         }
 
