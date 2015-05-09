@@ -503,12 +503,9 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
     });
 
     function atualizaConfiguracao(cfg) {
-      cfg.passos                    = $('#passos').is(':checked:enabled');
-      cfg.mudancasDeNome            = $('#mudancas_de_nome').is(':checked:enabled');
-      cfg.incorporacoes             = $('#incorporacoes').is(':checked:enabled');
-      cfg.fusoes                    = $('#fusoes').is(':checked:enabled');
-      cfg.ehGraficoArea             = $('#tipo_area').is(':checked');
-      cfg.mostraFundacaoEDissolucao = $('#tipo_curvas').is(':checked') || $('#tipo_linhas').is(':checked');
+      cfg.mudancasDeNome    = $('#mudancas_de_nome').is(':checked:enabled');
+      cfg.incorporacoes     = $('#incorporacoes').is(':checked:enabled');
+      cfg.fusoes            = $('#fusoes').is(':checked:enabled');
 
       if ($('#configuracao_todos').is(':checked')) {
         cfg.tabelaDeReescrita = null;
@@ -519,6 +516,9 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       } else if ($('#configuracao_antigos').is(':checked')) {
         cfg.tabelaDeReescrita = Configuracao.partidosAntigos;
       }
+
+      cfg.ehGraficoEmPassos = $('#passos').is(':checked:enabled');
+      cfg.ehGraficoDeArea   = $('#tipo_area').is(':checked');
     }
 
     function filtroJurisdicao() {

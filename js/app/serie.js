@@ -53,8 +53,11 @@
         var anos = _this.configuracao.anosComIndice(anosComDados, partido.fundado, partido.extinto, false);
 
         var indicesPorAno = _.map(anos, function(ano) {
-          var indice = _.find(partido.indices, function(i) { return ano === i[0] })[1];
-          return [ ano, indice ];
+          if (_this.configuracao.ehGraficoDeArea === true && ano < partido.fundado) {
+            return [ ano, null ];
+          } else {
+            return _.find(partido.indices, function(indice) { return ano === indice[0] });
+          }
         });
 
         return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno };
@@ -92,7 +95,7 @@
         // Resto
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
-          if (_this.configuracao.ehGraficoArea === false) { serie.dashStyle = 'dash'; }
+          if (_this.configuracao.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
         }
 
         return serie;
