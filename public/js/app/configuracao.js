@@ -15,7 +15,7 @@
       this.ehGraficoEmPassos = false;
 
       // Faz correções para gráficos de área
-      this.ehGraficoDeArea = false;
+      this.ehGraficoDeArea   = false;
     }
 
     Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
@@ -185,7 +185,7 @@
       var anos = anos.slice();
 
       // Adiciona um ano depois da última eleição para o último passo ficar visível
-      if (this.passos === true) {
+      if (this.ehGraficoEmPassos === true) {
         anos.push(_.max(anos) + 1);
       }
 
