@@ -566,18 +566,21 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             title: { text: titulo },
             subtitle: { text: subtitulo },
             credits: { enabled: false },
-            yAxis: [
+            yAxis: areaSelecionado ? { title: { text: '%' }, tickInterval: 20, minorTickInterval: 10, min: 0, ceiling: 100, reversedStacks: true } : [
               {
                 title: { text: '%' },
                 tickInterval: 5,
-                minorTickInterval: 1,
-                floor: 0,
+                minorTickInterval: null,
+                min: 0,
                 ceiling: 100,
-                reversedStacks: false
               }, {
-                title: { text: '%' },
                 linkedTo: 0,
-                opposite: true
+                opposite: true,
+                title: { text: '%' },
+                tickInterval: 5,
+                minorTickInterval: null,
+                min: 0,
+                ceiling: 100,
               }
             ],
             xAxis: {
@@ -596,8 +599,6 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
               },
               area: {
                 stacking: stacking,
-                fillOpacity: 1,
-                lineWidth: 1,
                 states: { hover: { enabled: false } },
               }
             }
