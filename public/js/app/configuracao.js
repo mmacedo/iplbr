@@ -40,12 +40,12 @@
     ]).sort();
 
     Configuracao.cores = {
-      'verde':      [ '#6ED854', '#A9FF97' ],
-      'vermelho':   [ '#DF5353', '#DC143C', '#FF197F' ],
-      'laranja':    [ '#F7A35C', '#EDB47E' ],
-      'azul':       [ '#7CB5EC', '#90B1D8' ],
-      'azul claro': [ '#7EEDEB' ],
-      'roxo':       [ '#BE55D9', '#7E80ED' ],
+      'verde':      [ '#6ed854', '#a9ff97', '#00ff99' ],
+      'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
+      'laranja':    [ '#f7a35c', '#edb47e' ],
+      'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff',  ],
+      'azul claro': [ '#7eedeb', '#7dedeb' ],
+      'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
     };
 
     Configuracao.partidosEmGrupos = {
