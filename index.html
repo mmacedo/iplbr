@@ -54,9 +54,19 @@
   </script>
 
   <style>
-    .grafico {
-      width: 100%;
-      height: 600px;
+    .grafico { width: 100%; height: 400px; }
+    .grafico > .highcharts-container { height: 400px; }
+
+    /* @screen-sm-min: 768px; */
+    @media (min-width: 768px) {
+      .grafico { height: 500px; }
+      .grafico > .highcharts-container { height: 500px; }
+    }
+
+    /* @screen-md-min: 992px; */
+    @media (min-width: 992px) {
+      .grafico { height: 600px; }
+      .grafico > .highcharts-container { height: 600px; }
     }
   </style>
 </head>
@@ -172,7 +182,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <h2 class="panel-title">
             <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Partidos</a>
             <small id="cfg_partidos" class="pull-right">
-              <span class="cfg_label">Pré-definição: Top 9</span>
+              <span class="cfg_label">Pré-definição: Top 10</span>
               <a class="cfg_remover" href="">(remover)</a>
             </small>
           </h2>
@@ -181,13 +191,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="panel-body">
 
             <div class="form-group">
-              <label for="configuracao_predefinida">Pré-definição</label>
+              <label for="configuracao_predefinida">Seleção</label>
               <div class="btn-group btn-group-justified" data-toggle="buttons">
                 <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Personalizar
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Todos
                 </label>
                 <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top9" autocomplete="off" checked> Top 9
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
                 </label>
                 <label class="btn btn-default">
                   <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
@@ -198,36 +208,26 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
               </div>
             </div>
 
-            <div id="panel_personalizar" class="collapse">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">Aplicar retroativo</div>
-                      <div class="panel-body">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" id="mudancas_de_nome" checked>
-                            Mudanças de nome
-                          </label>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" id="incorporacoes" checked>
-                            Incorporações
-                          </label>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" id="fusoes" checked>
-                            Fusões
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-9">
-                  </div>
+            <div id="panel_retroativo" class="panel panel-default collapse">
+              <div class="panel-heading">Aplicar retroativo</div>
+              <div class="panel-body">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="mudancas_de_nome" checked>
+                    Mudanças de nome
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="incorporacoes">
+                    Incorporações
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="fusoes">
+                    Fusões
+                  </label>
                 </div>
               </div>
             </div>
@@ -490,15 +490,16 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
   <script type="text/javascript">
     Highcharts.setOptions({
       lang: {
-        decimalPoint: ',',
-        thousandsSep: '.',
-        noData:       'Sem dados para exibir',
-        printChart:   'Imprimir gráfico',
-        downloadPNG:  'Baixar como imagem PNG',
-        downloadJPEG: 'Baixar como imagem JPEG',
-        downloadPDF:  'Baixar como documento PDF',
-        downloadSVG:  'Baixar como vetor gráfico SVG',
-        loading:      'Carregando...'
+        decimalPoint:       ',',
+        thousandsSep:       '.',
+        noData:             'Sem dados para exibir',
+        contextButtonTitle: 'Exportar',
+        printChart:         'Imprimir gráfico',
+        downloadPNG:        'Baixar como imagem PNG',
+        downloadJPEG:       'Baixar como imagem JPEG',
+        downloadPDF:        'Baixar como documento PDF',
+        downloadSVG:        'Baixar como vetor gráfico SVG',
+        loading:            'Carregando...'
       }
     });
 
@@ -509,8 +510,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
       if ($('#configuracao_todos').is(':checked')) {
         cfg.tabelaDeReescrita = null;
-      } else if ($('#configuracao_top9').is(':checked')) {
-        cfg.tabelaDeReescrita = Configuracao.top9;
+      } else if ($('#configuracao_top10').is(':checked')) {
+        cfg.tabelaDeReescrita = Configuracao.top10;
       } else if ($('#configuracao_top3').is(':checked')) {
         cfg.tabelaDeReescrita = Configuracao.top3;
       } else if ($('#configuracao_antigos').is(':checked')) {
@@ -542,7 +543,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       }
     }
 
-    function criaGrafico(id, titulo, subtitulo, serie, indice) {
+    function criaGrafico(id, titulo, subtitulo, serie, indice, forcaEmPassos) {
 
       var ufs = filtroJurisdicao(), ano = $('#ano').val();
 
@@ -552,11 +553,18 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
         if (chart == null) {
 
-          var passosSelecionado = $('#passos').is(':checked:enabled');
-
           var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
               linhasSelectionado = $('#tipo_linhas').is(':checked'),
               areaSelecionado    = $('#tipo_area').is(':checked');
+
+          var passosSelecionado = $('#passos').is(':checked:enabled');
+
+          if (forcaEmPassos) {
+            curvasSelecionado  = false;
+            linhasSelectionado = false;
+            areaSelecionado    = true;
+            passosSelecionado  = true;
+          }
 
           var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
           var stacking  = areaSelecionado?'normal':null;
@@ -577,7 +585,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             xAxis: {
               type: 'datetime',
               tickInterval: 2 * 24 * 3600 * 1000 * 365,
-              minorTickInterval: 1 * 24 * 3600 * 1000 * 365
+              minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
+              plotLines: [{
+                color: 'black',
+                value: Date.UTC(1988, 9, 5),
+                width: 3,
+                label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+              }]
             },
             tooltip: {
               shared: true,
@@ -654,6 +668,47 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       }
     }
 
+    function atualizaHistoria(hash, estado) {
+      fazerMudancas(function() {
+        if (estado.selecao === 'todos') {
+          titulo = 'Todos';
+          $('#configuracao_todos').click();
+          $('#mudancas_de_nome').prop('checked', true);
+          $('#incorporacoes, #fusoes').prop('checked', false);
+        } else if (estado.selecao === 'top3') {
+          titulo = 'Top 3';
+          $('#configuracao_top3').click();
+        } else if (estado.selecao === 'top10') {
+          titulo = 'Top 10';
+          $('#configuracao_top10').click();
+        } else if (estado.selecao === 'antigos') {
+          titulo = 'Antigos';
+          $('#configuracao_antigos').click();
+        }
+
+        history.state || history.replaceState(estado, titulo, '#' + hash);
+      });
+    }
+
+    function adicionaHistoria() {
+      var titulo, selecao;
+      if ($('#configuracao_todos').is(':checked')) {
+        titulo = 'Todos';
+        selecao = 'todos';
+      } else if ($('#configuracao_top10').is(':checked')) {
+        titulo = 'Top 10';
+        selecao = 'top10';
+      } else if ($('#configuracao_top3').is(':checked')) {
+        titulo = 'Top 3';
+        selecao = 'top3';
+      } else if ($('#configuracao_antigos').is(':checked')) {
+        titulo = 'Antigos';
+        selecao = 'antigos';
+      }
+
+      history.pushState({ selecao: selecao }, titulo, '#' + selecao);
+    }
+
     function recriaGraficosDaGuiaAtual(forcaDestruicao) {
 
       if (forcaDestruicao === true) {
@@ -686,22 +741,35 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       $(document).on('click', '#cfg_partidos > a.cfg_remover', function() {
         fazerMudancas(function() {
           $('#configuracao_todos').trigger('click');
-          $('#mudancas_de_nome, #incorporacoes, #fusoes').prop('checked', true);
+          $('#mudancas_de_nome').prop('checked', true);
+          $('#incorporacoes, #fusoes').prop('checked', false);
+          adicionaHistoria();
         });
         return false;
       });
 
-      // Esconde painel de personalização quando selecionar pré-definição
-      $(document).on('change', '[name="configuracao_predefinida"]', function(e) {
-        if ($('#configuracao_todos').is(':checked')) {
-          $('#panel_personalizar').addClass('in');
+      // Esconde link para remover configurãção quando expandir o painel
+      $(document).on('show.bs.collapse', '#panel_cfg_partidos', function () {
+        $('#cfg_partidos').hide();
+      }).on('hidden.bs.collapse', '#panel_cfg_partidos', function () {
+        if ($('#cfg_partidos > .cfg_label').text() !== "") {
+          $('#cfg_partidos').show();
         } else {
-          $('#panel_personalizar').removeClass('in');
+          $('#cfg_partidos').hide();
+        }
+      });
+
+      // Esconde painel de personalização quando selecionar pré-definição
+      $(document).on('change', '[name="configuracao_predefinida"]', function() {
+        if ($('#configuracao_todos').is(':checked')) {
+          $('#panel_retroativo').addClass('in');
+        } else {
+          $('#panel_retroativo').removeClass('in');
         }
       });
 
       // Esconde tipo de gráfico quando o ano for selecionado (apenas torta)
-      $(document).on('change', '#ano', function(e) {
+      $(document).on('change', '#ano', function() {
         if ($('#ano').val() === 'TODOS') {
           $('#panel_tipo_de_grafico').addClass('in');
         } else {
@@ -711,18 +779,24 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
       // Mostra botão para remover pré-definição
       $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+
         if ($('#configuracao_todos').is(':checked')) {
-          $('#cfg_partidos').hide();
           $('#cfg_partidos .cfg_label').text('');
-        } else if ($('#configuracao_top9').is(':checked')) {
-          $('#cfg_partidos').show();
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 9');
-        } else if ($('#configuracao_top3').is(':checked')) {
-          $('#cfg_partidos').show();
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 3');
-        } else if ($('#configuracao_antigos').is(':checked')) {
-          $('#cfg_partidos').show();
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Antigos');
+          $('#cfg_partidos').hide();
+        } else {
+          if ($('#configuracao_top10').is(':checked')) {
+            $('#cfg_partidos .cfg_label').text('Pré-definição: Top 10');
+          } else if ($('#configuracao_top3').is(':checked')) {
+            $('#cfg_partidos .cfg_label').text('Pré-definição: Top 3');
+          } else if ($('#configuracao_antigos').is(':checked')) {
+            $('#cfg_partidos .cfg_label').text('Pré-definição: Antigos');
+          }
+
+          if ($('#panel_cfg_partidos').hasClass('in')) {
+            $('#cfg_partidos').hide();
+          } else {
+            $('#cfg_partidos').show();
+          }
         }
       });
 
@@ -743,11 +817,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
       // Precisa atualizar séries (remove série e readiciona)
       $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
+        adicionaHistoria();
         recriaGraficosDaGuiaAtual(false);
       });
 
       // Precisa atualizar séries (destrói gráfico e recria)
       $(document).on('change', '[name="tipo_de_grafico"], #passos, #ano', function() {
+        adicionaHistoria();
         recriaGraficosDaGuiaAtual(true);
       });
 
@@ -809,7 +885,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
           atualizaConfiguracao(cfg);
 
-          criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal());
+          criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal(), true);
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
@@ -867,7 +943,8 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           $('#tablist_municipal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
         });
 
-        recriaGraficosDaGuiaAtual();
+        var hash = window.location.hash ? window.location.hash.replace(/^#/, '') : 'top10';
+        atualizaHistoria(hash, { selecao: hash });
       });
     });
   </script>

@@ -32,7 +32,7 @@
         var matches = sigla.match(/(.*?)([0-9]{2})/);
         var sigla = matches[1], numero = parseInt(matches[2], 10);
 
-        return { sigla: sigla, numero: numero, indices: indicePorAno };
+        return { sigla: sigla, numero: numero, indices: indicePorAno, info: info };
 
       });
 
@@ -60,7 +60,7 @@
           }
         });
 
-        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno };
+        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno, info: partido.info, mesclados: partido.mesclados };
 
       });
 
@@ -96,16 +96,21 @@
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
           if (_this.configuracao.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
+        } else {
+          serie.color = _this.configuracao.cor(linha.info);
         }
 
         return serie;
 
       });
 
+      // Não soma último ano se ele foi adicionado porque é gráfico em passos
+      var naoSomarAno = this.configuracao.ehGraficoEmPassos ? _.max(_.flatten(_.map(indicesPorSigla, function(linha) { return _.map(linha.indices, function(indice) { return indice[0]; }); }))) : null;
+
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
       series = _.sortBy(series, function(linha) {
 
-        var somaDosIndices = _.reduce(linha.data, function(memo, i) { return memo + i[1] }, 0);
+        var somaDosIndices = _.reduce(linha.data, function(memo, i) { return memo + (naoSomarAno && naoSomarAno === new Date(i[0]).getFullYear() ? 0 : i[1]) }, 0);
 
         // Mantem o resto em último (menor)
         if (_this.configuracao.tabelaDeReescrita != null) {
