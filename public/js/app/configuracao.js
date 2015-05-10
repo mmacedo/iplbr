@@ -116,7 +116,7 @@
 
     Configuracao.partidos = _.flatten(_.values(Configuracao.partidosEmGrupos));
 
-    Configuracao.top9 = {
+    Configuracao.top10 = {
       mapear: [
         { de: { sigla: 'PT',    numero: 13 }, para: 'PT' },
         { de: { sigla: 'PMDB',  numero: 15 }, para: 'PMDB' },
@@ -139,6 +139,7 @@
         { de: { sigla: 'PTB',   numero: 14 }, para: 'PTB' },
         { de: { sigla: 'PAN',   numero: 26 }, para: 'PTB' },
         { de: { sigla: 'PSD',   numero: 41 }, para: 'PTB' },
+        { de: { sigla: 'PSD',   numero: 55 }, para: 'PSD' },
       ],
       resto: 'Resto'
     };
