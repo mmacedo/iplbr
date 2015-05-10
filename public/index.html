@@ -585,7 +585,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             xAxis: {
               type: 'datetime',
               tickInterval: 2 * 24 * 3600 * 1000 * 365,
-              minorTickInterval: 1 * 24 * 3600 * 1000 * 365
+              minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
+              plotLines: [{
+                color: 'black',
+                value: Date.UTC(1988, 9, 5),
+                width: 3,
+                label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+              }]
             },
             tooltip: {
               shared: true,
