@@ -543,7 +543,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       }
     }
 
-    function criaGrafico(id, titulo, subtitulo, serie, indice) {
+    function criaGrafico(id, titulo, subtitulo, serie, indice, forcaEmPassos) {
 
       var ufs = filtroJurisdicao(), ano = $('#ano').val();
 
@@ -553,11 +553,18 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
         if (chart == null) {
 
-          var passosSelecionado = $('#passos').is(':checked:enabled');
-
           var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
               linhasSelectionado = $('#tipo_linhas').is(':checked'),
               areaSelecionado    = $('#tipo_area').is(':checked');
+
+          var passosSelecionado = $('#passos').is(':checked:enabled');
+
+          if (forcaEmPassos) {
+            curvasSelecionado  = false;
+            linhasSelectionado = false;
+            areaSelecionado    = true;
+            passosSelecionado  = true;
+          }
 
           var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
           var stacking  = areaSelecionado?'normal':null;
@@ -872,7 +879,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
           atualizaConfiguracao(cfg);
 
-          criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal());
+          criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal(), true);
 
         });
         $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {

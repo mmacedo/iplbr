@@ -32,7 +32,7 @@
         var matches = sigla.match(/(.*?)([0-9]{2})/);
         var sigla = matches[1], numero = parseInt(matches[2], 10);
 
-        return { sigla: sigla, numero: numero, indices: indicePorAno };
+        return { sigla: sigla, numero: numero, indices: indicePorAno, info: info };
 
       });
 
@@ -60,7 +60,7 @@
           }
         });
 
-        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno };
+        return { sigla: partido.sigla, numero: partido.numero, indices: indicesPorAno, info: partido.info, mesclados: partido.mesclados };
 
       });
 
@@ -96,6 +96,8 @@
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
           if (_this.configuracao.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
+        } else {
+          serie.color = _this.configuracao.cor(linha.info);
         }
 
         return serie;
