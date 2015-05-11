@@ -1,6 +1,5 @@
-/*
- *  Muda altura dos gráficos conforme o tamanho da tela
- */
+/* Muda altura dos gráficos conforme o tamanho da tela
+-------------------------------------------------------- */
 
 .grafico { width: 100%; height: 400px; }
 .grafico > .highcharts-container { height: 400px; }
@@ -16,3 +15,27 @@
   .grafico { height: 600px; }
   .grafico > .highcharts-container { height: 600px; }
 }
+
+/* Sticky footer
+-------------------------------------------------------- */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 120px;
+}
+
+#rodape {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  min-height: 80px;
+  background-color: #eee;
+  padding: 20px 20px 0;
+  text-align: center;
+}
+
+#dedicacao > .glyphicon-heart { color: #DC143C; } /* Crimson */
