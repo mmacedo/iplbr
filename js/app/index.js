@@ -17,7 +17,7 @@
     }
   });
 
-  function atualizaConfiguracao(cfg) {
+  function atualizaConfiguracao(cfg, apenas0e100) {
     cfg.mudancasDeNome    = $('#mudancas_de_nome').is(':checked:enabled');
     cfg.incorporacoes     = $('#incorporacoes').is(':checked:enabled');
     cfg.fusoes            = $('#fusoes').is(':checked:enabled');
@@ -32,8 +32,8 @@
       cfg.tabelaDeReescrita = Configuracao.partidosAntigos;
     }
 
-    cfg.ehGraficoEmPassos = $('#passos').is(':checked:enabled');
-    cfg.ehGraficoDeArea   = $('#tipo_area').is(':checked');
+    cfg.ehGraficoEmPassos = apenas0e100 === true || $('#passos').is(':checked:enabled');
+    cfg.ehGraficoDeArea   = apenas0e100 === true || $('#tipo_area').is(':checked');
   }
 
   function filtroJurisdicao() {
@@ -57,7 +57,7 @@
     }
   }
 
-  function criaGrafico(id, titulo, subtitulo, serie, indice, forcaEmPassos) {
+  function criaGrafico(id, titulo, subtitulo, serie, indice, apenas0e100) {
 
     var ufs = filtroJurisdicao(), ano = $('#ano').val();
 
@@ -73,7 +73,7 @@
 
         var passosSelecionado = $('#passos').is(':checked:enabled');
 
-        if (forcaEmPassos) {
+        if (apenas0e100 === true) {
           curvasSelecionado  = false;
           linhasSelectionado = false;
           areaSelecionado    = true;
@@ -109,7 +109,30 @@
           },
           tooltip: {
             shared: true,
-            valueDecimals: 4
+            useHTML: true,
+            pointFormatter: function() {
+
+              var ano = new Date(this.x).getFullYear() - 1;
+
+              // Não mostra tooltip para extinto
+              if (this.series.options.partido && this.series.options.partido.extinto && this.series.options.partido.extinto < ano) {
+                return null;
+              }
+
+              var indice;
+              if (this.y == 0) {
+                indice = '0';
+              } else {
+                var arredondado = Math.round10(this.y, 2);
+                if (arredondado == 0) {
+                  indice = '< 0.01';
+                } else {
+                  indice = arredondado.toFixed(2);
+                }
+              }
+
+              return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>' + indice + '</b><br/>';
+            }
           },
           plotOptions: {
             series: {
@@ -335,13 +358,13 @@
     });
 
     // Precisa atualizar séries (remove série e readiciona)
-    $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes, #jurisdicao', function() {
+    $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
       adicionaHistoria();
       recriaGraficosDaGuiaAtual(false);
     });
 
     // Precisa atualizar séries (destrói gráfico e recria)
-    $(document).on('change', '[name="tipo_de_grafico"], #passos, #ano', function() {
+    $(document).on('change', '[name="tipo_de_grafico"], #passos, #jurisdicao, #ano', function() {
       adicionaHistoria();
       recriaGraficosDaGuiaAtual(true);
     });
@@ -384,7 +407,7 @@
         criaGrafico("#congresso_nacional", 'Congresso Nacional',   'Câmara dos Deputados + Senado Federal', serie, indices.legislativoFederal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
-        atualizaConfiguracao(cfg);
+        atualizaConfiguracao(cfg, true);
         criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal(), true);
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
@@ -396,8 +419,9 @@
         criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie, indices.legislativoEstadual());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico("#governadores", 'Governos Estaduais', null, serie, indices.executivoEstadual());
+        var estaMostrandoApenasUmaUf = filtroJurisdicao().length === 1;
+        atualizaConfiguracao(cfg, estaMostrandoApenasUmaUf);
+        criaGrafico("#governadores", 'Governos Estaduais', null, serie, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
         atualizaConfiguracao(cfg);
@@ -408,8 +432,9 @@
         criaGrafico("#vereadores", 'Câmaras Municipais', null, serie, indices.legislativoMunicipal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal());
+        var ufs = filtroJurisdicao(), estaMostrandoApenasDf = ufs.length === 1 && ufs[0] === 'DF';
+        atualizaConfiguracao(cfg, estaMostrandoApenasDf);
+        criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
         $('#tablist_nacional > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
