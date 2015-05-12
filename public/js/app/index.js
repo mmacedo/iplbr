@@ -109,7 +109,30 @@
           },
           tooltip: {
             shared: true,
-            valueDecimals: 4
+            useHTML: true,
+            pointFormatter: function() {
+
+              var ano = new Date(this.x).getFullYear() - 1;
+
+              // Não mostra tooltip para extinto
+              if (this.series.options.partido && this.series.options.partido.extinto && this.series.options.partido.extinto < ano) {
+                return null;
+              }
+
+              var indice;
+              if (this.y == 0) {
+                indice = '0';
+              } else {
+                var arredondado = Math.round10(this.y, 2);
+                if (arredondado == 0) {
+                  indice = '< 0.01';
+                } else {
+                  indice = arredondado.toFixed(2);
+                }
+              }
+
+              return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>' + indice + '</b><br/>';
+            }
           },
           plotOptions: {
             series: {
