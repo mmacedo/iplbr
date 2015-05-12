@@ -134,6 +134,10 @@
       Eleicoes.prototype.constructor.apply(this, arguments);
     }
 
+    EleicoesFederais.prototype.anos = function() {
+      return _.map(_.keys(this.json), function(ano) { return parseInt(ano, 10); });
+    }
+
     EleicoesFederais.prototype.siglasDeputadosFederais = function(ano) {
       return this.siglas('deputados_federais', ano);
     };
@@ -455,8 +459,8 @@
       this.eleicoesFederais = eleicoesFederais;
     }
 
-    CamaraDosDeputados.prototype.anos = function(uf) {
-      return this.eleicoesFederais.anos(uf);
+    CamaraDosDeputados.prototype.anos = function() {
+      return this.eleicoesFederais.anos();
     };
 
     CamaraDosDeputados.prototype.siglasPorCargo = function(ano, uf) {
@@ -483,8 +487,8 @@
       this.eleicoesFederais = eleicoesFederais;
     }
 
-    SenadoFederal.prototype.anos = function(uf) {
-      return this.eleicoesFederais.anos(uf);
+    SenadoFederal.prototype.anos = function() {
+      return this.eleicoesFederais.anos();
     };
 
     SenadoFederal.prototype.siglasPorCargo = function(ano, uf) {
@@ -512,8 +516,8 @@
       this.senadoFederal      = senadoFederal;
     }
 
-    LegislativoFederal.prototype.anos = function(uf) {
-      var anos = [ this.camaraDosDeputados.anos(uf), this.senadoFederal.anos(uf) ];
+    LegislativoFederal.prototype.anos = function() {
+      var anos = [ this.camaraDosDeputados.anos(), this.senadoFederal.anos() ];
       return _.uniq(_.flatten(anos)).sort();
     };
 
