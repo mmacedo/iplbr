@@ -381,23 +381,25 @@
     }
 
     var somarIndicesDosRepetidos = function(dados, mapFunction) {
+
       return _.map(dados, function(partidos) {
+
         if (partidos.length == 1) {
           return partidos[0];
         }
 
-        var todosOsIndices = _.flatten(_.pluck(partidos, 'indices'));
+        var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
 
-        var indicesPorAno = _.groupBy(todosOsIndices, function(i) { return i[0] });
+        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, function(linha) { return linha.ano; }));
 
-        var somasDosIndicesPorAno = _.map(_.values(indicesPorAno), function(indices) {
-          var ano = indices[0][0];
-          var somaDosIndices = _.reduce(indices, function(memo, i) { return memo + i[1] }, 0);
-          return [ ano, somaDosIndices ];
+        var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
+          return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
         });
 
         return mapFunction(partidos, somasDosIndicesPorAno);
+
       });
+
     };
 
     Configuracao.prototype.mesclarPartidosExtintos = function(dados) {

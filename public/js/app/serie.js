@@ -25,7 +25,7 @@
 
         // Calcula índices
         var indicePorAno = _.map(anosParaCalcular, function(ano) {
-          return [ ano, indice.calculaIndice(ano, ufs, sigla) ];
+          return { ano: ano, indice: indice.calculaIndice(ano, ufs, sigla) };
         });
 
         // Extrai siglas e números dos partidos
@@ -54,9 +54,9 @@
 
         var indicesPorAno = _.map(anos, function(ano) {
           if (_this.configuracao.ehGraficoDeArea === true && ano < partido.fundado) {
-            return [ ano, null ];
+            return { ano: ano, indice: null };
           } else {
-            return _.find(partido.indices, function(indice) { return ano === indice[0] });
+            return _.find(partido.indices, function(linha) { return ano === linha.ano });
           }
         });
 
@@ -82,13 +82,12 @@
       var series = _.map(indicesPorSigla, function(linha) {
 
         // Converte anos em datas
-        var indices = _.map(linha.indices, function(tupla) {
-          var ano = tupla[0], indice = tupla[1];
-          return [ Date.UTC(ano + 1, 0, 1), indice ];
+        var indices = _.map(linha.indices, function(linha) {
+          return { x: Date.UTC(linha.ano + 1, 0, 1), y: linha.indice };
         });
 
         // Ordena índices por data (Highcharts precisa deles ordenados)
-        var indicesOrdenados = _.sortBy(indices, function(linha) { return linha[0] });
+        var indicesOrdenados = _.sortBy(indices, function(linha) { return linha.x });
 
         var serie = { name: linha.sigla, data: indicesOrdenados };
 
@@ -105,12 +104,19 @@
       });
 
       // Não soma último ano se ele foi adicionado porque é gráfico em passos
-      var naoSomarAno = this.configuracao.ehGraficoEmPassos ? _.max(_.flatten(_.map(indicesPorSigla, function(linha) { return _.map(linha.indices, function(indice) { return indice[0]; }); }))) : null;
+      var ultimoAno = _.max(_.flatten(_.map(indicesPorSigla, function(linha) {
+        return _.map(linha.data, function(ponto) {
+          return new Date(ponto.x).getFullYear();
+        });
+      })));
+      var naoSomarAno = this.configuracao.ehGraficoEmPassos ? ultimoAno : null;
 
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
       series = _.sortBy(series, function(linha) {
 
-        var somaDosIndices = _.reduce(linha.data, function(memo, i) { return memo + (naoSomarAno && naoSomarAno === new Date(i[0]).getFullYear() ? 0 : i[1]) }, 0);
+        var somaDosIndices = _.reduce(linha.data, function(total, ponto) {
+          return total + (naoSomarAno && naoSomarAno === new Date(ponto.x).getFullYear() ? 0 : ponto.y);
+        }, 0);
 
         // Mantem o resto em último (menor)
         if (_this.configuracao.tabelaDeReescrita != null) {
