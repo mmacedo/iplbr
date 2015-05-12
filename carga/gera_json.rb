@@ -214,7 +214,7 @@ end
 # Processa eleitos/*.txt e carrega os totais por partido
 # ------------------------------------------------------
 
-municipais, estaduais, federais, presidente = {}, {}, {}, {}
+municipais, estaduais, distritais, federais, presidenciais = {}, {}, {}, {}, {}
 
 Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
@@ -228,24 +228,17 @@ Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
     partido   = if numero.to_i >= 10 then "#{sigla}#{numero}" else "#{sigla}#{numero.to_i+10}" end
 
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
-
       ((((municipais[ano] ||= {})[uf] ||= {})[municipio] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
-
-    elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO (ESTADUAL|DISTRITAL)\z})
-
-      # Unifica DEPUTADO ESTADUAL e DEPUTADO DISTRITAL
-      cargo.gsub!(%r{ESTADUAL|DISTRITAL}, "ESTADUAL OU DISTRITAL")
-
+    elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO DISTRITAL\z}) and uf === 'DF'
+      ((distritais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+    elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO ESTADUAL\z})
       (((estaduais[ano] ||= {})[uf] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
-
     elsif cargo.match(%r{\ADEPUTADO FEDERAL|SENADOR\z})
-
       ((federais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
-
+    elsif cargo.match(%r(\APRESIDENTE\z))
+      presidenciais[ano] = partido
     else
-
-      presidente[ano] = partido
-
+      raise "Cargo '#{cargo}' econtrado!"
     end
   end
 end
@@ -255,7 +248,7 @@ end
 # Processa totais por partido e populações e gera os dados necessários
 # --------------------------------------------------------------------
 
-json = { municipais:{}, estaduais:{}, federais:{}, presidente:{} }
+json = { municipais:{}, estaduais:{}, distritais: {}, federais:{}, presidenciais:{} }
 
 def criaHashMunicipal(populacao)
   {
@@ -363,15 +356,14 @@ estaduais.each do |ano, ufs|
       puts "Faltando governador para #{uf} em #{ano}"
     end
 
+    if cargos.has_key? 'DEPUTADO ESTADUAL'
 
-    if cargos.has_key? 'DEPUTADO ESTADUAL OU DISTRITAL'
-
-      total_deputados_estaduais = cargos['DEPUTADO ESTADUAL OU DISTRITAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
+      total_deputados_estaduais = cargos['DEPUTADO ESTADUAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
 
       json[:estaduais][ano][:_BR][:total_deputados_estaduais] += total_deputados_estaduais
       json[:estaduais][ano][uf][:total_deputados_estaduais]   += total_deputados_estaduais
 
-      cargos['DEPUTADO ESTADUAL OU DISTRITAL'].each do |sigla, deputados_estaduais|
+      cargos['DEPUTADO ESTADUAL'].each do |sigla, deputados_estaduais|
         json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla][sigla]                += deputados_estaduais
         json[:estaduais][ano][uf][:deputados_estaduais_por_sigla][sigla]                  += deputados_estaduais
         json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla_peso_populacao][sigla] += deputados_estaduais * (total_populacao_uf / total_deputados_estaduais)
@@ -383,6 +375,64 @@ estaduais.each do |ano, ufs|
     end
 
   end
+end
+
+def criaHashDistrital(populacao)
+  {
+    total_governadores:                            0,
+    total_deputados_distritais:                    0,
+    total_populacao:                               populacao,
+    governadores_por_sigla:                        Hash.new(0),
+    governadores_por_sigla_peso_populacao:         Hash.new(0),
+    deputados_distritais_por_sigla:                Hash.new(0),
+    deputados_distritais_por_sigla_peso_populacao: Hash.new(0)
+  }
+end
+
+distritais.each do |ano, cargos|
+
+  json[:distritais][ano] = { :_BR => criaHashDistrital(populacao(populacao_brasil, nil, nil, ano)) }
+
+  total_populacao_uf = populacao(populacao_ufs, 'DF', nil, ano)
+
+  json[:distritais][ano][:DF] = criaHashDistrital(total_populacao_uf)
+
+  if cargos.has_key? 'GOVERNADOR'
+
+    total_governadores = cargos['GOVERNADOR'].map { |sigla, governadores| governadores }.reduce(:+)
+
+    json[:distritais][ano][:_BR][:total_governadores] += total_governadores
+    json[:distritais][ano][:DF][:total_governadores]  += total_governadores
+
+    cargos['GOVERNADOR'].each do |sigla, governadores|
+      json[:distritais][ano][:_BR][:governadores_por_sigla][sigla]                += total_governadores
+      json[:distritais][ano][:DF][:governadores_por_sigla][sigla]                 += total_governadores
+      json[:distritais][ano][:_BR][:governadores_por_sigla_peso_populacao][sigla] += total_populacao_uf
+      json[:distritais][ano][:DF][:governadores_por_sigla_peso_populacao][sigla]  += total_populacao_uf
+    end
+
+  else
+    puts "Faltando governador para DF em #{ano}"
+  end
+
+  if cargos.has_key? 'DEPUTADO DISTRITAL'
+
+    total_deputados_distritais = cargos['DEPUTADO DISTRITAL'].map { |sigla, deputados_distritais| deputados_distritais }.reduce(:+)
+
+    json[:distritais][ano][:_BR][:total_deputados_distritais] += total_deputados_distritais
+    json[:distritais][ano][:DF][:total_deputados_distritais]  += total_deputados_distritais
+
+    cargos['DEPUTADO DISTRITAL'].each do |sigla, deputados_distritais|
+      json[:distritais][ano][:_BR][:deputados_distritais_por_sigla][sigla]                += deputados_distritais
+      json[:distritais][ano][:DF][:deputados_distritais_por_sigla][sigla]                 += deputados_distritais
+      json[:distritais][ano][:_BR][:deputados_distritais_por_sigla_peso_populacao][sigla] += deputados_distritais * (total_populacao_uf / total_deputados_distritais)
+      json[:distritais][ano][:DF][:deputados_distritais_por_sigla_peso_populacao][sigla]  += deputados_distritais * (total_populacao_uf / total_deputados_distritais)
+    end
+
+  else
+    puts "Faltando deputados distritais para DF em #{ano}"
+  end
+
 end
 
 def criaHashFederal(populacao)
@@ -416,8 +466,8 @@ federais.each do |ano, cargos|
   end
 end
 
-presidente.each do |ano, sigla|
-  json[:presidente][ano] = sigla;
+presidenciais.each do |ano, sigla|
+  json[:presidenciais][ano] = sigla;
 end
 
 IO.write(arquivo_de_saida, json.to_json)

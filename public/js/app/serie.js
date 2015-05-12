@@ -13,7 +13,7 @@
       var _this = this;
 
       // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(indice.siglas(ufs, anos), function(sigla) {
+      var indicesPorSigla = _.map(indice.siglas(anos, ufs), function(sigla) {
 
         // Carrega informações do partido
         var info = _.find(Configuracao.partidos, function(info) {
@@ -172,8 +172,10 @@
 
       var _this = this;
 
+      var anos = _.uniq(_.flatten(_.map(ufs, function(uf) { return indice.anos(uf); }))).sort();
+
       // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
-      var anosComDados = _.filter(indice.anos(), function(ano) {
+      var anosComDados = _.filter(anos, function(ano) {
         return indice.temDados(ano, ufs);
       });
 
