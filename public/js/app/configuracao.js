@@ -428,13 +428,17 @@
 
             migrouUmPartido = true;
 
-            infoDestino = _.find(Configuracao.partidos, function(infoDestino) {
+            // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
+            var possiveisDestinos = _.filter(Configuracao.partidos, function(infoDestino) {
               return (
                 (mesclarCom === infoDestino.sigla) &&
                 (infoDestino.extinto      == null                                || infoDestino.extinto >= partido.info.extinto) &&
                 (partido.info.incorporado == null                                || infoDestino.fundado <= partido.info.extinto) &&
                 ((partido.info.renomeado  == null && partido.info.fusao == null) || infoDestino.fundado >= partido.info.extinto));
             });
+
+            // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
+            infoDestino = _.min(possiveisDestinos, 'fundado');
 
           }
 
