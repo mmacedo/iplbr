@@ -140,7 +140,7 @@
 
         var serie = {
           name: linha.sigla,
-          y:    linha.indices[0][1]
+          y:    linha.indices[0].indice
         };
 
         // Resto
