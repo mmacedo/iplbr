@@ -384,17 +384,17 @@
       var serie   = new Serie(cfg);
       var indices = new GeradorDeIndices(json);
 
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#indice_nacional', 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceNacional());
+        criaGrafico('#indice_total', 'Índice', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceTotal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#legislativo_nacional', 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoNacional());
+        criaGrafico('#legislativo_total', 'Legislativo', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoTotal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#executivo_nacional', 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoNacional());
+        criaGrafico('#executivo_total', 'Executivo', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoTotal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
         atualizaConfiguracao(cfg);
@@ -402,8 +402,8 @@
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#deputados_federais", 'Câmara dos Deputados', null,                                    serie, indices.camaraDosDeputados());
-        criaGrafico("#senadores",          'Senado Federal',       null,                                    serie, indices.senadoFederal());
+        criaGrafico("#deputados_federais", 'Câmara dos Deputados', null,                                    serie, indices.deputadosFederais());
+        criaGrafico("#senadores",          'Senado Federal',       null,                                    serie, indices.senadores());
         criaGrafico("#congresso_nacional", 'Congresso Nacional',   'Câmara dos Deputados + Senado Federal', serie, indices.legislativoFederal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
@@ -436,8 +436,8 @@
         atualizaConfiguracao(cfg, estaMostrandoApenasDf);
         criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
-        $('#tablist_nacional > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_total"]', function() {
+        $('#tablist_total > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
         $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
