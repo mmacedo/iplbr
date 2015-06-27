@@ -146,6 +146,8 @@
         // Resto
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
+        } else {
+          serie.color = _this.configuracao.cor(linha.info);
         }
 
         return serie;
