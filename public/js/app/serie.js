@@ -82,12 +82,12 @@
       var series = _.map(indicesPorSigla, function(linha) {
 
         // Converte anos em datas
-        var indices = _.map(linha.indices, function(linha) {
-          return { x: Date.UTC(linha.ano + 1, 0, 1), y: linha.indice };
+        var indices = _.map(linha.indices, function(ponto) {
+          return { x: Date.UTC(ponto.ano + 1, 0, 1), y: ponto.indice };
         });
 
         // Ordena índices por data (Highcharts precisa deles ordenados)
-        var indicesOrdenados = _.sortBy(indices, function(linha) { return linha.x });
+        var indicesOrdenados = _.sortBy(indices, function(ponto) { return ponto.x });
 
         var serie = { name: linha.sigla, data: indicesOrdenados, partido: linha.info, outros: linha.mesclados };
 
@@ -95,6 +95,8 @@
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
           if (_this.configuracao.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
+          // Substitui null por 0 para mostrar resto em todos os anos
+          serie.data = _.map(serie.data, function(ponto) { return { x: ponto.x, y: ponto.y || 0.0 } });
         } else {
           serie.color = _this.configuracao.cor(linha.info);
         }
