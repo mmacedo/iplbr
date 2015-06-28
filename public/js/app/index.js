@@ -100,12 +100,19 @@
             type: 'datetime',
             tickInterval: 2 * 24 * 3600 * 1000 * 365,
             minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
-            plotLines: [{
-              color: 'black',
-              value: Date.UTC(1988, 9, 5),
-              width: 3,
-              label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
-            }]
+            plotLines: [
+              {
+                color: 'black',
+                value: Date.UTC(1985, 1, 1),
+                width: 3,
+                label: { text: 'Nova República', style: { fontSize: 'larger' } },
+              }, {
+                color: 'black',
+                value: Date.UTC(1988, 9, 5),
+                width: 3,
+                label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+              }
+            ]
           },
           tooltip: {
             shared: true,
