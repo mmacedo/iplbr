@@ -53,7 +53,7 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 
 - `public/css/bootstrap.min.css` (tema)
 - `pulic/js/bootstrap/boostrap.min.js`
-- `pulic/js/bootstrap/ie10-viewport-bug-workaround.js`
+- `pulic/js/bootstrap/ie10-viewport-bug-workaround.js` (http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js)
 - `public/fonts` ([Glyphicon](http://getbootstrap.com/components/#glyphicons))
 
 Última versão não paga do [Highcharts](http://www.highcharts.com/) com os seguintes arquivos:
@@ -63,7 +63,7 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 - `public/js/highcharts/no-data-to-display.js` (módulo para mostrar texto quando não há dados)
 - `public/js/highcharts/grid-light.js` (tema Grid Light)
 
-Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/).
+Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/), com suporte para IE 8.
 
 ### Desenvolvimento
 
