@@ -115,7 +115,8 @@
               var ano = new Date(this.x).getFullYear() - 1;
 
               // Não mostra tooltip para extinto
-              if (this.series.options.partido && this.series.options.partido.extinto && this.series.options.partido.extinto < ano) {
+              var partidos = _.compact([ this.series.options.partido ].concat(this.series.options.outros || []));
+              if (_.all(partidos, function(p) { return p.extinto != null; }) && _.max(partidos, 'extinto') < ano) {
                 return null;
               }
 

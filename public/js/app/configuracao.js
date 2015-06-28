@@ -525,15 +525,31 @@
         });
 
         // Soma índices
-        var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(lista, somas) {
-          var sigla           = lista[0].sigla;
-          var info, mesclados;
+        var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(partidos, somas) {
+
+          var sigla           = partidos[0].sigla;
+          var todosOsPartidos = _.flatten(_.map(partidos, function(p) { return [ p.info ].concat(p.mesclados); }));
+
+          var info = null, mesclados = todosOsPartidos;
           if (sigla !== _this.tabelaDeReescrita.resto) {
+
             var primeiroMapeado = _.find(_this.tabelaDeReescrita.mapear, function(config) { return config.para === sigla; });
-            var info            = _.find(Configuracao.partidos, function(p) { return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero; });
-            var mesclados       = _.filter(_.map(lista, function(p) { return p.info; }), function(p) { return p !== info; });
+
+            info = _.find(todosOsPartidos, function(p) {
+              return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero;
+            });
+
+            if (info != null) {
+              mesclados = _.without(mesclados, info);
+            } else {
+              info = _.find(Configuracao.partidos, function(p) {
+                return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero;
+              });
+            }
           }
-          return { sigla: lista[0].sigla, indices: somas, info: info, mesclados: mesclados };
+
+          return { sigla: sigla, indices: somas, info: info, mesclados: mesclados };
+
         });
 
         return mesclados;

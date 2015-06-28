@@ -89,7 +89,7 @@
         // Ordena índices por data (Highcharts precisa deles ordenados)
         var indicesOrdenados = _.sortBy(indices, function(linha) { return linha.x });
 
-        var serie = { name: linha.sigla, data: indicesOrdenados, partido: linha.info };
+        var serie = { name: linha.sigla, data: indicesOrdenados, partido: linha.info, outros: linha.mesclados };
 
         // Resto
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
