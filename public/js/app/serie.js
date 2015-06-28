@@ -56,7 +56,7 @@
           if (_this.configuracao.ehGraficoDeArea === true && ano < partido.fundado) {
             return { ano: ano, indice: null };
           } else {
-            return _.find(partido.indices, function(linha) { return ano === linha.ano });
+            return _.find(partido.indices, 'ano', ano);
           }
         });
 

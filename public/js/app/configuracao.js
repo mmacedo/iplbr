@@ -383,9 +383,9 @@
 
     }
 
-    var somarIndicesDosRepetidos = function(dados, mapFunction) {
+    var somarIndicesDosRepetidos = function(agrupadosPorSigla, mapFunction) {
 
-      return _.map(dados, function(partidos) {
+      return _.map(agrupadosPorSigla, function(partidos) {
 
         if (partidos.length == 1) {
           return partidos[0];
@@ -393,7 +393,7 @@
 
         var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
 
-        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, function(linha) { return linha.ano; }));
+        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, 'ano'));
 
         var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
           return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
@@ -405,26 +405,26 @@
 
     };
 
-    Configuracao.prototype.mesclarPartidosExtintos = function(dados) {
+    Configuracao.prototype.mesclarPartidosExtintos = function(partidos) {
 
       var _this = this;
       var migrouUmPartido = false;
 
       // Realiza migrações
-      var migrados = _.flatten(_.map(dados, function(partido) {
+      var migrados = _.flatten(_.map(partidos, function(p) {
 
-        var infoDestino = partido.info;
+        var infoDestino = p.info;
 
         // Apenas partidos extintos podem ser migrados
-        if (partido.info.extinto != null) {
+        if (p.info.extinto != null) {
 
           var mesclarCom = null;
-          if (_this.mudancasDeNome === true && partido.info.renomeado != null) {
-            mesclarCom = partido.info.renomeado;
-          } else if (_this.incorporacoes === true && partido.info.incorporado != null) {
-            mesclarCom = partido.info.incorporado;
-          } else if (_this.fusoes === true && partido.info.fusao != null) {
-            mesclarCom = partido.info.fusao;
+          if (_this.mudancasDeNome === true && p.info.renomeado != null) {
+            mesclarCom = p.info.renomeado;
+          } else if (_this.incorporacoes === true && p.info.incorporado != null) {
+            mesclarCom = p.info.incorporado;
+          } else if (_this.fusoes === true && p.info.fusao != null) {
+            mesclarCom = p.info.fusao;
           }
 
           if (mesclarCom != null) {
@@ -435,9 +435,9 @@
             var possiveisDestinos = _.filter(Configuracao.partidos, function(infoDestino) {
               return (
                 (mesclarCom === infoDestino.sigla) &&
-                (infoDestino.extinto      == null                                || infoDestino.extinto >= partido.info.extinto) &&
-                (partido.info.incorporado == null                                || infoDestino.fundado <= partido.info.extinto) &&
-                ((partido.info.renomeado  == null && partido.info.fusao == null) || infoDestino.fundado >= partido.info.extinto));
+                (infoDestino.extinto == null                        || infoDestino.extinto >= p.info.extinto) &&
+                (p.info.incorporado == null                         || infoDestino.fundado <= p.info.extinto) &&
+                ((p.info.renomeado == null && p.info.fusao == null) || infoDestino.fundado >= p.info.extinto));
             });
 
             // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
@@ -450,11 +450,11 @@
         return {
           sigla:     infoDestino.sigla,
           numero:    infoDestino.numero,
-          fundado:   partido.fundado || partido.info.fundado,
+          fundado:   p.fundado || p.info.fundado,
           extinto:   infoDestino.extinto,
-          indices:   partido.indices,
+          indices:   p.indices,
           info:      infoDestino,
-          mesclados: infoDestino === partido.info ? (partido.mesclados || []) : (partido.mesclados || []).concat([ partido.info ])
+          mesclados: infoDestino === p.info ? (p.mesclados || []) : (p.mesclados || []).concat([ p.info ])
         };
 
       }));
@@ -462,8 +462,8 @@
       if (migrouUmPartido === true) {
 
         // Agrupa repetidos
-        var porPartido = _.values(_.groupBy(migrados, function(partido) {
-          return partido.sigla + partido.numero + (partido.extinto || '')
+        var porPartido = _.values(_.groupBy(migrados, function(p) {
+          return p.sigla + p.numero + (p.extinto || '')
         }));
 
         // Soma índices
@@ -471,7 +471,7 @@
           return {
             sigla:     lista[0].sigla,
             numero:    lista[0].numero,
-            fundado:   _.min(lista, function(p) { return p.fundado }).fundado,
+            fundado:   _.min(lista, 'fundado').fundado,
             extinto:   lista[0].extinto,
             indices:   somas,
             info:      lista[0].info,
@@ -487,48 +487,38 @@
       return migrados;
     }
 
-    Configuracao.prototype.reescreverSiglas = function(dados) {
+    Configuracao.prototype.reescreverSiglas = function(partidos) {
 
       var _this = this;
 
       if (this.tabelaDeReescrita == null) {
 
-        return _.map(dados, function(partido) {
+        return _.map(partidos, function(p) {
 
-          var info = _.find(Configuracao.partidos, function(info) {
-            return partido.sigla  === info.sigla &&
-                   partido.numero === info.numero;
-          });
+          var sigla = p.info.naoEhUltimo === true ? (p.info.sigla + " (" + p.info.fundado.toString() + ")") : p.info.sigla;
 
-          var sigla = info.naoEhUltimo === true ? (info.sigla + " (" + info.fundado.toString() + ")") : info.sigla;
-
-          return { sigla: sigla, indices: partido.indices, info: partido.info, mesclados: partido.mesclados };
+          return { sigla: sigla, indices: p.indices, info: p.info, mesclados: p.mesclados };
 
         });
 
       } else {
 
         // Realiza migrações
-        var migrados = _.map(dados, function(partido) {
-          var config = _.find(_this.tabelaDeReescrita.mapear, function(config) {
-            return partido.sigla  === config.de.sigla &&
-                   partido.numero === config.de.numero;
-          });
+        var migrados = _.map(partidos, function(p) {
+          var config = _.find(_this.tabelaDeReescrita.mapear, { de: _.pick(p, [ 'sigla', 'numero' ]) });
           return {
             sigla:     config != null ? config.para : _this.tabelaDeReescrita.resto,
-            indices:   partido.indices,
-            info:      partido.info,
-            mesclados: partido.mesclados
+            indices:   p.indices,
+            info:      p.info,
+            mesclados: p.mesclados
           };
         });
 
         // Agrupa repetidos
-        var porSigla = _.groupBy(migrados, function(partido) {
-          return partido.sigla;
-        });
+        var porSigla = _.values(_.groupBy(migrados, 'sigla'));
 
         // Soma índices
-        var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(partidos, somas) {
+        var mesclados = somarIndicesDosRepetidos(porSigla, function(partidos, somas) {
 
           var sigla           = partidos[0].sigla;
           var todosOsPartidos = _.flatten(_.map(partidos, function(p) { return [ p.info ].concat(p.mesclados); }));
@@ -536,18 +526,13 @@
           var info = null, mesclados = todosOsPartidos;
           if (sigla !== _this.tabelaDeReescrita.resto) {
 
-            var primeiroMapeado = _.find(_this.tabelaDeReescrita.mapear, function(config) { return config.para === sigla; });
-
-            info = _.find(todosOsPartidos, function(p) {
-              return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero;
-            });
+            var primeiroMapeado = _.find(_this.tabelaDeReescrita.mapear, 'para', sigla);
+            info = _.find(todosOsPartidos, primeiroMapeado.de);
 
             if (info != null) {
               mesclados = _.without(mesclados, info);
             } else {
-              info = _.find(Configuracao.partidos, function(p) {
-                return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero;
-              });
+              info = _.find(Configuracao.partidos, primeiroMapeado.de);
             }
           }
 
