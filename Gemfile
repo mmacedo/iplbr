@@ -3,6 +3,8 @@ ruby '2.2.2'
 
 gem 'rack'
 
+gem 'jasmine'
+
 # carga/analisa_partidos.rb
 gem 'unicode'
 
