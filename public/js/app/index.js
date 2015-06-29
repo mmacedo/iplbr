@@ -395,7 +395,7 @@
         'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
         'laranja':    [ '#f7a35c', '#edb47e' ],
         'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
-        'azul claro': [ '#7eedeb', '#7dedeb' ],
+        'azul claro': [ '#7eedeb', '#00CED1' ],
         'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
       };
 
