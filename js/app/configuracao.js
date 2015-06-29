@@ -17,13 +17,11 @@
       // Faz correções para gráficos de área
       this.ehGraficoDeArea   = false;
 
-      // Usados no método 'cor'
-      this._pilhaDeCores     = { 'verde': [], 'vermelho': [], 'laranja': [], 'azul': [], 'azul claro': [], 'roxo': [] };
-      this._coresDosPartidos = {};
-
-      // Inicia as cores de todos os partidos para evitar que sejam gerados cores diferentes toda vez
-      var _this = this; _.each(Configuracao.partidos, function(p) { _this.cor(p); });
+      // Paleta de cores
+      this.cores             = Configuracao.CORES_PADRAO;
     }
+
+    Configuracao.CORES_PADRAO = { 'verde': [ 'green' ], 'vermelho': [ 'red' ], 'laranja': [ 'orange' ], 'azul': [ 'blue' ], 'azul claro': [ 'lightblue' ], 'roxo': [ 'purple' ] };
 
     Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
     Configuracao.regiaoSudeste     = [ 'ES', 'MG', 'RJ', 'SP' ];
@@ -38,15 +36,6 @@
       Configuracao.regiaoNorte,
       Configuracao.regiaoNordeste
     ]).sort();
-
-    Configuracao.cores = {
-      'verde':      [ '#6ed854', '#a9ff97', '#00ff99' ],
-      'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
-      'laranja':    [ '#f7a35c', '#edb47e' ],
-      'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff',  ],
-      'azul claro': [ '#7eedeb', '#7dedeb' ],
-      'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
-    };
 
     Configuracao.partidosEmGrupos = {
       grandes: [
@@ -115,7 +104,7 @@
           cor:   'vermelho' },
         { sigla: 'PRP',    numero: 44, fundado: 1989,
           nome:  'Partido Republicano Progressista',
-          cor:   'azul claro' },
+          cor:   'azul' },
         { sigla: 'PSL',    numero: 17, fundado: 1994,
           nome:  'Partido Social Liberal',
           cor:   'laranja' },
@@ -127,10 +116,10 @@
           cor:   'verde' },
         { sigla: 'PSDC',   numero: 27, fundado: 1995,
           nome:  'Partido Social Democrata Cristão',
-          cor:   'azul' },
+          cor:   'azul claro' },
         { sigla: 'PTC',    numero: 36, fundado: 2000,
           nome:  'Partido Trabalhista Cristão',
-          cor:   'azul' },
+          cor:   'azul claro' },
         { sigla: 'PHS',    numero: 31, fundado: 2000,
           nome:  'Partido Humanista da Solidariedade',
           cor:   'azul' },
@@ -182,7 +171,7 @@
           cor:   'azul' },
         { sigla: 'PRN',    numero: 36, fundado: 1989, extinto: 2000, renomeado: 'PTC',
           nome:  'Partido da Reconstrução Nacional',
-          cor:   'azul' },
+          cor:   'azul claro' },
         { sigla: 'PSN',    numero: 31, fundado: 1997, extinto: 2000, renomeado: 'PHS',
           nome:  'Partido da Solidariedade Nacional',
           cor:   'azul' },
@@ -303,6 +292,9 @@
         { de: { sigla: 'PFL',    numero: 25 }, para: 'ARENA (1965)' },
         { de: { sigla: 'DEM',    numero: 25 }, para: 'ARENA (1965)' },
         { de: { sigla: 'PSD',    numero: 55 }, para: 'ARENA (1965)' },
+        { de: { sigla: 'PL',     numero: 22 }, para: 'ARENA (1965)' },
+        { de: { sigla: 'PR',     numero: 22 }, para: 'ARENA (1965)' },
+        { de: { sigla: 'PRB',    numero: 10 }, para: 'ARENA (1965)' },
         { de: { sigla: 'PMDB',   numero: 15 }, para: 'MDB (1965)' },
         { de: { sigla: 'PSDB',   numero: 45 }, para: 'MDB (1965)' },
         { de: { sigla: 'PT',     numero: 13 }, para: 'PT (1979)' },
@@ -324,26 +316,6 @@
         { de: { sigla: 'PPL',    numero: 54 }, para: 'PCB (1922)' }
       ],
       resto: 'Resto'
-    };
-
-    Configuracao.prototype.cor = function(info) {
-
-      var chave = info.sigla + info.numero.toString() + (info.extinto ? info.extinto.toString() : '');
-
-      // Se for primeira vez, acha a cor do partido
-      if (!(chave in this._coresDosPartidos)) {
-
-        // Inicia um novo loop nas variantes da cor
-        if (this._pilhaDeCores[info.cor].length === 0) {
-          this._pilhaDeCores[info.cor] = Configuracao.cores[info.cor].slice();
-        }
-
-        // Pega uma variante da cor do partido
-        this._coresDosPartidos[chave] = this._pilhaDeCores[info.cor].shift();
-
-      }
-
-      return this._coresDosPartidos[chave];
     };
 
     Configuracao.prototype.anosComIndice = function(anos, fundado, extinto, manterTodosAnos) {
@@ -380,9 +352,9 @@
 
     }
 
-    var somarIndicesDosRepetidos = function(dados, mapFunction) {
+    var somarIndicesDosRepetidos = function(agrupadosPorSigla, mapFunction) {
 
-      return _.map(dados, function(partidos) {
+      return _.map(agrupadosPorSigla, function(partidos) {
 
         if (partidos.length == 1) {
           return partidos[0];
@@ -390,7 +362,7 @@
 
         var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
 
-        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, function(linha) { return linha.ano; }));
+        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, 'ano'));
 
         var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
           return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
@@ -402,65 +374,64 @@
 
     };
 
-    Configuracao.prototype.mesclarPartidosExtintos = function(dados) {
+    Configuracao.encontraPartidoSucessor = function(partido) {
+
+      // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
+      var possiveisSucessores = _.filter(Configuracao.partidos, function(sucessor) {
+        return (
+          // O sucessor não pode ter sido extinto antes do predecessor
+          (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
+          // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
+          ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
+          // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
+           (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
+           (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
+      });
+
+      // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
+      return _.min(possiveisSucessores, 'fundado');
+
+    };
+
+    Configuracao.prototype._mesclarPartidosExtintosRecursivo = function(partidos) {
 
       var _this = this;
       var migrouUmPartido = false;
 
-      // Realiza migrações
-      var migrados = _.flatten(_.map(dados, function(partido) {
+      // Procurar partidos sucessores
+      var processados = _.map(partidos, function(partido) {
 
-        var infoDestino = partido.info;
+        // Encontra o partido sucessor se estiver configurado para mesclar
+        if (partido.info.extinto != null &&
+            ((_this.mudancasDeNome === true && partido.info.renomeado   != null) ||
+             (_this.incorporacoes  === true && partido.info.incorporado != null) ||
+             (_this.fusoes         === true && partido.info.fusao       != null))) {
 
-        // Apenas partidos extintos podem ser migrados
-        if (partido.info.extinto != null) {
+          migrouUmPartido = true;
 
-          var mesclarCom = null;
-          if (_this.mudancasDeNome === true && partido.info.renomeado != null) {
-            mesclarCom = partido.info.renomeado;
-          } else if (_this.incorporacoes === true && partido.info.incorporado != null) {
-            mesclarCom = partido.info.incorporado;
-          } else if (_this.fusoes === true && partido.info.fusao != null) {
-            mesclarCom = partido.info.fusao;
-          }
+          var sucessor = Configuracao.encontraPartidoSucessor(partido.info);
 
-          if (mesclarCom != null) {
+          return {
+            sigla:     sucessor.sigla,
+            numero:    sucessor.numero,
+            fundado:   partido.fundado,
+            extinto:   sucessor.extinto,
+            indices:   partido.indices,
+            info:      sucessor,
+            mesclados: partido.mesclados.concat([ partido.info ])
+          };
 
-            migrouUmPartido = true;
-
-            // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
-            var possiveisDestinos = _.filter(Configuracao.partidos, function(infoDestino) {
-              return (
-                (mesclarCom === infoDestino.sigla) &&
-                (infoDestino.extinto      == null                                || infoDestino.extinto >= partido.info.extinto) &&
-                (partido.info.incorporado == null                                || infoDestino.fundado <= partido.info.extinto) &&
-                ((partido.info.renomeado  == null && partido.info.fusao == null) || infoDestino.fundado >= partido.info.extinto));
-            });
-
-            // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
-            infoDestino = _.min(possiveisDestinos, 'fundado');
-
-          }
-
+        } else {
+          return partido;
         }
 
-        return {
-          sigla:     infoDestino.sigla,
-          numero:    infoDestino.numero,
-          fundado:   partido.fundado || partido.info.fundado,
-          extinto:   infoDestino.extinto,
-          indices:   partido.indices,
-          info:      infoDestino,
-          mesclados: infoDestino === partido.info ? (partido.mesclados || []) : (partido.mesclados || []).concat([ partido.info ])
-        };
-
-      }));
+      });
 
       if (migrouUmPartido === true) {
 
         // Agrupa repetidos
-        var porPartido = _.values(_.groupBy(migrados, function(partido) {
-          return partido.sigla + partido.numero + (partido.extinto || '')
+        var porPartido = _.values(_.groupBy(processados, function(partido) {
+          return partido.sigla + partido.numero + (partido.extinto || '');
         }));
 
         // Soma índices
@@ -468,7 +439,7 @@
           return {
             sigla:     lista[0].sigla,
             numero:    lista[0].numero,
-            fundado:   _.min(lista, function(p) { return p.fundado }).fundado,
+            fundado:   _.min(lista, 'fundado').fundado,
             extinto:   lista[0].extinto,
             indices:   somas,
             info:      lista[0].info,
@@ -477,63 +448,82 @@
         });
 
         // Reaplica migrações nos novos dados
-        return this.mesclarPartidosExtintos(mesclados);
+        return this._mesclarPartidosExtintosRecursivo(mesclados);
 
       }
 
-      return migrados;
+      return processados;
+    };
+
+    Configuracao.prototype.mesclarPartidosExtintos = function(dados) {
+
+      var dadosInicializados = _.map(dados, function(partido) {
+        return {
+          sigla:     partido.sigla,
+          numero:    partido.numero,
+          fundado:   partido.info.fundado,
+          extinto:   partido.info.extinto,
+          indices:   partido.indices,
+          info:      partido.info,
+          mesclados: []
+        };
+      })
+
+      return this._mesclarPartidosExtintosRecursivo(dadosInicializados);
+
     }
 
-    Configuracao.prototype.reescreverSiglas = function(dados) {
+    Configuracao.prototype.reescreverSiglas = function(partidos) {
 
       var _this = this;
 
       if (this.tabelaDeReescrita == null) {
 
-        return _.map(dados, function(partido) {
+        return _.map(partidos, function(p) {
 
-          var info = _.find(Configuracao.partidos, function(info) {
-            return partido.sigla  === info.sigla &&
-                   partido.numero === info.numero;
-          });
+          var sigla = p.info.naoEhUltimo === true ? (p.info.sigla + " (" + p.info.fundado.toString() + ")") : p.info.sigla;
 
-          var sigla = info.naoEhUltimo === true ? (info.sigla + " (" + info.fundado.toString() + ")") : info.sigla;
-
-          return { sigla: sigla, indices: partido.indices, info: partido.info, mesclados: partido.mesclados };
+          return { sigla: sigla, indices: p.indices, info: p.info, mesclados: p.mesclados };
 
         });
 
       } else {
 
         // Realiza migrações
-        var migrados = _.map(dados, function(partido) {
-          var config = _.find(_this.tabelaDeReescrita.mapear, function(config) {
-            return partido.sigla  === config.de.sigla &&
-                   partido.numero === config.de.numero;
-          });
+        var migrados = _.map(partidos, function(p) {
+          var config = _.find(_this.tabelaDeReescrita.mapear, { de: _.pick(p, [ 'sigla', 'numero' ]) });
           return {
             sigla:     config != null ? config.para : _this.tabelaDeReescrita.resto,
-            indices:   partido.indices,
-            info:      partido.info,
-            mesclados: partido.mesclados
+            indices:   p.indices,
+            info:      p.info,
+            mesclados: p.mesclados
           };
         });
 
         // Agrupa repetidos
-        var porSigla = _.groupBy(migrados, function(partido) {
-          return partido.sigla;
-        });
+        var porSigla = _.values(_.groupBy(migrados, 'sigla'));
 
         // Soma índices
-        var mesclados = somarIndicesDosRepetidos(_.values(porSigla), function(lista, somas) {
-          var sigla           = lista[0].sigla;
-          var info, mesclados;
+        var mesclados = somarIndicesDosRepetidos(porSigla, function(partidos, somas) {
+
+          var sigla           = partidos[0].sigla;
+          var todosOsPartidos = _.flatten(_.map(partidos, function(p) { return [ p.info ].concat(p.mesclados); }));
+
+          var info = null, mesclados = todosOsPartidos;
           if (sigla !== _this.tabelaDeReescrita.resto) {
-            var primeiroMapeado = _.find(_this.tabelaDeReescrita.mapear, function(config) { return config.para === sigla; });
-            var info            = _.find(Configuracao.partidos, function(p) { return p.sigla === primeiroMapeado.de.sigla && p.numero === primeiroMapeado.de.numero; });
-            var mesclados       = _.filter(_.map(lista, function(p) { return p.info; }), function(p) { return p !== info; });
+
+            var primeiroMapeado = _.find(_this.tabelaDeReescrita.mapear, 'para', sigla);
+            info = _.find(todosOsPartidos, primeiroMapeado.de);
+
+            if (info != null) {
+              mesclados = _.without(mesclados, info);
+            } else {
+              info = _.find(Configuracao.partidos, primeiroMapeado.de);
+            }
           }
-          return { sigla: lista[0].sigla, indices: somas, info: info, mesclados: mesclados };
+
+          return { sigla: sigla, indices: somas, info: info, mesclados: mesclados };
+
         });
 
         return mesclados;

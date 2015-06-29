@@ -100,12 +100,19 @@
             type: 'datetime',
             tickInterval: 2 * 24 * 3600 * 1000 * 365,
             minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
-            plotLines: [{
-              color: 'black',
-              value: Date.UTC(1988, 9, 5),
-              width: 3,
-              label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
-            }]
+            plotLines: [
+              {
+                color: 'black',
+                value: Date.UTC(1985, 1, 1),
+                width: 3,
+                label: { text: 'Nova República', style: { fontSize: 'larger' } },
+              }, {
+                color: 'black',
+                value: Date.UTC(1988, 9, 5),
+                width: 3,
+                label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+              }
+            ]
           },
           tooltip: {
             shared: true,
@@ -115,7 +122,8 @@
               var ano = new Date(this.x).getFullYear() - 1;
 
               // Não mostra tooltip para extinto
-              if (this.series.options.partido && this.series.options.partido.extinto && this.series.options.partido.extinto < ano) {
+              var partidos = _.compact([ this.series.options.partido ].concat(this.series.options.outros || []));
+              if (_.all(partidos, function(p) { return p.extinto != null; }) && _.max(partidos, 'extinto') < ano) {
                 return null;
               }
 
@@ -381,20 +389,30 @@
     $.getJSON('eleitos.json').done(function(json) {
 
       var cfg     = new Configuracao();
+
+      cfg.cores = {
+        'verde':      [ '#6ed854', '#a9ff97', '#00ff99' ],
+        'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
+        'laranja':    [ '#f7a35c', '#edb47e' ],
+        'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
+        'azul claro': [ '#7eedeb', '#00CED1' ],
+        'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
+      };
+
       var serie   = new Serie(cfg);
       var indices = new GeradorDeIndices(json);
 
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#indice_nacional', 'Índice Nacional', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceNacional());
+        criaGrafico('#indice_total', 'Índice', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceTotal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#legislativo_nacional', 'Legislativo Nacional', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoNacional());
+        criaGrafico('#legislativo_total', 'Legislativo', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoTotal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_nacional"]', function() {
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#executivo_nacional', 'Executivo Nacional', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoNacional());
+        criaGrafico('#executivo_total', 'Executivo', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoTotal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
         atualizaConfiguracao(cfg);
@@ -402,8 +420,8 @@
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#deputados_federais", 'Câmara dos Deputados', null,                                    serie, indices.camaraDosDeputados());
-        criaGrafico("#senadores",          'Senado Federal',       null,                                    serie, indices.senadoFederal());
+        criaGrafico("#deputados_federais", 'Câmara dos Deputados', null,                                    serie, indices.deputadosFederais());
+        criaGrafico("#senadores",          'Senado Federal',       null,                                    serie, indices.senadores());
         criaGrafico("#congresso_nacional", 'Congresso Nacional',   'Câmara dos Deputados + Senado Federal', serie, indices.legislativoFederal());
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
@@ -436,8 +454,8 @@
         atualizaConfiguracao(cfg, estaMostrandoApenasDf);
         criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_nacional"]', function() {
-        $('#tablist_nacional > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_total"]', function() {
+        $('#tablist_total > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
       $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
         $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
