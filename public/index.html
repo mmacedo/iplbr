@@ -64,12 +64,12 @@
 
 
       <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_metodologia">
+        <div class="panel-heading" role="tab" id="cabecalho_o_que_e">
           <h2 class="panel-title">
-            <a data-toggle="collapse" href="#panel_metodologia" aria-expanded="false" aria-controls="panel_metodologia">O que é</a>
+            <a data-toggle="collapse" href="#metodologia" aria-expanded="false" aria-controls="metodologia">O que é?</a>
           </h2>
         </div>
-        <div id="panel_metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_metodologia">
+        <div id="metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_o_que_e">
           <div class="panel-body">
             <h3>O que é</h3>
             <p>Uma tentativa de mensurar o poder de cada partido, analisando os resultados das eleições e o poder relativo de aprovar legislação de cada representante eleito.</p>
@@ -157,6 +157,45 @@ Legislativo Municipal = ⅀(Município)((Vereadores no Município ou Deputados D
 Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
 Índice = Esfera Federal / 3 + Esfera Estadual / 3 + Esfera Municipal / 3</pre>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="cabecalho_perguntas_frequentes">
+          <h2 class="panel-title">
+            <a data-toggle="collapse" href="#faq" aria-expanded="false" aria-controls="faq">Perguntas Frequentes</a>
+          </h2>
+        </div>
+        <div id="faq" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_perguntas_frequentes">
+          <div class="panel-body">
+            <h3>Por que os dados começam nas eleições de 1982?</h3>
+            <p>Essas são as primeiras eleições após a Lei da Anistia e o retorno do pluripartidarismo, embora os municípios, os territórios, o Distrito Federal, o recém-criado estado de Rondônia e o Senado Federal continuaram com representantes não-eleitos:</p>
+            <ol>
+              <li value="1985">Pela primeira vez 201 municípios puderam escolher seus prefeitos, incluindo as capitais.</li>
+              <li value="1986">O estado de Rondônia e o Distrito Federal elegeram pela primeira vez seus representantes. Em 1986 também foram substituídos os senadores biônicos de 1978.</li>
+              <li value="1988">Pela primeira vez todos os municípios puderam escolher seus representantes.</li>
+              <li value="1990">Os territórios federais de Amapá e Roraima foram elevados à estado pela Constituição de 1988 e escolheram pela primeira vez seus representantes. O Tocantins também teve sua primeira eleição, mas esse foi emancipado do estado de Goiás, que já escolhia seus representantes.</li>
+            </ol>
+            <h3>Por que o índice total é calculado só a partir das eleições 1996?</h3>
+            <p>É a primeira eleição em que há dados das eleições para todos os representantes cumprindo mandato (primeira municipal com dados).</p>
+            <h3>Por que não há dados para as eleições municipais de 1985, 1988 e 1992?</h3>
+            <p>As eleições de 1985 foram realizadas em apenas algumas cidades. Não há os dados necessários sobre as eleições de 1988 e 1992 no site do TSE.</p>
+            <h3>Por que partido X está com cor X ao invés da cor Y?</h3>
+            <p>Há várias dificuldades de utilizar as cores do partido: os partidos tem múltiplas cores, as cores não ficam bem no gráfico, as cores repetem muito entre partidos, etc. Portanto, as cores são escolhidas de forma arbritária para facilitar a compreensão do gráfico. Na maioria dos casos, as cores são tons de uma das cores do partido.</p>
+            <h3>Por que o índice federal para localidade X não é proporcional aos representantes de X?</h3>
+            <p>Os representantes do nível federal tem poderes legislativos que afetam todo o território nacional, não apenas a unidade da federação pela qual eles foram eleitos.</p>
+            <h3>Por que o número de representantes do partido X está errado na data X?</h3>
+            <p>O índice não rastreia mudanças de partido, renúncias, impeachmants, cassações, eleições complementares, etc. O número de representantes de cada partido é baseado exclusivamente no número de eleitos das eleições nacionais.</p>
+            <h3>Por que há representantes para o Distrito Federal na esfera municipal?</h3>
+            <p>Os representantes do Distrito Federal acumulam os poderes legislativos estaduais e municipais. O índice municipal para o Distrito Federal é igual ao índice estadual.</p>
+            <h3>Por que alguns indíces parecem não somar 100%?</h3>
+            <p>Há mais de um problema que pode causar isso:</p>
+            <ul>
+              <li>A lista de cidades do IBGE em suas estimativas de população difere da lista de cidades onde houve eleição. Essa lista pode diferir ainda mais quando não há estimativas de população para um ano que teve eleição e é necessário estimativas de um ano diferente.</li>
+              <li>Não está listado nenhum representante eleito para o cargo e a localidade.</li>
+            </ul>
           </div>
         </div>
       </div>
