@@ -17,13 +17,11 @@
       // Faz correções para gráficos de área
       this.ehGraficoDeArea   = false;
 
-      // Usados no método 'cor'
-      this._pilhaDeCores     = { 'verde': [], 'vermelho': [], 'laranja': [], 'azul': [], 'azul claro': [], 'roxo': [] };
-      this._coresDosPartidos = {};
-
-      // Inicia as cores de todos os partidos para evitar que sejam gerados cores diferentes toda vez
-      var _this = this; _.each(Configuracao.partidos, function(p) { _this.cor(p); });
+      // Paleta de cores
+      this.cores             = Configuracao.CORES_PADRAO;
     }
+
+    Configuracao.CORES_PADRAO = { 'verde': [ 'green' ], 'vermelho': [ 'red' ], 'laranja': [ 'orange' ], 'azul': [ 'blue' ], 'azul claro': [ 'lightblue' ], 'roxo': [ 'purple' ] };
 
     Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
     Configuracao.regiaoSudeste     = [ 'ES', 'MG', 'RJ', 'SP' ];
@@ -38,15 +36,6 @@
       Configuracao.regiaoNorte,
       Configuracao.regiaoNordeste
     ]).sort();
-
-    Configuracao.cores = {
-      'verde':      [ '#6ed854', '#a9ff97', '#00ff99' ],
-      'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
-      'laranja':    [ '#f7a35c', '#edb47e' ],
-      'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff',  ],
-      'azul claro': [ '#7eedeb', '#7dedeb' ],
-      'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
-    };
 
     Configuracao.partidosEmGrupos = {
       grandes: [
@@ -327,26 +316,6 @@
         { de: { sigla: 'PPL',    numero: 54 }, para: 'PCB (1922)' }
       ],
       resto: 'Resto'
-    };
-
-    Configuracao.prototype.cor = function(info) {
-
-      var chave = info.sigla + info.numero.toString() + (info.extinto ? info.extinto.toString() : '');
-
-      // Se for primeira vez, acha a cor do partido
-      if (!(chave in this._coresDosPartidos)) {
-
-        // Inicia um novo loop nas variantes da cor
-        if (this._pilhaDeCores[info.cor].length === 0) {
-          this._pilhaDeCores[info.cor] = Configuracao.cores[info.cor].slice();
-        }
-
-        // Pega uma variante da cor do partido
-        this._coresDosPartidos[chave] = this._pilhaDeCores[info.cor].shift();
-
-      }
-
-      return this._coresDosPartidos[chave];
     };
 
     Configuracao.prototype.anosComIndice = function(anos, fundado, extinto, manterTodosAnos) {

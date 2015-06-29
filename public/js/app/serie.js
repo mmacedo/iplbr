@@ -2,10 +2,51 @@
 
 (function(_) {
 
+  window.GerenciadorDeCores = (function() {
+
+    function GerenciadorDeCores(cores) {
+      this.cores             = cores;
+      this._pilhaDeCores     = {};
+      this._coresDosPartidos = {};
+    }
+
+    GerenciadorDeCores.prototype.cor = function(partido) {
+
+      var chave = partido.sigla + partido.numero.toString() + '_' + partido.fundado.toString();
+
+      // Se for primeira vez, acha a cor do partido
+      if (!(chave in this._coresDosPartidos)) {
+
+        // Inicia uma nova pilha de cores
+        if (!(partido.cor in this._pilhaDeCores)) {
+          this._pilhaDeCores[partido.cor] = [];
+        }
+
+        // Inicia um novo loop nas variantes da cor
+        if (this._pilhaDeCores[partido.cor].length === 0) {
+          this._pilhaDeCores[partido.cor] = this.cores[partido.cor].slice();
+        }
+
+        // Pega uma variante da cor do partido
+        this._coresDosPartidos[chave] = this._pilhaDeCores[partido.cor].shift();
+
+      }
+
+      return this._coresDosPartidos[chave];
+    };
+
+    return GerenciadorDeCores;
+
+  })();
+
   window.Serie = (function() {
 
     function Serie(configuracao) {
       this.configuracao = configuracao;
+      this.cores        = new GerenciadorDeCores(configuracao.cores);
+
+      // Inicia as cores de todos os partidos para evitar que sejam gerados cores diferentes toda vez
+      _.each(Configuracao.partidos, _.bind(this.cores.cor, this.cores));
     }
 
     Serie.prototype.geraIndices = function(indice, anos, ufs) {
@@ -98,7 +139,7 @@
           // Substitui null por 0 para mostrar resto em todos os anos
           serie.data = _.map(serie.data, function(ponto) { return { x: ponto.x, y: ponto.y || 0.0 } });
         } else {
-          serie.color = _this.configuracao.cor(linha.info);
+          serie.color = _this.cores.cor(linha.info);
         }
 
         return serie;
@@ -149,7 +190,7 @@
         if (_this.configuracao.tabelaDeReescrita != null && linha.sigla === _this.configuracao.tabelaDeReescrita.resto) {
           serie.color = '#333';
         } else {
-          serie.color = _this.configuracao.cor(linha.info);
+          serie.color = _this.cores.cor(linha.info);
         }
 
         return serie;

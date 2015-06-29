@@ -12,6 +12,7 @@
 #
 src_files:
   - js/lodash.min.js
+  - js/app/serie.js
 
 # stylesheets
 #
