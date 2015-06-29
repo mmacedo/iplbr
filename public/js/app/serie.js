@@ -17,18 +17,25 @@
       // Se for primeira vez, acha a cor do partido
       if (!(chave in this._coresDosPartidos)) {
 
-        // Inicia uma nova pilha de cores
-        if (!(partido.cor in this._pilhaDeCores)) {
-          this._pilhaDeCores[partido.cor] = [];
-        }
+        // Mantém a mesma cor se o partido foi renomeado
+        if (partido.renomeado != null) {
+          var sucessor = Configuracao.encontraPartidoSucessor(partido);
+          this._coresDosPartidos[chave] = this.cor(sucessor);
+        } else {
 
-        // Inicia um novo loop nas variantes da cor
-        if (this._pilhaDeCores[partido.cor].length === 0) {
-          this._pilhaDeCores[partido.cor] = this.cores[partido.cor].slice();
-        }
+          // Inicia uma nova pilha de cores
+          if (!(partido.cor in this._pilhaDeCores)) {
+            this._pilhaDeCores[partido.cor] = [];
+          }
 
-        // Pega uma variante da cor do partido
-        this._coresDosPartidos[chave] = this._pilhaDeCores[partido.cor].shift();
+          // Inicia um novo loop nas variantes da cor
+          if (this._pilhaDeCores[partido.cor].length === 0) {
+            this._pilhaDeCores[partido.cor] = this.cores[partido.cor].slice();
+          }
+
+          // Pega uma variante da cor do partido
+          this._coresDosPartidos[chave] = this._pilhaDeCores[partido.cor].shift();
+        }
 
       }
 

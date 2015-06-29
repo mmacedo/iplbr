@@ -59,4 +59,21 @@ describe("GerenciadorDeCores", function() {
 
   });
 
+  it("deve retornar a mesma cor para partido renomeado", function() {
+
+    var partido1 = _.assign(this.a, { cor: 'vermelho', fundado: 1979, extinto: 1980, renomeado: 'B' });
+    var partido2 = _.assign(this.b, { cor: 'vermelho', fundado: 1980, extinto: 1981, renomeado: 'C' });
+    var partido3 = _.assign(this.c, { cor: 'vermelho', fundado: 1981 });
+    Configuracao.partidos = [ partido1, partido2, partido3 ];
+
+    var paleta = { 'vermelho': [ 'crimson', 'tomato' ] };
+    var gerenciadorDeCores = new GerenciadorDeCores(paleta);
+
+    expect(gerenciadorDeCores.cor(partido1)).toEqual('crimson');
+    expect(gerenciadorDeCores.cor(partido2)).toEqual('crimson');
+    expect(gerenciadorDeCores.cor(partido3)).toEqual('crimson');
+
+  });
+
+
 });
