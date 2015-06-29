@@ -65,9 +65,16 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 
 Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/), com suporte para IE 8.
 
+### Testes
+
+Testado com a última versão de [Jasmine](http://jasmine.github.io/) instalado via [gem](https://github.com/jasmine/jasmine-gem):
+
+1. Instale o site com `bundle install`.
+2. Rode os testes com `rake jasmine:ci`.
+
 ### Desenvolvimento
 
-Servido localmente última versão do [MRI (Ruby)](https://www.ruby-lang.org/) e [rack](https://rack.github.io/) (ver `Gemfile` e `config.ru`):
+Servido localmente com as últimas versões de [MRI (Ruby)](https://www.ruby-lang.org/) e [rack](https://rack.github.io/) (ver `Gemfile` e `config.ru`):
 
 1. Instale o site com `bundle install`.
 2. Rode o servidor com `bundle exec rackup`.
@@ -91,3 +98,7 @@ Para criar o branch `gh-pages` no github, execute o seguinte no bash dentro do d
     popd
 
 Para publicar, guarde as alterações não comitadas no stash e execute `./publish_to_github.sh`.
+
+## Extra
+
+Execute `./conta_linhas.sh` para enumerar todos os arquivos mantidos manualmente com contagem de linhas e caracteres (ver `wc`).
