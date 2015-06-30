@@ -1,4 +1,6 @@
-"use strict";
+/* globals _, GerenciadorDeCores, Configuracao */
+
+'use strict';
 
 describe("GerenciadorDeCores", function() {
 

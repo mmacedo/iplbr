@@ -1,6 +1,8 @@
-"use strict";
+/* jshint browser: true */
+/* globals _, jQuery, Highcharts, Configuracao, Serie, GeradorDeIndices */
 
 (function($, _, Highcharts) {
+  'use strict';
 
   Highcharts.setOptions({
     lang: {
@@ -128,11 +130,11 @@
               }
 
               var indice;
-              if (this.y == 0) {
+              if (this.y === 0) {
                 indice = '0';
               } else {
                 var arredondado = Math.round10(this.y, 2);
-                if (arredondado == 0) {
+                if (arredondado === 0) {
                   indice = '< 0.01';
                 } else {
                   indice = arredondado.toFixed(2);
@@ -356,12 +358,12 @@
         $('#passos')
           .prop('disabled', true)
           .closest('.checkbox')
-          .addClass('disabled')
+          .addClass('disabled');
       } else {
         $('#passos')
           .prop('disabled', false)
           .closest('.checkbox')
-          .removeClass('disabled')
+          .removeClass('disabled');
       }
     });
 
@@ -378,7 +380,7 @@
     });
 
     // Redesenha gráficos que estavam em elementos escondidos
-    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function() {
       var panel_id = $(this).attr('aria-controls');
       $("#" + panel_id + " [data-highcharts-chart]").each(function() {
         $(this).highcharts().redraw();

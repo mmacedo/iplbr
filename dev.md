@@ -65,6 +65,13 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 
 Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/), com suporte para IE 8.
 
+### Lint
+
+Código-fonte verificado com [bootlint](https://github.com/twbs/bootlint) e [jshint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`):
+
+1. Instale os linters com `npm install -g bootlint jshint`.
+2. Execute `./verifica.sh` para rodar os linters nos arquivos relevantes.
+
 ### Testes
 
 Testado com a última versão de [Jasmine](http://jasmine.github.io/) instalado via [gem](https://github.com/jasmine/jasmine-gem):

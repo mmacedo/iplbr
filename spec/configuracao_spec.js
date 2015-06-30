@@ -1,4 +1,6 @@
-"use strict";
+/* global _, Configuracao */
+
+'use strict';
 
 describe("Configuracao - métodos estáticos", function() {
 

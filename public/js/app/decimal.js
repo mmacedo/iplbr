@@ -1,6 +1,5 @@
-"use strict";
-
 (function() {
+  'use strict';
 
   // Copied from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
 
@@ -18,7 +17,7 @@
       return Math[type](value);
     }
     value = +value;
-    exp = +exp;
+    exp   = +exp;
     // If the value is not a number or the exp is not an integer...
     if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
       return NaN;
@@ -32,21 +31,15 @@
   }
 
   // Decimal round
-  if (!Math.round10) {
-    Math.round10 = function(value, exp) {
-      return decimalAdjust('round', value, exp == null ? 0 : -exp);
-    };
-  }
+  Math.round10 = function(value, exp) {
+    return decimalAdjust('round', value, exp == null ? 0 : -exp);
+  };
   // Decimal floor
-  if (!Math.floor10) {
-    Math.floor10 = function(value, exp) {
-      return decimalAdjust('floor', value, exp == null ? 0 : -exp);
-    };
-  }
+  Math.floor10 = function(value, exp) {
+    return decimalAdjust('floor', value, exp == null ? 0 : -exp);
+  };
   // Decimal ceil
-  if (!Math.ceil10) {
-    Math.ceil10 = function(value, exp) {
-      return decimalAdjust('ceil', value, exp == null ? 0 : -exp);
-    };
-  }
+  Math.ceil10 = function(value, exp) {
+    return decimalAdjust('ceil', value, exp == null ? 0 : -exp);
+  };
 })();
