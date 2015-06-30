@@ -293,8 +293,8 @@
         $('#configuracao_todos').trigger('click');
         $('#mudancas_de_nome').prop('checked', true);
         $('#incorporacoes, #fusoes').prop('checked', false);
-        adicionaHistoria();
       });
+      adicionaHistoria();
       return false;
     });
 
