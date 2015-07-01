@@ -2,11 +2,11 @@
 
 'use strict';
 
-describe("Configuracao - métodos estáticos", function() {
+describe('Configuracao - métodos estáticos', function() {
 
-  describe(".encontraPartidoSucessor", function() {
+  describe('.encontraPartidoSucessor', function() {
 
-    it("deve retornar sucessor se foi incorporado", function() {
+    it('deve retornar sucessor se foi incorporado', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       Configuracao.partidos = [ a, b ];
@@ -16,7 +16,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b);
     });
 
-    it("não deve retornar sucessor com mesma sigla, mas fundado após a incorporação", function() {
+    it('não deve retornar sucessor com mesma sigla, mas fundado após a incorporação', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b_apos  = { sigla: 'B', numero: 21, fundado: 2014 };
       var b_antes = { sigla: 'B', numero: 22, fundado: 1979 };
@@ -27,7 +27,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b_antes);
     });
 
-    it("deve retornar sucessor se foi renomeado", function() {
+    it('deve retornar sucessor se foi renomeado', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, renomeado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       Configuracao.partidos = [ a, b ];
@@ -37,7 +37,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b);
     });
 
-    it("não deve retornar sucessor com mesma sigla, mas fundado antes da mudança de nome", function() {
+    it('não deve retornar sucessor com mesma sigla, mas fundado antes da mudança de nome', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, renomeado: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
@@ -48,7 +48,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b_apos);
     });
 
-    it("deve retornar sucessor se foi fundido", function() {
+    it('deve retornar sucessor se foi fundido', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, fusao: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       Configuracao.partidos = [ a, b ];
@@ -58,7 +58,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b);
     });
 
-    it("não deve retornar sucessor com mesma sigla, mas fundado antes da fusão", function() {
+    it('não deve retornar sucessor com mesma sigla, mas fundado antes da fusão', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, fusao: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
@@ -69,7 +69,7 @@ describe("Configuracao - métodos estáticos", function() {
       expect(resultado).toBe(b_apos);
     });
 
-    it("não deve retornar sucessor com mesma sigla, mas extinto antes do predecessor", function() {
+    it('não deve retornar sucessor com mesma sigla, mas extinto antes do predecessor', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979, extinto: 2010 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 1979, extinto: 2014 };
@@ -84,27 +84,26 @@ describe("Configuracao - métodos estáticos", function() {
 
 });
 
-describe("Configuracao", function() {
+describe('Configuracao', function() {
   beforeEach(function() {
     this.configuracao = new Configuracao();
   });
 
-  describe("#mesclarPartidosExtintos", function() {
+  describe('#mesclarPartidosExtintos', function() {
 
     function geraInput(partido, indices) {
       return { sigla: partido.sigla, numero: partido.numero, info: partido, indices: indices || [] };
     }
 
     function geraOutputInalterado(input) {
-      return _.assign(input, {
+      return _.assign(_.cloneDeep(input), {
         fundado:   input.info.fundado,
         extinto:   input.info.extinto,
-        mesclados: [],
-        indices:   input.indices
+        mesclados: []
       });
     }
 
-    it("deve retornar inalterado se não tem sucessor", function() {
+    it('deve retornar inalterado se não tem sucessor', function() {
       _.set(this.configuracao, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
 
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012 };
@@ -120,7 +119,7 @@ describe("Configuracao", function() {
       expect(resultado).toEqualIgnoringNulls(esperado);
     });
 
-    it("deve mesclar se estiver configurado para mesclar", function() {
+    it('deve mesclar se estiver configurado para mesclar', function() {
       this.configuracao.incorporacoes = true;
 
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
@@ -137,7 +136,7 @@ describe("Configuracao", function() {
       expect(Configuracao.encontraPartidoSucessor).toHaveBeenCalled();
     });
 
-    it("não deve mesclar se não estiver configurado para mesclar", function() {
+    it('não deve mesclar se não estiver configurado para mesclar', function() {
       this.configuracao.incorporacoes = false;
 
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
@@ -152,7 +151,7 @@ describe("Configuracao", function() {
       expect(_.find(resultado, _.pick(a, [ 'sigla', 'numero' ]))).toBeTruthy();
     });
 
-    it("deve manter a data de fundação do mais antigo e data de extinção do último", function() {
+    it('deve manter a data de fundação do mais antigo e data de extinção do último', function() {
       _.set(this.configuracao, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
 
       var a = { sigla: 'A', numero: 1, fundado: 1980, extinto: 1981, incorporado: 'B' };
@@ -171,7 +170,7 @@ describe("Configuracao", function() {
       expect(resultado[0].extinto).toEqual(1984);
     });
 
-    it("deve somar os índices", function() {
+    it('deve somar os índices', function() {
       _.set(this.configuracao, { incorporacoes: true, fusoes: true });
 
       var a = { sigla: 'A', numero: 1, fundado: 2002, extinto: 2006, fusao: 'C' };
@@ -180,6 +179,7 @@ describe("Configuracao", function() {
       var d = { sigla: 'D', numero: 4, fundado: 2006, extinto: 2014 };
       Configuracao.partidos = [ a, b, c, d ];
 
+      // jscs:disable maximumLineLength
       var dados = [
         geraInput(a, [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 1 } ]),
         geraInput(b, [                           { ano: 2006, indice: 2 } ]),
@@ -188,6 +188,7 @@ describe("Configuracao", function() {
       ];
 
       var esperado = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 7 }, { ano: 2010, indice: 3 }, { ano: 2014, indice: 1 } ];
+      // jscs:enable maximumLineLength
 
       var resultado = this.configuracao.mesclarPartidosExtintos(dados);
 

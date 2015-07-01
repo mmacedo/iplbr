@@ -20,7 +20,14 @@
     this.cores             = Configuracao.CORES_PADRAO;
   }
 
-  Configuracao.CORES_PADRAO = { 'verde': [ 'green' ], 'vermelho': [ 'red' ], 'laranja': [ 'orange' ], 'azul': [ 'blue' ], 'azul claro': [ 'lightblue' ], 'roxo': [ 'purple' ] };
+  Configuracao.CORES_PADRAO = {
+    verde:        [ 'green' ],
+    vermelho:     [ 'red' ],
+    laranja:      [ 'orange' ],
+    azul:         [ 'blue' ],
+    'azul claro': [ 'lightblue' ],
+    roxo:         [ 'purple' ]
+  };
 
   Configuracao.regiaoSul         = [ 'PR', 'RS', 'SC' ];
   Configuracao.regiaoSudeste     = [ 'ES', 'MG', 'RJ', 'SP' ];
@@ -144,100 +151,130 @@
         cor:   'verde' },
     ],
     mudancas_de_nome: [
-      { sigla: 'PJ',     numero: 36, fundado: 1985, extinto: 1989, renomeado: 'PRN',
+      { sigla: 'PJ',     numero: 36, fundado: 1985,
+        extinto: 1989, renomeado: 'PRN',
         nome:  'Partido da Juventude',
         cor:   'azul' },
-      { sigla: 'PNT',    numero: 67, fundado: 1990, extinto: 1991, renomeado: 'PNTB',
+      { sigla: 'PNT',    numero: 67, fundado: 1990,
+        extinto: 1991, renomeado: 'PNTB',
         nome:  'Partido Nacionalista dos Trabalhadores',
         cor:   'verde' },
-      { sigla: 'PCB',    numero: 23, fundado: 1986, extinto: 1992, renomeado: 'PPS', naoEhUltimo: true,
+      { sigla: 'PCB',    numero: 23, fundado: 1986,
+        extinto: 1992, renomeado: 'PPS', naoEhUltimo: true,
         nome:  'Partido Comunista Brasileiro',
         cor:   'vermelho' },
-      { sigla: 'PTR',    numero: 28, fundado: 1985, extinto: 1993, renomeado: 'PP',
+      { sigla: 'PTR',    numero: 28, fundado: 1985,
+        extinto: 1993, renomeado: 'PP',
         nome:  'Partido Trabalhista Renovador',
         cor:   'azul' },
-      { sigla: 'PRT',    numero: 16, fundado: 1992, extinto: 1993, renomeado: 'PSTU',
+      { sigla: 'PRT',    numero: 16, fundado: 1992,
+        extinto: 1993, renomeado: 'PSTU',
         nome:  'Partido Revolucionário dos Trabalhadores',
         cor:   'vermelho' },
-      { sigla: 'PTRB',   numero: 17, fundado: 1993, extinto: 1995, renomeado: 'PRTB',
+      { sigla: 'PTRB',   numero: 17, fundado: 1993,
+        extinto: 1995, renomeado: 'PRTB',
         nome:  'Partido Trabalhista Renovador Brasileiro',
         cor:   'verde' },
-      { sigla: 'PDC',    numero: 27, fundado: 1995, extinto: 1995, renomeado: 'PSDC',
+      { sigla: 'PDC',    numero: 27, fundado: 1995,
+        extinto: 1995, renomeado: 'PSDC',
         nome:  'Partido Democrata Cristão',
         cor:   'azul' },
-      { sigla: 'PSN',    numero: 31, fundado: 1995, extinto: 1997, renomeado: 'PSN',
+      { sigla: 'PSN',    numero: 31, fundado: 1995,
+        extinto: 1997, renomeado: 'PSN',
         nome:  'Partido Solidarista Nacional',
         cor:   'azul' },
-      { sigla: 'PRN',    numero: 36, fundado: 1989, extinto: 2000, renomeado: 'PTC',
+      { sigla: 'PRN',    numero: 36, fundado: 1989,
+        extinto: 2000, renomeado: 'PTC',
         nome:  'Partido da Reconstrução Nacional',
         cor:   'azul claro' },
-      { sigla: 'PSN',    numero: 31, fundado: 1997, extinto: 2000, renomeado: 'PHS',
+      { sigla: 'PSN',    numero: 31, fundado: 1997,
+        extinto: 2000, renomeado: 'PHS',
         nome:  'Partido da Solidariedade Nacional',
         cor:   'azul' },
-      { sigla: 'PPB',    numero: 11, fundado: 1995, extinto: 2003, renomeado: 'PP',
+      { sigla: 'PPB',    numero: 11, fundado: 1995,
+        extinto: 2003, renomeado: 'PP',
         nome:  'Partido Progressista Brasileiro',
         cor:   'azul' },
-      { sigla: 'PFL',    numero: 25, fundado: 1985, extinto: 2007, renomeado: 'DEM',
+      { sigla: 'PFL',    numero: 25, fundado: 1985,
+        extinto: 2007, renomeado: 'DEM',
         nome:  'Partido da Frente Liberal',
         cor:   'azul claro' },
     ],
     incorporacoes: [
-      { sigla: 'PASART', numero: 30, fundado: 1985, extinto: 1990, incorporado: 'PTdoB',
+      { sigla: 'PASART', numero: 30, fundado: 1985,
+        extinto: 1990, incorporado: 'PTdoB',
         nome:  'Partido Socialista Agrário Renovador Trabalhista',
         cor:   'azul claro' },
-      { sigla: 'PCN',    numero: 31, fundado: 1988, extinto: 1992, incorporado: 'PDT',
+      { sigla: 'PCN',    numero: 31, fundado: 1988,
+        extinto: 1992, incorporado: 'PDT',
         nome:  'Partido Comunitário Nacional',
         cor:   'vermelho' },
-      { sigla: 'PNTB',   numero: 81, fundado: 1991, extinto: 1993, incorporado: 'PTdoB',
+      { sigla: 'PNTB',   numero: 81, fundado: 1991,
+        extinto: 1993, incorporado: 'PTdoB',
         nome:  'Partido Nacionalista dos Trabalhadores Brasileiros',
         cor:   'verde' },
-      { sigla: 'PST',    numero: 52, fundado: 1989, extinto: 1993, incorporado: 'PTR', naoEhUltimo: true,
+      { sigla: 'PST',    numero: 52, fundado: 1989,
+        extinto: 1993, incorporado: 'PTR', naoEhUltimo: true,
         nome:  'Partido Social Trabalhista',
         cor:   'azul' },
-      { sigla: 'PSD',    numero: 41, fundado: 1987, extinto: 2003, incorporado: 'PTB', naoEhUltimo: true,
+      { sigla: 'PSD',    numero: 41, fundado: 1987,
+        extinto: 2003, incorporado: 'PTB', naoEhUltimo: true,
         nome:  'Partido Social Democrático',
         cor:   'laranja' },
-      { sigla: 'PGT',    numero: 30, fundado: 1995, extinto: 2003, incorporado: 'PL',
+      { sigla: 'PGT',    numero: 30, fundado: 1995,
+        extinto: 2003, incorporado: 'PL',
         nome:  'Partido Geral dos Trabalhadores',
         cor:   'roxo' },
-      { sigla: 'PST',    numero: 18, fundado: 1996, extinto: 2003, incorporado: 'PL',
+      { sigla: 'PST',    numero: 18, fundado: 1996,
+        extinto: 2003, incorporado: 'PL',
         nome:  'Partido Social Trabalhista',
         cor:   'roxo' },
-      { sigla: 'PAN',    numero: 26, fundado: 1998, extinto: 2006, incorporado: 'PTB',
+      { sigla: 'PAN',    numero: 26, fundado: 1998,
+        extinto: 2006, incorporado: 'PTB',
         nome:  'Partido dos Aposentados da Nação',
         cor:   'laranja' },
     ],
     fusoes: [
-      { sigla: 'PDS',    numero: 11, fundado: 1980, extinto: 1993, fusao: 'PPR',
+      { sigla: 'PDS',    numero: 11, fundado: 1980,
+        extinto: 1993, fusao: 'PPR',
         nome:  'Partido Democrático Social',
         cor:   'azul' },
-      { sigla: 'PDC',    numero: 17, fundado: 1985, extinto: 1993, fusao: 'PPR',
+      { sigla: 'PDC',    numero: 17, fundado: 1985,
+        extinto: 1993, fusao: 'PPR',
         nome:  'Partido Democrata Cristão',
         cor:   'azul' },
-      { sigla: 'PP',     numero: 39, fundado: 1993, extinto: 1995, fusao: 'PPB', naoEhUltimo: true,
+      { sigla: 'PP',     numero: 39, fundado: 1993,
+        extinto: 1995, fusao: 'PPB', naoEhUltimo: true,
         nome:  'Partido Progressista',
         cor:   'azul' },
-      { sigla: 'PPR',    numero: 11, fundado: 1993, extinto: 1995, fusao: 'PPB',
+      { sigla: 'PPR',    numero: 11, fundado: 1993,
+        extinto: 1995, fusao: 'PPB',
         nome:  'Partido Progressista Reformador',
         cor:   'azul' },
-      { sigla: 'PL',     numero: 22, fundado: 1985, extinto: 2006, fusao: 'PR',
+      { sigla: 'PL',     numero: 22, fundado: 1985,
+        extinto: 2006, fusao: 'PR',
         nome:  'Partido Liberal',
         cor:   'azul' },
-      { sigla: 'PRONA',  numero: 56, fundado: 1989, extinto: 2006, fusao: 'PR',
+      { sigla: 'PRONA',  numero: 56, fundado: 1989,
+        extinto: 2006, fusao: 'PR',
         nome:  'Partido de Reedificação da Ordem Nacional',
         cor:   'azul' },
     ],
     extintos: [
-      { sigla: 'PMB',    numero: 26, fundado: 1985, extinto: 1989,
+      { sigla: 'PMB',    numero: 26, fundado: 1985,
+        extinto: 1989,
         nome:  'Partido Municipalista Brasileiro',
         cor:   'verde' },
-      { sigla: 'PTN',    numero: 21, fundado: 1986, extinto: 1986, naoEhUltimo: true,
+      { sigla: 'PTN',    numero: 21, fundado: 1986,
+        extinto: 1986, naoEhUltimo: true,
         nome:  'Partido Trabalhista Nacional',
         cor:   'laranja' },
-      { sigla: 'PSL',    numero: 59, fundado: 1989, extinto: 1992, naoEhUltimo: true,
+      { sigla: 'PSL',    numero: 59, fundado: 1989,
+        extinto: 1992, naoEhUltimo: true,
         nome:  'Partido do Solidarismo Libertador',
         cor:   'azul' },
-      { sigla: 'PRS',    numero: 71, fundado: 1990, extinto: 1992,
+      { sigla: 'PRS',    numero: 71, fundado: 1990,
+        extinto: 1992,
         nome:  'Partido das Reformas Sociais',
         cor:   'roxo' },
     ],
@@ -317,217 +354,229 @@
     resto: 'Resto'
   };
 
-  Configuracao.prototype.anosComIndice = function(todosOsAnos, fundado, extinto, manterTodosAnos) {
+  _.extend(Configuracao, {
 
-    // Se o partido não aparece no gráfico (pode aparecer se foi extinto antes)
-    if (fundado > _.max(todosOsAnos)) {
-      return [];
-    }
+    somarIndicesDosRepetidos: function(agrupadosPorSigla, mapFunction) {
 
-    var anos = todosOsAnos.slice();
+      return _.map(agrupadosPorSigla, function(partidos) {
 
-    // Adiciona um ano depois da última eleição para o último passo ficar visível
-    if (this.ehGraficoEmPassos === true) {
-      anos.push(_.max(anos) + 1);
-    }
-
-    // No gráfico de área, se começar com null ao invés de zero, a área não é preenchida
-    if (this.ehGraficoDeArea === true) {
-      return anos;
-    }
-
-    // Remove anos antes da fundação
-    if (manterTodosAnos === false && (fundado - 1) > _.min(anos)) {
-      anos = _.filter(anos, function(ano) { return ano >= fundado; });
-    }
-
-    // Remove anos depois da dissolução
-    if (manterTodosAnos === false && extinto != null) {
-      anos = _.filter(anos, function(ano) { return ano <= extinto; });
-    }
-
-    return anos;
-  };
-
-  var somarIndicesDosRepetidos = function(agrupadosPorSigla, mapFunction) {
-
-    return _.map(agrupadosPorSigla, function(partidos) {
-
-      if (partidos.length === 1) {
-        return partidos[0];
-      }
-
-      var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
-
-      var linhasPorAno = _.values(_.groupBy(todasAsLinhas, 'ano'));
-
-      var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
-        return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
-      });
-
-      return mapFunction(partidos, somasDosIndicesPorAno);
-
-    });
-
-  };
-
-  Configuracao.encontraPartidoSucessor = function(partido) {
-
-    // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
-    var possiveisSucessores = _.filter(Configuracao.partidos, function(sucessor) {
-      return (
-        // O sucessor não pode ter sido extinto antes do predecessor
-        (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
-        // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
-        ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
-        // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
-         (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
-         (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
-    });
-
-    // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
-    return _.min(possiveisSucessores, 'fundado');
-
-  };
-
-  Configuracao.prototype._mesclarPartidosExtintosRecursivo = function(partidos) {
-
-    var _this = this;
-    var migrouUmPartido = false;
-
-    // Procurar partidos sucessores
-    var processados = _.map(partidos, function(partido) {
-
-      // Encontra o partido sucessor se estiver configurado para mesclar
-      if (partido.info.extinto != null &&
-          ((_this.mudancasDeNome === true && partido.info.renomeado   != null) ||
-           (_this.incorporacoes  === true && partido.info.incorporado != null) ||
-           (_this.fusoes         === true && partido.info.fusao       != null))) {
-
-        migrouUmPartido = true;
-
-        var sucessor = Configuracao.encontraPartidoSucessor(partido.info);
-
-        return {
-          sigla:     sucessor.sigla,
-          numero:    sucessor.numero,
-          fundado:   partido.fundado,
-          extinto:   sucessor.extinto,
-          indices:   partido.indices,
-          info:      sucessor,
-          mesclados: partido.mesclados.concat([ partido.info ])
-        };
-
-      } else {
-        return partido;
-      }
-
-    });
-
-    if (migrouUmPartido === true) {
-
-      // Agrupa repetidos
-      var porPartido = _.values(_.groupBy(processados, function(partido) {
-        return partido.sigla + partido.numero + (partido.extinto || '');
-      }));
-
-      // Soma índices
-      var mesclados = somarIndicesDosRepetidos(porPartido, function(lista, somas) {
-        return {
-          sigla:     lista[0].sigla,
-          numero:    lista[0].numero,
-          fundado:   _.min(lista, 'fundado').fundado,
-          extinto:   lista[0].extinto,
-          indices:   somas,
-          info:      lista[0].info,
-          mesclados: lista[0].mesclados
-        };
-      });
-
-      // Reaplica migrações nos novos dados
-      return this._mesclarPartidosExtintosRecursivo(mesclados);
-
-    }
-
-    return processados;
-  };
-
-  Configuracao.prototype.mesclarPartidosExtintos = function(dados) {
-
-    var dadosInicializados = _.map(dados, function(partido) {
-      return {
-        sigla:     partido.sigla,
-        numero:    partido.numero,
-        fundado:   partido.info.fundado,
-        extinto:   partido.info.extinto,
-        indices:   partido.indices,
-        info:      partido.info,
-        mesclados: []
-      };
-    });
-
-    return this._mesclarPartidosExtintosRecursivo(dadosInicializados);
-
-  };
-
-  Configuracao.prototype.reescreverSiglas = function(partidos) {
-
-    var tabela = this.tabelaDeReescrita;
-
-    if (tabela == null) {
-      return _.map(partidos, function(p) {
-        // Desambígua siglas com mesmo nome
-        var siglaDesambiguada = p.info.naoEhUltimo === true ?
-          (p.info.sigla + " (" + p.info.fundado.toString() + ")") :
-          p.info.sigla;
-        return _.assign({}, p, { sigla: siglaDesambiguada });
-      });
-    } else {
-
-      // Realiza migrações
-      var migrados = _.map(partidos, function(p) {
-        var config = _.find(tabela.mapear, { de: _.pick(p, [ 'sigla', 'numero' ]) });
-        return _.assign({}, p, { sigla: config != null ? config.para : tabela.resto });
-      });
-
-      // Agrupa repetidos
-      var porSigla = _.values(_.groupBy(migrados, 'sigla'));
-
-      // Soma índices
-      var mesclados = somarIndicesDosRepetidos(porSigla, function(partidos, somas) {
-
-        var sigla           = partidos[0].sigla;
-        var todosOsPartidos = _.flatten(_.map(partidos, function(p) { return [ p.info ].concat(p.mesclados); }));
-
-        var info = null, mesclados = todosOsPartidos;
-        if (sigla !== tabela.resto) {
-
-          var primeiroMapeado = _.find(tabela.mapear, 'para', sigla);
-          info = _.find(todosOsPartidos, primeiroMapeado.de);
-
-          if (info != null) {
-            mesclados = _.without(mesclados, info);
-          } else {
-            info = _.find(Configuracao.partidos, primeiroMapeado.de);
-          }
+        if (partidos.length === 1) {
+          return partidos[0];
         }
 
-        return {
-          sigla:     sigla,
-          fundado:   _.min(partidos, 'fundado'),
-          extinto:   _.all(partidos, 'extinto') ? _.max(partidos, 'extinto') : null,
-          indices:   somas,
-          info:      info,
-          mesclados: mesclados
-        };
+        var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
+
+        var linhasPorAno = _.values(_.groupBy(todasAsLinhas, 'ano'));
+
+        var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
+          return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
+        });
+
+        return mapFunction(partidos, somasDosIndicesPorAno);
 
       });
 
-      return mesclados;
+    },
 
-    }
+    encontraPartidoSucessor: function(partido) {
 
-  };
+      // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
+      var possiveisSucessores = _.filter(Configuracao.partidos, function(sucessor) {
+        return (
+          // O sucessor não pode ter sido extinto antes do predecessor
+          (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
+          // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
+          ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
+          // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
+           (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
+           (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
+      });
+
+      // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
+      return _.min(possiveisSucessores, 'fundado');
+
+    },
+
+  });
+
+  _.extend(Configuracao.prototype, {
+
+    anosComIndice: function(todosOsAnos, fundado, extinto, manterTodosAnos) {
+
+      // Se o partido não aparece no gráfico (pode aparecer se foi extinto antes)
+      if (fundado > _.max(todosOsAnos)) {
+        return [];
+      }
+
+      var anos = todosOsAnos.slice();
+
+      // Adiciona um ano depois da última eleição para o último passo ficar visível
+      if (this.ehGraficoEmPassos === true) {
+        anos.push(_.max(anos) + 1);
+      }
+
+      // No gráfico de área, se começar com null ao invés de zero, a área não é preenchida
+      if (this.ehGraficoDeArea === true) {
+        return anos;
+      }
+
+      // Remove anos antes da fundação
+      if (manterTodosAnos === false && (fundado - 1) > _.min(anos)) {
+        anos = _.filter(anos, function(ano) { return ano >= fundado; });
+      }
+
+      // Remove anos depois da dissolução
+      if (manterTodosAnos === false && extinto != null) {
+        anos = _.filter(anos, function(ano) { return ano <= extinto; });
+      }
+
+      return anos;
+
+    },
+
+    _mesclarPartidosExtintosRecursivo: function(partidos) {
+
+      var _this = this;
+      var migrouUmPartido = false;
+
+      // Procurar partidos sucessores
+      var processados = _.map(partidos, function(partido) {
+
+        // Encontra o partido sucessor se estiver configurado para mesclar
+        if (partido.info.extinto != null &&
+            ((_this.mudancasDeNome === true && partido.info.renomeado   != null) ||
+             (_this.incorporacoes  === true && partido.info.incorporado != null) ||
+             (_this.fusoes         === true && partido.info.fusao       != null))) {
+
+          migrouUmPartido = true;
+
+          var sucessor = Configuracao.encontraPartidoSucessor(partido.info);
+
+          return {
+            sigla:     sucessor.sigla,
+            numero:    sucessor.numero,
+            fundado:   partido.fundado,
+            extinto:   sucessor.extinto,
+            indices:   partido.indices,
+            info:      sucessor,
+            mesclados: partido.mesclados.concat([ partido.info ])
+          };
+
+        } else {
+          return partido;
+        }
+
+      });
+
+      if (migrouUmPartido === true) {
+
+        // Agrupa repetidos
+        var porPartido = _.values(_.groupBy(processados, function(partido) {
+          return partido.sigla + partido.numero + (partido.extinto || '');
+        }));
+
+        // Soma índices
+        var mesclados = Configuracao.somarIndicesDosRepetidos(porPartido, function(lista, somas) {
+          return {
+            sigla:     lista[0].sigla,
+            numero:    lista[0].numero,
+            fundado:   _.min(lista, 'fundado').fundado,
+            extinto:   lista[0].extinto,
+            indices:   somas,
+            info:      lista[0].info,
+            mesclados: lista[0].mesclados
+          };
+        });
+
+        // Reaplica migrações nos novos dados
+        return this._mesclarPartidosExtintosRecursivo(mesclados);
+
+      }
+
+      return processados;
+    },
+
+    mesclarPartidosExtintos: function(dados) {
+
+      var dadosInicializados = _.map(dados, function(partido) {
+        return {
+          sigla:     partido.sigla,
+          numero:    partido.numero,
+          fundado:   partido.info.fundado,
+          extinto:   partido.info.extinto,
+          indices:   partido.indices,
+          info:      partido.info,
+          mesclados: []
+        };
+      });
+
+      return this._mesclarPartidosExtintosRecursivo(dadosInicializados);
+
+    },
+
+    reescreverSiglas: function(partidos) {
+
+      var tabela = this.tabelaDeReescrita;
+
+      if (tabela == null) {
+        return _.map(partidos, function(p) {
+          // Desambígua siglas com mesmo nome
+          var siglaDesambiguada = p.info.naoEhUltimo === true ?
+            (p.info.sigla + " (" + p.info.fundado.toString() + ")") :
+            p.info.sigla;
+          return _.assign({}, p, { sigla: siglaDesambiguada });
+        });
+      } else {
+
+        // Realiza migrações
+        var migrados = _.map(partidos, function(p) {
+          var config = _.find(tabela.mapear, { de: _.pick(p, [ 'sigla', 'numero' ]) });
+          return _.assign({}, p, { sigla: config != null ? config.para : tabela.resto });
+        });
+
+        // Agrupa repetidos
+        var porSigla = _.values(_.groupBy(migrados, 'sigla'));
+
+        // Soma índices
+        var mesclados = Configuracao.somarIndicesDosRepetidos(porSigla, function(partidos, somas) {
+
+          var sigla = partidos[0].sigla;
+
+          var todosOsPartidos = _.flatten(_.map(partidos, function(p) {
+            return [ p.info ].concat(p.mesclados);
+          }));
+
+          var info = null, mesclados = todosOsPartidos;
+          if (sigla !== tabela.resto) {
+
+            var primeiroMapeado = _.find(tabela.mapear, 'para', sigla);
+            info = _.find(todosOsPartidos, primeiroMapeado.de);
+
+            if (info != null) {
+              mesclados = _.without(mesclados, info);
+            } else {
+              info = _.find(Configuracao.partidos, primeiroMapeado.de);
+            }
+          }
+
+          return {
+            sigla:     sigla,
+            fundado:   _.min(partidos, 'fundado'),
+            extinto:   _.all(partidos, 'extinto') ? _.max(partidos, 'extinto') : null,
+            indices:   somas,
+            info:      info,
+            mesclados: mesclados
+          };
+
+        });
+
+        return mesclados;
+
+      }
+
+    },
+
+  });
 
   this.Configuracao = Configuracao;
 

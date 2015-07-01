@@ -4,19 +4,22 @@
   'use strict';
 
   // https://github.com/jasmine/jasmine/issues/592
-  beforeEach(function () {
+  beforeEach(function() {
 
     jasmine.addMatchers({
-      toEqualIgnoringNulls: function (utils, customEqualityTesters) {
+      toEqualIgnoringNulls: function(utils, funcaoIgualdade) {
         return {
-          compare: function (efetivo, esperado) {
+          compare: function(efetivo, esperado) {
 
             var efetivoSemNulls  = removerNulls(efetivo);
             var esperadoSemNulls = removerNulls(esperado);
 
-            var resultado = { pass: utils.equals(efetivoSemNulls, esperadoSemNulls, customEqualityTesters) };
-            if (!resultado.pass) {
-              resultado.message = "Expected " + JSON.stringify(efetivoSemNulls) + " toEqualIgnoringNulls " + JSON.stringify(esperadoSemNulls);
+            var passou = utils.equals(efetivoSemNulls, esperadoSemNulls, funcaoIgualdade);
+            var resultado = { pass: passou };
+
+            if (passou === false) {
+              resultado.message = 'Expected ' + JSON.stringify(efetivoSemNulls) +
+                ' toEqualIgnoringNulls ' + JSON.stringify(esperadoSemNulls);
             }
 
             return resultado;
@@ -29,11 +32,11 @@
   });
 
   /**
-   * remover chave quando valor é null
+   * Remover chave quando valor é null
    * @param {Object} obj
    * @returns {Object}
    */
-  function removerNulls(obj){
+  function removerNulls(obj) {
 
     var copia = _.cloneDeep(obj);
 
@@ -48,7 +51,7 @@
   }
 
   /**
-   * percorrer objeto
+   * Percorrer objeto
    * @param {Object} obj
    * @param {Function} callback as function(chave, valor, pai)
    * @param {Array} [caminho]

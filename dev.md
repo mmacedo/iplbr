@@ -67,9 +67,9 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 
 ### Lint
 
-Código-fonte verificado com [bootlint](https://github.com/twbs/bootlint) e [jshint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`):
+Código-fonte verificado com [bootlint](https://github.com/twbs/bootlint), [jshint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`) e [jscs](http://jscs.info/) (ver `.jscsrc`):
 
-1. Instale os linters com `npm install -g bootlint jshint`.
+1. Instale os linters com `npm install -g bootlint jshint jscs`.
 2. Execute `./verifica.sh` para rodar os linters nos arquivos relevantes.
 
 ### Testes

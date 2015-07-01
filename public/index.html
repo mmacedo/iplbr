@@ -218,16 +218,16 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
               <label for="configuracao_predefinida">Seleção</label>
               <div class="btn-group btn-group-justified" data-toggle="buttons">
                 <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" autocomplete="off"> Todos
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" class="cfg cfg-indice" autocomplete="off"> Todos
                 </label>
                 <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" autocomplete="off" checked> Top 10
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" class="cfg cfg-indice" autocomplete="off" checked> Top 10
                 </label>
                 <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top3" autocomplete="off"> Top 3
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_top3" class="cfg cfg-indice" autocomplete="off"> Top 3
                 </label>
                 <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" autocomplete="off"> Antigos
+                  <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" class="cfg cfg-indice" autocomplete="off"> Antigos
                 </label>
               </div>
             </div>
@@ -237,19 +237,19 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
               <div class="panel-body">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="mudancas_de_nome" checked>
+                    <input type="checkbox" id="mudancas_de_nome" class="cfg cfg-indice" checked>
                     Mudanças de nome
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="incorporacoes">
+                    <input type="checkbox" id="incorporacoes" class="cfg cfg-indice">
                     Incorporações
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="fusoes">
+                    <input type="checkbox" id="fusoes" class="cfg cfg-indice">
                     Fusões
                   </label>
                 </div>
@@ -267,7 +267,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="form-group">
             <label class="control-label col-sm-2" for="jurisdicao">Jurisdição</label>
             <div class="col-sm-10">
-              <select id="jurisdicao" class="form-control">
+              <select id="jurisdicao" class="form-control cfg cfg-grafico">
                 <optgroup>
                   <option value="pais">Brasil</option>
                 </optgroup>
@@ -314,7 +314,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="form-group">
             <label class="control-label col-sm-2" for="ano">Ano</label>
             <div class="col-sm-10">
-              <select id="ano" class="form-control">
+              <select id="ano" class="form-control cfg cfg-grafico">
                 <option value="TODOS">Todos</option>
                 <option value="2015">2015</option>
                 <option value="2013">2013</option>
@@ -346,20 +346,20 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             <div class="col-xs-9">
               <div class="btn-group btn-group-justified" data-toggle="buttons">
                 <label class="btn btn-default">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_curvas" autocomplete="off"> Curvas
+                  <input type="radio" name="tipo_de_grafico" id="tipo_curvas" class="cfg cfg-grafico" autocomplete="off"> Curvas
                 </label>
                 <label class="btn btn-default">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_linhas" autocomplete="off"> Linhas
+                  <input type="radio" name="tipo_de_grafico" id="tipo_linhas" class="cfg cfg-grafico" autocomplete="off"> Linhas
                 </label>
                 <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_area" autocomplete="off" checked> Área
+                  <input type="radio" name="tipo_de_grafico" id="tipo_area" class="cfg cfg-grafico" autocomplete="off" checked> Área
                 </label>
               </div>
             </div>
             <div class="col-xs-3">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" id="passos">
+                  <input type="checkbox" id="passos" class="cfg cfg-grafico">
                   Em passos
                 </label>
               </div>
@@ -399,13 +399,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab_indice_total">
-              <div id="indice_total" class="grafico"></div>
+              <div id="indice_total" class="grafico" data-titulo="Índice" data-subtitulo="Federal / 3 + Estadual / 3 + Municipal / 3"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_legislativo_total">
-              <div id="legislativo_total" class="grafico"></div>
+              <div id="legislativo_total" class="grafico" data-titulo="Legislativo" data-subtitulo="Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_executivo_total">
-              <div id="executivo_total" class="grafico"></div>
+              <div id="executivo_total" class="grafico" data-titulo="Executivo" data-subtitulo="Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3"></div>
             </div>
           </div>
         </div>
@@ -423,15 +423,15 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab_indice_federal">
-              <div id="indice_federal" class="grafico"></div>
+              <div id="indice_federal" class="grafico" data-titulo="Índice Federal" data-subtitulo="congresso = 75% e presidente = 25%"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
-              <div id="deputados_federais" class="grafico"></div>
-              <div id="senadores" class="grafico"></div>
-              <div id="congresso_nacional" class="grafico"></div>
+              <div id="deputados_federais" class="grafico" data-titulo="Câmara dos Deputados"></div>
+              <div id="senadores" class="grafico" data-titulo="Senado Federal"></div>
+              <div id="congresso_nacional" class="grafico" data-titulo="Congresso Nacional" data-subtitulo="Câmara dos Deputados + Senado Federal"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
-              <div id="presidentes" class="grafico"></div>
+              <div id="presidentes" class="grafico" data-titulo="Presidência da República"></div>
             </div>
           </div>
         </div>
@@ -449,13 +449,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab_indice_estadual">
-              <div id="indice_estadual" class="grafico"></div>
+              <div id="indice_estadual" class="grafico" data-titulo="Índice Estadual" data-subtitulo="deputados estaduais = 75% e governadores = 25%"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_legislativo_estadual">
-              <div id="deputados_estaduais" class="grafico"></div>
+              <div id="deputados_estaduais" class="grafico" data-titulo="Assembléias Legislativas Estaduais ou Distritais"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_executivo_estadual">
-              <div id="governadores" class="grafico"></div>
+              <div id="governadores" class="grafico" data-titulo="Governos Estaduais"></div>
             </div>
           </div>
         </div>
@@ -473,13 +473,13 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab_indice_municipal">
-              <div id="indice_municipal" class="grafico"></div>
+              <div id="indice_municipal" class="grafico" data-titulo="Índice Municipal" data-subtitulo="vereadores = 75% e prefeitos = 25%"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_legislativo_municipal">
-              <div id="vereadores" class="grafico"></div>
+              <div id="vereadores" class="grafico" data-titulo="Câmaras Municipais"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tab_executivo_municipal">
-              <div id="prefeitos" class="grafico"></div>
+              <div id="prefeitos" class="grafico" data-titulo="Prefeituras"></div>
             </div>
           </div>
         </div>
