@@ -1,6 +1,8 @@
-"use strict";
+/* jshint browser: true */
+/* globals _, jQuery, Highcharts, Configuracao, Serie, GeradorDeIndices */
 
 (function($, _, Highcharts) {
+  'use strict';
 
   Highcharts.setOptions({
     lang: {
@@ -57,159 +59,148 @@
     }
   }
 
-  function criaGrafico(id, titulo, subtitulo, serie, indice, apenas0e100) {
+  function criaGraficoSemFiltros($el, apenas0e100) {
+    var curvasSelecionado  = $('#tipo_curvas').is(':checked');
+    var linhasSelectionado = $('#tipo_linhas').is(':checked');
+    var areaSelecionado    = $('#tipo_area').is(':checked');
 
-    var ufs = filtroJurisdicao(), ano = $('#ano').val();
+    var passosSelecionado = $('#passos').is(':checked:enabled');
 
-    var $el = $(id), chart = $el.highcharts();
+    if (apenas0e100 === true) {
+      curvasSelecionado  = false;
+      linhasSelectionado = false;
+      areaSelecionado    = true;
+      passosSelecionado  = true;
+    }
 
-    if (ano === 'TODOS') {
+    var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
+    var stacking  = areaSelecionado?'normal':null;
 
-      if (chart == null) {
+    return $el.highcharts({
+      chart: { type: chartType },
+      title: { text: $el.data('titulo') },
+      subtitle: { text: $el.data('subtitulo') },
+      credits: { enabled: false },
+      yAxis: {
+        title: { text: '%' },
+        tickInterval: areaSelecionado ? 20 : 5,
+        minorTickInterval: areaSelecionado ? 10 : null,
+        min: 0,
+        ceiling: 100,
+        reversedStacks: true,
+      },
+      xAxis: {
+        type: 'datetime',
+        tickInterval: 2 * 24 * 3600 * 1000 * 365,
+        minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
+        plotLines: [
+          {
+            color: 'black',
+            value: Date.UTC(1985, 1, 1),
+            width: 3,
+            label: { text: 'Nova República', style: { fontSize: 'larger' } },
+          }, {
+            color: 'black',
+            value: Date.UTC(1988, 9, 5),
+            width: 3,
+            label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+          }
+        ]
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        pointFormatter: function() {
 
-        var curvasSelecionado  = $('#tipo_curvas').is(':checked'),
-            linhasSelectionado = $('#tipo_linhas').is(':checked'),
-            areaSelecionado    = $('#tipo_area').is(':checked');
+          var ano = new Date(this.x).getFullYear() - 1;
 
-        var passosSelecionado = $('#passos').is(':checked:enabled');
+          // Não mostra tooltip para extinto
+          var partidos = this.series.options.partidos;
+          if (_.all(partidos, 'extinto') && _.max(partidos, 'extinto') < ano) {
+            return null;
+          }
 
-        if (apenas0e100 === true) {
-          curvasSelecionado  = false;
-          linhasSelectionado = false;
-          areaSelecionado    = true;
-          passosSelecionado  = true;
+          var indice;
+          if (this.y === 0) {
+            indice = '0';
+          } else {
+            var arredondado = Math.round10(this.y, 2);
+            if (arredondado === 0) {
+              indice = '< 0.01';
+            } else {
+              indice = arredondado.toFixed(2);
+            }
+          }
+
+          var cor   = '<span style="color:' + this.color + ';">\u25CF</span>';
+          var nome  = this.series.name;
+          var valor = '<strong>' + indice + '</strong>';
+          return cor + ' ' + nome + ': ' + valor + '<br/>';
         }
-
-        var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
-        var stacking  = areaSelecionado?'normal':null;
-
-        chart = $el.highcharts({
-          chart: { type: chartType },
-          title: { text: titulo },
-          subtitle: { text: subtitulo },
-          credits: { enabled: false },
-          yAxis: {
-            title: { text: '%' },
-            tickInterval: areaSelecionado ? 20 : 5,
-            minorTickInterval: areaSelecionado ? 10 : null,
-            min: 0,
-            ceiling: 100,
-            reversedStacks: true,
-          },
-          xAxis: {
-            type: 'datetime',
-            tickInterval: 2 * 24 * 3600 * 1000 * 365,
-            minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
-            plotLines: [
-              {
-                color: 'black',
-                value: Date.UTC(1985, 1, 1),
-                width: 3,
-                label: { text: 'Nova República', style: { fontSize: 'larger' } },
-              }, {
-                color: 'black',
-                value: Date.UTC(1988, 9, 5),
-                width: 3,
-                label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
-              }
-            ]
-          },
-          tooltip: {
-            shared: true,
-            useHTML: true,
-            pointFormatter: function() {
-
-              var ano = new Date(this.x).getFullYear() - 1;
-
-              // Não mostra tooltip para extinto
-              var partidos = _.compact([ this.series.options.partido ].concat(this.series.options.outros || []));
-              if (_.all(partidos, function(p) { return p.extinto != null; }) && _.max(partidos, 'extinto') < ano) {
-                return null;
-              }
-
-              var indice;
-              if (this.y == 0) {
-                indice = '0';
-              } else {
-                var arredondado = Math.round10(this.y, 2);
-                if (arredondado == 0) {
-                  indice = '< 0.01';
-                } else {
-                  indice = arredondado.toFixed(2);
-                }
-              }
-
-              return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>' + indice + '</b><br/>';
-            }
-          },
-          plotOptions: {
-            series: {
-              marker: { enabled: false },
-              step: passosSelecionado?'left':false
-            },
-            area: {
-              stacking: stacking,
-              states: { hover: { enabled: false } },
-            }
-          }
-        }).highcharts();
+      },
+      plotOptions: {
+        series: {
+          marker: { enabled: false },
+          step: passosSelecionado?'left':false
+        },
+        area: {
+          stacking: stacking,
+          states: { hover: { enabled: false } },
+        }
       }
+    }).highcharts();
+  }
 
-      chart.showLoading();
+function criaGraficoComFiltroDeAno($el) {
+    return $el.highcharts({
+      chart: { type: 'pie' },
+      title: { text: $el.data('titulo') },
+      subtitle: { text: $el.data('subtitulo') },
+      credits: { enabled: false },
+      tooltip: {
+        headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
+        pointFormat:  '{point.name}: <b>{point.y:.4f}%</b> do total<br/>'
+      },
+      plotOptions: {
+        series: {
+          dataLabels: {
+            enabled: true,
+            format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.4f}%'
+          }
+        }
+      }
+    }).highcharts();
+  }
 
-      setTimeout(function() {
-        // Remove todas as séries
-        _.each(chart.series.slice(), function(series) { series.remove(false); });
+  function atualizaGrafico(chart, series) {
+    chart.showLoading();
 
-        // Adiciona séries
-        _.each(serie.seriesPorJurisdicao(indice, ufs), function(series) {
-          chart.addSeries(series, false);
-        });
+    setTimeout(function() {
+      // Remove todas as séries
+      _.each(chart.series.slice(), function(series) { series.remove(false); });
 
-        // Atualiza tela
-        chart.redraw();
-        chart.hideLoading();
-      }, 0);
+      // Adiciona séries
+      _.each(series, function(series) { chart.addSeries(series, false); });
 
-    } else {
+      // Atualiza tela
+      chart.redraw();
+      chart.hideLoading();
+    }, 0);
+  }
 
+  function criaGrafico(id, serie, indice, apenas0e100) {
+    var $el = $(id), chart = $el.highcharts();
+    var ufs = filtroJurisdicao(), ano = $('#ano').val();
+    if (ano === 'TODOS') {
       if (chart == null) {
-        chart = $(id).highcharts({
-          chart: { type: 'pie' },
-          title: { text: titulo },
-          subtitle: { text: subtitulo },
-          credits: { enabled: false },
-          tooltip: {
-            headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
-            pointFormat:  '{point.name}: <b>{point.y:.4f}%</b> do total<br/>'
-          },
-          plotOptions: {
-            series: {
-              dataLabels: {
-                enabled: true,
-                format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.4f}%'
-              }
-            }
-          }
-        }).highcharts();
+        chart = criaGraficoSemFiltros($el, apenas0e100);
       }
-
-      chart.showLoading();
-
-      setTimeout(function() {
-        // Remove todas as séries
-        _.each(chart.series.slice(), function(series) { series.remove(false); });
-
-        // Adiciona séries
-        _.each(serie.seriesPorAno(indice, ufs, parseInt(ano, 10)), function(series) {
-          chart.addSeries(series, false);
-        });
-
-        // Atualiza tela
-        chart.redraw();
-        chart.hideLoading();
-      }, 0);
-
+      atualizaGrafico(chart, serie.seriesPorJurisdicao(indice, ufs));
+    } else {
+      if (chart == null) {
+        chart = criaGraficoComFiltroDeAno($el);
+      }
+      atualizaGrafico(chart, serie.seriesPorAno(indice, ufs, parseInt(ano, 10)));
     }
   }
 
@@ -293,16 +284,16 @@
         $('#configuracao_todos').trigger('click');
         $('#mudancas_de_nome').prop('checked', true);
         $('#incorporacoes, #fusoes').prop('checked', false);
-        adicionaHistoria();
       });
+      adicionaHistoria();
       return false;
     });
 
     // Esconde link para remover configurãção quando expandir o painel
-    $(document).on('show.bs.collapse', '#panel_cfg_partidos', function () {
+    $(document).on('show.bs.collapse', '#panel_cfg_partidos', function() {
       $('#cfg_partidos').hide();
-    }).on('hidden.bs.collapse', '#panel_cfg_partidos', function () {
-      if ($('#cfg_partidos > .cfg_label').text() !== "") {
+    }).on('hidden.bs.collapse', '#panel_cfg_partidos', function() {
+      if ($('#cfg_partidos > .cfg_label').text() !== '') {
         $('#cfg_partidos').show();
       } else {
         $('#cfg_partidos').hide();
@@ -328,8 +319,7 @@
     });
 
     // Mostra botão para remover pré-definição
-    $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
-
+    $(document).on('change', '.cfg.cfg-indice', function() {
       if ($('#configuracao_todos').is(':checked')) {
         $('#cfg_partidos .cfg_label').text('');
         $('#cfg_partidos').hide();
@@ -356,31 +346,31 @@
         $('#passos')
           .prop('disabled', true)
           .closest('.checkbox')
-          .addClass('disabled')
+          .addClass('disabled');
       } else {
         $('#passos')
           .prop('disabled', false)
           .closest('.checkbox')
-          .removeClass('disabled')
+          .removeClass('disabled');
       }
     });
 
     // Precisa atualizar séries (remove série e readiciona)
-    $(document).on('change', '[name="configuracao_predefinida"], #mudancas_de_nome, #incorporacoes, #fusoes', function() {
+    $(document).on('change', '.cfg.cfg-indice', function() {
       adicionaHistoria();
       recriaGraficosDaGuiaAtual(false);
     });
 
     // Precisa atualizar séries (destrói gráfico e recria)
-    $(document).on('change', '[name="tipo_de_grafico"], #passos, #jurisdicao, #ano', function() {
+    $(document).on('change', '.cfg.cfg-grafico', function() {
       adicionaHistoria();
       recriaGraficosDaGuiaAtual(true);
     });
 
     // Redesenha gráficos que estavam em elementos escondidos
-    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function() {
       var panel_id = $(this).attr('aria-controls');
-      $("#" + panel_id + " [data-highcharts-chart]").each(function() {
+      $('#' + panel_id + ' [data-highcharts-chart]').each(function() {
         $(this).highcharts().redraw();
         $(this).highcharts().reflow();
       });
@@ -391,79 +381,79 @@
       var cfg     = new Configuracao();
 
       cfg.cores = {
-        'verde':      [ '#6ed854', '#a9ff97', '#00ff99' ],
-        'vermelho':   [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
-        'laranja':    [ '#f7a35c', '#edb47e' ],
-        'azul':       [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
+        verde:        [ '#6ed854', '#a9ff97', '#00ff99' ],
+        vermelho:     [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
+        laranja:      [ '#f7a35c', '#edb47e' ],
+        azul:         [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
         'azul claro': [ '#7eedeb', '#00CED1' ],
-        'roxo':       [ '#be55d9', '#7e80ed', '#996699' ],
+        roxo:         [ '#be55d9', '#7e80ed', '#996699' ],
       };
 
       var serie   = new Serie(cfg);
       var indices = new GeradorDeIndices(json);
 
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_total"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#indice_total', 'Índice', 'Federal / 3 + Estadual / 3 + Municipal / 3', serie, indices.indiceTotal());
+        criaGrafico('#indice_total', serie, indices.indice());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_total"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#legislativo_total', 'Legislativo', 'Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3', serie, indices.legislativoTotal());
+        criaGrafico('#legislativo_total', serie, indices.legislativo());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_total"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_total"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico('#executivo_total', 'Executivo', 'Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3', serie, indices.executivoTotal());
+        criaGrafico('#executivo_total', serie, indices.executivo());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_federal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_federal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#indice_federal", 'Índice Federal', 'congresso = 75% e presidente = 25%', serie, indices.indiceFederal());
+        criaGrafico('#indice_federal', serie, indices.federal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_federal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_federal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#deputados_federais", 'Câmara dos Deputados', null,                                    serie, indices.deputadosFederais());
-        criaGrafico("#senadores",          'Senado Federal',       null,                                    serie, indices.senadores());
-        criaGrafico("#congresso_nacional", 'Congresso Nacional',   'Câmara dos Deputados + Senado Federal', serie, indices.legislativoFederal());
+        criaGrafico('#deputados_federais', serie, indices.deputadosFederais());
+        criaGrafico('#senadores', serie, indices.senadores());
+        criaGrafico('#congresso_nacional', serie, indices.legislativoFederal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_federal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_federal"]', function() {
         atualizaConfiguracao(cfg, true);
-        criaGrafico("#presidentes", 'Presidência da República', null, serie, indices.executivoFederal(), true);
+        criaGrafico('#presidentes', serie, indices.executivoFederal(), true);
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_estadual"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_estadual"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#indice_estadual", 'Índice Estadual', 'deputados estaduais = 75% e governadores = 25%', serie, indices.indiceEstadual());
+        criaGrafico('#indice_estadual', serie, indices.estadual());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_estadual"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_estadual"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#deputados_estaduais", 'Assembléias Legislativas Estaduais ou Distritais', null, serie, indices.legislativoEstadual());
+        criaGrafico('#deputados_estaduais', serie, indices.legislativoEstadual());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_estadual"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_estadual"]', function() {
         var estaMostrandoApenasUmaUf = filtroJurisdicao().length === 1;
         atualizaConfiguracao(cfg, estaMostrandoApenasUmaUf);
-        criaGrafico("#governadores", 'Governos Estaduais', null, serie, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
+        criaGrafico('#governadores', serie, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_indice_municipal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_municipal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#indice_municipal", 'Índice Municipal', 'vereadores = 75% e prefeitos = 25%', serie, indices.indiceMunicipal());
+        criaGrafico('#indice_municipal', serie, indices.municipal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_legislativo_municipal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_municipal"]', function() {
         atualizaConfiguracao(cfg);
-        criaGrafico("#vereadores", 'Câmaras Municipais', null, serie, indices.legislativoMunicipal());
+        criaGrafico('#vereadores', serie, indices.legislativoMunicipal());
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_executivo_municipal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_municipal"]', function() {
         var ufs = filtroJurisdicao(), estaMostrandoApenasDf = ufs.length === 1 && ufs[0] === 'DF';
         atualizaConfiguracao(cfg, estaMostrandoApenasDf);
-        criaGrafico("#prefeitos", 'Prefeituras', null, serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
+        criaGrafico('#prefeitos', serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_total"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_total"]', function() {
         $('#tablist_total > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_federal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_federal"]', function() {
         $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_estadual"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_estadual"]', function() {
         $('#tablist_estadual > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
-      $(document).on('shown.bs.tab', 'a[data-toggle="tab"][aria-controls="tab_municipal"]', function() {
+      $(document).on('shown.bs.tab', '[aria-controls="tab_municipal"]', function() {
         $('#tablist_municipal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
 
