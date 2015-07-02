@@ -79,7 +79,7 @@
 
         // Extrai siglas e números dos partidos
         var matches = siglaENumero.match(/(.*?)([0-9]{2})/);
-        var sigla = matches[1], numero = parseInt(matches[2], 10);
+        var sigla = matches[1], numero = +matches[2];
 
         return { sigla: sigla, numero: numero, indices: indicePorAno, info: info };
 

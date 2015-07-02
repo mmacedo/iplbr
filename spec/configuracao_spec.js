@@ -10,20 +10,16 @@ describe('Configuracao - métodos estáticos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       Configuracao.partidos = [ a, b ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b);
     });
 
-    it('não deve retornar sucessor com mesma sigla, mas fundado após a incorporação', function() {
+    it('não deve retornar partido fundado após a incorporação', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b_apos  = { sigla: 'B', numero: 21, fundado: 2014 };
       var b_antes = { sigla: 'B', numero: 22, fundado: 1979 };
       Configuracao.partidos = [ a, b_apos, b_antes ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b_antes);
     });
 
@@ -31,20 +27,16 @@ describe('Configuracao - métodos estáticos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, renomeado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       Configuracao.partidos = [ a, b ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b);
     });
 
-    it('não deve retornar sucessor com mesma sigla, mas fundado antes da mudança de nome', function() {
+    it('não deve retornar partido fundado antes da mudança de nome', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, renomeado: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       Configuracao.partidos = [ a, b_antes, b_apos ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b_apos);
     });
 
@@ -52,31 +44,25 @@ describe('Configuracao - métodos estáticos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, fusao: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       Configuracao.partidos = [ a, b ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b);
     });
 
-    it('não deve retornar sucessor com mesma sigla, mas fundado antes da fusão', function() {
+    it('não deve retornar partido fundado antes da fusão', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, fusao: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       Configuracao.partidos = [ a, b_antes, b_apos ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b_apos);
     });
 
-    it('não deve retornar sucessor com mesma sigla, mas extinto antes do predecessor', function() {
+    it('não deve retornar partido extinto antes do predecessor', function() {
       var a       = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979, extinto: 2010 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 1979, extinto: 2014 };
       Configuracao.partidos = [ a, b_antes, b_apos ];
-
       var resultado = Configuracao.encontraPartidoSucessor(a);
-
       expect(resultado).toBe(b_apos);
     });
 
@@ -85,6 +71,7 @@ describe('Configuracao - métodos estáticos', function() {
 });
 
 describe('Configuracao', function() {
+
   beforeEach(function() {
     this.configuracao = new Configuracao();
   });
@@ -92,7 +79,12 @@ describe('Configuracao', function() {
   describe('#mesclarPartidosExtintos', function() {
 
     function geraInput(partido, indices) {
-      return { sigla: partido.sigla, numero: partido.numero, info: partido, indices: indices || [] };
+      return {
+        sigla:   partido.sigla,
+        numero:  partido.numero,
+        info:    partido,
+        indices: indices || []
+      };
     }
 
     function geraOutputInalterado(input) {
@@ -197,6 +189,5 @@ describe('Configuracao', function() {
     });
 
   });
-
 
 });

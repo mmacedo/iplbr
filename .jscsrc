@@ -12,7 +12,7 @@
   "disallowSpacesInsideParentheses": true,
   "disallowTrailingWhitespace": true,
   "maximumLineLength": {
-    "value": 105,
+    "value": 100,
     "allowUrlComments": true
   },
   "maximumNumberOfLines": 400,

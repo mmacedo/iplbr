@@ -380,7 +380,8 @@
 
     encontraPartidoSucessor: function(partido) {
 
-      // Partidos com o nome correto e fundados após a extinção desse, ex.: PTR -> [ PP (1993), PP (2003) ]
+      // Partidos com o nome correto e fundados após a extinção desse
+      // Ex.: PTR -> [ PP (1993), PP (2003) ]
       var possiveisSucessores = _.filter(Configuracao.partidos, function(sucessor) {
         return (
           // O sucessor não pode ter sido extinto antes do predecessor
@@ -392,7 +393,8 @@
            (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
       });
 
-      // Primeiro partido fundado após a extinção do outro, ex.: PTR -> PP (1993) ao invés de PP (2003)
+      // Primeiro partido fundado após a extinção do outro
+      // Ex.: PTR -> PP (1993) ao invés de PP (2003)
       return _.min(possiveisSucessores, 'fundado');
 
     },
@@ -522,7 +524,7 @@
         return _.map(partidos, function(p) {
           // Desambígua siglas com mesmo nome
           var siglaDesambiguada = p.info.naoEhUltimo === true ?
-            (p.info.sigla + " (" + p.info.fundado.toString() + ")") :
+            (p.info.sigla + ' (' + p.info.fundado.toString() + ')') :
             p.info.sigla;
           return _.assign({}, p, { sigla: siglaDesambiguada });
         });
