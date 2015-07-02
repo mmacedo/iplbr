@@ -1,0 +1,13 @@
+*.txt                 eol=lf
+*.md                  eol=lf
+*.rb                  eol=lf
+public/index.html     eol=lf
+public/js/app/*.js    eol=lf
+public/css/index.css  eol=lf
+
+public/eleitos.json                     binary
+public/highcharts/highcharts.js         binary
+public/highcharts/exporting.js          binary
+public/highcharts/no-data-to-display.js binary
+*.min.js                                binary
+*.min.css                               binary
