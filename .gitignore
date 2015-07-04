@@ -1,1 +1,3 @@
-_deploy
+tmp
+node_modules
+.grunt

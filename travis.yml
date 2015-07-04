@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - node
+script:
+  - npm run-script check
+  - npm test
+before_script:
+  - npm install -g grunt-cli

@@ -65,27 +65,46 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 
 Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/), com suporte para IE 8.
 
-### Lint
-
-Código-fonte verificado com [bootlint](https://github.com/twbs/bootlint), [jshint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`) e [jscs](http://jscs.info/) (ver `.jscsrc`):
-
-1. Instale os linters com `npm install -g bootlint jshint jscs`.
-2. Execute `./verifica.sh` para rodar os linters nos arquivos relevantes.
-
-### Testes
-
-Testado com a última versão de [Jasmine](http://jasmine.github.io/) instalado via [gem](https://github.com/jasmine/jasmine-gem):
-
-1. Instale o site com `bundle install`.
-2. Rode os testes com `rake jasmine:ci`.
-
 ### Desenvolvimento
 
-Servido localmente com as últimas versões de [MRI (Ruby)](https://www.ruby-lang.org/) e [rack](https://rack.github.io/) (ver `Gemfile` e `config.ru`):
+Todas as tarefas são realizadas com [Node.js](https://nodejs.org/) e [Grunt](http://gruntjs.com/) (ver `Gruntfile.js`). Para preparar o ambiente realize as seguinte:
 
-1. Instale o site com `bundle install`.
-2. Rode o servidor com `bundle exec rackup`.
-3. Acesse a página em `http://localhost:9292`.
+1. Instale o Node.js mais recente.
+1. Instale o comando `grunt` com `npm install -g grunt-cli`.
+2. Instale os módulos [npm](https://www.npmjs.com/) (ver `package.json`) com `npm install`.
+
+#### Verificadores
+
+O seguintes verificadores são utilizados:
+
+- Código HTML validado com [v.Nu](https://validator.github.io/validator/) via [grunt-html](https://github.com/jzaefferer/grunt-html);
+- Código HTML com Bootstrap analisado com [Bootlint](https://github.com/twbs/bootlint) via [grunt-bootlint](https://github.com/twbs/grunt-bootlint);
+- Código JavaScript analisado com [JSHint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`) via [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint);
+- Estilo do código JavaScript verificado com [JSCS](http://jscs.info/) (ver `.jscsrc`) via [grunt-jscs](https://github.com/jscs-dev/grunt-jscs).
+
+Para rodar todos os verificadores, execute `grunt check`.
+
+#### Testes
+
+Testado com a última versão de [Jasmine](http://jasmine.github.io/) via [grunt-contrib-jasmine](https://github.com/gruntjs/grunt-contrib-jasmine). Para rodar todos os testes execute:
+
+```
+grunt test
+```
+
+Para servir uma página de testes localmente na porta 8989 usando [Connect](https://github.com/senchalabs/connect) e [LiveReload](http://livereload.com/):
+
+```
+grunt server:jasmine
+```
+
+#### Servidor
+
+Para servir a aplicação localmente localmente na porta 9393 usando [Connect](https://github.com/senchalabs/connect) e [LiveReload](http://livereload.com/):
+
+```
+grunt server:public
+```
 
 ### Produção
 
@@ -93,18 +112,18 @@ Para criar o branch `gh-pages` no github, execute o seguinte no bash dentro do d
 
     REPO=git@github.com:mmacedo/iplbr.git
 
-    git clone $REPO _deploy
+    git clone $REPO tmp/_deploy
     pushd _deploy
     git checkout --orphan gh-pages
     git rm -r --cached .
     git clean -df
-    cp -r ../public/* .
+    cp -r ../../public/* .
     git add -A
     git commit -m "Initial commit"
     git push origin gh-pages --set-upstream
     popd
 
-Para publicar, guarde as alterações não comitadas no stash e execute `./publish_to_github.sh`.
+Para publicar, guarde as alterações não comitadas no stash e execute `./deploy_no_github.sh`.
 
 ## Extra
 
