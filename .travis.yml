@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - node
 script:
-  - npm run-script check
+  - npm run-script check-html
+  - npm run-script check-js
   - npm test
 before_script:
   - npm install -g grunt-cli

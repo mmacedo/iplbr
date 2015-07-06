@@ -42,10 +42,13 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 - `public/eleitos.json`: Ver **Carga de dados**;
 - `public/favicons`: O ícone é o [escudo de armas do Brasil](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Brazil.svg), gerado utilizando [gerador de favicon](http://realfavicongenerator.net/);
 - `public/css/index.css`: Contém o CSS da página;
-- `public/js/app/index.js`: Contém o Javascript da página;
-- `public/js/app/configuracao.js`: Contém a lógica de configuração dos índices;
+- `public/js/app/eleicao.js`: Contém a lógica de leitura do json;
 - `public/js/app/indice.js`: Contém a lógica de cálculo dos índices;
-- `public/js/app/serie.js`: Contém a lógica de geração das séries para os gráficos.
+- `public/js/app/partido.js`: Contém a lógica de busca dos partidos;
+- `public/js/app/configuracao.js`: Contém a lógica de configuração dos partidos;
+- `public/js/app/serie.js`: Contém a lógica de geração das séries para os gráficos;
+- `public/js/app/serie.js`: Contém a lógica de geração dos gráficos;
+- `public/js/app/index.js`: Contém o Javascript da página.
 
 ### Dependências
 
@@ -75,18 +78,31 @@ Todas as tarefas são realizadas com [Node.js](https://nodejs.org/) e [Grunt](ht
 
 #### Verificadores
 
-O seguintes verificadores são utilizados:
+O seguintes verificadores são utilizados no código HTML:
 
-- Código HTML validado com [v.Nu](https://validator.github.io/validator/) via [grunt-html](https://github.com/jzaefferer/grunt-html);
-- Código HTML com Bootstrap analisado com [Bootlint](https://github.com/twbs/bootlint) via [grunt-bootlint](https://github.com/twbs/grunt-bootlint);
-- Código JavaScript analisado com [JSHint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`) via [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint);
-- Estilo do código JavaScript verificado com [JSCS](http://jscs.info/) (ver `.jscsrc`) via [grunt-jscs](https://github.com/jscs-dev/grunt-jscs).
+- Código HTML validado com [v.Nu](https://validator.github.io/validator/) (requer Java >=6 instalado);
+- Código HTML com Bootstrap analisado com [Bootlint](https://github.com/twbs/bootlint).
 
-Para rodar todos os verificadores, execute `grunt check`.
+Para rodar todos os verificadores execute:
+
+```
+grunt check-html
+```
+
+Os seguintes verificados são utilizados no código JavaScript:
+
+- Código JavaScript analisado com [JSHint](http://jshint.com/) (ver `.jshintrc` e `spec/.jshintrc`);
+- Estilo do código JavaScript verificado com [JSCS](http://jscs.info/) (ver `.jscsrc`).
+
+Para rodar todos os verificadores execute:
+
+```
+grunt check-js
+```
 
 #### Testes
 
-Testado com a última versão de [Jasmine](http://jasmine.github.io/) via [grunt-contrib-jasmine](https://github.com/gruntjs/grunt-contrib-jasmine). Para rodar todos os testes execute:
+Testado com a última versão de [Jasmine](http://jasmine.github.io/). Para rodar todos os testes execute:
 
 ```
 grunt test
@@ -95,7 +111,7 @@ grunt test
 Para servir uma página de testes localmente na porta 8989 usando [Connect](https://github.com/senchalabs/connect) e [LiveReload](http://livereload.com/):
 
 ```
-grunt server:jasmine
+grunt runner
 ```
 
 #### Servidor
@@ -103,7 +119,7 @@ grunt server:jasmine
 Para servir a aplicação localmente localmente na porta 9393 usando [Connect](https://github.com/senchalabs/connect) e [LiveReload](http://livereload.com/):
 
 ```
-grunt server:public
+grunt server
 ```
 
 ### Produção
@@ -113,7 +129,7 @@ Para criar o branch `gh-pages` no github, execute o seguinte no bash dentro do d
     REPO=git@github.com:mmacedo/iplbr.git
 
     git clone $REPO tmp/_deploy
-    pushd _deploy
+    pushd tmp/_deploy
     git checkout --orphan gh-pages
     git rm -r --cached .
     git clean -df

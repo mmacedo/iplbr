@@ -12,7 +12,7 @@
   "disallowSpacesInsideParentheses": true,
   "disallowTrailingWhitespace": true,
   "maximumLineLength": {
-    "value": 100,
+    "value": 95,
     "allowUrlComments": true
   },
   "maximumNumberOfLines": 400,
@@ -20,6 +20,7 @@
     "allExcept": [
       "global",
       "globals",
+      "exported",
       "jshint",
       "http",
       "https"

@@ -1,7 +1,11 @@
 /* jshint browser: true */
-/* globals _, jQuery, Highcharts, Configuracao, Serie, GeradorDeIndices */
+/* globals _, jQuery, Highcharts */
+/* globals RepositorioEleitoral, GeradorDeIndices */
+/* globals RepositorioDePartidos, ConfiguracaoDePartidos */
+/* globals GerenciadorDeCores, GeradorDeSeries */
+/* globals criaGrafico, filtroJurisdicao */
 
-(function($, _, Highcharts) {
+(function($, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao) {
   'use strict';
 
   Highcharts.setOptions({
@@ -19,7 +23,7 @@
     }
   });
 
-  function atualizaConfiguracao(cfg, apenas0e100) {
+  function atualizaConfiguracao(cfg, series, apenas0e100) {
     cfg.mudancasDeNome    = $('#mudancas_de_nome').is(':checked:enabled');
     cfg.incorporacoes     = $('#incorporacoes').is(':checked:enabled');
     cfg.fusoes            = $('#fusoes').is(':checked:enabled');
@@ -27,181 +31,15 @@
     if ($('#configuracao_todos').is(':checked')) {
       cfg.tabelaDeReescrita = null;
     } else if ($('#configuracao_top10').is(':checked')) {
-      cfg.tabelaDeReescrita = Configuracao.top10;
+      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.top10;
     } else if ($('#configuracao_top3').is(':checked')) {
-      cfg.tabelaDeReescrita = Configuracao.top3;
+      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.top3;
     } else if ($('#configuracao_antigos').is(':checked')) {
-      cfg.tabelaDeReescrita = Configuracao.partidosAntigos;
+      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.partidosAntigos;
     }
 
-    cfg.ehGraficoEmPassos = apenas0e100 === true || $('#passos').is(':checked:enabled');
-    cfg.ehGraficoDeArea   = apenas0e100 === true || $('#tipo_area').is(':checked');
-  }
-
-  function filtroJurisdicao() {
-    var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
-    if (matches[5] === 'pais') {
-      return Configuracao.brasil;
-    } else if (matches[3] === 'regiao') {
-      if (matches[4] === 'co') {
-        return Configuracao.regiaoCentroOeste;
-      } else if (matches[4] === 'ne') {
-        return Configuracao.regiaoNordeste;
-      } else if (matches[4] === 'n') {
-        return Configuracao.regiaoNorte;
-      } else if (matches[4] === 'se') {
-        return Configuracao.regiaoSudeste;
-      } else {
-        return Configuracao.regiaoSul;
-      }
-    } else {
-      return [ matches[2].toUpperCase() ];
-    }
-  }
-
-  function criaGraficoSemFiltros($el, apenas0e100) {
-    var curvasSelecionado  = $('#tipo_curvas').is(':checked');
-    var linhasSelectionado = $('#tipo_linhas').is(':checked');
-    var areaSelecionado    = $('#tipo_area').is(':checked');
-
-    var passosSelecionado = $('#passos').is(':checked:enabled');
-
-    if (apenas0e100 === true) {
-      curvasSelecionado  = false;
-      linhasSelectionado = false;
-      areaSelecionado    = true;
-      passosSelecionado  = true;
-    }
-
-    var chartType = curvasSelecionado?'spline':linhasSelectionado?'line':'area';
-    var stacking  = areaSelecionado?'normal':null;
-
-    return $el.highcharts({
-      chart: { type: chartType },
-      title: { text: $el.data('titulo') },
-      subtitle: { text: $el.data('subtitulo') },
-      credits: { enabled: false },
-      yAxis: {
-        title: { text: '%' },
-        tickInterval: areaSelecionado ? 20 : 5,
-        minorTickInterval: areaSelecionado ? 10 : null,
-        min: 0,
-        ceiling: 100,
-        reversedStacks: true,
-      },
-      xAxis: {
-        type: 'datetime',
-        tickInterval: 2 * 24 * 3600 * 1000 * 365,
-        minorTickInterval: 1 * 24 * 3600 * 1000 * 365,
-        plotLines: [
-          {
-            color: 'black',
-            value: Date.UTC(1985, 1, 1),
-            width: 3,
-            label: { text: 'Nova República', style: { fontSize: 'larger' } },
-          }, {
-            color: 'black',
-            value: Date.UTC(1988, 9, 5),
-            width: 3,
-            label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
-          }
-        ]
-      },
-      tooltip: {
-        shared: true,
-        useHTML: true,
-        pointFormatter: function() {
-
-          var ano = new Date(this.x).getFullYear() - 1;
-
-          // Não mostra tooltip para extinto
-          var partidos = this.series.options.partidos;
-          if (_.all(partidos, 'extinto') && _.max(partidos, 'extinto') < ano) {
-            return null;
-          }
-
-          var indice;
-          if (this.y === 0) {
-            indice = '0';
-          } else {
-            var arredondado = Math.round10(this.y, 2);
-            if (arredondado === 0) {
-              indice = '< 0.01';
-            } else {
-              indice = arredondado.toFixed(2);
-            }
-          }
-
-          var cor   = '<span style="color:' + this.color + ';">\u25CF</span>';
-          var nome  = this.series.name;
-          var valor = '<strong>' + indice + '</strong>';
-          return cor + ' ' + nome + ': ' + valor + '<br/>';
-        }
-      },
-      plotOptions: {
-        series: {
-          marker: { enabled: false },
-          step: passosSelecionado?'left':false
-        },
-        area: {
-          stacking: stacking,
-          states: { hover: { enabled: false } },
-        }
-      }
-    }).highcharts();
-  }
-
-function criaGraficoComFiltroDeAno($el) {
-    return $el.highcharts({
-      chart: { type: 'pie' },
-      title: { text: $el.data('titulo') },
-      subtitle: { text: $el.data('subtitulo') },
-      credits: { enabled: false },
-      tooltip: {
-        headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
-        pointFormat:  '{point.name}: <b>{point.y:.4f}%</b> do total<br/>'
-      },
-      plotOptions: {
-        series: {
-          dataLabels: {
-            enabled: true,
-            format:  '<b style="color:{point.color}">{point.name}</b>: {point.y:.4f}%'
-          }
-        }
-      }
-    }).highcharts();
-  }
-
-  function atualizaGrafico(chart, series) {
-    chart.showLoading();
-
-    setTimeout(function() {
-      // Remove todas as séries
-      _.each(chart.series.slice(), function(series) { series.remove(false); });
-
-      // Adiciona séries
-      _.each(series, function(series) { chart.addSeries(series, false); });
-
-      // Atualiza tela
-      chart.redraw();
-      chart.hideLoading();
-    }, 0);
-  }
-
-  function criaGrafico(id, serie, indice, apenas0e100) {
-    var $el = $(id), chart = $el.highcharts();
-    var ufs = filtroJurisdicao(), ano = $('#ano').val();
-    if (ano === 'TODOS') {
-      if (chart == null) {
-        chart = criaGraficoSemFiltros($el, apenas0e100);
-      }
-      atualizaGrafico(chart, serie.seriesPorJurisdicao(indice, ufs));
-    } else {
-      if (chart == null) {
-        chart = criaGraficoComFiltroDeAno($el);
-      }
-      atualizaGrafico(chart, serie.seriesPorAno(indice, ufs, parseInt(ano, 10)));
-    }
+    series.ehGraficoEmPassos = apenas0e100 === true || $('#passos').is(':checked:enabled');
+    series.ehGraficoDeArea   = apenas0e100 === true || $('#tipo_area').is(':checked');
   }
 
   function atualizaTela(estado) {
@@ -250,16 +88,7 @@ function criaGraficoComFiltroDeAno($el) {
     history.pushState({ selecao: selecao }, titulo, '#' + selecao);
   }
 
-  function recriaGraficosDaGuiaAtual(forcaDestruicao) {
-
-    if (forcaDestruicao === true) {
-      // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
-      _.each(Highcharts.charts, function(chart) {
-        if (chart != null) {
-          chart.destroy();
-        }
-      });
-    }
+  function atualizaGuia() {
 
     if (window.fazendoMudancas === true) {
       return;
@@ -273,7 +102,7 @@ function criaGraficoComFiltroDeAno($el) {
     window.fazendoMudancas = true;
     mudancas();
     window.fazendoMudancas = false;
-    recriaGraficosDaGuiaAtual();
+    atualizaGuia();
   }
 
   $(function() {
@@ -358,13 +187,21 @@ function criaGraficoComFiltroDeAno($el) {
     // Precisa atualizar séries (remove série e readiciona)
     $(document).on('change', '.cfg.cfg-indice', function() {
       adicionaHistoria();
-      recriaGraficosDaGuiaAtual(false);
+      atualizaGuia();
     });
 
     // Precisa atualizar séries (destrói gráfico e recria)
     $(document).on('change', '.cfg.cfg-grafico', function() {
       adicionaHistoria();
-      recriaGraficosDaGuiaAtual(true);
+
+      // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
+      _.each(Highcharts.charts, function(chart) {
+        if (chart != null) {
+          chart.destroy();
+        }
+      });
+
+      atualizaGuia();
     });
 
     // Redesenha gráficos que estavam em elementos escondidos
@@ -377,83 +214,68 @@ function criaGraficoComFiltroDeAno($el) {
     });
 
     $.getJSON('eleitos.json').done(function(json) {
+      var eleicoes = new RepositorioEleitoral(json);
+      var indices  = new GeradorDeIndices(eleicoes);
 
-      var cfg     = new Configuracao();
-
-      cfg.cores = {
+      var partidos = new RepositorioDePartidos();
+      var cfg = new ConfiguracaoDePartidos(partidos);
+      var cores = new GerenciadorDeCores(partidos, {
         verde:        [ '#6ed854', '#a9ff97', '#00ff99' ],
-        vermelho:     [ '#df5353', '#E86850', '#dc143c', '#ed7db7' ],
+        vermelho:     [ '#df5353', '#e86850', '#dc143c', '#ed7db7' ],
         laranja:      [ '#f7a35c', '#edb47e' ],
         azul:         [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
-        'azul claro': [ '#7eedeb', '#00CED1' ],
+        'azul claro': [ '#7eedeb', '#00ced1' ],
         roxo:         [ '#be55d9', '#7e80ed', '#996699' ],
-      };
-
-      var serie   = new Serie(cfg);
-      var indices = new GeradorDeIndices(json);
+      });
+      var series = new GeradorDeSeries(cfg, partidos, cores);
 
       $(document).on('shown.bs.tab', '[aria-controls="tab_indice_total"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#indice_total', serie, indices.indice());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_total"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#legislativo_total', serie, indices.legislativo());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_total"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#executivo_total', serie, indices.executivo());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_federal"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#indice_federal', serie, indices.federal());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_federal"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#deputados_federais', serie, indices.deputadosFederais());
-        criaGrafico('#senadores', serie, indices.senadores());
-        criaGrafico('#congresso_nacional', serie, indices.legislativoFederal());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_federal"]', function() {
-        atualizaConfiguracao(cfg, true);
-        criaGrafico('#presidentes', serie, indices.executivoFederal(), true);
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_estadual"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#indice_estadual', serie, indices.estadual());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_estadual"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#deputados_estaduais', serie, indices.legislativoEstadual());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_estadual"]', function() {
-        var estaMostrandoApenasUmaUf = filtroJurisdicao().length === 1;
-        atualizaConfiguracao(cfg, estaMostrandoApenasUmaUf);
-        criaGrafico('#governadores', serie, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_indice_municipal"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#indice_municipal', serie, indices.municipal());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_legislativo_municipal"]', function() {
-        atualizaConfiguracao(cfg);
-        criaGrafico('#vereadores', serie, indices.legislativoMunicipal());
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_executivo_municipal"]', function() {
-        var ufs = filtroJurisdicao(), estaMostrandoApenasDf = ufs.length === 1 && ufs[0] === 'DF';
-        atualizaConfiguracao(cfg, estaMostrandoApenasDf);
-        criaGrafico('#prefeitos', serie, indices.executivoMunicipal(), estaMostrandoApenasDf);
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_total"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#indice_total', series, indices.indice());
+      }).on('shown.bs.tab', '[aria-controls="tab_legislativo_total"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#legislativo_total', series, indices.legislativo());
+      }).on('shown.bs.tab', '[aria-controls="tab_executivo_total"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#executivo_total', series, indices.executivo());
+      }).on('shown.bs.tab', '[aria-controls="tab_indice_federal"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#indice_federal', series, indices.federal());
+      }).on('shown.bs.tab', '[aria-controls="tab_legislativo_federal"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#deputados_federais', series, indices.deputadosFederais());
+        criaGrafico('#senadores', series, indices.senadores());
+        criaGrafico('#congresso_nacional', series, indices.legislativoFederal());
+      }).on('shown.bs.tab', '[aria-controls="tab_executivo_federal"]', function() {
+        atualizaConfiguracao(cfg, series, true);
+        criaGrafico('#presidentes', series, indices.executivoFederal(), true);
+      }).on('shown.bs.tab', '[aria-controls="tab_indice_estadual"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#indice_estadual', series, indices.estadual());
+      }).on('shown.bs.tab', '[aria-controls="tab_legislativo_estadual"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#deputados_estaduais', series, indices.legislativoEstadual());
+      }).on('shown.bs.tab', '[aria-controls="tab_executivo_estadual"]', function() {
+        var estaMostrandoApenasUmaUf = filtroJurisdicao().ufs.length === 1;
+        atualizaConfiguracao(cfg, series, estaMostrandoApenasUmaUf);
+        criaGrafico('#governadores', series, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
+      }).on('shown.bs.tab', '[aria-controls="tab_indice_municipal"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#indice_municipal', series, indices.municipal());
+      }).on('shown.bs.tab', '[aria-controls="tab_legislativo_municipal"]', function() {
+        atualizaConfiguracao(cfg, series);
+        criaGrafico('#vereadores', series, indices.legislativoMunicipal());
+      }).on('shown.bs.tab', '[aria-controls="tab_executivo_municipal"]', function() {
+        var ufs = filtroJurisdicao().ufs, estaMostrandoApenasDf = ufs.length === 1 && ufs[0] === 'DF';
+        atualizaConfiguracao(cfg, series, estaMostrandoApenasDf);
+        criaGrafico('#prefeitos', series, indices.executivoMunicipal(), estaMostrandoApenasDf);
+      }).on('shown.bs.tab', '[aria-controls="tab_total"]', function() {
         $('#tablist_total > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_federal"]', function() {
+      }).on('shown.bs.tab', '[aria-controls="tab_federal"]', function() {
         $('#tablist_federal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_estadual"]', function() {
+      }).on('shown.bs.tab', '[aria-controls="tab_estadual"]', function() {
         $('#tablist_estadual > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-      });
-      $(document).on('shown.bs.tab', '[aria-controls="tab_municipal"]', function() {
+      }).on('shown.bs.tab', '[aria-controls="tab_municipal"]', function() {
         $('#tablist_municipal > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       });
 
@@ -475,4 +297,4 @@ function criaGraficoComFiltroDeAno($el) {
     });
   });
 
-})(jQuery, _, Highcharts);
+})(jQuery, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao);

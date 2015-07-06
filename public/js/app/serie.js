@@ -1,12 +1,13 @@
-/* globals _, Configuracao */
+/* global _ */
+/* exported GerenciadorDeCores, GeradorDeSeries */
 
-(function(_, Configuracao) {
+(function(_) {
   'use strict';
 
-  function GerenciadorDeCores(cores) {
-    this.cores             = cores;
-    this._pilhaDeCores     = {};
-    this._coresDosPartidos = {};
+  function GerenciadorDeCores(partidos, cores) {
+    this.partidos      = partidos;
+    this.cores         = cores || GerenciadorDeCores.CORES_PADRAO;
+    this._pilhaDeCores = {};
   }
 
   _.extend(GerenciadorDeCores.prototype, {
@@ -26,114 +27,112 @@
       return this._pilhaDeCores[cor].shift();
     },
 
-    cor: function(partido) {
-
-      var chave = partido.sigla + partido.numero + '_' + partido.fundado;
-
-      // Retorna cor se já tem uma
-      if (chave in this._coresDosPartidos) {
-        return this._coresDosPartidos[chave];
-      }
-
+    cor: _.memoize(function(partido) {
       // Se o partido foi renomeado, usa a mesma cor do sucessor
       if (partido.renomeado != null) {
-        var sucessor = Configuracao.encontraPartidoSucessor(partido);
-        return (this._coresDosPartidos[chave] = this.cor(sucessor));
+        var sucessor = this.partidos.buscarSucessor(partido);
+        return this.cor(sucessor);
       }
-
       // Retorna próxima cor da paleta
-      return (this._coresDosPartidos[chave] = this.proxima(partido.cor));
-    },
+      return this.proxima(partido.cor);
+    }, function(partido) {
+      return partido.sigla + partido.numero + '_' + partido.fundado;
+    }),
 
   });
 
-  function Serie(configuracao) {
-    this.configuracao = configuracao;
-    this.cores        = new GerenciadorDeCores(configuracao.cores);
+  GerenciadorDeCores.CORES_PADRAO = {
+    verde:        [ 'green' ],
+    vermelho:     [ 'red' ],
+    laranja:      [ 'orange' ],
+    azul:         [ 'blue' ],
+    'azul claro': [ 'lightblue' ],
+    roxo:         [ 'purple' ]
+  };
 
-    // Inicia as cores de todos os partidos para evitar que sejam gerados cores diferentes toda vez
-    _.each(Configuracao.partidos, _.bind(this.cores.cor, this.cores));
+  function GeradorDeSeries(configuracao, partidos, cores) {
+    this.configuracao = configuracao;
+    this.partidos     = partidos;
+    this.cores        = cores;
+
+    // Faz correções para gráficos em passos
+    this.ehGraficoEmPassos = false;
+
+    // Faz correções para gráficos de área
+    this.ehGraficoDeArea   = false;
   }
 
-  _.extend(Serie.prototype, {
+  _.extend(GeradorDeSeries.prototype, {
 
-    geraIndices: function(indice, anos, ufs) {
-
-      var cfg = this.configuracao;
-
-      // Calcula para cada partido os índices por ano
-      var indicesPorSigla = _.map(indice.siglas(anos, ufs), function(siglaENumero) {
-
+    geraIndices: function(indice, ufs, anos, siglas) {
+      return _.map(siglas, function(siglaENumero) {
         // Carrega informações do partido
-        var info = _.find(Configuracao.partidos, function(info) {
-          return siglaENumero === (info.sigla + info.numero.toString());
+        var info = _.find(this.partidos.todos(), function(p) {
+          return siglaENumero === (p.sigla + p.numero);
         });
-
-        // Adiciona todos anos necessários
-        var anosParaCalcular = cfg.anosComIndice(anos, info.fundado, info.extinto, true);
-
         // Calcula índices
-        var indicePorAno = _.map(anosParaCalcular, function(ano) {
-          return { ano: ano, indice: indice.calculaIndice(ano, ufs, siglaENumero) };
+        var indices = _.map(anos, function(ano) {
+          return { ano: ano, indice: indice.calcula(ufs, ano, siglaENumero) };
         });
-
-        // Extrai siglas e números dos partidos
-        var matches = siglaENumero.match(/(.*?)([0-9]{2})/);
-        var sigla = matches[1], numero = +matches[2];
-
-        return { sigla: sigla, numero: numero, indices: indicePorAno, info: info };
-
-      });
-
-      return indicesPorSigla;
-
+        return { info: info, indices: indices };
+      }, this);
     },
 
-    aplicaConfiguracoes: function(anosComDados, indicesPorSigla) {
-
-      var cfg = this.configuracao;
-
-      // Aplica configuração de partidos (parte 1)
-      var dados = cfg.mesclarPartidosExtintos(indicesPorSigla);
-
-      // Aplica configuração de partidos (parte 2)
-      dados = cfg.reescreverSiglas(dados);
+    filtrarAnos: function(indicesPorSigla, manterNulls) {
 
       // Filtra anos que o partido existe
-      dados = _.map(dados, function(p) {
+      var partidos = _.map(indicesPorSigla, function(p) {
 
-        var anos = cfg.anosComIndice(anosComDados, p.fundado, p.extinto, false);
+        var indices = p.indices;
 
-        var indicesPorAno = _.map(anos, function(ano) {
-          if (cfg.ehGraficoDeArea === true && ano < p.fundado) {
-            return { ano: ano, indice: null };
-          } else {
-            return _.find(p.indices, 'ano', ano);
+        if (manterNulls === true) {
+          // No gráfico de área precisa de nulls nos anos que não tem dados
+          indices = _.map(indices, function(ponto) {
+            if (ponto.ano < p.fundado) {
+              return { ano: ponto.ano, indice: null };
+            }
+            return ponto;
+          });
+        } else {
+          // Remover pontos antes da fundação
+          indices = _.filter(indices, function(ponto) {
+            return ponto.ano >= p.fundado;
+          });
+          if (p.extinto != null) {
+            // Remover pontos após a extinção
+            indices = _.filter(indices, function(ponto) {
+              return ponto.ano <= p.extinto;
+            });
           }
-        });
+        }
 
         var essencial = _.pick(p, [ 'sigla', 'info', 'mesclados' ]);
-        return _.assign(essencial, { indices: indicesPorAno });
-
+        return _.assign(essencial, { indices: indices });
       });
 
       // Filtra partidos que não tem dados para nenhum ano
-      dados = _.filter(dados, 'indices.length');
+      partidos = _.filter(partidos, 'indices.length');
 
-      return dados;
+      return partidos;
+    },
 
+    inicializaCores: function() {
+      // Inicia as cores de todos os partidos para garantir que sempre seja gerada a mesma cor
+      _.each(this.partidos.todos(), this.cores.cor, this.cores);
     },
 
     formataParaHighchartsPorJurisdicao: function(indicesPorSigla) {
 
-      var cfg = this.configuracao, tabela = cfg.tabelaDeReescrita, cores = this.cores;
+      var tabela = this.configuracao.tabelaDeReescrita;
+
+      this.inicializaCores();
 
       // Converte para formato esperado pelo Highcharts
       var series = _.map(indicesPorSigla, function(p) {
 
         // Converte anos em datas
         var indices = _.map(p.indices, function(ponto) {
-          return { x: Date.UTC(ponto.ano + 1, 0, 1), y: ponto.indice };
+          return { x: Date.UTC(ponto.ano + 1, 0, 1), y: ponto.indice * 100 };
         });
 
         // Ordena índices por data (Highcharts precisa deles ordenados)
@@ -145,18 +144,18 @@
         // Resto
         if (tabela != null && p.sigla === tabela.resto) {
           serie.color = '#333';
-          if (cfg.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
+          if (this.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
           // Substitui null por 0 para mostrar resto em todos os anos
           serie.data = _.map(serie.data, function(ponto) {
             return { x: ponto.x, y: ponto.y || 0.0 };
           });
         } else {
-          serie.color = cores.cor(p.info);
+          serie.color = this.cores.cor(p.info);
         }
 
         return serie;
 
-      });
+      }, this);
 
       var todosOsPontos = _.flatten(_.pluck(indicesPorSigla, 'data'));
       var ultimoAno = _.max(_.pluck(todosOsPontos, 'x'));
@@ -166,11 +165,11 @@
 
         var somaDosIndices = _.reduce(p.data, function(total, ponto) {
           // Não soma último ano se ele foi adicionado porque é gráfico em passos
-          if (cfg.ehGraficoEmPassos === true && ponto.x === ultimoAno) {
+          if (this.ehGraficoEmPassos === true && ponto.x === ultimoAno) {
             return total;
           }
           return total + ponto.y;
-        }, 0);
+        }, 0, this);
 
         // Mantem o resto em último (menor)
         if (tabela != null) {
@@ -179,7 +178,7 @@
 
         return somaDosIndices;
 
-      }).reverse();
+      }, this).reverse();
 
       return series;
 
@@ -187,35 +186,37 @@
 
     formataParaHighchartsPorAno: function(indicesPorSigla) {
 
-      var tabela = this.configuracao.tabelaDeReescrita, cores = this.cores;
+      var tabela = this.configuracao.tabelaDeReescrita;
+
+      this.inicializaCores();
 
       // Converte para formato esperado pelo Highcharts
-      var series = _.map(indicesPorSigla, function(linha) {
+      var series = _.map(indicesPorSigla, function(p) {
 
         var serie = {
-          name: linha.sigla,
-          y:    linha.indices[0].indice
+          name: p.sigla,
+          y:    p.indices[0].indice * 100
         };
 
         // Resto
-        if (tabela != null && linha.sigla === tabela.resto) {
+        if (tabela != null && p.sigla === tabela.resto) {
           serie.color = '#333';
         } else {
-          serie.color = cores.cor(linha.info);
+          serie.color = this.cores.cor(p.info);
         }
 
         return serie;
 
-      });
+      }, this);
 
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
-      series = _.sortBy(series, function(linha) {
+      series = _.sortBy(series, function(p) {
 
-        var indice = linha.y;
+        var indice = p.y;
 
         // Mantem o resto em último (menor)
         if (tabela != null) {
-          indice += (tabela.resto === linha.name) ? 0 : 9999;
+          indice += (tabela.resto === p.name) ? 0 : 9999;
         }
 
         return indice;
@@ -231,41 +232,39 @@
     },
 
     seriesPorJurisdicao: function(indice, ufs) {
-
-      var anos = _.uniq(_.flatten(_.map(ufs, _.bind(indice.anos, indice)))).sort();
-
-      // Filtra anos que não tem dados (ex.: anos sem todos os senadores)
-      var anosComDados = _.filter(anos, function(ano) {
-        return indice.temDados(ano, ufs);
+      // Adiciona um ano depois da última eleição para o último passo ficar visível
+      var anos = _.filter(indice.anosComDados(ufs), function(ano) {
+        return indice.temDados(ufs, ano);
       });
-
-      var indicesPorSigla = this.geraIndices(indice, anosComDados, ufs);
-      var indicesMigrados = this.aplicaConfiguracoes(anosComDados, indicesPorSigla);
-      var series = this.formataParaHighchartsPorJurisdicao(indicesMigrados);
-
+      if (this.ehGraficoEmPassos === true) {
+        anos.push(_.max(anos) + 1);
+      }
+      var siglas = _.union.apply(_, _.map(anos, function(ano) {
+        return indice.siglasComDados(ufs, ano);
+      }));
+      var partidos = this.geraIndices(indice, ufs, anos, siglas);
+      partidos = this.configuracao.mapearPartidos(partidos);
+      partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
+      var series = this.formataParaHighchartsPorJurisdicao(partidos);
       return series;
-
     },
 
     seriesPorAno: function(indice, ufs, filtroAno) {
-
-      var ano = filtroAno - 1, series;
-
-      if (indice.temDados(ano, ufs)) {
-        var indicesPorSigla = this.geraIndices(indice, [ano], ufs);
-        var indicesMigrados = this.aplicaConfiguracoes([ano], indicesPorSigla);
-        series = this.formataParaHighchartsPorAno(indicesMigrados);
-      } else {
-        series = this.formataParaHighchartsPorAno([]);
+      var ano = filtroAno - 1;
+      if (indice.temDados(ufs, ano) === false) {
+        return this.formataParaHighchartsPorAno([]);
       }
-
+      var siglas = indice.siglasComDados(ufs, ano);
+      var partidos = this.geraIndices(indice, ufs, [ ano ], siglas);
+      partidos = this.configuracao.mapearPartidos(partidos);
+      partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
+      var series = this.formataParaHighchartsPorAno(partidos);
       return series;
-
     },
 
   });
 
   this.GerenciadorDeCores = GerenciadorDeCores;
-  this.Serie = Serie;
+  this.GeradorDeSeries = GeradorDeSeries;
 
-}.call(this, _, Configuracao));
+}.call(this, _));

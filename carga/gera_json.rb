@@ -18,166 +18,233 @@ arquivo_de_saida = File.expand_path(File.join(File.dirname(cwd), "public", "elei
 def normaliza_municipio(municipio, uf)
   municipio = Unicode::downcase(municipio)
   # Elimina todos os acentos
-  municipio = municipio.gsub(%r{[áãâà]}i, 'a').gsub(%r{[éê]}i, 'e').gsub(%r{[í]}i, 'i').gsub(%r{[óõô]}i, 'o').gsub(%r{[úü]}i, 'u').gsub(%r{[ç]}i, 'c')
+  municipio = municipio
+    .gsub(%r{[áãâà]}i, 'a')
+    .gsub(%r{[éê]}i,   'e')
+    .gsub(%r{[í]}i,    'i')
+    .gsub(%r{[óõô]}i,  'o')
+    .gsub(%r{[úü]}i,   'u')
+    .gsub(%r{[ç]}i,    'c')
   # Contrai todos os d'
-  municipio = municipio.gsub("da a", "d'a").gsub("do o", "d'o").gsub(" d ", " d'").gsub(" dagua", " d'agua")
-  # Elimina hífen
+  municipio = municipio
+    .gsub(" da a", " d'a")
+    .gsub(" do o", " d'o")
+    .gsub(" d ", " d'")
+    .gsub(" dagua", " d'agua")
+  # Elimina os hífens
   municipio = municipio.gsub('-', ' ')
-  # Atualiza nomes errados ou desatualizados
-  municipio = 'agua doce do maranhao' if municipio == 'agua doce' && uf == 'MA'
-  municipio = 'aguas lindas de goias' if municipio == 'aguas lindas' && uf == 'GO'
-  municipio = 'alagoinha do piaui' if municipio == 'alagoinha' && uf == 'PI'
-  municipio = 'almeirim' if municipio == 'almerim' && uf == 'PA'
-  municipio = 'alto boa vista' if municipio == 'alto da boa vista' && uf == 'MT'
-  municipio = 'alto paraiso de goias' if municipio == 'alto paraiso' && uf == 'GO'
-  municipio = 'amparo de sao francisco' if municipio == 'amparo do sao francisco' && uf == 'SE'
-  municipio = 'aparecida do taboado' if municipio == 'aparecida do tabuado' && uf == 'MS'
-  municipio = 'armacao dos buzios' if municipio == 'armacao de buzios' && uf == 'RJ'
-  municipio = 'assu' if municipio == 'acu' && uf == 'RN'
-  municipio = 'bady bassitt' if municipio == 'bady bassit' && uf == 'SP'
-  municipio = 'balneario barra do sul' if municipio == 'balneario de barra do sul' && uf == 'SC'
-  municipio = 'balneario camboriu' if municipio == 'balneario de camboriu' && uf == 'SC'
-  municipio = 'bandeirantes do tocantins' if municipio == 'bandeirante' && uf == 'TO'
-  municipio = 'barauna' if municipio == 'baraunas' && uf == 'PB'
-  municipio = 'barro preto' if municipio == 'governador lomanto junior' && uf == 'BA'
-  municipio = 'bataguassu' if municipio == 'bataguacu' && uf == 'MS'
-  municipio = 'bataypora' if municipio == 'bataipora' && uf == 'MS'
-  municipio = 'bela vista do maranhao' if municipio == 'bela vista' && uf == 'MA'
-  municipio = 'bernardino de campos' if municipio == 'bernadino de campos' && uf == 'SP'
-  municipio = 'boa vista do sul' if municipio == 'vinte e sete da boa vista' && uf == 'RS'
-  municipio = 'boa saude' if municipio == 'januario cicco' && uf == 'RN'
-  municipio = 'boa vista do ramos' if municipio == 'boa vista de ramos' && uf == 'AM'
-  municipio = 'bom jesus de goias' if municipio == 'bom jesus' && uf == 'GO'
-  municipio = 'brasopolis' if municipio == 'brazopolis' && uf == 'MG'
-  municipio = 'brodowski' if municipio == 'brodosqui' && uf == 'SP'
-  municipio = 'cabo de santo agostinho' if municipio == 'cabo' && uf == 'PE'
-  municipio = 'caem' if municipio == 'anselmo da fonseca' && uf == 'BA'
-  municipio = 'campo grande' if municipio == 'augusto severo' && uf == 'RN'
-  municipio = 'campos dos goytacazes' if municipio == 'campos' && uf == 'RJ'
-  municipio = 'caninde de sao francisco' if municipio == 'caninde do sao francisco' && uf == 'SE'
-  municipio = 'catunda' if municipio == 'senador catunda' && uf == 'CE'
-  municipio = 'cezarina' if municipio == 'cesarina' && uf == 'GO'
-  municipio = 'chapada de areia' if municipio == "chapada d'areia" && uf == 'TO'
-  municipio = 'chiapetta' if municipio == 'chiapeta' && uf == 'RS'
-  municipio = 'conceicao das pedras' if municipio == 'conceicao da pedra' && uf == 'MG'
-  municipio = 'conselheiro mairinck' if municipio == 'conselheiro mayrinck' && uf == 'PR'
-  municipio = 'darcinopolis' if municipio == 'darcynopolis' && uf == 'TO'
-  municipio = 'deputado irapuan pinheiro' if municipio == 'dep irapuan pinheiro' && uf == 'CE'
-  municipio = 'divinopolis do tocantins' if municipio == 'divinopolis' && uf == 'TO'
-  municipio = 'eldorado dos carajas' if municipio == 'eldorado do carajas' && uf == 'PA'
-  municipio = 'erico cardoso' if municipio == 'agua quente' && uf == 'BA'
-  municipio = 'espirito santo' if municipio == "espirito santo d'oeste" && uf == 'RN'
-  municipio = 'eusebio' if municipio == 'euzebio' && uf == 'CE'
-  municipio = 'fernando pedroza' if municipio == 'fernando pedrosa' && uf == 'RN'
-  municipio = "figueiropolis d'oeste" if municipio == "figueiropoles d'oeste" && uf == 'MT'
-  municipio = 'florinea' if municipio == 'florinia' && uf == 'SP'
-  municipio = 'graccho cardoso' if municipio == 'gracho cardoso' && uf == 'SE'
-  municipio = 'granjeiro' if municipio == 'grangeiro' && uf == 'CE'
-  municipio = 'gouveia' if municipio == 'gouvea' && uf == 'MG'
-  municipio = 'governador edison lobao' if municipio == 'governador edson lobao' && uf == 'MA'
-  municipio = 'herval' if municipio == 'erval' && uf == 'RS'
-  municipio = 'ilha de itamaraca' if municipio == 'itamaraca' && uf == 'PE'
-  municipio = 'ipaussu' if municipio == 'ipaucu' && uf == 'SP'
-  municipio = 'itabirinha de mantena' if municipio == 'itabirinha' && uf == 'MG'
-  municipio = 'itaguaje' if municipio == 'itaguage' && uf == 'PR'
-  municipio = 'itamogi' if municipio == 'itamoji' && uf == 'MG'
-  municipio = "itapua d'oeste" if municipio == 'jamari' && uf == 'RO'
-  municipio = 'jaboatao dos guararapes' if municipio == 'jaboatao' && uf == 'PE'
-  municipio = 'juti' if municipio == 'juty' && uf == 'MS'
-  municipio = 'lagoa de itaenga' if municipio == 'lagoa do itaenga' && uf == 'PE'
-  municipio = 'lajeado' if municipio == 'lageado' && uf == 'TO'
-  municipio = 'lajeado grande' if municipio == 'lageado grande' && uf == 'SC'
-  municipio = 'luis alves' if municipio == 'luiz alves' && uf == 'SC'
-  municipio = 'luis domingues' if municipio == 'luis domingues do maranhao' && uf == 'MA'
-  municipio = 'luiziana' if municipio == 'luisiania' && uf == 'PR'
-  municipio = 'luiziania' if municipio == 'luisiania' && uf == 'SP'
-  municipio = 'manoel urbano' if municipio == 'manuel urbano' && uf == 'AC'
-  municipio = 'mogi das cruzes' if municipio == 'moji das cruzes' && uf == 'SP'
-  municipio = 'mogi guacu' if municipio == 'moji guacu' && uf == 'SP'
-  municipio = 'mogi mirim' if municipio == 'moji mirim' && uf == 'SP'
-  municipio = 'monte santo do tocantins' if municipio == 'monte santo' && uf == 'TO'
-  municipio = 'moreira sales' if municipio == 'moreira salles' && uf == 'PR'
-  municipio = 'muquem do sao francisco' if municipio == 'muquem de sao francisco' && uf == 'BA'
-  municipio = 'mundo novo' if municipio == 'mundo novo de goias' && uf == 'GO'
-  municipio = 'munhoz de melo' if municipio == 'munhoz de mello' && uf == 'PR'
-  municipio = 'nova santa rita' if municipio == 'petronio portela' && uf == 'PI'
-  municipio = 'novo airao' if municipio == 'novo ayrao' && uf == 'AM'
-  municipio = 'nova bandeirantes' if municipio == 'nova bandeirante' && uf == 'MT'
-  municipio = "nova brasilandia d'oeste" if municipio == 'nova brasilandia' && uf == 'RO'
-  municipio = 'oliveira de fatima' if municipio == 'oliveira do tocantins' && uf == 'TO'
-  municipio = 'palmeiras do tocantins' if municipio == 'mosquito' && uf == 'TO'
-  municipio = 'paraty' if municipio == 'parati' && uf == 'RJ'
-  municipio = 'paty do alferes' if municipio == 'pati do alferes' && uf == 'RJ'
-  municipio = "pau d'arco do piaui" if municipio == 'pau darco do piaui' && uf == 'PI'
-  municipio = 'pedra branca do amapari' if (municipio == 'agua branca do amapari' || municipio == 'amapari') && uf == 'AP'
-  municipio = 'pedro regis' if municipio == 'retiro' && uf == 'PB'
-  municipio = 'picarras' if municipio == 'balneario picarras' && uf == 'SC'
-  municipio = 'pindai' if municipio == 'ouro branco' && uf == 'BA'
-  municipio = 'pindorama do tocantins' if municipio == 'pindorama de goias' && uf == 'TO'
-  municipio = 'pirassununga' if municipio == 'piracununga' && uf == 'SP'
-  municipio = 'piumhi' if municipio == 'pium i' && uf == 'MG'
-  municipio = 'porto esperidiao' if municipio == 'porto esperediao' && uf == 'MT'
-  municipio = 'poxoreu' if municipio == 'poxoreo' && uf == 'MT'
-  municipio = 'presidente castello branco' if municipio == 'presidente castelo branco' && uf == 'SC'
-  municipio = 'sao jose dos quatro marcos' if municipio == 'quatro marcos' && uf == 'MT'
-  municipio = 'quijingue' if municipio == 'quinjingue' && uf == 'BA'
-  municipio = 'salmourao' if municipio == 'salmorao' && uf == 'SP'
-  municipio = 'sud mennucci' if municipio == 'sud menucci' && uf == 'SP'
-  municipio = 'santa cecilia' if municipio == 'santa cecilia de umbuzeiro' && uf == 'PB'
-  municipio = 'santa cruz de monte castelo' if municipio == 'santa cruz do monte castelo' && uf == 'PR'
-  municipio = 'santa isabel do ivai' if municipio == 'santa izabel do ivai' && uf == 'PR'
-  municipio = 'santa isabel do para' if municipio == 'santa izabel do para' && uf == 'PA'
-  municipio = 'santa maria de jetiba' if municipio == 'santa maria do jetiba' && uf == 'ES'
-  municipio = 'santa rita de ibitipoca' if municipio == 'santa rita do ibitipoca' && uf == 'MG'
-  municipio = 'santa rosa do purus' if municipio == 'santa rosa' && uf == 'AC'
-  municipio = 'santa teresinha' if municipio == 'santa terezinha' && uf == 'BA'
-  municipio = 'santana do itarare' if municipio == 'santa ana do itarare' && uf == 'PR'
-  municipio = 'santo antonio de posse' if municipio == 'santo antonio da posse' && uf == 'SP'
-  municipio = 'sao bentinho' if municipio == 'sao bento de pombal' && uf == 'PB'
-  municipio = 'sao caitano' if municipio == 'sao caetano' && uf == 'PE'
-  municipio = 'sao domingos do cariri' if municipio == 'sao domingos de cabaceiras' && uf == 'PB'
-  municipio = 'sao domingos do norte' if municipio == 'sao domingos' && uf == 'ES'
-  municipio = 'sao jose da lapa' if municipio == 'sao jose do lapa' && uf == 'MG'
-  municipio = 'sao jose do brejo do cruz' if municipio == 'sao jose do brejo cruz' && uf == 'PB'
-  municipio = 'sao jose do campestre' if municipio == 'sao jose de campestre' && uf == 'RN'
-  municipio = 'sao luis de montes belos' if municipio == 'sao luis dos montes belos' && uf == 'GO'
-  municipio = 'sao luiz' if municipio == 'sao luiz do anaua' && uf == 'RR'
-  municipio = 'sao luiz gonzaga' if municipio == 'sao luis gonzaga' && uf == 'RS'
-  municipio = 'sao raimundo do doca bezerra' if municipio == 'sao raimundo da doca bezerra' && uf == 'MA'
-  municipio = 'sao sebastiao de lagoa de roca' if municipio == 'sao seb. de lagoa de roca' && uf == 'PB'
-  municipio = 'sao thome das letras' if municipio == 'sao tome das letras' && uf == 'MG'
-  municipio = 'sao valerio da natividade' if municipio == 'sao valerio do tocantins' && uf == 'TO'
-  municipio = 'sao vicente do serido' if municipio == 'serido' && uf == 'PB'
-  municipio = 'senador la rocque' if municipio == 'senador la roque' && uf == 'MA'
-  municipio = 'serra caiada' if municipio == 'presidente juscelino' && uf == 'RN'
-  municipio = 'suzanapolis' if municipio == 'suzanopolis' && uf == 'SP'
-  municipio = 'tapurah' if municipio == 'tapura' && uf == 'MT'
-  municipio = 'tejucuoca' if municipio == 'tejussuoca' && uf == 'CE'
-  municipio = 'teotonio vilela' if municipio == 'senador teotonio vilela' && uf == 'AL'
-  municipio = 'teresina de goias' if municipio == 'terezinha de goias' && uf == 'GO'
-  municipio = 'trindade do sul' if municipio == 'trindade' && uf == 'RS'
-  municipio = 'valparaiso' if municipio == 'valparaizo' && uf == 'SP'
-  municipio = 'valparaiso de goias' if (municipio == 'valparaiso' || municipio == 'valparaizo') && uf == 'GO'
-  municipio = 'varre sai' if municipio == 'varre e sai' && uf == 'RJ'
-  municipio = 'vila bela da santissima trindade' if municipio == 'vila bela stssma trindade' && uf == 'MT'
-  municipio = 'viseu' if municipio == 'vizeu' && uf == 'PA'
+  municipio
+end
 
+# Corrige quando os nomes estão errados no TSE e IBGE, mas em anos diferentes
+def atualiza_municipios_ibge_e_tse(municipio, uf)
+  case uf
+  when 'MT'
+    municipio = 'poxoreu' if municipio == 'poxoreo'
+  when 'RN'
+    municipio = 'boa saude' if municipio == 'januario cicco'
+    municipio = 'serra caiada' if municipio == 'presidente juscelino'
+  when 'RJ'
+    municipio = 'paraty' if municipio == 'parati'
+  when 'SC'
+    municipio = 'luis alves' if municipio == 'luiz alves'
+  when 'SP'
+    municipio = 'mogi mirim' if municipio == 'moji mirim'
+  end
+  municipio
+end
+
+# Corrige quando os nomes estão errados no IBGE, mas corretos no TSE
+def atualiza_municipios_ibge(municipio, uf)
+  case uf
+  when 'BA'
+    municipio = 'muquem do sao francisco' if municipio == 'muquem de sao francisco'
+  when 'PB'
+    municipio = 'sao vicente do serido' if municipio == 'serido'
+  when 'PE'
+    municipio = 'lagoa de itaenga' if municipio == 'lagoa do itaenga'
+  when 'RN'
+    municipio = 'assu' if municipio == 'acu'
+    municipio = 'campo grande' if municipio == 'augusto severo'
+  when 'SE'
+    municipio = 'graccho cardoso' if municipio == 'gracho cardoso'
+  when 'SP'
+    municipio = 'florinea' if municipio == 'florinia'
+  end
+  municipio
+end
+
+# Corrige quando os nomes estão errados no TSE, mas corretos no IBGE
+def atualiza_municipios_tse(municipio, uf)
+  case uf
+  when 'AC'
+    municipio = 'manoel urbano' if municipio == 'manuel urbano'
+    municipio = 'santa rosa do purus' if municipio == 'santa rosa'
+  when 'AL'
+    municipio = 'teotonio vilela' if municipio == 'senador teotonio vilela'
+  when 'AM'
+    municipio = 'boa vista do ramos' if municipio == 'boa vista de ramos'
+    municipio = 'novo airao' if municipio == 'novo ayrao'
+  when 'AP'
+    municipio = 'pedra branca do amapari' if municipio == 'agua branca do amapari'
+    municipio = 'pedra branca do amapari' if municipio == 'amapari'
+  when 'BA'
+    municipio = 'barro preto' if municipio == 'governador lomanto junior'
+    municipio = 'caem' if municipio == 'anselmo da fonseca'
+    municipio = 'erico cardoso' if municipio == 'agua quente'
+    municipio = 'pindai' if municipio == 'ouro branco'
+    municipio = 'quijingue' if municipio == 'quinjingue'
+    municipio = 'santa teresinha' if municipio == 'santa terezinha'
+  when 'CE'
+    municipio = 'catunda' if municipio == 'senador catunda'
+    municipio = 'deputado irapuan pinheiro' if municipio == 'dep irapuan pinheiro'
+    municipio = 'eusebio' if municipio == 'euzebio'
+    municipio = 'granjeiro' if municipio == 'grangeiro'
+    municipio = 'tejucuoca' if municipio == 'tejussuoca'
+  when 'ES'
+    municipio = 'santa maria de jetiba' if municipio == 'santa maria do jetiba'
+    municipio = 'sao domingos do norte' if municipio == 'sao domingos'
+  when 'GO'
+    municipio = 'aguas lindas de goias' if municipio == 'aguas lindas'
+    municipio = 'alto paraiso de goias' if municipio == 'alto paraiso'
+    municipio = 'bom jesus de goias' if municipio == 'bom jesus'
+    municipio = 'cezarina' if municipio == 'cesarina'
+    municipio = 'mundo novo' if municipio == 'mundo novo de goias'
+    municipio = 'sao luis de montes belos' if municipio == 'sao luis dos montes belos'
+    municipio = 'teresina de goias' if municipio == 'terezinha de goias'
+    municipio = 'valparaiso de goias' if municipio == 'valparaiso'
+    municipio = 'valparaiso de goias' if municipio == 'valparaizo'
+  when 'MA'
+    municipio = 'agua doce do maranhao' if municipio == 'agua doce'
+    municipio = 'bela vista do maranhao' if municipio == 'bela vista'
+    municipio = 'governador edison lobao' if municipio == 'governador edson lobao'
+    municipio = 'luis domingues' if municipio == 'luis domingues do maranhao'
+    municipio = 'sao raimundo do doca bezerra' if municipio == 'sao raimundo da doca bezerra'
+    municipio = 'senador la rocque' if municipio == 'senador la roque'
+  when 'MG'
+    municipio = 'brasopolis' if municipio == 'brazopolis'
+    municipio = 'conceicao das pedras' if municipio == 'conceicao da pedra'
+    municipio = 'gouveia' if municipio == 'gouvea'
+    municipio = 'itabirinha de mantena' if municipio == 'itabirinha'
+    municipio = 'itamogi' if municipio == 'itamoji'
+    municipio = 'piumhi' if municipio == 'pium i'
+    municipio = 'santa rita de ibitipoca' if municipio == 'santa rita do ibitipoca'
+    municipio = 'sao jose da lapa' if municipio == 'sao jose do lapa'
+    municipio = 'sao thome das letras' if municipio == 'sao tome das letras'
+  when 'MT'
+    municipio = 'alto boa vista' if municipio == 'alto da boa vista'
+    municipio = "figueiropolis d'oeste" if municipio == "figueiropoles d'oeste"
+    municipio = 'nova bandeirantes' if municipio == 'nova bandeirante'
+    municipio = 'porto esperidiao' if municipio == 'porto esperediao'
+    municipio = 'sao jose dos quatro marcos' if municipio == 'quatro marcos'
+    municipio = 'tapurah' if municipio == 'tapura'
+    municipio = 'vila bela da santissima trindade' if municipio == 'vila bela stssma trindade'
+  when 'MS'
+    municipio = 'aparecida do taboado' if municipio == 'aparecida do tabuado'
+    municipio = 'bataguassu' if municipio == 'bataguacu'
+    municipio = 'bataypora' if municipio == 'bataipora'
+    municipio = 'juti' if municipio == 'juty'
+  when 'PA'
+    municipio = 'almeirim' if municipio == 'almerim'
+    municipio = 'eldorado dos carajas' if municipio == 'eldorado do carajas'
+    municipio = 'santa isabel do para' if municipio == 'santa izabel do para'
+    municipio = 'viseu' if municipio == 'vizeu'
+  when 'PB'
+    municipio = 'barauna' if municipio == 'baraunas'
+    municipio = 'pedro regis' if municipio == 'retiro'
+    municipio = 'santa cecilia' if municipio == 'santa cecilia de umbuzeiro'
+    municipio = 'sao bentinho' if municipio == 'sao bento de pombal'
+    municipio = 'sao domingos do cariri' if municipio == 'sao domingos de cabaceiras'
+    municipio = 'sao jose do brejo do cruz' if municipio == 'sao jose do brejo cruz'
+    municipio = 'sao sebastiao de lagoa de roca' if municipio == 'sao seb. de lagoa de roca'
+  when 'PE'
+    municipio = 'cabo de santo agostinho' if municipio == 'cabo'
+    municipio = 'ilha de itamaraca' if municipio == 'itamaraca'
+    municipio = 'jaboatao dos guararapes' if municipio == 'jaboatao'
+    municipio = 'sao caitano' if municipio == 'sao caetano'
+  when 'PI'
+    municipio = 'alagoinha do piaui' if municipio == 'alagoinha'
+    municipio = 'nova santa rita' if municipio == 'petronio portela'
+    municipio = "pau d'arco do piaui" if municipio == 'pau darco do piaui'
+  when 'PR'
+    municipio = 'conselheiro mairinck' if municipio == 'conselheiro mayrinck'
+    municipio = 'itaguaje' if municipio == 'itaguage'
+    municipio = 'luiziana' if municipio == 'luisiania'
+    municipio = 'moreira sales' if municipio == 'moreira salles'
+    municipio = 'munhoz de melo' if municipio == 'munhoz de mello'
+    municipio = 'santa cruz de monte castelo' if municipio == 'santa cruz do monte castelo'
+    municipio = 'santa isabel do ivai' if municipio == 'santa izabel do ivai'
+    municipio = 'santana do itarare' if municipio == 'santa ana do itarare'
+  when 'RJ'
+    municipio = 'armacao dos buzios' if municipio == 'armacao de buzios'
+    municipio = 'campos dos goytacazes' if municipio == 'campos'
+    municipio = 'paty do alferes' if municipio == 'pati do alferes'
+    municipio = 'varre sai' if municipio == 'varre e sai'
+  when 'RN'
+    municipio = 'espirito santo' if municipio == "espirito santo d'oeste"
+    municipio = 'fernando pedroza' if municipio == 'fernando pedrosa'
+    municipio = 'sao jose do campestre' if municipio == 'sao jose de campestre'
+  when 'RO'
+    municipio = "itapua d'oeste" if municipio == 'jamari'
+    municipio = "nova brasilandia d'oeste" if municipio == 'nova brasilandia'
+  when 'RR'
+    municipio = 'sao luiz' if municipio == 'sao luiz do anaua'
+  when 'RS'
+    municipio = 'boa vista do sul' if municipio == 'vinte e sete da boa vista'
+    municipio = 'chiapetta' if municipio == 'chiapeta'
+    municipio = 'herval' if municipio == 'erval'
+    municipio = 'sao luiz gonzaga' if municipio == 'sao luis gonzaga'
+    municipio = 'trindade do sul' if municipio == 'trindade'
+  when 'SE'
+    municipio = 'amparo de sao francisco' if municipio == 'amparo do sao francisco'
+    municipio = 'caninde de sao francisco' if municipio == 'caninde do sao francisco'
+  when 'SC'
+    municipio = 'balneario barra do sul' if municipio == 'balneario de barra do sul'
+    municipio = 'balneario camboriu' if municipio == 'balneario de camboriu'
+    municipio = 'lajeado grande' if municipio == 'lageado grande'
+    municipio = 'picarras' if municipio == 'balneario picarras'
+    municipio = 'presidente castello branco' if municipio == 'presidente castelo branco'
+  when 'SP'
+    municipio = 'bady bassitt' if municipio == 'bady bassit'
+    municipio = 'bernardino de campos' if municipio == 'bernadino de campos'
+    municipio = 'brodowski' if municipio == 'brodosqui'
+    municipio = 'ipaussu' if municipio == 'ipaucu'
+    municipio = 'luiziania' if municipio == 'luisiania'
+    municipio = 'mogi das cruzes' if municipio == 'moji das cruzes'
+    municipio = 'mogi guacu' if municipio == 'moji guacu'
+    municipio = 'pirassununga' if municipio == 'piracununga'
+    municipio = 'salmourao' if municipio == 'salmorao'
+    municipio = 'santo antonio de posse' if municipio == 'santo antonio da posse'
+    municipio = 'sud mennucci' if municipio == 'sud menucci'
+    municipio = 'suzanapolis' if municipio == 'suzanopolis'
+    municipio = 'valparaiso' if municipio == 'valparaizo'
+  when 'TO'
+    municipio = 'bandeirantes do tocantins' if municipio == 'bandeirante'
+    municipio = 'chapada de areia' if municipio == "chapada d'areia"
+    municipio = 'darcinopolis' if municipio == 'darcynopolis'
+    municipio = 'divinopolis do tocantins' if municipio == 'divinopolis'
+    municipio = 'lajeado' if municipio == 'lageado'
+    municipio = 'monte santo do tocantins' if municipio == 'monte santo'
+    municipio = 'oliveira de fatima' if municipio == 'oliveira do tocantins'
+    municipio = 'palmeiras do tocantins' if municipio == 'mosquito'
+    municipio = 'pindorama do tocantins' if municipio == 'pindorama de goias'
+    municipio = 'sao valerio da natividade' if municipio == 'sao valerio do tocantins'
+  end
   municipio
 end
 
 def populacao(lista, uf, municipio, ano)
-  ultimo_ano_com_dados = lista.keys.select { |i| i <= ano }.max || lista.keys.min
+  ultimo_ano = lista.keys.select { |i| i <= ano }.max || lista.keys.min
   if uf.nil?
-    lista[ultimo_ano_com_dados]
+    lista[ultimo_ano]
   elsif municipio.nil?
-    lista[ultimo_ano_com_dados][uf]
-  elsif lista[ultimo_ano_com_dados][uf].has_key? municipio
-    lista[ultimo_ano_com_dados][uf][municipio]
+    lista[ultimo_ano][uf]
+  elsif lista[ultimo_ano][uf].has_key? municipio
+    lista[ultimo_ano][uf][municipio]
   else
-    primeiro_ano_com_municipio = lista.keys.select { |i| lista[i][uf].has_key? municipio }.min
-
-    raise "Não encontrado '#{municipio}' / #{uf} em #{ano}" unless lista.has_key? primeiro_ano_com_municipio
-    lista[primeiro_ano_com_municipio][uf][municipio]
+    primeiro_ano = lista.keys.select { |i| lista[i][uf].has_key? municipio }.min
+    raise "Não encontrado '#{municipio}' / #{uf} em #{ano}" unless lista.has_key? primeiro_ano
+    lista[primeiro_ano][uf][municipio]
   end
 end
 
@@ -199,6 +266,8 @@ Dir.glob(File.join(pasta_de_entrada_populacao, "*_municipios.txt")) do |arquivo|
     uf, municipio, populacao = linha.chomp.split(';')
 
     municipio = normaliza_municipio(municipio, uf)
+    municipio = atualiza_municipios_ibge(municipio, uf)
+    municipio = atualiza_municipios_ibge_e_tse(municipio, uf)
     populacao = populacao.to_i
 
     populacao_municipios[ano][uf] ||= {}
@@ -224,21 +293,40 @@ Dir.glob(File.join(pasta_de_entrada_eleitos, "*.txt")) do |arquivo|
 
     ano       = ano.to_i
     municipio = normaliza_municipio(municipio, uf)
+    municipio = atualiza_municipios_tse(municipio, uf)
+    municipio = atualiza_municipios_ibge_e_tse(municipio, uf)
     sigla     = sigla.gsub(/ /, '')
-    partido   = if numero.to_i >= 10 then "#{sigla}#{numero}" else "#{sigla}#{numero.to_i+10}" end
+    partido   =
+      if numero.to_i >= 10 then
+        "#{sigla}#{numero}"
+      else
+        "#{sigla}#{numero.to_i+10}"
+      end
 
     if cargo.match(%r{\APREFEITO|VEREADOR\z})
-      ((((municipais[ano] ||= {})[uf] ||= {})[municipio] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+      municipais[uf] ||= {}
+      municipais[uf][municipio] ||= {}
+      municipais[uf][municipio][ano] ||= {}
+      municipais[uf][municipio][ano] ||= {}
+      municipais[uf][municipio][ano][cargo] ||= Hash.new(0)
+      municipais[uf][municipio][ano][cargo][partido] += 1
     elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO DISTRITAL\z}) and uf === 'DF'
-      ((distritais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+      distritais[ano] ||= {}
+      distritais[ano][cargo] ||= Hash.new(0)
+      distritais[ano][cargo][partido] += 1
     elsif cargo.match(%r{\AGOVERNADOR|DEPUTADO ESTADUAL\z})
-      (((estaduais[ano] ||= {})[uf] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+      estaduais[uf] ||= {}
+      estaduais[uf][ano] ||= {}
+      estaduais[uf][ano][cargo] ||= Hash.new(0)
+      estaduais[uf][ano][cargo][partido] += 1
     elsif cargo.match(%r{\ADEPUTADO FEDERAL|SENADOR\z})
-      ((federais[ano] ||= {})[cargo] ||= Hash.new(0))[partido] += 1
+      federais[ano] ||= {}
+      federais[ano][cargo] ||= Hash.new(0)
+      federais[ano][cargo][partido] += 1
     elsif cargo.match(%r(\APRESIDENTE\z))
       presidenciais[ano] = partido
     else
-      raise "Cargo '#{cargo}' econtrado!"
+      raise "Cargo '#{cargo}' encontrado!"
     end
   end
 end
@@ -248,226 +336,119 @@ end
 # Processa totais por partido e populações e gera os dados necessários
 # --------------------------------------------------------------------
 
-json = { municipais:{}, estaduais:{}, distritais: {}, federais:{}, presidenciais:{} }
-
-def criaHashMunicipal(populacao)
-  {
-    total_prefeitos:                      0,
-    total_vereadores:                     0,
-    total_populacao:                      populacao,
-    prefeitos_por_sigla:                  Hash.new(0),
-    prefeitos_por_sigla_peso_populacao:   Hash.new(0),
-    vereadores_por_sigla:                 Hash.new(0),
-    vereadores_por_sigla_peso_populacao:  Hash.new(0)
-  }
-end
-
-municipais.each do |ano, ufs|
-
-  json[:municipais][ano] = { :_BR => criaHashMunicipal(populacao(populacao_brasil, nil, nil, ano)) }
-
-  ufs.each do |uf, municipios|
-
-    total_populacao_uf = populacao(populacao_ufs, uf, nil, ano)
-
-    json[:municipais][ano][uf] = criaHashMunicipal(total_populacao_uf)
-
-    municipios.each do |municipio, cargos|
-
-      total_populacao_municipio = populacao(populacao_municipios, uf, municipio, ano)
-
-      if cargos.has_key? 'VEREADOR'
-
-        total_vereadores = cargos['VEREADOR'].map { |sigla, vereadores| vereadores }.reduce(:+)
-
-        json[:municipais][ano][:_BR][:total_vereadores] += total_vereadores
-        json[:municipais][ano][uf][:total_vereadores]   += total_vereadores
-
-        cargos['VEREADOR'].each do |sigla, vereadores|
-          json[:municipais][ano][:_BR][:vereadores_por_sigla][sigla]                += vereadores
-          json[:municipais][ano][uf][:vereadores_por_sigla][sigla]                  += vereadores
-          json[:municipais][ano][:_BR][:vereadores_por_sigla_peso_populacao][sigla] += vereadores * (total_populacao_municipio / total_vereadores)
-          json[:municipais][ano][uf][:vereadores_por_sigla_peso_populacao][sigla]   += vereadores * (total_populacao_municipio / total_vereadores)
-        end
-
-      else
-        puts "Faltando vereadores para #{municipio}/#{uf} em #{ano}"
-      end
-
-      if cargos.has_key? 'PREFEITO'
-
-        total_prefeitos = cargos['PREFEITO'].map { |sigla, prefeitos| prefeitos }.reduce(:+)
-
-        json[:municipais][ano][:_BR][:total_prefeitos] += total_prefeitos
-        json[:municipais][ano][uf][:total_prefeitos]   += total_prefeitos
-
-        cargos['PREFEITO'].each do |sigla, prefeitos|
-          json[:municipais][ano][:_BR][:prefeitos_por_sigla][sigla]                += total_prefeitos
-          json[:municipais][ano][uf][:prefeitos_por_sigla][sigla]                  += total_prefeitos
-          json[:municipais][ano][:_BR][:prefeitos_por_sigla_peso_populacao][sigla] += total_populacao_municipio
-          json[:municipais][ano][uf][:prefeitos_por_sigla_peso_populacao][sigla]   += total_populacao_municipio
-        end
-
-      else
-        puts "Faltando prefeito para #{municipio}/#{uf} em #{ano}"
-      end
-
-    end
-  end
-end
-
-def criaHashEstadual(populacao)
-  {
-    total_governadores:                           0,
-    total_deputados_estaduais:                    0,
-    total_populacao:                              populacao,
-    governadores_por_sigla:                       Hash.new(0),
-    governadores_por_sigla_peso_populacao:        Hash.new(0),
-    deputados_estaduais_por_sigla:                Hash.new(0),
-    deputados_estaduais_por_sigla_peso_populacao: Hash.new(0)
-  }
-end
-
-estaduais.each do |ano, ufs|
-
-  json[:estaduais][ano] = { :_BR => criaHashEstadual(populacao(populacao_brasil, nil, nil, ano)) }
-
-  ufs.each do |uf, cargos|
-
-    total_populacao_uf = populacao(populacao_ufs, uf, nil, ano)
-
-    json[:estaduais][ano][uf] = criaHashEstadual(total_populacao_uf)
-
-    if cargos.has_key? 'GOVERNADOR'
-
-      total_governadores = cargos['GOVERNADOR'].map { |sigla, governadores| governadores }.reduce(:+)
-
-      json[:estaduais][ano][:_BR][:total_governadores] += total_governadores
-      json[:estaduais][ano][uf][:total_governadores]   += total_governadores
-
-      cargos['GOVERNADOR'].each do |sigla, governadores|
-        json[:estaduais][ano][:_BR][:governadores_por_sigla][sigla]                += total_governadores
-        json[:estaduais][ano][uf][:governadores_por_sigla][sigla]                  += total_governadores
-        json[:estaduais][ano][:_BR][:governadores_por_sigla_peso_populacao][sigla] += total_populacao_uf
-        json[:estaduais][ano][uf][:governadores_por_sigla_peso_populacao][sigla]   += total_populacao_uf
-      end
-
-    else
-      puts "Faltando governador para #{uf} em #{ano}"
-    end
-
-    if cargos.has_key? 'DEPUTADO ESTADUAL'
-
-      total_deputados_estaduais = cargos['DEPUTADO ESTADUAL'].map { |sigla, deputados_estaduais| deputados_estaduais }.reduce(:+)
-
-      json[:estaduais][ano][:_BR][:total_deputados_estaduais] += total_deputados_estaduais
-      json[:estaduais][ano][uf][:total_deputados_estaduais]   += total_deputados_estaduais
-
-      cargos['DEPUTADO ESTADUAL'].each do |sigla, deputados_estaduais|
-        json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla][sigla]                += deputados_estaduais
-        json[:estaduais][ano][uf][:deputados_estaduais_por_sigla][sigla]                  += deputados_estaduais
-        json[:estaduais][ano][:_BR][:deputados_estaduais_por_sigla_peso_populacao][sigla] += deputados_estaduais * (total_populacao_uf / total_deputados_estaduais)
-        json[:estaduais][ano][uf][:deputados_estaduais_por_sigla_peso_populacao][sigla]   += deputados_estaduais * (total_populacao_uf / total_deputados_estaduais)
-      end
-
-    else
-      puts "Faltando deputados estaduais para #{uf} em #{ano}"
-    end
-
-  end
-end
-
-def criaHashDistrital(populacao)
-  {
-    total_governadores:                            0,
-    total_deputados_distritais:                    0,
-    total_populacao:                               populacao,
-    governadores_por_sigla:                        Hash.new(0),
-    governadores_por_sigla_peso_populacao:         Hash.new(0),
-    deputados_distritais_por_sigla:                Hash.new(0),
-    deputados_distritais_por_sigla_peso_populacao: Hash.new(0)
-  }
-end
-
-distritais.each do |ano, cargos|
-
-  json[:distritais][ano] = { :_BR => criaHashDistrital(populacao(populacao_brasil, nil, nil, ano)) }
-
-  total_populacao_uf = populacao(populacao_ufs, 'DF', nil, ano)
-
-  json[:distritais][ano][:DF] = criaHashDistrital(total_populacao_uf)
-
-  if cargos.has_key? 'GOVERNADOR'
-
-    total_governadores = cargos['GOVERNADOR'].map { |sigla, governadores| governadores }.reduce(:+)
-
-    json[:distritais][ano][:_BR][:total_governadores] += total_governadores
-    json[:distritais][ano][:DF][:total_governadores]  += total_governadores
-
-    cargos['GOVERNADOR'].each do |sigla, governadores|
-      json[:distritais][ano][:_BR][:governadores_por_sigla][sigla]                += total_governadores
-      json[:distritais][ano][:DF][:governadores_por_sigla][sigla]                 += total_governadores
-      json[:distritais][ano][:_BR][:governadores_por_sigla_peso_populacao][sigla] += total_populacao_uf
-      json[:distritais][ano][:DF][:governadores_por_sigla_peso_populacao][sigla]  += total_populacao_uf
-    end
-
-  else
-    puts "Faltando governador para DF em #{ano}"
-  end
-
-  if cargos.has_key? 'DEPUTADO DISTRITAL'
-
-    total_deputados_distritais = cargos['DEPUTADO DISTRITAL'].map { |sigla, deputados_distritais| deputados_distritais }.reduce(:+)
-
-    json[:distritais][ano][:_BR][:total_deputados_distritais] += total_deputados_distritais
-    json[:distritais][ano][:DF][:total_deputados_distritais]  += total_deputados_distritais
-
-    cargos['DEPUTADO DISTRITAL'].each do |sigla, deputados_distritais|
-      json[:distritais][ano][:_BR][:deputados_distritais_por_sigla][sigla]                += deputados_distritais
-      json[:distritais][ano][:DF][:deputados_distritais_por_sigla][sigla]                 += deputados_distritais
-      json[:distritais][ano][:_BR][:deputados_distritais_por_sigla_peso_populacao][sigla] += deputados_distritais * (total_populacao_uf / total_deputados_distritais)
-      json[:distritais][ano][:DF][:deputados_distritais_por_sigla_peso_populacao][sigla]  += deputados_distritais * (total_populacao_uf / total_deputados_distritais)
-    end
-
-  else
-    puts "Faltando deputados distritais para DF em #{ano}"
-  end
-
-end
-
-def criaHashFederal(populacao)
-  {
-    total_deputados_federais:     0,
-    total_senadores:              0,
-    total_populacao:              populacao,
-    deputados_federais_por_sigla: Hash.new(0),
-    senadores_por_sigla:          Hash.new(0)
-  }
-end
+json = { BR: { populacao: {}, deputado_federal: {}, senador: {}, presidente: {} } }
 
 federais.each do |ano, cargos|
-
-  json[:federais][ano] = { :_BR => criaHashFederal(populacao(populacao_brasil, nil, nil, ano)) }
-
+  json[:BR][:populacao][ano] = populacao(populacao_brasil, nil, nil, ano)
   if cargos.has_key? 'DEPUTADO FEDERAL'
-    json[:federais][ano][:_BR][:total_deputados_federais] = cargos['DEPUTADO FEDERAL'].map { |sigla, deputados_federais| deputados_federais }.reduce(:+)
-
-    cargos['DEPUTADO FEDERAL'].each do |sigla, deputados_federais|
-      json[:federais][ano][:_BR][:deputados_federais_por_sigla][sigla] += deputados_federais
+    deputados = json[:BR][:deputado_federal][ano] ||= { _total: 0, _mandato: 4 }
+    cargos['DEPUTADO FEDERAL'].each do |sigla, quantidade|
+      deputados[:_total] += quantidade
+      deputados[sigla] = quantidade
     end
   end
-
   if cargos.has_key? 'SENADOR'
-    json[:federais][ano][:_BR][:total_senadores] = cargos['SENADOR'].map { |sigla, senadores| senadores }.reduce(:+)
-
-    cargos['SENADOR'].each do |sigla, senadores|
-      json[:federais][ano][:_BR][:senadores_por_sigla][sigla] += senadores
+    senadores = json[:BR][:senador][ano] ||= { _total: 0, _mandato: 8 }
+    cargos['SENADOR'].each do |sigla, quantidade|
+      senadores[:_total] += quantidade
+      senadores[sigla] = quantidade
     end
   end
 end
 
 presidenciais.each do |ano, sigla|
-  json[:presidenciais][ano] = sigla;
+  presidentes = json[:BR][:presidente][ano] = { _total: 1 };
+  presidentes[:_mandato] = if ano == 1989 then 5 else 4 end
+  presidentes[sigla] = 1
 end
+
+estaduais.each do |uf, anos|
+  json[uf.to_sym] ||= { populacao: {}, deputado_estadual: {}, governador: {} }
+  anos.each do |ano, cargos|
+    json[uf.to_sym][:populacao][ano] = populacao(populacao_ufs, uf, nil, ano)
+    if cargos.has_key? 'GOVERNADOR'
+      governadores = json[uf.to_sym][:governador][ano] = { _total: 0, _mandato: 4 }
+      cargos['GOVERNADOR'].each do |sigla, quantidade|
+        governadores[:_total] += quantidade
+        governadores[sigla] = quantidade
+      end
+    else
+      puts "Faltando governador para #{uf} em #{ano}"
+    end
+    if cargos.has_key? 'DEPUTADO ESTADUAL'
+      deputados = json[uf.to_sym][:deputado_estadual][ano] = { _total: 0, _mandato: 4 }
+      cargos['DEPUTADO ESTADUAL'].each do |sigla, quantidade|
+        deputados[:_total] += quantidade
+        deputados[sigla] = quantidade
+      end
+    else
+      puts "Faltando deputados estaduais para #{uf} em #{ano}"
+    end
+  end
+end
+
+json[:DF] = { populacao: {}, deputado_distrital: {}, governador: {} }
+distritais.each do |ano, cargos|
+  json[:DF][:populacao][ano] = populacao(populacao_ufs, 'DF', nil, ano)
+  if cargos.has_key? 'GOVERNADOR'
+    governadores = json[:DF][:governador][ano] = { _total: 0, _mandato: 4 }
+    cargos['GOVERNADOR'].each do |sigla, quantidade|
+      governadores[:_total] += quantidade
+      governadores[sigla] = quantidade
+    end
+  else
+    puts "Faltando governador para DF em #{ano}"
+  end
+  if cargos.has_key? 'DEPUTADO DISTRITAL'
+    deputados = json[:DF][:deputado_distrital][ano] = { _total: 0, _mandato: 4 }
+    cargos['DEPUTADO DISTRITAL'].each do |sigla, quantidade|
+      deputados[:_total] += quantidade
+      deputados[sigla] = quantidade
+    end
+  else
+    puts "Faltando deputados distritais para DF em #{ano}"
+  end
+end
+
+municipais.each do |uf, municipios|
+  json[uf.to_sym].update(vereador: {}, prefeito: {})
+  municipios.each do |municipio, anos|
+    anos.each do |ano, cargos|
+      json[uf.to_sym][:populacao][ano] ||= populacao(populacao_ufs, uf, nil, ano)
+      json[:DF][:populacao][ano] ||= populacao(populacao_ufs, 'DF', nil, ano)
+      populacao_municipio = populacao(populacao_municipios, uf, municipio, ano)
+      if cargos.has_key? 'VEREADOR'
+        vereadores = json[uf.to_sym][:vereador][ano] ||= { _total: 0, _mandato: 4 }
+        total = cargos['VEREADOR'].values.reduce(:+)
+        vereadores[:_total] += total
+        cargos['VEREADOR'].each do |sigla, quantidade|
+          vereadores[sigla] ||= { quantidade: 0, populacao: 0 }
+          vereadores[sigla][:quantidade] += quantidade
+          vereadores[sigla][:populacao] += quantidade * (populacao_municipio / total)
+        end
+      else
+        puts "Faltando vereadores para #{municipio}/#{uf} em #{ano}"
+      end
+      if cargos.has_key? 'PREFEITO'
+        prefeitos = json[uf.to_sym][:prefeito][ano] ||= { _total: 0, _mandato: 4 }
+        total = cargos['PREFEITO'].values.reduce(:+)
+        prefeitos[:_total] += total
+        cargos['PREFEITO'].each do |sigla, quantidade|
+          prefeitos[sigla] ||= { quantidade: 0, populacao: 0 }
+          prefeitos[sigla][:quantidade] += quantidade
+          prefeitos[sigla][:populacao] += populacao_municipio
+        end
+      else
+        puts "Faltando prefeito para #{municipio}/#{uf} em #{ano}"
+      end
+    end
+  end
+end
+
+
+
+# ---------------------------------------------
+# Escreve o resultado em ../public/eleitos.json
+# ---------------------------------------------
 
 IO.write(arquivo_de_saida, json.to_json)

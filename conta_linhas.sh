@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
-echo web:
-ls -dS public/index.html public/css/index.css public/js/app/* 2>/dev/null | xargs wc
+function imprime_contagem() {
+  eval ls -dS $* 2>/dev/null | xargs wc
+}
 
+web='public/index.html public/css/index.css public/js/app/*'
+spec='spec/helpers/*_helper.js spec/*_spec.js'
+carga='carga/*.rb carga/eleitos/presidentes.txt'
+etc='*.sh Gemfile Gruntfile.js package.json .*rc spec/.*rc .travis.yml .git{ignore,attributes}'
+doc='*.md carga/*.md'
+
+echo web:
+imprime_contagem $web
 echo
 echo spec:
-ls -dS spec/helpers/*_helper.js spec/*_spec.js 2>/dev/null | xargs wc
-
+imprime_contagem $spec
 echo
 echo carga:
-ls -dS carga/*.rb carga/eleitos/presidentes.txt 2>/dev/null | xargs wc
-
+imprime_contagem $carga
 echo
-echo scripts:
-ls -dS *.{ru,sh} Gemfile Rakefile 2>/dev/null | xargs wc
-
+echo etc:
+imprime_contagem $etc
 echo
 echo doc:
-ls -dS *.md carga/*.md  2>/dev/null | xargs wc
+imprime_contagem $doc
+echo
+echo TOTAL:
+eval cat $web $spec $carga $etc $doc | wc

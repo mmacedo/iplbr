@@ -1,6 +1,6 @@
 /* jshint node: true */
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   'use strict';
 
   require('load-grunt-tasks')(grunt);
@@ -29,11 +29,11 @@ module.exports = function (grunt) {
       app: [ 'Gruntfile.js', 'public/js/app/*' ],
       spec: [ 'spec/helpers/*.js', 'spec/*.js' ],
       options: {
-        config: ".jscsrc"
+        config: '.jscsrc'
       }
     },
     watch: {
-      'public': {
+      public: {
         files: [ 'public/**/*' ],
         options: {
           livereload: 35730
@@ -41,23 +41,23 @@ module.exports = function (grunt) {
       },
       jasmine: {
         files: [ 'public/js/app/*', 'spec/helpers/*.js', 'spec/*.js' ],
-        tasks: 'jasmine:server:build',
+        tasks: 'jasmine:runner:build',
         options: {
           livereload: 35731
         }
       }
     },
     connect: {
-      'public': {
+      public: {
         options: {
           port: 9393,
           base: 'public',
           livereload: 35730
         }
       },
-      jasmine_server: {
+      runner: {
         options: {
-          port : 8989,
+          port: 8989,
           base: {
             path: '.',
             options: {
@@ -67,67 +67,46 @@ module.exports = function (grunt) {
           livereload: 35731
         }
       },
-      jasmine_manual: {
+      jasmine: {
         options: {
-          port : 8890
+          port: 8890
         }
       }
     },
     jasmine: {
-      server: {
+      all: [
+        'public/js/app/eleicao.js',
+        'public/js/app/partido.js',
+        'public/js/app/configuracao.js',
+        'public/js/app/serie.js'
+      ],
+      options: {
+        helpers: 'spec/helpers/**/*.js',
+        specs:   'spec/**/*_spec.js',
+        vendor:  'public/js/lodash.min.js',
+        outfile: 'tmp/_SpecRunner.html',
+        host:    'http://127.0.0.1:8890/'
+      },
+      runner: {
         src: [
+          'public/js/app/eleicao.js',
+          'public/js/app/partido.js',
           'public/js/app/configuracao.js',
           'public/js/app/serie.js'
         ],
         options: {
-          helpers: 'spec/helpers/**/*.js',
-          specs:   'spec/**/*[sS]pec.js',
-          vendor:  'public/js/lodash.min.js',
           outfile: 'tmp/_ServerSpecRunner.html',
           host:    'http://127.0.0.1:8989/'
-        }
-      },
-      all: {
-        src: [
-          'public/js/app/configuracao.js',
-          'public/js/app/serie.js'
-        ],
-        options: {
-          helpers: 'spec/helpers/**/*.js',
-          specs:   'spec/**/*[sS]pec.js',
-          vendor:  'public/js/lodash.min.js',
-          outfile: 'tmp/_SpecRunner.html',
-          host:    'http://127.0.0.1:8890/'
-        }
-      }
-    },
-    concurrent: {
-      'public': {
-        tasks: [ 'watch:public', 'connect:public:keepalive' ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      jasmine: {
-        tasks: [ 'watch:jasmine', 'connect:jasmine_server:keepalive' ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      servers: {
-        tasks: [ 'server:public', 'server:jasmine' ],
-        options: {
-          logConcurrentOutput: true
         }
       }
     }
   });
 
-  grunt.registerTask('server:public', 'concurrent:public');
-  grunt.registerTask('server:jasmine', [ 'jasmine:server:build', 'concurrent:jasmine' ]);
-  grunt.registerTask('server', 'concurrent:servers');
+  grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
+  grunt.registerTask('runner', [ 'jasmine:runner:build', 'connect:runner', 'watch:jasmine' ]);
 
-  grunt.registerTask('check', [ 'htmllint', 'bootlint', 'jshint', 'jscs' ]);
-  grunt.registerTask('test', [ 'connect:jasmine_manual', 'jasmine:all' ]);
-  grunt.registerTask('default', [ 'check', 'test' ]);
+  grunt.registerTask('check-html', [ 'htmllint', 'bootlint' ]);
+  grunt.registerTask('check-js', [ 'jshint', 'jscs' ]);
+  grunt.registerTask('test', [ 'connect:jasmine', 'jasmine:all' ]);
+  grunt.registerTask('default', [ 'check-htl', 'check-js', 'test' ]);
 };
