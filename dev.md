@@ -34,6 +34,8 @@ A fonte de dados principal da aplicação é um arquivo JSON contendo uma série
 
 ## Website
 
+[![Build Status](https://travis-ci.org/mmacedo/iplbr.svg)](https://travis-ci.org/mmacedo/iplbr) [![Coverage Status](https://coveralls.io/repos/mmacedo/iplbr/badge.svg?branch=master&service=github)](https://coveralls.io/github/mmacedo/iplbr?branch=master) [![devDependency Status](https://david-dm.org/mmacedo/iplbr/dev-status.svg)](https://david-dm.org/mmacedo/iplbr#info=devDependencies) [![Code Climate](https://codeclimate.com/github/mmacedo/iplbr/badges/gpa.svg)](https://codeclimate.com/github/mmacedo/iplbr)
+
 ### Estrutura
 
 A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `public` são servidos de forma estática e sem pré-processamento.
