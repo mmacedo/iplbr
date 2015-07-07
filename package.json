@@ -25,9 +25,9 @@
     "karma-coverage": "^0.4.2",
     "karma-dirty-chai": "git://github.com/appearin/karma-dirty-chai.git#0bc9f32caa0a7381218c07f4e8907215db2a8e4c",
     "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-sinon-chai": "^1.0.0",
-    "karma-spec-reporter": "0.0.19",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17"
