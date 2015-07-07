@@ -71,11 +71,6 @@ module.exports = function(grunt) {
       options: {
         force: true
       }
-    },
-    shell: {
-      codeclimate: {
-        command: 'codeclimate-test-reporter < tmp/coverage/report-lcov/lcov.info'
-      }
     }
   });
 
