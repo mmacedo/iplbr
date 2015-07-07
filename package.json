@@ -5,7 +5,9 @@
   "scripts": {
     "check-html": "grunt check-html --force",
     "check-js": "grunt check-js --force",
-    "test": "grunt test"
+    "test": "grunt test",
+    "coveralls": "grunt coveralls --force",
+    "codeclimate": "grunt codeclimate --force"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -13,9 +15,11 @@
     "grunt-contrib-connect": "^0.10.1",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-coveralls": "^1.0.0",
     "grunt-html": "git://github.com/pedrosland/grunt-html.git#b4f943be1011debc31dad27401a17be83c0c7852",
     "grunt-jscs": "^1.8.0",
     "grunt-karma": "^0.11.2",
+    "grunt-shell": "^1.1.2",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.37",
     "karma-coverage": "^0.4.2",

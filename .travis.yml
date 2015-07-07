@@ -1,9 +1,12 @@
 language: node_js
 node_js:
   - node
+before_script:
+  - npm install -g grunt-cli codeclimate-test-reporter
 script:
   - npm run-script check-html
   - npm run-script check-js
   - npm test
-before_script:
-  - npm install -g grunt-cli
+after_script:
+  - npm run-script coveralls
+  - npm run-script codeclimate

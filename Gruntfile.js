@@ -66,7 +66,20 @@ module.exports = function(grunt) {
         configFile: 'karma.conf.js'
       }
     },
+    coveralls: {
+      src: 'tmp/coverage/report-lcov/lcov.info',
+      options: {
+        force: true
+      }
+    },
+    shell: {
+      codeclimate: {
+        command: 'codeclimate-test-reporter < tmp/coverage/report-lcov/lcov.info'
+      }
+    }
   });
+
+  grunt.registerTask('codeclimate', 'shell:codeclimate');
 
   grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
   grunt.registerTask('runner', [ 'karma:runner:start', 'watch:karma' ]);
@@ -74,5 +87,5 @@ module.exports = function(grunt) {
   grunt.registerTask('check-html', [ 'htmllint', 'bootlint' ]);
   grunt.registerTask('check-js', [ 'jshint', 'jscs' ]);
   grunt.registerTask('test', 'karma:ci:start');
-  grunt.registerTask('default', [ 'check-htl', 'check-js', 'test' ]);
+  grunt.registerTask('default', [ 'check-html', 'check-js', 'test' ]);
 };

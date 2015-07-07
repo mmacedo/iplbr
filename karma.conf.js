@@ -17,8 +17,11 @@ module.exports = function(config) {
       'public/js/app/*.js': [ 'coverage' ]
     },
     coverageReporter: {
-      type: 'html',
-      dir: 'tmp/coverage'
+      dir: 'tmp/coverage',
+      reporters: [
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' }
+      ]
     }
   });
 };
