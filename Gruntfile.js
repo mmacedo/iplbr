@@ -39,12 +39,9 @@ module.exports = function(grunt) {
           livereload: 35730
         }
       },
-      jasmine: {
+      karma: {
         files: [ 'public/js/app/*', 'spec/helpers/*.js', 'spec/*.js' ],
-        tasks: 'jasmine:runner:build',
-        options: {
-          livereload: 35731
-        }
+        tasks: 'karma:runner:run',
       }
     },
     connect: {
@@ -55,58 +52,27 @@ module.exports = function(grunt) {
           livereload: 35730
         }
       },
-      runner: {
-        options: {
-          port: 8989,
-          base: {
-            path: '.',
-            options: {
-              index: 'tmp/_ServerSpecRunner.html'
-            }
-          },
-          livereload: 35731
-        }
+    },
+    karma: {
+      ci: {
+        port: 8990,
+        singleRun: true
       },
-      jasmine: {
-        options: {
-          port: 8890
-        }
+      runner: {
+        port: 8989,
+        background: true
+      },
+      options: {
+        configFile: 'karma.conf.js'
       }
     },
-    jasmine: {
-      all: [
-        'public/js/app/eleicao.js',
-        'public/js/app/partido.js',
-        'public/js/app/configuracao.js',
-        'public/js/app/serie.js'
-      ],
-      options: {
-        helpers: 'spec/helpers/**/*.js',
-        specs:   'spec/**/*_spec.js',
-        vendor:  'public/js/lodash.min.js',
-        outfile: 'tmp/_SpecRunner.html',
-        host:    'http://127.0.0.1:8890/'
-      },
-      runner: {
-        src: [
-          'public/js/app/eleicao.js',
-          'public/js/app/partido.js',
-          'public/js/app/configuracao.js',
-          'public/js/app/serie.js'
-        ],
-        options: {
-          outfile: 'tmp/_ServerSpecRunner.html',
-          host:    'http://127.0.0.1:8989/'
-        }
-      }
-    }
   });
 
   grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
-  grunt.registerTask('runner', [ 'jasmine:runner:build', 'connect:runner', 'watch:jasmine' ]);
+  grunt.registerTask('runner', [ 'karma:runner:start', 'watch:karma' ]);
 
   grunt.registerTask('check-html', [ 'htmllint', 'bootlint' ]);
   grunt.registerTask('check-js', [ 'jshint', 'jscs' ]);
-  grunt.registerTask('test', [ 'connect:jasmine', 'jasmine:all' ]);
+  grunt.registerTask('test', 'karma:ci:start');
   grunt.registerTask('default', [ 'check-htl', 'check-js', 'test' ]);
 };

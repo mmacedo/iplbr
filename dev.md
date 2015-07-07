@@ -102,13 +102,19 @@ grunt check-js
 
 #### Testes
 
-Testado com a última versão de [Jasmine](http://jasmine.github.io/). Para rodar todos os testes execute:
+As seguintes bibliotecas são utilizadas para testar o código JavaScript:
+
+- Biblioteca de testes: [Jasmine](http://jasmine.github.io/);
+- Executor de testes: [Karma](http://karma-runner.github.io/);
+- Relatório de cobertura de código: [Istanbul](https://github.com/gotwarlost/istanbul).
+
+Para rodar todos os testadores execute:
 
 ```
 grunt test
 ```
 
-Para servir uma página de testes localmente na porta 8989 usando [Connect](https://github.com/senchalabs/connect) e [LiveReload](http://livereload.com/):
+Para servir uma página de testes localmente na porta 8989 usando [Karma](http://karma-runner.github.io/):
 
 ```
 grunt runner
