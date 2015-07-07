@@ -5,7 +5,7 @@ function imprime_contagem() {
 }
 
 web='public/index.html public/css/index.css public/js/app/*'
-spec='spec/helpers/*_helper.js spec/*_spec.js'
+spec='spec/*_spec.js'
 carga='carga/*.rb carga/eleitos/presidentes.txt'
 etc='*.sh Gemfile Gruntfile.js package.json .*rc spec/.*rc .travis.yml .git{ignore,attributes}'
 doc='*.md carga/*.md'

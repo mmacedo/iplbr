@@ -27,7 +27,7 @@ describe('ConfiguracaoDePartidos', function() {
       _.set(cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       var dados = _.map(partidos, geraInput);
       var resultado = cfg.mesclarPartidosExtintos(dados);
-      expect(resultado).toEqualIgnoringNulls(dados);
+      expect(resultado).to.eql(dados);
     });
 
     describe('(configuração)', function() {
@@ -43,20 +43,20 @@ describe('ConfiguracaoDePartidos', function() {
 
       it('deve mesclar se estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = true;
-        spyOn(this.repo, 'buscarSucessor').and.callThrough();
+        sinon.spy(this.repo, 'buscarSucessor');
         var resultado = this.cfg.mesclarPartidosExtintos(this.dados);
-        expect(resultado.length).toEqual(1);
-        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).toBeFalsy();
-        expect(this.repo.buscarSucessor).toHaveBeenCalled();
+        expect(resultado.length).to.equal(1);
+        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).not.to.be.ok();
+        expect(this.repo.buscarSucessor).to.have.been.called();
       });
 
       it('não deve mesclar se não estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = false;
-        spyOn(this.repo, 'buscarSucessor').and.callThrough();
+        sinon.spy(this.repo, 'buscarSucessor');
         var resultado = this.cfg.mesclarPartidosExtintos(this.dados);
-        expect(resultado.length).toEqual(2);
-        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).toBeTruthy();
-        expect(this.repo.buscarSucessor).not.toHaveBeenCalled();
+        expect(resultado.length).to.equal(2);
+        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).to.be.ok();
+        expect(this.repo.buscarSucessor).not.to.have.been.called();
       });
 
     });
@@ -80,23 +80,23 @@ describe('ConfiguracaoDePartidos', function() {
       it('deve manter a data de fundação do mais antigo', function() {
         var dados = _.map(this.partidos, geraInput);
         var resultado = this.cfg.mesclarPartidosExtintos(dados);
-        expect(resultado.length).toEqual(1);
-        expect(resultado[0].fundado).toEqual(this.maisAntigo.fundado);
+        expect(resultado.length).to.equal(1);
+        expect(resultado[0].fundado).to.equal(this.maisAntigo.fundado);
       });
 
       it('deve manter a data de dissolução do último extinto', function() {
         var dados = _.map(this.partidos, geraInput);
         var resultado = this.cfg.mesclarPartidosExtintos(dados);
-        expect(resultado.length).toEqual(1);
-        expect(resultado[0].extinto).toEqual(this.ultimoExtinto.extinto);
+        expect(resultado.length).to.equal(1);
+        expect(resultado[0].extinto).to.equal(this.ultimoExtinto.extinto);
       });
 
       it('não deve ser extinto se algum deles não foi extinto', function() {
         this.ultimoExtinto.extinto = null;
         var dados = _.map(this.partidos, geraInput);
         var resultado = this.cfg.mesclarPartidosExtintos(dados);
-        expect(resultado.length).toEqual(1);
-        expect(resultado[0].extinto).toBeNull();
+        expect(resultado.length).to.equal(1);
+        expect(resultado[0].extinto).to.be.null();
       });
 
     });
@@ -122,8 +122,8 @@ describe('ConfiguracaoDePartidos', function() {
       var esperado = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 7 }, { ano: 2010, indice: 3 }, { ano: 2014, indice: 1 } ];
       // jscs:enable maximumLineLength
       var resultado = cfg.mesclarPartidosExtintos(dados);
-      expect(resultado.length).toEqual(1);
-      expect(resultado[0].indices).toEqual(esperado);
+      expect(resultado.length).to.equal(1);
+      expect(resultado[0].indices).to.eql(esperado);
     });
 
   });

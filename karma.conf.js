@@ -7,10 +7,9 @@ module.exports = function(config) {
       'public/js/app/partido.js',
       'public/js/app/configuracao.js',
       'public/js/app/serie.js',
-      'spec/helpers/**/*.js',
       'spec/**/*_spec.js'
     ],
-    frameworks: [ 'jasmine' ],
+    frameworks: [ 'mocha', 'chai', 'dirty-chai', 'sinon-chai' ],
     browsers: [ 'PhantomJS' ],
     reporters: [ 'spec', 'coverage' ],
     preprocessors: {

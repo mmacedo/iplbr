@@ -106,7 +106,9 @@ grunt check-js
 
 As seguintes bibliotecas são utilizadas para testar o código JavaScript:
 
-- Biblioteca de testes: [Jasmine](http://jasmine.github.io/);
+- Biblioteca de testes: [Mocha](http://mochajs.org/);
+- Biblioteca de asserção: [Chai](http://chaijs.com/);
+- Biblioteca de test doubles: [Sinon.JS](http://sinonjs.org/);
 - Executor de testes: [Karma](http://karma-runner.github.io/);
 - Relatório de cobertura de código: [Istanbul](https://github.com/gotwarlost/istanbul).
 

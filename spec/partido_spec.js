@@ -11,7 +11,7 @@ describe('RepositorioDePartidos', function() {
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       var repo = new RepositorioDePartidos([ a, b ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b);
+      expect(resultado).to.equal(b);
     });
 
     it('não deve retornar partido fundado após a incorporação', function() {
@@ -20,7 +20,7 @@ describe('RepositorioDePartidos', function() {
       var b_antes = { sigla: 'B', numero: 22, fundado: 1979 };
       var repo = new RepositorioDePartidos([ a, b_apos, b_antes ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b_antes);
+      expect(resultado).to.equal(b_antes);
     });
 
     it('deve retornar sucessor se foi renomeado', function() {
@@ -28,7 +28,7 @@ describe('RepositorioDePartidos', function() {
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       var repo = new RepositorioDePartidos([ a, b ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b);
+      expect(resultado).to.equal(b);
     });
 
     it('não deve retornar partido fundado antes da mudança de nome', function() {
@@ -37,7 +37,7 @@ describe('RepositorioDePartidos', function() {
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       var repo = new RepositorioDePartidos([ a, b_antes, b_apos ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b_apos);
+      expect(resultado).to.equal(b_apos);
     });
 
     it('deve retornar sucessor se foi fundido', function() {
@@ -45,7 +45,7 @@ describe('RepositorioDePartidos', function() {
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       var repo = new RepositorioDePartidos([ a, b ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b);
+      expect(resultado).to.equal(b);
     });
 
     it('não deve retornar partido fundado antes da fusão', function() {
@@ -54,7 +54,7 @@ describe('RepositorioDePartidos', function() {
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       var repo = new RepositorioDePartidos([ a, b_antes, b_apos ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b_apos);
+      expect(resultado).to.equal(b_apos);
     });
 
     it('não deve retornar partido extinto antes do predecessor', function() {
@@ -63,7 +63,7 @@ describe('RepositorioDePartidos', function() {
       var b_apos  = { sigla: 'B', numero: 22, fundado: 1979, extinto: 2014 };
       var repo = new RepositorioDePartidos([ a, b_antes, b_apos ]);
       var resultado = repo.buscarSucessor(a);
-      expect(resultado).toBe(b_apos);
+      expect(resultado).to.equal(b_apos);
     });
 
   });

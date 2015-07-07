@@ -1,5 +1,11 @@
 {
   "extends": "../.jshintrc",
-  "jasmine": true,
+  "mocha": true,
+  "globals": {
+    // Chai
+    "expect": true,
+    // Sinon.JS
+    "sinon": true
+  },
   "globalstrict": true
 }
