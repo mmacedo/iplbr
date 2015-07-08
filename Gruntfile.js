@@ -71,10 +71,14 @@ module.exports = function(grunt) {
       options: {
         force: true
       }
+    },
+    codeclimate: {
+      options: {
+        file: 'tmp/coverage/report-lcov/lcov.info',
+        token: '86ab5ab3914de434d4609b156a398ba2c667ef6e0cec3d62b6cbc75d8b886145'
+      }
     }
   });
-
-  grunt.registerTask('codeclimate', 'shell:codeclimate');
 
   grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
   grunt.registerTask('runner', [ 'karma:runner:start', 'watch:karma' ]);
