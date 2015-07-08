@@ -1,11 +1,11 @@
 /* jshint browser: true */
 /* globals _, jQuery, Highcharts */
-/* globals RepositorioEleitoral, GeradorDeIndices */
+/* globals RepositorioEleitoral, RepositorioDeIndices */
 /* globals RepositorioDePartidos, ConfiguracaoDePartidos */
 /* globals GerenciadorDeCores, GeradorDeSeries */
 /* globals criaGrafico, filtroJurisdicao */
 
-(function($, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao) {
+(function($, _, Highcharts, RepositorioEleitoral, RepositorioDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao) {
   'use strict';
 
   Highcharts.setOptions({
@@ -215,7 +215,7 @@
 
     $.getJSON('eleitos.json').done(function(json) {
       var eleicoes = new RepositorioEleitoral(json);
-      var indices  = new GeradorDeIndices(eleicoes);
+      var indices  = new RepositorioDeIndices(eleicoes);
 
       var partidos = new RepositorioDePartidos();
       var cfg = new ConfiguracaoDePartidos(partidos);
@@ -297,4 +297,4 @@
     });
   });
 
-})(jQuery, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao);
+})(jQuery, _, Highcharts, RepositorioEleitoral, RepositorioDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao);
