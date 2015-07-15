@@ -4,8 +4,7 @@
 
 describe('RepositorioEleitoral', function() {
 
-  // Esse método foi memoizado
-  xdescribe('#anosDeEleicao', function() {
+  describe('#anosDeEleicao', function() {
 
     it('deve retornar anos que teve eleição', function() {
       var json = { BR: { presidente: { 2002: {}, 2006: {} } } };
@@ -30,17 +29,51 @@ describe('RepositorioEleitoral', function() {
 
   });
 
-  // Esse método foi memoizado
-  xdescribe('#mandatos', function() {
+  describe('#mandatos', function() {
+
+    it('deve retornar lista de anos de eleição e duração dos mandatos', function() {
+      var json = { BR: { presidente: { 1989: { _mandato: 5 }, 1994: { _mandato: 4 } } } };
+      var repo = new RepositorioEleitoral(json);
+      var resultado = repo.mandatos('presidente', 'BR');
+      var esperado = [ { eleicao: 1989, duracao: 5 }, { eleicao: 1994, duracao: 4 } ];
+      expect(resultado).to.eql(esperado);
+    });
 
   });
 
-  // Esse método foi memoizado
-  xdescribe('#mandatosAtivos', function() {
+  describe('#mandatosAtivos', function() {
+
+    it('deve retornar mandato que acaba no ano', function() {
+      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var repo = new RepositorioEleitoral(json);
+      var resultado = repo.mandatosAtivos('presidente', 'BR', 1994);
+      expect(resultado).to.eql([ 1989 ]);
+    });
+
+    it('deve retornar mandato que não terminaram no ano', function() {
+      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var repo = new RepositorioEleitoral(json);
+      var resultado = repo.mandatosAtivos('presidente', 'BR', 1990);
+      expect(resultado).to.eql([ 1989 ]);
+    });
+
+    it('não deve retornar mandato que não iniciou', function() {
+      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var repo = new RepositorioEleitoral(json);
+      var resultado = repo.mandatosAtivos('presidente', 'BR', 1989);
+      expect(resultado).to.eql([]);
+    });
+
+    it('não deve retornar mandato que já encerrou', function() {
+      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var repo = new RepositorioEleitoral(json);
+      var resultado = repo.mandatosAtivos('presidente', 'BR', 1995);
+      expect(resultado).to.eql([]);
+    });
 
   });
 
-  xdescribe('#siglasComRepresentantes', function() {
+  describe('#siglasComRepresentantes', function() {
 
     it('não deve retornar propriedades especiais como siglas', function() {
       var json = { BR: { senador: { 2002: { _total: 0, _mandato: 0 } } } };
