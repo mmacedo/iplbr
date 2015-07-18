@@ -10,7 +10,7 @@ GEM
       spreadsheet (> 0.6.4)
     ruby-ole (1.2.11.8)
     rubyzip (1.1.7)
-    spreadsheet (1.0.3)
+    spreadsheet (1.0.4)
       ruby-ole (>= 1.0)
     unicode (0.4.4.2)
     zip-zip (0.3)
