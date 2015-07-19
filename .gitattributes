@@ -3,6 +3,7 @@
 *.rb                  eol=lf
 public/index.html     eol=lf
 public/js/app/*.js    eol=lf
+public/js/app/**/*.js eol=lf
 public/css/index.css  eol=lf
 
 public/eleitos.json                     binary

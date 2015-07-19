@@ -1,8 +1,7 @@
 /* jshint browser: true */
-/* globals _, jQuery */
-/* exported criaGrafico, filtroJurisdicao */
+/* globals jQuery, Big */
 
-(function($, _) {
+(function($, _, Big) {
   'use strict';
 
   var regiaoSul         = [ 'PR', 'RS', 'SC' ];
@@ -22,21 +21,21 @@
   function filtroJurisdicao() {
     var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
     if (matches[5] === 'pais') {
-      return { ufs: brasil, regiao: 'brasil' };
+      return { ues: brasil, nome: 'brasil' };
     } else if (matches[3] === 'regiao') {
       if (matches[4] === 'co') {
-        return { ufs: regiaoCentroOeste, regiao: 'centro-oeste' };
+        return { ues: regiaoCentroOeste, nome: 'centro-oeste' };
       } else if (matches[4] === 'ne') {
-        return { ufs: regiaoNordeste, regiao: 'nordeste' };
+        return { ues: regiaoNordeste, nome: 'nordeste' };
       } else if (matches[4] === 'n') {
-        return { ufs: regiaoNorte, regiao: 'norte' };
+        return { ues: regiaoNorte, nome: 'norte' };
       } else if (matches[4] === 'se') {
-        return { ufs: regiaoSudeste, regiao: 'sudeste' };
+        return { ues: regiaoSudeste, nome: 'sudeste' };
       } else {
-        return { ufs: regiaoSul, regiao: 'sul' };
+        return { ues: regiaoSul, nome: 'sul' };
       }
     } else {
-      return { ufs: [ matches[2].toUpperCase() ], regiao: matches[2] };
+      return { ues: [ matches[2].toUpperCase() ], nome: matches[2] };
     }
   }
 
@@ -102,8 +101,8 @@
           if (this.y === 0) {
             indice = '0';
           } else {
-            var arredondado = Math.round10(this.y, 2);
-            if (arredondado === 0) {
+            var arredondado = new Big(this.y).round(2);
+            if (arredondado.eq(0)) {
               indice = '< 0.01';
             } else {
               indice = arredondado.toFixed(2);
@@ -168,21 +167,23 @@
 
   function criaGrafico(id, series, indice, apenas0e100) {
     var $el = $(id), chart = $el.highcharts();
-    var ufs = filtroJurisdicao(), ano = $('#ano').val();
+    var regiao = filtroJurisdicao(), ano = $('#ano').val();
     if (ano === 'TODOS') {
       if (chart == null) {
         chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
       }
-      atualizaGrafico(chart, series.seriesPorJurisdicao(indice, ufs));
+      atualizaGrafico(chart, series.seriesPorJurisdicao(indice, regiao));
     } else {
       if (chart == null) {
         chart = criaGraficoParaUmUnicoAno($el);
       }
-      atualizaGrafico(chart, series.seriesPorAno(indice, ufs, +ano));
+      atualizaGrafico(chart, series.seriesPorAno(indice, regiao, +ano));
     }
   }
 
-  this.criaGrafico = criaGrafico;
-  this.filtroJurisdicao = filtroJurisdicao;
+  _.extend(ipl, /* @lends ipl */ {
+    criaGrafico:      criaGrafico,
+    filtroJurisdicao: filtroJurisdicao
+  });
 
-}.call(this, jQuery, _));
+}.call(this, jQuery, _, Big));

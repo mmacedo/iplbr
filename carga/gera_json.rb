@@ -341,45 +341,47 @@ json = { BR: { populacao: {}, deputado_federal: {}, senador: {}, presidente: {} 
 federais.each do |ano, cargos|
   json[:BR][:populacao][ano] = populacao(populacao_brasil, nil, nil, ano)
   if cargos.has_key? 'DEPUTADO FEDERAL'
-    deputados = json[:BR][:deputado_federal][ano] ||= { _total: 0, _mandato: 4 }
+    deputados = json[:BR][:deputado_federal][ano] ||= { por_sigla: {}, total: 0, mandato: 4 }
     cargos['DEPUTADO FEDERAL'].each do |sigla, quantidade|
-      deputados[:_total] += quantidade
-      deputados[sigla] = quantidade
+      deputados[:total] += quantidade
+      deputados[:por_sigla][sigla] = quantidade
     end
   end
   if cargos.has_key? 'SENADOR'
-    senadores = json[:BR][:senador][ano] ||= { _total: 0, _mandato: 8 }
+    senadores = json[:BR][:senador][ano] ||= { por_sigla: {}, total: 0, mandato: 8 }
     cargos['SENADOR'].each do |sigla, quantidade|
-      senadores[:_total] += quantidade
-      senadores[sigla] = quantidade
+      senadores[:total] += quantidade
+      senadores[:por_sigla][sigla] = quantidade
     end
   end
 end
 
 presidenciais.each do |ano, sigla|
-  presidentes = json[:BR][:presidente][ano] = { _total: 1 };
-  presidentes[:_mandato] = if ano == 1989 then 5 else 4 end
-  presidentes[sigla] = 1
+  json[:BR][:populacao][ano] ||= populacao(populacao_brasil, nil, nil, ano)
+  presidentes = json[:BR][:presidente][ano] = { por_sigla: {}, total: 1 };
+  presidentes[:mandato] = if ano == 1989 then 5 else 4 end
+  presidentes[:por_sigla][sigla] = 1
 end
 
 estaduais.each do |uf, anos|
   json[uf.to_sym] ||= { populacao: {}, deputado_estadual: {}, governador: {} }
   anos.each do |ano, cargos|
+    json[:BR][:populacao][ano] ||= populacao(populacao_brasil, nil, nil, ano)
     json[uf.to_sym][:populacao][ano] = populacao(populacao_ufs, uf, nil, ano)
     if cargos.has_key? 'GOVERNADOR'
-      governadores = json[uf.to_sym][:governador][ano] = { _total: 0, _mandato: 4 }
+      governadores = json[uf.to_sym][:governador][ano] = { por_sigla: {}, total: 0, mandato: 4 }
       cargos['GOVERNADOR'].each do |sigla, quantidade|
-        governadores[:_total] += quantidade
-        governadores[sigla] = quantidade
+        governadores[:total] += quantidade
+        governadores[:por_sigla][sigla] = quantidade
       end
     else
       puts "Faltando governador para #{uf} em #{ano}"
     end
     if cargos.has_key? 'DEPUTADO ESTADUAL'
-      deputados = json[uf.to_sym][:deputado_estadual][ano] = { _total: 0, _mandato: 4 }
+      deputados = json[uf.to_sym][:deputado_estadual][ano] = { por_sigla: {}, total: 0, mandato: 4 }
       cargos['DEPUTADO ESTADUAL'].each do |sigla, quantidade|
-        deputados[:_total] += quantidade
-        deputados[sigla] = quantidade
+        deputados[:total] += quantidade
+        deputados[:por_sigla][sigla] = quantidade
       end
     else
       puts "Faltando deputados estaduais para #{uf} em #{ano}"
@@ -389,21 +391,22 @@ end
 
 json[:DF] = { populacao: {}, deputado_distrital: {}, governador: {} }
 distritais.each do |ano, cargos|
+  json[:BR][:populacao][ano] ||= populacao(populacao_brasil, nil, nil, ano)
   json[:DF][:populacao][ano] = populacao(populacao_ufs, 'DF', nil, ano)
   if cargos.has_key? 'GOVERNADOR'
-    governadores = json[:DF][:governador][ano] = { _total: 0, _mandato: 4 }
+    governadores = json[:DF][:governador][ano] = { por_sigla: {}, total: 0, mandato: 4 }
     cargos['GOVERNADOR'].each do |sigla, quantidade|
-      governadores[:_total] += quantidade
-      governadores[sigla] = quantidade
+      governadores[:total] += quantidade
+      governadores[:por_sigla][sigla] = quantidade
     end
   else
     puts "Faltando governador para DF em #{ano}"
   end
   if cargos.has_key? 'DEPUTADO DISTRITAL'
-    deputados = json[:DF][:deputado_distrital][ano] = { _total: 0, _mandato: 4 }
+    deputados = json[:DF][:deputado_distrital][ano] = { por_sigla: {}, total: 0, mandato: 4 }
     cargos['DEPUTADO DISTRITAL'].each do |sigla, quantidade|
-      deputados[:_total] += quantidade
-      deputados[sigla] = quantidade
+      deputados[:total] += quantidade
+      deputados[:por_sigla][sigla] = quantidade
     end
   else
     puts "Faltando deputados distritais para DF em #{ano}"
@@ -414,29 +417,30 @@ municipais.each do |uf, municipios|
   json[uf.to_sym].update(vereador: {}, prefeito: {})
   municipios.each do |municipio, anos|
     anos.each do |ano, cargos|
+      json[:BR][:populacao][ano] ||= populacao(populacao_brasil, nil, nil, ano)
       json[uf.to_sym][:populacao][ano] ||= populacao(populacao_ufs, uf, nil, ano)
       json[:DF][:populacao][ano] ||= populacao(populacao_ufs, 'DF', nil, ano)
       populacao_municipio = populacao(populacao_municipios, uf, municipio, ano)
       if cargos.has_key? 'VEREADOR'
-        vereadores = json[uf.to_sym][:vereador][ano] ||= { _total: 0, _mandato: 4 }
+        vereadores = json[uf.to_sym][:vereador][ano] ||= { por_sigla: {}, total: 0, mandato: 4 }
         total = cargos['VEREADOR'].values.reduce(:+)
-        vereadores[:_total] += total
+        vereadores[:total] += total
         cargos['VEREADOR'].each do |sigla, quantidade|
-          vereadores[sigla] ||= { quantidade: 0, populacao: 0 }
-          vereadores[sigla][:quantidade] += quantidade
-          vereadores[sigla][:populacao] += quantidade * (populacao_municipio / total)
+          vereadores[:por_sigla][sigla] ||= { quantidade: 0, populacao: 0 }
+          vereadores[:por_sigla][sigla][:quantidade] += quantidade
+          vereadores[:por_sigla][sigla][:populacao] += quantidade * (populacao_municipio / total)
         end
       else
         puts "Faltando vereadores para #{municipio}/#{uf} em #{ano}"
       end
       if cargos.has_key? 'PREFEITO'
-        prefeitos = json[uf.to_sym][:prefeito][ano] ||= { _total: 0, _mandato: 4 }
+        prefeitos = json[uf.to_sym][:prefeito][ano] ||= { por_sigla: {}, total: 0, mandato: 4 }
         total = cargos['PREFEITO'].values.reduce(:+)
-        prefeitos[:_total] += total
+        prefeitos[:total] += total
         cargos['PREFEITO'].each do |sigla, quantidade|
-          prefeitos[sigla] ||= { quantidade: 0, populacao: 0 }
-          prefeitos[sigla][:quantidade] += quantidade
-          prefeitos[sigla][:populacao] += populacao_municipio
+          prefeitos[:por_sigla][sigla] ||= { quantidade: 0, populacao: 0 }
+          prefeitos[:por_sigla][sigla][:quantidade] += quantidade
+          prefeitos[:por_sigla][sigla][:populacao] += populacao_municipio
         end
       else
         puts "Faltando prefeito para #{municipio}/#{uf} em #{ano}"
@@ -445,6 +449,15 @@ municipais.each do |uf, municipios|
   end
 end
 
+estimativas_br = json[:BR][:populacao]
+ultimo_ano_br = estimativas_br.keys.max
+estimativas_br[ultimo_ano_br + 1] = populacao(populacao_brasil, nil, nil, ultimo_ano_br + 1)
+
+(json.keys - [:BR]).each do |uf|
+  estimativas = json[uf][:populacao]
+  ultimo_ano = estimativas.keys.max
+  estimativas[ultimo_ano + 1] = populacao(populacao_ufs, uf, nil, ultimo_ano + 1)
+end
 
 
 # ---------------------------------------------

@@ -1,8 +1,6 @@
-/* globals _, RepositorioDePartidos, ConfiguracaoDePartidos */
-
 'use strict';
 
-describe('ConfiguracaoDePartidos', function() {
+describe('ipl.ConfiguracaoDePartidos', function() {
 
   describe('#mesclarPartidosExtintos', function() {
 
@@ -22,8 +20,8 @@ describe('ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012 };
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       var partidos = [ a, b ];
-      var repo = new RepositorioDePartidos(partidos);
-      var cfg = new ConfiguracaoDePartidos(repo);
+      var repo = new ipl.RepositorioDePartidos(partidos);
+      var cfg = new ipl.ConfiguracaoDePartidos(repo);
       _.set(cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       var dados = _.map(partidos, geraInput);
       var resultado = cfg.mesclarPartidosExtintos(dados);
@@ -36,8 +34,8 @@ describe('ConfiguracaoDePartidos', function() {
         this.a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
         var b = { sigla: 'B', numero: 2, fundado: 1979 };
         var partidos = [ this.a, b ];
-        this.repo = new RepositorioDePartidos(partidos);
-        this.cfg = new ConfiguracaoDePartidos(this.repo);
+        this.repo = new ipl.RepositorioDePartidos(partidos);
+        this.cfg = new ipl.ConfiguracaoDePartidos(this.repo);
         this.dados = _.map(partidos, geraInput);
       });
 
@@ -72,8 +70,8 @@ describe('ConfiguracaoDePartidos', function() {
         this.maisAntigo = b;
         this.ultimoExtinto = e;
         this.partidos = [ a, b, c, d, e ];
-        var repo = new RepositorioDePartidos(this.partidos);
-        this.cfg = new ConfiguracaoDePartidos(repo);
+        var repo = new ipl.RepositorioDePartidos(this.partidos);
+        this.cfg = new ipl.ConfiguracaoDePartidos(repo);
         _.set(this.cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       });
 
@@ -107,8 +105,8 @@ describe('ConfiguracaoDePartidos', function() {
       var c = { sigla: 'C', numero: 3, fundado: 2006, extinto: 2010, incorporado: 'D' };
       var d = { sigla: 'D', numero: 4, fundado: 2006, extinto: 2014 };
       var partidos = [ a, b, c, d ];
-      var repo = new RepositorioDePartidos(partidos);
-      var cfg = new ConfiguracaoDePartidos(repo);
+      var repo = new ipl.RepositorioDePartidos(partidos);
+      var cfg = new ipl.ConfiguracaoDePartidos(repo);
       // jscs:disable maximumLineLength
       var indices = [
         [              { ano: 2002, indice: 1 }, { ano: 2006, indice: 1 } ],

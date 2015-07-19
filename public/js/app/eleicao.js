@@ -1,7 +1,4 @@
-/* global _ */
-/* exported RepositorioEleitoral */
-
-(function(_) {
+(function(_, ipl) {
   'use strict';
 
   /**
@@ -9,6 +6,21 @@
    * /^[a-z]{2}$/
    *
    * @typedef {string} Ue
+   */
+
+  /**
+   * Uma identificação para um cargo única na UE.
+   * /^[a-z]+(_[a-z]+)*$/
+   *
+   * @typedef {string} IdCargo
+   */
+
+  /**
+   * Um objeto de parâmetro para filtrar as UEs para calcular o índice.
+   *
+   * @typedef {Object} TipoDeEleicao
+   * @property {IdCargo} cargo
+   * @property {Ue} ue
    */
 
   /**
@@ -26,73 +38,48 @@
    */
 
   /**
-   * Uma identificação para um cargo única na UE.
-   * /^[a-z]+(_[a-z]+)*$/
+   * @classdesc
+   * Classe para pesquisa de dados dos resultados das eleições.
    *
-   * @typedef {string} IdCargo
-   */
-
-  /**
-   * @class
-   * @classdesc Classe para pesquisa de dados dos resultados das eleições.
-   * @param {Object} json - {@link RepositorioEleitoral#json}
+   * @constructor
+   * @param {Object} json - {@link RepositorioEleitoral~json}
    */
   function RepositorioEleitoral(json) {
     /**
      * Fonte de dados JSON.
      *
-     * @private
      * @memberOf RepositorioEleitoral.prototype
      * @member {Object}
+     * @private
      */
     this.json  = json;
     /**
      * Cache para memoizar o resultado de algumas funções.
      *
-     * @private
      * @memberOf RepositorioEleitoral.prototype
-     * @member {Object}
+     * @member {_.memoize.Cache}
+     * @private
      */
-    this.cache = new _.memoize.Cache;
+    this.cache = new _.memoize.Cache();
   }
 
-  RepositorioEleitoral.prototype = /** @lends RepositorioEleitoral.prototype */ {
+  RepositorioEleitoral.prototype = {
 
     /**
      * Busca anos que teve eleição.
      *
-     * @param {IdCargo} cargo - Filtro por cargo.
-     * @param {Ue}      ue    - Filtro por UE.
-     * @return {Array<Ano>}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @returns {Array<Ano>}
      * @nosideeffects
      */
-    anosDeEleicao: function(cargo, ue) {
-      var chave = 'anosDeEleicao' + cargo + ue;
+    anosDeEleicao: function(tipoDeEleicao) {
+      var metodo = 'anosDeEleicao';
+      var chave = metodo + tipoDeEleicao.cargo + tipoDeEleicao.ue;
       if (!this.cache.has(chave)) {
-        var anosString = _.keys(this.json[ue][cargo]);
+        var anosString = _.keys(this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo]);
         var anos = _.map(anosString, function(ano) { return +ano; });
         this.cache.set(chave, anos);
-      }
-      return this.cache.get(chave);
-    },
-
-    /**
-     * Busca anos que teve eleição e a duração do mandato do representante eleito.
-     *
-     * @private
-     * @param {IdCargo} cargo - Filtro por cargo.
-     * @param {Ue}      ue    - Filtro por UE.
-     * @return {Array<{eleicao: Ano, duracao: number}>}
-     * @nosideeffects
-     */
-    mandatos: function(cargo, ue) {
-      var chave = 'mandatos' + cargo + ue;
-      if (!this.cache.has(chave)) {
-        var anos = this.anosDeEleicao(cargo, ue);
-        var mandatos = _.map(anos, function(ano) {
-          return { eleicao: ano, duracao: this.json[ue][cargo][ano]._mandato };
-        }, this);
-        this.cache.set(chave, mandatos);
+        return anos;
       }
       return this.cache.get(chave);
     },
@@ -101,22 +88,29 @@
      * Busca anos que teve eleição em que o mandato do representante eleito está
      * ativo no ano especificado.
      *
-     * @param {IdCargo} cargo - Filtro por cargo.
-     * @param {Ue}      ue    - Filtro por UE.
-     * @param {Ano}     ano   - Filtro por ano.
-     * @return {Array<Ano>}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @param {Ano} ano
+     * @returns {Array<Ano>}
      * @nosideeffects
      */
-    mandatosAtivos: function(cargo, ue, ano) {
-      var chave = 'mandatosAtivos' + cargo + ue + ano;
+    mandatosAtivos: function(tipoDeEleicao, ano) {
+      var metodo = 'mandatosAtivos';
+      var chave = metodo + tipoDeEleicao.cargo + tipoDeEleicao.ue + ano;
       if (!this.cache.has(chave)) {
-        var mandatos = this.mandatos(cargo, ue);
-        var ativos = _.filter(mandatos, function(mandato) {
-          return mandato.eleicao + 1 <= ano &&
-                 mandato.eleicao + 1 + mandato.duracao > ano;
-        });
-        var anosDeMandatosAtivos = _.pluck(ativos, 'eleicao');
-        this.cache.set(chave, anosDeMandatosAtivos);
+        var anos = this.anosDeEleicao(tipoDeEleicao);
+        var ativos = _.filter(anos, function(anoDeEleicao) {
+          if (anoDeEleicao + 1 > ano) {
+            return false;
+          }
+          var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][anoDeEleicao];
+          var duracao = eleicao.mandato;
+          if (anoDeEleicao + 1 + duracao <= ano) {
+            return false;
+          }
+          return true;
+        }, this);
+        this.cache.set(chave, ativos);
+        return ativos;
       }
       return this.cache.get(chave);
     },
@@ -124,20 +118,19 @@
     /**
      * Busca partidos que tem representantes.
      *
-     * @param {IdCargo} cargo - Filtro por cargo.
-     * @param {Ue}      ue    - Filtro por UE.
-     * @param {Ano}     ano   - Filtro por ano.
-     * @return {Array<IdPartido>}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @param {Ano} ano
+     * @returns {Array<IdPartido>}
      * @nosideeffects
      */
-    siglasComRepresentantes: function(cargo, ue, ano) {
-      var chave = 'siglasComRepresentantes' + cargo + ue + ano;
+    partidosComRepresentantes: function(tipoDeEleicao, ano) {
+      var metodo = 'partidosComRepresentantes';
+      var chave = metodo + tipoDeEleicao.cargo + tipoDeEleicao.ue + ano;
       if (!this.cache.has(chave)) {
-        var chaves   = _.keys(this.json[ue || 'BR'][cargo][ano]);
-        var partidos =  _.reject(chaves, function(partido) {
-          return _.startsWith(partido, '_');
-        });
+        var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
+        var partidos = _.keys(eleicao.por_sigla);
         this.cache.set(chave, partidos);
+        return partidos;
       }
       return this.cache.get(chave);
     },
@@ -145,75 +138,82 @@
     /**
      * Quantidade total de representantes.
      *
-     * @param {IdCargo} cargo - Filtro por cargo.
-     * @param {Ue}      ue    - Filtro por UE.
-     * @param {Ano}     ano   - Filtro por ano.
-     * @return {number}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @param {Ano} ano
+     * @returns {number}
      * @nosideeffects
      */
-    total: function(cargo, ue, ano) {
-      return this.json[ue || 'BR'][cargo][ano]._total;
+    total: function(tipoDeEleicao, ano) {
+      var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
+      return eleicao.total;
     },
 
     /**
      * Estimativa de população da UE.
      *
-     * @param {Ue}      ue    - Filtro por UE.
-     * @param {Ano}     ano   - Filtro por ano.
-     * @return {number}
+     * @param {Ue} ue
+     * @param {Ano} ano
+     * @returns {number}
      * @nosideeffects
      */
     populacao: function(ue, ano) {
-      return this.json[ue].populacao[ano];
+      var populacao = this.json[ue].populacao[ano];
+      if (populacao == null) {
+        throw 'Estimativa de população não encontrada para ' + ue + ' em ' + ano + '!';
+      }
+      return populacao;
     },
 
     /**
      * Quantidade de representantes eleitos pelo partido.
      *
-     * @param {IdCargo}   cargo   - Filtro por cargo.
-     * @param {Ue}        ue      - Filtro por UE.
-     * @param {Ano}       ano     - Filtro por ano.
-     * @param {IdPartido} partido - Filtro por partido.
-     * @return {number}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @param {Ano} ano
+     * @param {IdPartido} partido
+     * @returns {number}
      * @nosideeffects
      */
-    quantidade: function(cargo, ue, ano, partido) {
-      var anoNaUe = this.json[ue || 'BR'][cargo][ano];
-      if (anoNaUe == null) {
+    quantidade: function(tipoDeEleicao, ano, partido) {
+      var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
+      if (eleicao == null) {
         return 0;
       }
-      var siglaNoAno = anoNaUe[partido];
-      if (siglaNoAno == null) {
+      var daSigla = eleicao.por_sigla[partido];
+      if (daSigla == null) {
         return 0;
       }
-      return siglaNoAno.quantidade != null ? siglaNoAno.quantidade : siglaNoAno;
+      return daSigla.quantidade != null ? daSigla.quantidade : daSigla;
     },
 
     /**
      * Estimativa de população representada pelo partido calculada proporcional
      * aos representantes eleitos pelo partido em cada UE.
      *
-     * @param {IdCargo}   cargo   - Filtro por cargo.
-     * @param {Ue}        ue      - Filtro por UE.
-     * @param {Ano}       ano     - Filtro por ano.
-     * @param {IdPartido} partido - Filtro por partido.
-     * @return {number}
+     * @param {TipoDeEleicao} tipoDeEleicao
+     * @param {Ano} ano
+     * @param {IdPartido} partido
+     * @returns {number}
      * @nosideeffects
      */
-    proporcionalAPopulacao: function(cargo, ue, ano, partido) {
-      var anoNaUe = this.json[ue || 'BR'][cargo][ano];
-      if (anoNaUe == null) {
+    proporcionalAPopulacao: function(tipoDeEleicao, ano, partido) {
+      var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
+      if (eleicao == null) {
         return 0;
       }
-      var siglaNoAno = anoNaUe[partido];
+      var siglaNoAno = eleicao.por_sigla[partido];
       if (siglaNoAno == null) {
         return 0;
       }
+      if (siglaNoAno.populacao == null) {
+        return null;
+      }
       return siglaNoAno.populacao;
-    },
+    }
 
   };
 
-  this.RepositorioEleitoral = RepositorioEleitoral;
+  _.extend(ipl, /** @lends ipl */ {
+    RepositorioEleitoral: RepositorioEleitoral
+  });
 
-}.call(this, _));
+}.call(this, _, ipl));

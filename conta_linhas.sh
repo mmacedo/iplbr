@@ -4,7 +4,7 @@ function imprime_contagem() {
   eval ls -dS $* 2>/dev/null | xargs wc
 }
 
-web='public/index.html public/css/index.css public/js/app/*'
+web='public/index.html public/css/index.css public/js/app/*.js public/js/app/**/*.js'
 spec='spec/*_spec.js'
 carga='carga/*.rb carga/eleitos/presidentes.txt'
 etc='*.sh Gemfile Gruntfile.js package.json .*rc spec/.*rc .travis.yml .git{ignore,attributes}'

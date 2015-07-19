@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       all: 'public/index.html'
     },
     jshint: {
-      app: [ 'Gruntfile.js', 'public/js/app/*' ],
+      app: [ 'Gruntfile.js', 'public/js/app/**/*.js' ],
       spec: {
         src: 'spec/*.js',
         options: {
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       }
     },
     jscs: {
-      app: [ 'Gruntfile.js', 'public/js/app/*' ],
+      app: [ 'Gruntfile.js', 'public/js/app/**/*.js' ],
       spec: 'spec/*.js',
       options: {
         config: '.jscsrc'
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         }
       },
       karma: {
-        files: [ 'public/js/app/*', 'spec/*.js' ],
+        files: [ 'public/js/app/**/*.js', 'spec/*.js' ],
         tasks: 'karma:runner:run',
       }
     },
