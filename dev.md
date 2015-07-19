@@ -68,7 +68,7 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 - `public/js/highcharts/no-data-to-display.js` (módulo para mostrar texto quando não há dados)
 - `public/js/highcharts/grid-light.js` (tema Grid Light)
 
-Últimas versões de [jQuery](https://jquery.com/) e [Lo-Dash](https://lodash.com/), com suporte para IE 8. Última versão de [big.js](http://mikemcl.github.io/big.js/).
+Últimas versões sem suporte para IE 8 de [jQuery](https://jquery.com/) (2.x) e [Lo-Dash](https://lodash.com/) (modern). Última versão de [big.js](http://mikemcl.github.io/big.js/).
 
 ### Desenvolvimento
 

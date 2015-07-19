@@ -2,7 +2,7 @@ module.exports = function(config) {
   config.set({
     files: [
       'public/js/lodash.min.js',
-      'public/js/app/utils.js',
+      'public/js/app/ipl.js',
       'public/js/app/eleicao.js',
       'public/js/app/indice/base.js',
       'public/js/app/cargo.js',
