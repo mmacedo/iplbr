@@ -43,22 +43,25 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 - `public/index.html`: Única página com todo HTML. Deve ser responsiva;
 - `public/eleitos.json`: Ver **Carga de dados**;
 - `public/favicons`: O ícone é o [escudo de armas do Brasil](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Brazil.svg), gerado utilizando [gerador de favicon](http://realfavicongenerator.net/);
-- `public/css/index.css`: Contém o CSS da página;
+- `public/js/app/ipl.js`: Cria o namespace para o resto dos arquivos;
 - `public/js/app/eleicao.js`: Contém a lógica de leitura do json;
-- `public/js/app/indice.js`: Contém a lógica de cálculo dos índices;
+- `public/js/app/cargo.js`: ?
+- `public/js/app/indice/base.js`: ?
+- `public/js/app/indice/cargo.js`: ?
+- `public/js/app/indice/composto.js`: ?
 - `public/js/app/partido.js`: Contém a lógica de busca dos partidos;
 - `public/js/app/configuracao.js`: Contém a lógica de configuração dos partidos;
 - `public/js/app/serie.js`: Contém a lógica de geração das séries para os gráficos;
-- `public/js/app/serie.js`: Contém a lógica de geração dos gráficos;
-- `public/js/app/index.js`: Contém o Javascript da página.
+- `public/js/app/grafico.js`: Contém a lógica de geração dos gráficos;
+- `public/js/app/main.js`: Contém o Javascript da página.
 
 ### Dependências
 
 Última versão do [Twitter Boostrap](http://getbootstrap.com/) com tema [Journal](https://bootswatch.com/journal/):
 
 - `public/css/bootstrap.min.css` (tema)
-- `pulic/js/bootstrap/boostrap.min.js`
-- `pulic/js/bootstrap/ie10-viewport-bug-workaround.js` (http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js)
+- `pulic/js/boostrap.min.js`
+- `pulic/js/ie10-viewport-bug-workaround.js` (http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js)
 - `public/fonts` ([Glyphicon](http://getbootstrap.com/components/#glyphicons))
 
 Última versão não paga do [Highcharts](http://www.highcharts.com/) com os seguintes arquivos:

@@ -1,7 +1,8 @@
 languages:
   JavaScript: true
 exclude_paths:
-- "*.js"
+- "Gruntfile.js"
+- "karma.conf.js"
 - "public/js/*.min.js"
-- "public/js/bootstrap/*.js"
+- "public/js/ie10-viewport-bug-workaround.js"
 - "public/js/highcharts/*.js"
