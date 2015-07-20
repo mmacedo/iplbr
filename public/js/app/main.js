@@ -1,7 +1,7 @@
 /* jshint browser: true */
-/* globals jQuery, Highcharts */
+/* globals ipl, _, jQuery, Highcharts */
 
-(function($, _, Highcharts, ipl) {
+;(function(ipl, _, $, Highcharts) {
   'use strict';
 
   Highcharts.setOptions({
@@ -293,4 +293,4 @@
     });
   });
 
-})(jQuery, _, Highcharts, ipl);
+})(ipl, _, jQuery, Highcharts);

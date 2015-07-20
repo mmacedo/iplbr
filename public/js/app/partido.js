@@ -1,4 +1,7 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.RepositorioDePartidos */
+
+;(function(ipl, _) {
   'use strict';
 
   var partidosEmGrupos = {
@@ -245,7 +248,7 @@
 
   RepositorioDePartidos.PARTIDOS = _.flatten(_.values(partidosEmGrupos));
 
-  _.extend(RepositorioDePartidos.prototype, {
+  RepositorioDePartidos.prototype = {
 
     todos: function() {
       return this.partidos.slice();
@@ -279,10 +282,8 @@
       return this.cache.get(chave);
     },
 
-  });
+  };
 
-  _.extend(ipl, /* @lends ipl */ {
-    RepositorioDePartidos: RepositorioDePartidos
-  });
+  ipl.RepositorioDePartidos = RepositorioDePartidos;
 
-}.call(this, _, ipl));
+})(ipl, _);

@@ -16,6 +16,5 @@
   "nonew":         true,
   "strict":        true,
   "undef":         true,
-  "unused":        true,
-  "globals": { "_": true, "ipl": true }
+  "unused":        true
 }

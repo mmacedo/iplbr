@@ -1,7 +1,9 @@
 /* jshint browser: true */
-/* globals jQuery, Big */
+/* globals ipl, _, jQuery, Big */
+/* exported ipl.criaGrafico */
+/* exported ipl.filtroJurisdicao */
 
-(function($, _, Big) {
+;(function(ipl, _, $, Big) {
   'use strict';
 
   var regiaoSul         = [ 'PR', 'RS', 'SC' ];
@@ -181,9 +183,7 @@
     }
   }
 
-  _.extend(ipl, /* @lends ipl */ {
-    criaGrafico:      criaGrafico,
-    filtroJurisdicao: filtroJurisdicao
-  });
+  ipl.criaGrafico      = criaGrafico;
+  ipl.filtroJurisdicao = filtroJurisdicao;
 
-}.call(this, jQuery, _, Big));
+})(ipl, _, jQuery, Big);

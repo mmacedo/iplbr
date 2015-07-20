@@ -1,4 +1,6 @@
-(function() {
+/* exported ipl, ipl.Cache */
+
+;(function(root) {
   'use strict';
 
   function SimpleMap() {
@@ -19,7 +21,7 @@
       this.__data__[chave] = valor;
     },
 
-    'delete': function(chave) {
+    delete: function(chave) {
       delete this.__data__[chave];
     },
 
@@ -34,6 +36,6 @@
    *
    * @namespace ipl
    */
-  this.ipl = { Cache: SimpleMap };
+  root.ipl = { Cache: SimpleMap };
 
-}.call(this));
+})(this);

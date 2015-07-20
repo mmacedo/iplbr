@@ -1,4 +1,7 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.RepositorioEleitoral */
+
+;(function(ipl, _) {
   'use strict';
 
   /**
@@ -212,8 +215,6 @@
 
   };
 
-  _.extend(ipl, /** @lends ipl */ {
-    RepositorioEleitoral: RepositorioEleitoral
-  });
+  ipl.RepositorioEleitoral = RepositorioEleitoral;
 
-}.call(this, _, ipl));
+})(ipl, _);

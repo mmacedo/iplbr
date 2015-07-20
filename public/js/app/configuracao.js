@@ -1,4 +1,7 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.ConfiguracaoDePartidos */
+
+;(function(ipl, _) {
   'use strict';
 
   function ConfiguracaoDePartidos(repo) {
@@ -102,7 +105,7 @@
     });
   }
 
-  _.extend(ConfiguracaoDePartidos.prototype, {
+  ConfiguracaoDePartidos.prototype = {
 
     mesclarPartidosExtintos: function(partidos) {
       var migrouUmPartido = false;
@@ -247,10 +250,8 @@
       }
     },
 
-  });
+  };
 
-  _.extend(ipl, /* @lends ipl */ {
-    ConfiguracaoDePartidos: ConfiguracaoDePartidos
-  });
+  ipl.ConfiguracaoDePartidos = ConfiguracaoDePartidos;
 
-}.call(this, _, ipl));
+})(ipl, _);

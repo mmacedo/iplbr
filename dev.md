@@ -44,16 +44,15 @@ A ideia é manter uma estrutura minimalista. Todos os arquivos dentro da pasta `
 - `public/eleitos.json`: Ver **Carga de dados**;
 - `public/favicons`: O ícone é o [escudo de armas do Brasil](https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Brazil.svg), gerado utilizando [gerador de favicon](http://realfavicongenerator.net/);
 - `public/js/app/ipl.js`: Cria o namespace para o resto dos arquivos;
-- `public/js/app/eleicao.js`: Contém a lógica de leitura do json;
-- `public/js/app/cargo.js`: ?
-- `public/js/app/indice/base.js`: ?
-- `public/js/app/indice/cargo.js`: ?
-- `public/js/app/indice/composto.js`: ?
-- `public/js/app/partido.js`: Contém a lógica de busca dos partidos;
-- `public/js/app/configuracao.js`: Contém a lógica de configuração dos partidos;
-- `public/js/app/serie.js`: Contém a lógica de geração das séries para os gráficos;
-- `public/js/app/grafico.js`: Contém a lógica de geração dos gráficos;
-- `public/js/app/main.js`: Contém o Javascript da página.
+- `public/js/app/eleicao.js`: Lógica de leitura do json;
+- `public/js/app/indice.js`: Fábrica de índices.
+- `public/js/app/cargo.js`: Índices por cargo.
+- `public/js/app/composto.js`: Índices complexos compostos de outros índices.
+- `public/js/app/partido.js`: Lógica de busca dos partidos;
+- `public/js/app/configuracao.js`: Lógica de configuração dos partidos;
+- `public/js/app/serie.js`: Geração das séries para os gráficos;
+- `public/js/app/grafico.js`: Geração dos gráficos;
+- `public/js/app/main.js`: Lógica da página.
 
 ### Dependências
 

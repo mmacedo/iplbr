@@ -1,14 +1,27 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.GerenciadorDeCores */
+/* exported ipl.GeradorDeSeries */
+
+;(function(ipl, _) {
   'use strict';
 
   function GerenciadorDeCores(partidos, cores) {
     this.partidos      = partidos;
     this.cores         = cores || GerenciadorDeCores.CORES_PADRAO;
     this.pilhasDeCores = {};
-    this.cache         = new ipl.Cache;
+    this.cache         = new ipl.Cache();
   }
 
-  _.extend(GerenciadorDeCores.prototype, {
+  GerenciadorDeCores.CORES_PADRAO = {
+    verde:        [ 'green' ],
+    vermelho:     [ 'red' ],
+    laranja:      [ 'orange' ],
+    azul:         [ 'blue' ],
+    'azul claro': [ 'lightblue' ],
+    roxo:         [ 'purple' ]
+  };
+
+  GerenciadorDeCores.prototype = {
 
     proxima: function(cor) {
       // Inicia uma nova pilha de cores
@@ -43,15 +56,6 @@
       return this.cache.get(chave);
     },
 
-  });
-
-  GerenciadorDeCores.CORES_PADRAO = {
-    verde:        [ 'green' ],
-    vermelho:     [ 'red' ],
-    laranja:      [ 'orange' ],
-    azul:         [ 'blue' ],
-    'azul claro': [ 'lightblue' ],
-    roxo:         [ 'purple' ]
   };
 
   function GeradorDeSeries(configuracao, partidos, cores) {
@@ -66,7 +70,7 @@
     this.ehGraficoDeArea   = false;
   }
 
-  _.extend(GeradorDeSeries.prototype, {
+  GeradorDeSeries.prototype = {
 
     geraIndices: function(indice, regiao, anos, siglas) {
       return _.map(siglas, function(siglaENumero) {
@@ -266,11 +270,9 @@
       return series;
     },
 
-  });
+  };
 
-  _.extend(ipl, /* @lends ipl */ {
-    GerenciadorDeCores: GerenciadorDeCores,
-    GeradorDeSeries: GeradorDeSeries
-  });
+  ipl.GerenciadorDeCores = GerenciadorDeCores;
+  ipl.GeradorDeSeries    = GeradorDeSeries;
 
-}.call(this, _, ipl));
+})(ipl, _);

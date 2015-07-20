@@ -1,4 +1,14 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.ResultadoSemPeso */
+/* exported ipl.ResultadoPorPopulacao */
+/* exported ipl.EsferaFederal */
+/* exported ipl.EsferaEstadual */
+/* exported ipl.EsferaDistrital */
+/* exported ipl.EsferaMunicipal */
+/* exported ipl.Cargo */
+/* exported ipl.IndicePorCargo */
+
+;(function(ipl, _) {
   'use strict';
 
   /**
@@ -338,14 +348,89 @@
 
   };
 
-  _.extend(ipl, /* @lends ipl */ {
-    ResultadoSemPeso:      ResultadoSemPeso,
-    ResultadoPorPopulacao: ResultadoPorPopulacao,
-    EsferaFederal:         EsferaFederal,
-    EsferaEstadual:        EsferaEstadual,
-    EsferaDistrital:       EsferaDistrital,
-    EsferaMunicipal:       EsferaMunicipal,
-    Cargo:                 Cargo
-  });
+  /**
+   * @classdesc
+   * Índice para um único cargo.
+   *
+   * @constructor
+   * @param {Cargo} cargo         - {@link IndicePorCargo~cargo}
+   * @param {Esfera} esfera       - {@link IndicePorCargo~esfera}
+   * @param {Resultado} resultado - {@link IndicePorCargo~resultado}
+   * @implements {Indice}
+   */
+  function IndicePorCargo(cargo, esfera, resultado) {
+    this.cargo     = cargo;
+    this.esfera    = esfera;
+    this.resultado = resultado;
+  }
 
-}.call(this, _, ipl));
+  IndicePorCargo.prototype = {
+
+    /**
+     * @inheritdoc
+     * @nosideeffects
+     */
+    anos: function(regiao) {
+      var ues = this.esfera.uesComDados(regiao);
+      var anos = _.map(ues, function(ue) {
+        return this.cargo.eleicoes(ue);
+      }, this);
+      return _.flatten(anos);
+    },
+
+    /**
+     * @inheritdoc
+     * @nosideeffects
+     */
+    series: function(regiao, ano) {
+      var ues = this.esfera.uesComDados(regiao);
+      var partidos = _.map(ues, function(ue) {
+        return this.cargo.partidos(ue, ano);
+      }, this);
+      return _.flatten(partidos);
+    },
+
+    /**
+     * @inheritdoc
+     * @nosideeffects
+     */
+    temDados: function(regiao, ano) {
+      var ues = this.esfera.uesComDados(regiao);
+      return _.all(ues, function(ue) {
+        return this.cargo.temDados(ue, ano);
+      }, this);
+    },
+
+    /**
+     * @inheritdoc
+     * @nosideeffects
+     */
+    calcula: function(regiao, ano, idPartido) {
+      var todasUes = this.esfera.todasAsUesNaMesmaEsfera(regiao);
+      var somaDosPesos = _.sum(todasUes, function(ue) {
+        var tipoDeEleicao = { cargo: this.cargo.idCargo, ue: ue };
+        return this.resultado.peso(tipoDeEleicao, ano);
+      }, this);
+      var uesComIndice = this.esfera.uesComDados(regiao);
+      var indice = _.sum(uesComIndice, function(ue) {
+        var tipoDeEleicao = { cargo: this.cargo.idCargo, ue: ue };
+        var quantidade = this.resultado.quantidade(tipoDeEleicao, ano, idPartido);
+        var total      = this.resultado.total(tipoDeEleicao, ano);
+        var peso       = this.resultado.peso(tipoDeEleicao, ano);
+        return (quantidade / total) * (peso / somaDosPesos);
+      }, this);
+      return indice;
+    }
+
+  };
+
+  ipl.ResultadoSemPeso      = ResultadoSemPeso;
+  ipl.ResultadoPorPopulacao = ResultadoPorPopulacao;
+  ipl.EsferaFederal         = EsferaFederal;
+  ipl.EsferaEstadual        = EsferaEstadual;
+  ipl.EsferaDistrital       = EsferaDistrital;
+  ipl.EsferaMunicipal       = EsferaMunicipal;
+  ipl.Cargo                 = Cargo;
+  ipl.IndicePorCargo        = IndicePorCargo;
+
+}.call(ipl, _));

@@ -1,4 +1,10 @@
-(function(_, ipl) {
+/* globals ipl, _ */
+/* exported ipl.IndiceBicameral */
+/* exported ipl.IndiceSomaDistritoFederal */
+/* exported ipl.IndiceEsfera */
+/* exported ipl.IndiceTodosOsNiveis */
+
+;(function(ipl, _) {
   'use strict';
 
   /**
@@ -243,146 +249,9 @@
 
   };
 
-  _.extend(ipl.FabricaDeIndices.prototype, /** @lends ipl.FabricaDeIndices# */ {
+  ipl.IndiceBicameral           = IndiceBicameral;
+  ipl.IndiceSomaDistritoFederal = IndiceSomaDistritoFederal;
+  ipl.IndiceEsfera              = IndiceEsfera;
+  ipl.IndiceTodosOsNiveis       = IndiceTodosOsNiveis;
 
-    indice: function() {
-      var chave = 'indice';
-      if (!this.singletons.has(chave)) {
-        var federal   = this.federal();
-        var estadual  = this.estadual();
-        var municipal = this.municipal();
-        var indice = new IndiceTodosOsNiveis(federal, estadual, municipal);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    legislativo: function() {
-      var chave = 'legislativo';
-      if (!this.singletons.has(chave)) {
-        var federal   = this.legislativoFederal();
-        var estadual  = this.legislativoEstadual();
-        var municipal = this.legislativoMunicipal();
-        var indice = new IndiceTodosOsNiveis(federal, estadual, municipal);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    executivo: function() {
-      var chave = 'executivo';
-      if (!this.singletons.has(chave)) {
-        var federal   = this.executivoFederal();
-        var estadual  = this.executivoEstadual();
-        var municipal = this.executivoMunicipal();
-        var indice = new IndiceTodosOsNiveis(federal, estadual, municipal);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    federal: function() {
-      var chave = 'federal';
-      if (!this.singletons.has(chave)) {
-        var legislativo = this.legislativoFederal();
-        var executivo   = this.executivoFederal();
-        var indice = new IndiceEsfera(legislativo, executivo);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    legislativoFederal: function() {
-      var chave = 'legislativoFederal';
-      if (!this.singletons.has(chave)) {
-        var menor = this.deputadosFederais();
-        var maior = this.senadores();
-        var indice = new IndiceBicameral(menor, maior);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    /** @borrows ipl.FabricaDeIndices#presidentes */
-    executivoFederal: ipl.FabricaDeIndices.prototype.presidentes,
-
-    estadual: function() {
-      var chave = 'estadual';
-      if (!this.singletons.has(chave)) {
-        var legislativo = this.legislativoEstadual();
-        var executivo   = this.executivoEstadual();
-        var indice = new IndiceEsfera(legislativo, executivo);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    legislativoEstadual: function() {
-      var chave = 'legislativoEstadual';
-      if (!this.singletons.has(chave)) {
-        var regular   = this.deputadosEstaduais();
-        var distrital = this.deputadosDistritais();
-        var indice = new IndiceSomaDistritoFederal(regular, distrital);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    executivoEstadual: function() {
-      var chave = 'executivoEstadual';
-      if (!this.singletons.has(chave)) {
-        var regular   = this.governadoresEstaduais();
-        var distrital = this.governadoresDistritais();
-        var indice = new IndiceSomaDistritoFederal(regular, distrital);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    municipal: function() {
-      var chave = 'municipal';
-      if (!this.singletons.has(chave)) {
-        var legislativo = this.legislativoMunicipal();
-        var executivo   = this.executivoMunicipal();
-        var indice = new IndiceEsfera(legislativo, executivo);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    legislativoMunicipal: function() {
-      var chave = 'legislativoMunicipal';
-      if (!this.singletons.has(chave)) {
-        var regular   = this.vereadores();
-        var distrital = this.deputadosDistritais();
-        var indice = new IndiceSomaDistritoFederal(regular, distrital);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-    executivoMunicipal: function() {
-      var chave = 'executivoMunicipal';
-      if (!this.singletons.has(chave)) {
-        var regular   = this.prefeitos();
-        var distrital = this.governadoresDistritais();
-        var indice = new IndiceSomaDistritoFederal(regular, distrital);
-        this.singletons.set(chave, indice);
-        return indice;
-      }
-      return this.singletons.get(chave);
-    },
-
-  });
-
-}.call(this, _, ipl));
+})(ipl, _);
