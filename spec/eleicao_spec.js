@@ -33,7 +33,7 @@ describe('ipl.RepositorioEleitoral', function() {
   describe('#mandatosAtivos', function() {
 
     it('deve retornar mandato que acaba no ano', function() {
-      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
       var resultado = repo.mandatosAtivos(tipoDeEleicao, 1994);
@@ -41,7 +41,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('deve retornar mandato que não terminaram no ano', function() {
-      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
       var resultado = repo.mandatosAtivos(tipoDeEleicao, 1990);
@@ -49,7 +49,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('não deve retornar mandato que não iniciou', function() {
-      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
       var resultado = repo.mandatosAtivos(tipoDeEleicao, 1989);
@@ -57,7 +57,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('não deve retornar mandato que já encerrou', function() {
-      var json = { BR: { presidente: { 1989: { _mandato: 5 } } } };
+      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
       var resultado = repo.mandatosAtivos(tipoDeEleicao, 1995);
@@ -69,7 +69,7 @@ describe('ipl.RepositorioEleitoral', function() {
   describe('#partidosComRepresentantes', function() {
 
     it('não deve retornar propriedades especiais como siglas', function() {
-      var json = { BR: { senador: { 2002: { _total: 0, _mandato: 0 } } } };
+      var json = { BR: { senador: { 2002: { total: 0, mandato: 0 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
@@ -77,7 +77,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('deve retornar siglas para a eleição', function() {
-      var json = { BR: { senador: { 2002: { a1: {}, a2: {} } } } };
+      var json = { BR: { senador: { 2002: { por_sigla: { a1: {}, a2: {} } } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
@@ -85,7 +85,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('deve retornar siglas para as eleições municipais em um estado', function() {
-      var json = { RS: { vereador: { 2002: { a1: {}, a2: {} } } } };
+      var json = { RS: { vereador: { 2002: { por_sigla: { a1: {}, a2: {} } } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'vereador', ue: 'RS' };
       var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
@@ -97,7 +97,7 @@ describe('ipl.RepositorioEleitoral', function() {
   describe('#quantidade', function() {
 
     it('deve retornar quantidade de representantes da sigla', function() {
-      var json = { BR: { senador: { 2002: { a1: 3 } } } };
+      var json = { BR: { senador: { 2002: { por_sigla: { a1: 3 } } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.quantidade(tipoDeEleicao, 2002, 'a1');
@@ -121,7 +121,7 @@ describe('ipl.RepositorioEleitoral', function() {
     });
 
     it('deve retornar quantidade de representantes municipais da uf', function() {
-      var json = { RS: { vereador: { 2000: { a1: { quantidade: 120 } } } } };
+      var json = { RS: { vereador: { 2000: { por_sigla: { a1: { quantidade: 120 } } } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'vereador', ue: 'RS' };
       var resultado = repo.quantidade(tipoDeEleicao, 2000, 'a1');
@@ -133,7 +133,7 @@ describe('ipl.RepositorioEleitoral', function() {
   describe('#proporcionalAPopulacao', function() {
 
     it('deve retornar representantes municipais proporcional à população', function() {
-      var json = { RS: { vereador: { 2000: { a1: { populacao: 120 } } } } };
+      var json = { RS: { vereador: { 2000: { por_sigla: { a1: { populacao: 120 } } } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'vereador', ue: 'RS' };
       var resultado = repo.proporcionalAPopulacao(tipoDeEleicao, 2000, 'a1');
@@ -161,7 +161,7 @@ describe('ipl.RepositorioEleitoral', function() {
   describe('#total', function() {
 
     it('deve retornar quantidade total de representantes', function() {
-      var json = { BR: { senador: { 2002: { _total: 10 } } } };
+      var json = { BR: { senador: { 2002: { total: 10 } } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.total(tipoDeEleicao, 2002);

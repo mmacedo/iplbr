@@ -33,8 +33,7 @@ describe('ipl.GerenciadorDeCores', function() {
 
   });
 
-  // Esse método foi memoizado
-  xdescribe('#cor', function() {
+  describe('#cor', function() {
 
     beforeEach(function() {
       this.a = { sigla: 'A', numero: 1, fundado: 1979, cor: this.cor };
@@ -47,7 +46,7 @@ describe('ipl.GerenciadorDeCores', function() {
       var g = new ipl.GerenciadorDeCores(null, this.paletaComUmTom);
       sinon.spy(g, 'proxima');
       expect(g.cor(partido)).to.equal(this.tom1);
-      expect(g.proxima).toHaveBeenCalled();
+      expect(g.proxima).to.have.been.called();
     });
 
     it('deve retornar a mesma cor para o mesmo partido', function() {
@@ -56,7 +55,7 @@ describe('ipl.GerenciadorDeCores', function() {
       sinon.spy(g, 'proxima');
       expect(g.cor(partido)).to.equal(this.tom1);
       expect(g.cor(partido)).to.equal(this.tom1);
-      expect(g.proxima.calls.count()).to.equal(1);
+      expect(g.proxima).to.have.callCount(1);
     });
 
     it('deve retornar a mesma cor para partido renomeado', function() {
@@ -69,7 +68,7 @@ describe('ipl.GerenciadorDeCores', function() {
       expect(g.cor(partido1)).to.equal(this.tom1);
       expect(g.cor(partido2)).to.equal(this.tom1);
       expect(g.cor(partido3)).to.equal(this.tom1);
-      expect(g.proxima.calls.count()).to.equal(1);
+      expect(g.proxima).to.have.callCount(1);
     });
 
   });

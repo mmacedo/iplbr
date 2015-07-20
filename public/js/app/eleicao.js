@@ -57,10 +57,10 @@
      * Cache para memoizar o resultado de algumas funções.
      *
      * @memberOf RepositorioEleitoral.prototype
-     * @member {_.memoize.Cache}
+     * @member {ipl.Cache}
      * @private
      */
-    this.cache = new _.memoize.Cache();
+    this.cache = new ipl.Cache();
   }
 
   RepositorioEleitoral.prototype = {
@@ -128,7 +128,7 @@
       var chave = metodo + tipoDeEleicao.cargo + tipoDeEleicao.ue + ano;
       if (!this.cache.has(chave)) {
         var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
-        var partidos = _.keys(eleicao.por_sigla);
+        var partidos = eleicao && eleicao.por_sigla ? _.keys(eleicao.por_sigla) : [];
         this.cache.set(chave, partidos);
         return partidos;
       }
@@ -175,7 +175,7 @@
      */
     quantidade: function(tipoDeEleicao, ano, partido) {
       var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
-      if (eleicao == null) {
+      if (eleicao == null || eleicao.por_sigla == null) {
         return 0;
       }
       var daSigla = eleicao.por_sigla[partido];
@@ -197,7 +197,7 @@
      */
     proporcionalAPopulacao: function(tipoDeEleicao, ano, partido) {
       var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
-      if (eleicao == null) {
+      if (eleicao == null || eleicao.por_sigla == null) {
         return 0;
       }
       var siglaNoAno = eleicao.por_sigla[partido];

@@ -240,7 +240,7 @@
 
   function RepositorioDePartidos(partidos) {
     this.partidos = partidos || RepositorioDePartidos.PARTIDOS;
-    this.cache = new _.memoize.Cache();
+    this.cache = new ipl.Cache();
   }
 
   RepositorioDePartidos.PARTIDOS = _.flatten(_.values(partidosEmGrupos));

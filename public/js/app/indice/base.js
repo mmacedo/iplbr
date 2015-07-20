@@ -63,10 +63,10 @@
      * Cache de singletons.
      *
      * @memberOf FabricaDeIndices.prototype
-     * @member {_.memoize.Cache}
+     * @member {ipl.Cache}
      * @private
      */
-    this.singletons = new _.memoize.Cache();
+    this.singletons = new ipl.Cache();
   }
 
   FabricaDeIndices.prototype = {};

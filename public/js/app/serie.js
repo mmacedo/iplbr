@@ -4,37 +4,44 @@
   function GerenciadorDeCores(partidos, cores) {
     this.partidos      = partidos;
     this.cores         = cores || GerenciadorDeCores.CORES_PADRAO;
-    this._pilhaDeCores = {};
+    this.pilhasDeCores = {};
+    this.cache         = new ipl.Cache;
   }
 
   _.extend(GerenciadorDeCores.prototype, {
 
     proxima: function(cor) {
       // Inicia uma nova pilha de cores
-      if (!(cor in this._pilhaDeCores)) {
-        this._pilhaDeCores[cor] = [];
+      if (!(cor in this.pilhasDeCores)) {
+        this.pilhasDeCores[cor] = [];
       }
 
       // Inicia um novo loop nas variantes da cor
-      if (this._pilhaDeCores[cor].length === 0) {
-        this._pilhaDeCores[cor] = this.cores[cor].slice();
+      if (this.pilhasDeCores[cor].length === 0) {
+        this.pilhasDeCores[cor] = this.cores[cor].slice();
       }
 
       // Pega uma variante da cor do partido
-      return this._pilhaDeCores[cor].shift();
+      return this.pilhasDeCores[cor].shift();
     },
 
-    cor: _.memoize(function(partido) {
-      // Se o partido foi renomeado, usa a mesma cor do sucessor
-      if (partido.renomeado != null) {
-        var sucessor = this.partidos.buscarSucessor(partido);
-        return this.cor(sucessor);
+    cor: function(partido) {
+      var chave = partido.sigla + partido.numero + partido.fundado;
+      if (!this.cache.has(chave)) {
+        // Se o partido foi renomeado, usa a mesma cor do sucessor
+        if (partido.renomeado != null) {
+          var sucessor = this.partidos.buscarSucessor(partido);
+          var corDoSucessor = this.cor(sucessor);
+          this.cache.set(chave, corDoSucessor);
+          return corDoSucessor;
+        }
+        // Retorna próxima cor da paleta
+        var proximaCor = this.proxima(partido.cor);
+        this.cache.set(chave, proximaCor);
+        return proximaCor;
       }
-      // Retorna próxima cor da paleta
-      return this.proxima(partido.cor);
-    }, function(partido) {
-      return partido.sigla + partido.numero + '_' + partido.fundado;
-    }),
+      return this.cache.get(chave);
+    },
 
   });
 
