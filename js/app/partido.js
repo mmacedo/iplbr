@@ -1,12 +1,5 @@
-/* global _ */
-/* exported RepositorioDePartidos */
-
-(function(_) {
+(function(_, ipl) {
   'use strict';
-
-  function RepositorioDePartidos(partidos) {
-    this.partidos = partidos || RepositorioDePartidos.PARTIDOS;
-  }
 
   var partidosEmGrupos = {
     grandes: [
@@ -245,6 +238,11 @@
     ],
   };
 
+  function RepositorioDePartidos(partidos) {
+    this.partidos = partidos || RepositorioDePartidos.PARTIDOS;
+    this.cache = new ipl.Cache();
+  }
+
   RepositorioDePartidos.PARTIDOS = _.flatten(_.values(partidosEmGrupos));
 
   _.extend(RepositorioDePartidos.prototype, {
@@ -258,28 +256,33 @@
     },
 
     buscarSucessor: function(partido) {
-
-      // Partidos com o nome correto e fundados após a extinção desse
-      // Ex.: PTR -> [ PP (1993), PP (2003) ]
-      var possiveisSucessores = _.filter(this.partidos, function(sucessor) {
-        return (
-          // O sucessor não pode ter sido extinto antes do predecessor
-          (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
-          // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
-          ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
-          // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
-           (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
-           (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
-      });
-
-      // Primeiro partido fundado após a extinção do outro
-      // Ex.: PTR -> PP (1993) ao invés de PP (2003)
-      return _.min(possiveisSucessores, 'fundado');
-
+      var chave = 'buscarSucessor' + partido.sigla + partido.numero + partido.fundado;
+      if (!this.cache.has(chave)) {
+        // Partidos com o nome correto e fundados após a extinção desse
+        // Ex.: PTR -> [ PP (1993), PP (2003) ]
+        var possiveisSucessores = _.filter(this.partidos, function(sucessor) {
+          return (
+            // O sucessor não pode ter sido extinto antes do predecessor
+            (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
+            // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
+            ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
+            // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
+             (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
+             (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
+        });
+        // Primeiro partido fundado após a extinção do outro
+        // Ex.: PTR -> PP (1993) ao invés de PP (2003)
+        var sucessor = _.min(possiveisSucessores, 'fundado');
+        this.cache.set(chave, sucessor);
+        return sucessor;
+      }
+      return this.cache.get(chave);
     },
 
   });
 
-  this.RepositorioDePartidos = RepositorioDePartidos;
+  _.extend(ipl, /* @lends ipl */ {
+    RepositorioDePartidos: RepositorioDePartidos
+  });
 
-}.call(this, _));
+}.call(this, _, ipl));

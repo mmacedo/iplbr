@@ -1,11 +1,7 @@
 /* jshint browser: true */
-/* globals _, jQuery, Highcharts */
-/* globals RepositorioEleitoral, GeradorDeIndices */
-/* globals RepositorioDePartidos, ConfiguracaoDePartidos */
-/* globals GerenciadorDeCores, GeradorDeSeries */
-/* globals criaGrafico, filtroJurisdicao */
+/* globals jQuery, Highcharts */
 
-(function($, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao) {
+(function($, _, Highcharts, ipl) {
   'use strict';
 
   Highcharts.setOptions({
@@ -31,11 +27,11 @@
     if ($('#configuracao_todos').is(':checked')) {
       cfg.tabelaDeReescrita = null;
     } else if ($('#configuracao_top10').is(':checked')) {
-      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.top10;
+      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.top10;
     } else if ($('#configuracao_top3').is(':checked')) {
-      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.top3;
+      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.top3;
     } else if ($('#configuracao_antigos').is(':checked')) {
-      cfg.tabelaDeReescrita = ConfiguracaoDePartidos.partidosAntigos;
+      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.partidosAntigos;
     }
 
     series.ehGraficoEmPassos = apenas0e100 === true || $('#passos').is(':checked:enabled');
@@ -195,7 +191,7 @@
       adicionaHistoria();
 
       // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
-      _.each(Highcharts.charts, function(chart) {
+      _.each(Highcharts.charts.slice(), function(chart) {
         if (chart != null) {
           chart.destroy();
         }
@@ -214,12 +210,12 @@
     });
 
     $.getJSON('eleitos.json').done(function(json) {
-      var eleicoes = new RepositorioEleitoral(json);
-      var indices  = new GeradorDeIndices(eleicoes);
+      var eleicoes = new ipl.RepositorioEleitoral(json);
+      var indices  = new ipl.FabricaDeIndices(eleicoes);
 
-      var partidos = new RepositorioDePartidos();
-      var cfg = new ConfiguracaoDePartidos(partidos);
-      var cores = new GerenciadorDeCores(partidos, {
+      var partidos = new ipl.RepositorioDePartidos();
+      var cfg = new ipl.ConfiguracaoDePartidos(partidos);
+      var cores = new ipl.GerenciadorDeCores(partidos, {
         verde:        [ '#6ed854', '#a9ff97', '#00ff99' ],
         vermelho:     [ '#df5353', '#e86850', '#dc143c', '#ed7db7' ],
         laranja:      [ '#f7a35c', '#edb47e' ],
@@ -227,48 +223,48 @@
         'azul claro': [ '#7eedeb', '#00ced1' ],
         roxo:         [ '#be55d9', '#7e80ed', '#996699' ],
       });
-      var series = new GeradorDeSeries(cfg, partidos, cores);
+      var series = new ipl.GeradorDeSeries(cfg, partidos, cores);
 
       $(document).on('shown.bs.tab', '[aria-controls="tab_indice_total"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#indice_total', series, indices.indice());
+        ipl.criaGrafico('#indice_total', series, indices.indice());
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_total"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#legislativo_total', series, indices.legislativo());
+        ipl.criaGrafico('#legislativo_total', series, indices.legislativo());
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_total"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#executivo_total', series, indices.executivo());
+        ipl.criaGrafico('#executivo_total', series, indices.executivo());
       }).on('shown.bs.tab', '[aria-controls="tab_indice_federal"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#indice_federal', series, indices.federal());
+        ipl.criaGrafico('#indice_federal', series, indices.federal());
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_federal"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#deputados_federais', series, indices.deputadosFederais());
-        criaGrafico('#senadores', series, indices.senadores());
-        criaGrafico('#congresso_nacional', series, indices.legislativoFederal());
+        ipl.criaGrafico('#deputados_federais', series, indices.deputadosFederais());
+        ipl.criaGrafico('#senadores', series, indices.senadores());
+        ipl.criaGrafico('#congresso_nacional', series, indices.legislativoFederal());
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_federal"]', function() {
         atualizaConfiguracao(cfg, series, true);
-        criaGrafico('#presidentes', series, indices.executivoFederal(), true);
+        ipl.criaGrafico('#presidentes', series, indices.executivoFederal(), true);
       }).on('shown.bs.tab', '[aria-controls="tab_indice_estadual"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#indice_estadual', series, indices.estadual());
+        ipl.criaGrafico('#indice_estadual', series, indices.estadual());
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_estadual"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#deputados_estaduais', series, indices.legislativoEstadual());
+        ipl.criaGrafico('#deputados_estaduais', series, indices.legislativoEstadual());
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_estadual"]', function() {
-        var estaMostrandoApenasUmaUf = filtroJurisdicao().ufs.length === 1;
+        var estaMostrandoApenasUmaUf = ipl.filtroJurisdicao().ues.length === 1;
         atualizaConfiguracao(cfg, series, estaMostrandoApenasUmaUf);
-        criaGrafico('#governadores', series, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
+        ipl.criaGrafico('#governadores', series, indices.executivoEstadual(), estaMostrandoApenasUmaUf);
       }).on('shown.bs.tab', '[aria-controls="tab_indice_municipal"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#indice_municipal', series, indices.municipal());
+        ipl.criaGrafico('#indice_municipal', series, indices.municipal());
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_municipal"]', function() {
         atualizaConfiguracao(cfg, series);
-        criaGrafico('#vereadores', series, indices.legislativoMunicipal());
+        ipl.criaGrafico('#vereadores', series, indices.legislativoMunicipal());
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_municipal"]', function() {
-        var ufs = filtroJurisdicao().ufs, estaMostrandoApenasDf = ufs.length === 1 && ufs[0] === 'DF';
+        var ues = ipl.filtroJurisdicao().ues, estaMostrandoApenasDf = ues.length === 1 && ues[0] === 'DF';
         atualizaConfiguracao(cfg, series, estaMostrandoApenasDf);
-        criaGrafico('#prefeitos', series, indices.executivoMunicipal(), estaMostrandoApenasDf);
+        ipl.criaGrafico('#prefeitos', series, indices.executivoMunicipal(), estaMostrandoApenasDf);
       }).on('shown.bs.tab', '[aria-controls="tab_total"]', function() {
         $('#tablist_total > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
       }).on('shown.bs.tab', '[aria-controls="tab_federal"]', function() {
@@ -297,4 +293,4 @@
     });
   });
 
-})(jQuery, _, Highcharts, RepositorioEleitoral, GeradorDeIndices, RepositorioDePartidos, ConfiguracaoDePartidos, GerenciadorDeCores, GeradorDeSeries, criaGrafico, filtroJurisdicao);
+})(jQuery, _, Highcharts, ipl);

@@ -1,7 +1,4 @@
-/* global _ */
-/* exported ConfiguracaoDePartidos */
-
-(function(_) {
+(function(_, ipl) {
   'use strict';
 
   function ConfiguracaoDePartidos(repo) {
@@ -252,6 +249,8 @@
 
   });
 
-  this.ConfiguracaoDePartidos = ConfiguracaoDePartidos;
+  _.extend(ipl, /* @lends ipl */ {
+    ConfiguracaoDePartidos: ConfiguracaoDePartidos
+  });
 
-}.call(this, _));
+}.call(this, _, ipl));
