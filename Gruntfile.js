@@ -89,7 +89,8 @@ module.exports = function(grunt) {
           {
             dest: 'tmp/build/favicons/',
             src: 'public/favicons/*',
-            expand: true
+            expand: true,
+            flatten: true
           }
         ]
       }
