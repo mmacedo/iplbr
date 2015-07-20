@@ -6,21 +6,25 @@
     "check-html": "grunt check-html --force",
     "check-js": "grunt check-js --force",
     "test": "grunt test",
-    "coveralls": "grunt coveralls --force",
-    "codeclimate": "grunt codeclimate --force"
+    "build": "grunt build",
+    "coveralls": "grunt coveralls --force"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
+    "chai": "^3.2.0",
     "grunt": "^0.4.5",
     "grunt-bootlint": "^0.9.1",
-    "grunt-codeclimate-reporter": "^1.1.1",
+    "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-coveralls": "^1.0.0",
     "grunt-html": "git://github.com/pedrosland/grunt-html.git#b4f943be1011debc31dad27401a17be83c0c7852",
     "grunt-jscs": "^1.8.0",
     "grunt-karma": "^0.11.2",
+    "grunt-preprocess": "^5.0.1",
     "karma": "^0.12.37",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^0.4.2",
@@ -31,6 +35,7 @@
     "karma-sinon-chai": "^0.3.2",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^2.2.5",
-    "phantomjs": "^1.9.17"
+    "phantomjs": "^1.9.17",
+    "time-grunt": "^1.2.1"
   }
 }

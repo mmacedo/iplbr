@@ -433,4 +433,4 @@
   ipl.Cargo                 = Cargo;
   ipl.IndicePorCargo        = IndicePorCargo;
 
-}.call(ipl, _));
+})(ipl, _);

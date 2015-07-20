@@ -18,7 +18,7 @@ function puxar_alteracoes() {
 
 function adicionar_arquivos() {
   git rm -r .
-  cp -r ../../public/* .
+  cp -r ../build/* .
 }
 
 function adicionar_no_git() {
@@ -36,6 +36,8 @@ echo_timestamp 'Deploying…'
 
 pushd $(dirname "$0")/tmp/_deploy >/dev/null
 descartar_mudancas_locais >/dev/null
+echo_timestamp 'Compilando…'
+grunt build >/dev/null 2>&1 || ( echo; echo 'Erro ao compilar!' >&2; exit 1 )
 echo_timestamp 'Puxando alterações do GitHub…'
 puxar_alteracoes >/dev/null 2>&1
 echo_timestamp 'Fazendo alterações…'
