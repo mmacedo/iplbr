@@ -34,7 +34,7 @@ set -e
 
 echo_timestamp 'Deploying…'
 
-pushd $(dirname "$0")/tmp/_deploy >/dev/null
+pushd $(dirname "$0")/tmp/deploy >/dev/null
 descartar_mudancas_locais >/dev/null
 echo_timestamp 'Compilando…'
 grunt build >/dev/null 2>&1 || ( echo; echo 'Erro ao compilar!' >&2; exit 1 )

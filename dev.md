@@ -34,7 +34,7 @@ A fonte de dados principal da aplicação é um arquivo JSON contendo uma série
 
 ## Website
 
-[![Build Status](https://travis-ci.org/mmacedo/iplbr.svg)](https://travis-ci.org/mmacedo/iplbr) [![Coverage Status](https://coveralls.io/repos/mmacedo/iplbr/badge.svg?branch=master&service=github)](https://coveralls.io/github/mmacedo/iplbr?branch=master) [![devDependency Status](https://david-dm.org/mmacedo/iplbr/dev-status.svg)](https://david-dm.org/mmacedo/iplbr#info=devDependencies) [![Code Climate](https://codeclimate.com/github/mmacedo/iplbr/badges/gpa.svg)](https://codeclimate.com/github/mmacedo/iplbr)
+[![Build Status](https://travis-ci.org/mmacedo/iplbr.svg)](https://travis-ci.org/mmacedo/iplbr) [![Build status](https://ci.appveyor.com/api/projects/status/xet1aa2gcyhsed51?svg=true)](https://ci.appveyor.com/project/mmacedo/iplbr) [![Coverage Status](https://coveralls.io/repos/mmacedo/iplbr/badge.svg?branch=master&service=github)](https://coveralls.io/github/mmacedo/iplbr?branch=master) [![devDependency Status](https://david-dm.org/mmacedo/iplbr/dev-status.svg)](https://david-dm.org/mmacedo/iplbr#info=devDependencies) [![Code Climate](https://codeclimate.com/github/mmacedo/iplbr/badges/gpa.svg)](https://codeclimate.com/github/mmacedo/iplbr)
 
 ### Estrutura
 
@@ -140,8 +140,8 @@ Para criar o branch `gh-pages` no github, execute o seguinte no bash dentro do d
 
     REPO=git@github.com:mmacedo/iplbr.git
 
-    git clone $REPO tmp/_deploy
-    pushd tmp/_deploy
+    git clone $REPO tmp/deploy
+    pushd tmp/deploy
     git checkout --orphan gh-pages
     git rm -r --cached .
     git clean -df

@@ -1,0 +1,26 @@
+environment:
+  matrix:
+    - nodejs_version: '0.12' # node.js
+    - nodejs_version: '1'    # iojs
+install: # https://github.com/sindresorhus/appveyor-node
+  - ps: Install-Product node $env:nodejs_version
+  - set CI=true
+  - npm -g install npm@latest
+  - set PATH=%APPDATA%\npm;%PATH%
+  - npm install
+matrix:
+  fast_finish: true
+build: off
+shallow_clone: true
+clone_depth: 1
+before_test:
+  - npm install -g grunt-cli
+test_script:
+  - node --version
+  - npm --version
+  - npm run check-html
+  - npm run check-js
+  - npm test
+  - npm run build
+after_test:
+  - npm run coveralls
