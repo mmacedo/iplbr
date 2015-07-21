@@ -95,6 +95,14 @@ module.exports = function(grunt) {
         ]
       }
     },
+    jsdoc: {
+      dist: {
+        src: [ 'public/js/app/*.js', 'spec/*_spec.js' ],
+        options: {
+          destination: 'tmp/doc'
+        }
+      }
+    },
     watch: {
       public: {
         files: [ 'public/**/*' ],
@@ -109,8 +117,15 @@ module.exports = function(grunt) {
         }
       },
       karma: {
-        files: [ 'public/js/app/**/*.js', 'spec/*.js' ],
+        files: [ 'karma.conf.js', 'public/js/app/**/*.js', 'spec/*.js' ],
         tasks: 'karma:runner:run',
+      },
+      docs: {
+        files: [ 'jsdoc.conf.json', 'public/js/app/**/*.js', 'spec/*.js' ],
+        tasks: 'jsdoc',
+        options: {
+          livereload: 35732
+        }
       }
     },
     connect: {
@@ -126,6 +141,13 @@ module.exports = function(grunt) {
           port: 9494,
           base: 'tmp/build',
           livereload: 35731
+        }
+      },
+      docs: {
+        options: {
+          port: 9595,
+          base: 'tmp/doc',
+          livereload: 35732
         }
       }
     },
@@ -154,6 +176,8 @@ module.exports = function(grunt) {
   grunt.registerTask('check-js', [ 'jshint', 'jscs' ]);
   grunt.registerTask('test', 'karma:ci:start');
 
+  grunt.registerTask('default', [ 'check-html', 'check-js', 'test', 'jsdoc' ]);
+
   grunt.registerTask('minify-html', [ 'preprocess:html', 'htmlmin:app' ]);
   grunt.registerTask('minify-js', 'uglify:app');
   grunt.registerTask('build', [ 'minify-html', 'minify-js', 'clean:dist', 'copy:dist' ]);
@@ -161,4 +185,5 @@ module.exports = function(grunt) {
   grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
   grunt.registerTask('server:dist', [ 'connect:dist', 'watch:dist' ]);
   grunt.registerTask('runner', [ 'karma:runner:start', 'watch:karma' ]);
+  grunt.registerTask('docs', [ 'jsdoc', 'connect:docs', 'watch:docs' ]);
 };

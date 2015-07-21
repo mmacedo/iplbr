@@ -4,6 +4,22 @@
 ;(function(ipl, _) {
   'use strict';
 
+  /**
+   * Um objeto com as informações de um partido.
+   *
+   * @typedef {Object} ipl.Partido
+   * @property {string} sigla
+   * @property {number} numero
+   * @property {ipl.Ano} fundado
+   * @property {?ipl.Ano} extinto
+   * @property {?boolean} naoEhUtilmo
+   * @property {?string} renomeado
+   * @property {?string} incorporado
+   * @property {?string} fusao
+   * @property {string} nome
+   * @property {string} cor
+   */
+
   var partidosEmGrupos = {
     grandes: [
       { sigla: 'PMDB',   numero: 15, fundado: 1979,
@@ -241,23 +257,64 @@
     ],
   };
 
+  /**
+   * @classdesc
+   * Classe para pesquisa de dados dos partidos.
+   *
+   * @alias ipl.RepositorioDePartidos
+   * @constructor
+   * @param {?Array<ipl.Partido>} partidos - {@link RepositorioDePartidos~partidos}
+   */
   function RepositorioDePartidos(partidos) {
+    /**
+     * Lista de partidos.
+     * @member {Array<ipl.Partido>} ipl.RepositorioDePartidos~partidos
+     */
     this.partidos = partidos || RepositorioDePartidos.PARTIDOS;
+    /**
+     * Cache para memoizar o resultado de algumas funções.
+     * @member {ipl.Cache} ipl.RepositorioDePartidos~cache
+     */
     this.cache = new ipl.Cache();
   }
 
+  /** @const {Array<ipl.Partido>} ipl.RepositorioDePartidos.PARTIDOS */
   RepositorioDePartidos.PARTIDOS = _.flatten(_.values(partidosEmGrupos));
 
   RepositorioDePartidos.prototype = {
 
+    /**
+     * Retorna todos os partidos.
+     *
+     * @returns {Array<ipl.Partido>}
+     * @nosideeffects
+     */
     todos: function() {
-      return this.partidos.slice();
+      return this.partidos;
     },
 
+    /**
+     * Busca um partido.
+     *
+     * @param {{sigla: string, numero: number}} filtro
+     * @returns {ipl.Partido}
+     * @nosideeffects
+     */
     buscar: function(filtro) {
-      return _.find(this.partidos, filtro);
+      var partido = _.find(this.partidos, filtro);
+      if (partido == null) {
+        throw 'Partido ' + JSON.stringify(filtro) + ' não encontrado!';
+      }
+      return partido;
     },
 
+    /**
+     * Busca o partido em que outro foi incorporado, fundido ou renomeado.
+     *
+     * @param {ipl.Partido} partido - Partido extinto.
+     * @returns {ipl.Partido} Partido sucessor.
+     * @nosideeffects
+     */
     buscarSucessor: function(partido) {
       var chave = 'buscarSucessor' + partido.sigla + partido.numero + partido.fundado;
       if (!this.cache.has(chave)) {

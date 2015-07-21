@@ -2,6 +2,50 @@
 
 describe('ipl.RepositorioDePartidos', function() {
 
+  describe('#constructor', function() {
+
+    it('deve usar .PARTIDOS como padrão se não receber partidos', function() {
+      var repo = new ipl.RepositorioDePartidos();
+      expect(repo.partidos).to.equal(ipl.RepositorioDePartidos.PARTIDOS);
+    });
+
+  });
+
+  describe('#todos', function() {
+
+    it('dever retornar todos os partidos', function() {
+      var partidos = [
+        { sigla: 'A', numero: 1, fundado: 1979 },
+        { sigla: 'B', numero: 2, fundado: 1979 }
+      ];
+      var repo = new ipl.RepositorioDePartidos(partidos);
+      expect(repo.todos()).to.eql(partidos);
+    });
+
+  });
+
+  describe('#buscar', function() {
+
+    var a =  { sigla: 'A', numero: 1, fundado: 1979 };
+    var b1 = { sigla: 'B', numero: 2, fundado: 1979 };
+    var b2 = { sigla: 'B', numero: 3, fundado: 1980 };
+
+    it('dever retornar partido', function() {
+      var repo = new ipl.RepositorioDePartidos([ a, b1, b2 ]);
+      var filtro = { sigla: b2.sigla, numero: b2.numero };
+      var resultado = repo.buscar(filtro);
+      expect(resultado).to.eql(b2);
+    });
+
+    it('dever jogar exceção se não encontrar partido', function() {
+      var repo = new ipl.RepositorioDePartidos([ a, b1 ]);
+      var filtro = { sigla: b2.sigla, numero: b2.numero };
+      function chamada() { repo.buscar(filtro); }
+      expect(chamada).to.throw();
+    });
+
+  });
+
   describe('#buscarSucessor', function() {
 
     it('deve retornar sucessor se foi incorporado', function() {
@@ -62,6 +106,17 @@ describe('ipl.RepositorioDePartidos', function() {
       var repo = new ipl.RepositorioDePartidos([ a, b_antes, b_apos ]);
       var resultado = repo.buscarSucessor(a);
       expect(resultado).to.equal(b_apos);
+    });
+
+    it('deve buscar do cache se chamar duas vezes', function() {
+      var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
+      var b = { sigla: 'B', numero: 2, fundado: 1979 };
+      var repo = new ipl.RepositorioDePartidos([ a, b ]);
+      sinon.spy(repo.cache, 'get');
+      repo.buscarSucessor(a);
+      repo.buscarSucessor(a);
+      expect(repo.cache.get).to.have.been.called();
+      expect(repo.cache.get).to.have.callCount(1);
     });
 
   });

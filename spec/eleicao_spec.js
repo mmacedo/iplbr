@@ -28,6 +28,25 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.eql([ 2002, 2006 ]);
     });
 
+    it('deve retornar vazio se não teve eleição', function() {
+      var json = { BR: { presidente: {} } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
+      var resultado = repo.anosDeEleicao(tipoDeEleicao);
+      expect(resultado).to.eql([]);
+    });
+
+    it('deve buscar do cache na segunda chamada', function() {
+      var json = { BR: { presidente: {} } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
+      sinon.spy(repo.cache, 'get');
+      repo.anosDeEleicao(tipoDeEleicao);
+      repo.anosDeEleicao(tipoDeEleicao);
+      expect(repo.cache.get).to.have.been.called();
+      expect(repo.cache.get).to.have.callCount(1);
+    });
+
   });
 
   describe('#mandatosAtivos', function() {
@@ -64,17 +83,20 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.eql([]);
     });
 
+    it('deve buscar do cache na segunda chamada', function() {
+      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
+      sinon.spy(repo.cache, 'get');
+      repo.mandatosAtivos(tipoDeEleicao, 1995);
+      repo.mandatosAtivos(tipoDeEleicao, 1995);
+      expect(repo.cache.get).to.have.been.called();
+      expect(repo.cache.get).to.have.callCount(1);
+    });
+
   });
 
   describe('#partidosComRepresentantes', function() {
-
-    it('não deve retornar propriedades especiais como siglas', function() {
-      var json = { BR: { senador: { 2002: { total: 0, mandato: 0 } } } };
-      var repo = new ipl.RepositorioEleitoral(json);
-      var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
-      var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
-      expect(resultado).to.eql([]);
-    });
 
     it('deve retornar siglas para a eleição', function() {
       var json = { BR: { senador: { 2002: { por_sigla: { a1: {}, a2: {} } } } } };
@@ -92,6 +114,33 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.eql([ 'a1', 'a2' ]);
     });
 
+    it('deve retornar vazio se não ter nenhum partido', function() {
+      var json = { BR: { senador: { 2002: { total: 0, mandato: 0 } } } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
+      var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
+      expect(resultado).to.eql([]);
+    });
+
+    it('deve retornar vazio se não ter eleição no ano', function() {
+      var json = { BR: { senador: {} } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
+      var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
+      expect(resultado).to.eql([]);
+    });
+
+    it('deve buscar do cache na segunda chamada', function() {
+      var json = { BR: { senador: {} } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
+      sinon.spy(repo.cache, 'get');
+      repo.partidosComRepresentantes(tipoDeEleicao, 2002);
+      repo.partidosComRepresentantes(tipoDeEleicao, 2002);
+      expect(repo.cache.get).to.have.been.called();
+      expect(repo.cache.get).to.have.callCount(1);
+    });
+
   });
 
   describe('#quantidade', function() {
@@ -104,7 +153,15 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.equal(3);
     });
 
-    it('deve retornar zero se não tiver representantes', function() {
+    it('deve retornar quantidade de representantes municipais da uf', function() {
+      var json = { RS: { vereador: { 2000: { por_sigla: { a1: { quantidade: 120 } } } } } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      var tipoDeEleicao = { cargo: 'vereador', ue: 'RS' };
+      var resultado = repo.quantidade(tipoDeEleicao, 2000, 'a1');
+      expect(resultado).to.equal(120);
+    });
+
+    it('deve retornar zero se o partido não ter representante no ano', function() {
       var json = { BR: { senador: { 2002: {} } } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
@@ -112,20 +169,12 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.equal(0);
     });
 
-    it('deve retornar zero se não tiver eleição no ano', function() {
+    it('deve retornar zero se não ter eleição no ano', function() {
       var json = { BR: { senador: {} } };
       var repo = new ipl.RepositorioEleitoral(json);
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.quantidade(tipoDeEleicao, 2002, null);
       expect(resultado).to.equal(0);
-    });
-
-    it('deve retornar quantidade de representantes municipais da uf', function() {
-      var json = { RS: { vereador: { 2000: { por_sigla: { a1: { quantidade: 120 } } } } } };
-      var repo = new ipl.RepositorioEleitoral(json);
-      var tipoDeEleicao = { cargo: 'vereador', ue: 'RS' };
-      var resultado = repo.quantidade(tipoDeEleicao, 2000, 'a1');
-      expect(resultado).to.equal(120);
     });
 
   });
@@ -184,6 +233,13 @@ describe('ipl.RepositorioEleitoral', function() {
       var repo = new ipl.RepositorioEleitoral(json);
       var resultado = repo.populacao('RS', 2002);
       expect(resultado).to.equal(10);
+    });
+
+    it('deve gerar exceção se não ter estimativa para o ano', function() {
+      var json = { RS: { populacao: {} } };
+      var repo = new ipl.RepositorioEleitoral(json);
+      function chamada() { repo.populacao('RS', 2002); }
+      expect(chamada).to.throw();
     });
 
   });

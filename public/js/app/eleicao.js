@@ -8,20 +8,20 @@
    * Sigla de um estado ou distrito federal ou BR para Brasil.
    * /^[a-z]{2}$/
    *
-   * @typedef {string} Ue
+   * @typedef {string} ipl.Ue
    */
 
   /**
    * Uma identificação para um cargo única na UE.
    * /^[a-z]+(_[a-z]+)*$/
    *
-   * @typedef {string} IdCargo
+   * @typedef {string} ipl.IdCargo
    */
 
   /**
    * Um objeto de parâmetro para filtrar as UEs para calcular o índice.
    *
-   * @typedef {Object} TipoDeEleicao
+   * @typedef {Object} ipl.TipoDeEleicao
    * @property {IdCargo} cargo
    * @property {Ue} ue
    */
@@ -30,38 +30,33 @@
    * Um número de representando um ano de eleição ou mandato.
    * /^(19[8-9]|20[0-1])[0-9]$/
    *
-   * @typedef {number} Ano
+   * @typedef {number} ipl.Ano
    */
 
   /**
    * Uma identificação para um partido única no ano.
    * /^[A-Z]{2,}(do[A-Z])?[0-9]{2}$/
    *
-   * @typedef {string} IdPartido
+   * @typedef {string} ipl.IdPartido
    */
 
   /**
    * @classdesc
    * Classe para pesquisa de dados dos resultados das eleições.
    *
+   * @alias ipl.RepositorioEleitoral
    * @constructor
    * @param {Object} json - {@link RepositorioEleitoral~json}
    */
   function RepositorioEleitoral(json) {
     /**
      * Fonte de dados JSON.
-     *
-     * @memberOf RepositorioEleitoral.prototype
-     * @member {Object}
-     * @private
+     * @member {Object} ipl.RepositorioEleitoral~json
      */
-    this.json  = json;
+    this.json = json;
     /**
      * Cache para memoizar o resultado de algumas funções.
-     *
-     * @memberOf RepositorioEleitoral.prototype
-     * @member {ipl.Cache}
-     * @private
+     * @member {ipl.Cache} ipl.RepositorioEleitoral~cache
      */
     this.cache = new ipl.Cache();
   }
@@ -71,8 +66,8 @@
     /**
      * Busca anos que teve eleição.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @returns {Array<Ano>}
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @returns {Array<ipl.Ano>}
      * @nosideeffects
      */
     anosDeEleicao: function(tipoDeEleicao) {
@@ -91,9 +86,9 @@
      * Busca anos que teve eleição em que o mandato do representante eleito está
      * ativo no ano especificado.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @param {Ano} ano
-     * @returns {Array<Ano>}
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @param {ipl.Ano} ano
+     * @returns {Array<ipl.Ano>}
      * @nosideeffects
      */
     mandatosAtivos: function(tipoDeEleicao, ano) {
@@ -121,9 +116,9 @@
     /**
      * Busca partidos que tem representantes.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @param {Ano} ano
-     * @returns {Array<IdPartido>}
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @param {ipl.Ano} ano
+     * @returns {Array<ipl.IdPartido>}
      * @nosideeffects
      */
     partidosComRepresentantes: function(tipoDeEleicao, ano) {
@@ -141,8 +136,8 @@
     /**
      * Quantidade total de representantes.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @param {Ano} ano
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @param {ipl.Ano} ano
      * @returns {number}
      * @nosideeffects
      */
@@ -155,7 +150,7 @@
      * Estimativa de população da UE.
      *
      * @param {Ue} ue
-     * @param {Ano} ano
+     * @param {ipl.Ano} ano
      * @returns {number}
      * @nosideeffects
      */
@@ -170,47 +165,41 @@
     /**
      * Quantidade de representantes eleitos pelo partido.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @param {Ano} ano
-     * @param {IdPartido} partido
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @param {ipl.Ano} ano
+     * @param {ipl.IdPartido} partido
      * @returns {number}
      * @nosideeffects
      */
     quantidade: function(tipoDeEleicao, ano, partido) {
       var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
-      if (eleicao == null || eleicao.por_sigla == null) {
+      if (eleicao == null ||
+          eleicao.por_sigla == null ||
+          eleicao.por_sigla[partido] == null) {
         return 0;
       }
-      var daSigla = eleicao.por_sigla[partido];
-      if (daSigla == null) {
-        return 0;
-      }
-      return daSigla.quantidade != null ? daSigla.quantidade : daSigla;
+      var partidoNoAno = eleicao.por_sigla[partido];
+      return partidoNoAno.quantidade != null ? partidoNoAno.quantidade : partidoNoAno;
     },
 
     /**
      * Estimativa de população representada pelo partido calculada proporcional
      * aos representantes eleitos pelo partido em cada UE.
      *
-     * @param {TipoDeEleicao} tipoDeEleicao
-     * @param {Ano} ano
-     * @param {IdPartido} partido
+     * @param {ipl.TipoDeEleicao} tipoDeEleicao
+     * @param {ipl.Ano} ano
+     * @param {ipl.IdPartido} partido
      * @returns {number}
      * @nosideeffects
      */
     proporcionalAPopulacao: function(tipoDeEleicao, ano, partido) {
       var eleicao = this.json[tipoDeEleicao.ue][tipoDeEleicao.cargo][ano];
-      if (eleicao == null || eleicao.por_sigla == null) {
+      if (eleicao == null ||
+          eleicao.por_sigla == null ||
+          eleicao.por_sigla[partido] == null) {
         return 0;
       }
-      var siglaNoAno = eleicao.por_sigla[partido];
-      if (siglaNoAno == null) {
-        return 0;
-      }
-      if (siglaNoAno.populacao == null) {
-        return null;
-      }
-      return siglaNoAno.populacao;
+      return eleicao.por_sigla[partido].populacao;
     }
 
   };

@@ -23,6 +23,7 @@
     "grunt-coveralls": "^1.0.0",
     "grunt-html": "git://github.com/pedrosland/grunt-html.git#b4f943be1011debc31dad27401a17be83c0c7852",
     "grunt-jscs": "^1.8.0",
+    "grunt-jsdoc": "^0.6.7",
     "grunt-karma": "^0.11.2",
     "grunt-preprocess": "^5.0.1",
     "karma": "^0.12.37",
