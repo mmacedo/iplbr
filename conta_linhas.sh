@@ -9,7 +9,7 @@ function imprime_contagem() {
 web='public/index.html public/js/app/*.js'
 spec='spec/*_spec.js'
 carga='carga/*.rb carga/eleitos/presidentes.txt carga/eleitos/governadores_bionicos.txt'
-etc='Gemfile *.{js,json,sh,yml} .*{rc,.yml} spec/.*rc .git{ignore,attributes}'
+etc='Gemfile *.{js,json,sh,yml} .*{rc,.yml} spec/.*rc .git{ignore,attributes} dashboard/connect-*.js dashboard/web/index.html dashboard/web/css/led.css'
 doc='*.md carga/*.md'
 
 echo web:
