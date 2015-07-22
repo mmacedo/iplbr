@@ -239,6 +239,22 @@ module.exports = function(grunt) {
           }
         }
       }
+    },
+    concurrent: {
+      dashboard: {
+        tasks: [
+          'runner',
+          'server:specs',
+          'server:coverage',
+          'server:docs',
+          'server',
+          'server:dist',
+          'connect:dashboard:keepalive'
+        ],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
     }
   });
 
@@ -258,5 +274,5 @@ module.exports = function(grunt) {
   grunt.registerTask('server:docs', [ 'jsdoc:app', 'connect:docs', 'watch:docs' ]);
   grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
   grunt.registerTask('server:dist', [ 'connect:dist', 'watch:dist' ]);
-  grunt.registerTask('dashboard', 'connect:dashboard:keepalive');
+  grunt.registerTask('dashboard', 'concurrent:dashboard');
 };
