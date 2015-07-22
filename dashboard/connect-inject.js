@@ -1,4 +1,4 @@
-module.exports = function connectInject(snippet) {
+module.exports = function connectInject(snippet, asEarlyAsPossible) {
   return function inject(req, res, next) {
     var filepath = require('url').parse(req.url).pathname;
     filepath = filepath.slice(-1) === '/' ? filepath + 'index.html' : filepath;
@@ -47,9 +47,17 @@ module.exports = function connectInject(snippet) {
         injected = true;
 
         // Include, if necessary, replacing the entire res.data with the included snippet.
-        res.data = res.data.replace(/<\/body>(?![\s\S]*<\/body>)/i, function(w) {
-          return snippet + w;
-        });
+        if (asEarlyAsPossible === true) {
+          function reverse(s) { return s.split('').reverse().join(''); }
+          // Reverse string and regex to fake a negative look-behind
+          res.data = reverse(reverse(res.data).replace(/>daeh<(?![\s\S]*>daeh<)/i, function(w) {
+            return reverse(snippet) + w;
+          }));
+        } else {
+          res.data = res.data.replace(/<\/body>(?![\s\S]*<\/body>)/i, function(w) {
+            return snippet + w;
+          });
+        }
 
         // Write Content-Length
         if (!res.headersSent) {

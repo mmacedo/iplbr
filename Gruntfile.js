@@ -12,15 +12,17 @@ module.exports = function(grunt) {
 
   function tabMiddlewares(livereloadPort) {
     return function(connect, options, middlewares) {
-      // Inject iframeResizer.contentWindow.min.js and serve it
+      // Injeta código para avisar dashboard que carregou
+      middlewares.unshift(inject('<script>if(window.parent){window.parent.postMessage("I am here!", "*");}</script>', true));
+      // Injeta iframeResizer.contentWindow.min.js e serve
       var iframeResizer = 'iframeResizer.contentWindow.min.js';
       middlewares.unshift([ '/' + iframeResizer, serveFile('./dashboard/' + iframeResizer) ]);
       middlewares.unshift(inject('<script src="/' + iframeResizer + '"></script>'));
-      // Inject livereload.js
+      // Injeta livereload.js
       var livereloadUrl = 'http://localhost:' + livereloadPort + '/livereload.js?snipver=1';
       var livereloadScriptTag = '<script src="' + livereloadUrl + '"><\\/script>';
       middlewares.unshift(inject("<script>document.write('" + livereloadScriptTag + "');</script>"));
-      // Return modified stack
+      // Retorna pilha modificada
       return middlewares;
     };
   }
