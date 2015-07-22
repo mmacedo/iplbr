@@ -12,3 +12,4 @@ script:
   - npm run build
 after_script:
   - npm run coveralls
+  - cat tmp/coverage/report-lcov/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js

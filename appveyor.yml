@@ -22,5 +22,3 @@ test_script:
   - npm run check-js
   - npm test
   - npm run build
-after_test:
-  - npm run coveralls
