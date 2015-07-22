@@ -18,9 +18,12 @@ module.exports = function(config) {
     frameworks: [ 'mocha', 'chai', 'dirty-chai', 'sinon-chai' ],
     browsers: [ 'PhantomJS' ],
     reportSlowerThan: 10,
-    reporters: [ 'mocha', 'coverage' ],
+    reporters: [ 'mocha', 'html', 'coverage' ],
     preprocessors: {
       'public/js/app/*.js': [ 'coverage' ]
+    },
+    htmlReporter: {
+      outputDir: 'tmp/spec'
     },
     coverageReporter: {
       dir: 'tmp/coverage',
