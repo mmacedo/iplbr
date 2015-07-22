@@ -7,7 +7,8 @@
     "check-js": "grunt check-js --force",
     "test": "grunt test",
     "build": "grunt build",
-    "coveralls": "grunt coveralls --force"
+    "coveralls": "grunt coveralls --force",
+    "codecov.io": "cat tmp/coverage/report-lcov/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
   },
   "devDependencies": {
     "chai": "^2.3.0",
