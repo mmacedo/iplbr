@@ -227,14 +227,20 @@ module.exports = function(grunt) {
           port: PORT_CONNECT_DASHBOARD,
           base: 'dashboard/web',
           middleware: function(connect, options, middlewares) {
-            function localhost(port) { return 'http://localhost:' + port; }
-            middlewares.unshift([ '/tabs.json', serveText(JSON.stringify({
+            var tabs = {
               'Specs':    localhost(PORT_CONNECT_SPECS),
               'Coverage': localhost(PORT_CONNECT_COVERAGE),
               'Docs':     localhost(PORT_CONNECT_DOCS),
               'Dev.':     localhost(PORT_CONNECT_PUBLIC),
               'Prod.':    localhost(PORT_CONNECT_DIST),
-            }), 'application/json') ]);
+            };
+            var _ = require('lodash');
+            var serveIndex = serveFile('dashboard/web/index.html', 'text/html');
+            _.forOwn(tabs, function(url, tab) {
+              middlewares.unshift([ '/' + _.kebabCase(tab), serveIndex ]);
+            });
+            function localhost(port) { return 'http://localhost:' + port; }
+            middlewares.unshift([ '/tabs.json', serveText(JSON.stringify(tabs), 'application/json') ]);
             return middlewares;
           }
         }

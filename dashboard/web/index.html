@@ -104,13 +104,13 @@
         var $tabs = $('#content').empty();
         var navTmpl = _.template(
           '<li class="show-button" id="show_<%- id %>">' +
-          '<a href="#<%- id %>"><span class="led led-yellow"></span> <%- title %></a>' +
+          '<a href="/<%- id %>"><span class="led led-yellow"></span> <%- title %></a>' +
           '</li>' +
           '<li class="open-button" id="open_<%- id %>">' +
           '<a href="<%- url %>" target="_new"><span class="glyphicon glyphicon-new-window"></span></a>' +
           '</li>' +
           '<li class="refresh-button" id="refresh_<%- id %>">' +
-          '<a href=""><span class="glyphicon glyphicon-refresh"></span></a>' +
+          '<a href="/"><span class="glyphicon glyphicon-refresh"></span></a>' +
           '</li>');
         var tabTmpl = _.template(
           '<div id="<%- id %>" class="tab">' +
@@ -179,25 +179,25 @@
             return;
           }
           showTab(null);
-          history.pushState({ tab: null }, 'Dashboard', $('#brand').attr('href'));
+          history.pushState({ tab: null }, 'Dashboard', '/');
         });
 
         $(document).on('click', '#navbar > .nav > .show-button > a', function(e) {
           if (e.ctrlKey === true || e.shiftKey === true) {
             return;
           }
-          var hash = $(this).attr('href'), tab = hash.slice(1);
-          history.pushState({ tab: tab }, showTab(tab), hash);
+          var tab = $(this).attr('href').replace('/', '');
+          history.pushState({ tab: tab }, showTab(tab), '/' + tab);
           // Not good if you are changing tabs often
           return false;
         });
 
         if (history.state == null) {
-          var hash = window.location.hash ? window.location.hash.replace(/^#/, '') : '';
-          var state = { tab: hash || null };
+          var path = (window.location.pathname || '').replace('/', '');
+          var state = { tab: path || null };
           var title = showTab(state.tab);
-          if (hash.length > 0) {
-            history.replaceState(state, title, '#' + hash);
+          if (path.length > 0) {
+            history.replaceState(state, title, '/' + path);
           } else {
             history.replaceState(state, title);
           }
