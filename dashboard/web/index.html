@@ -137,8 +137,9 @@
             $iframe.load(function() {
               $iframe.data('loaded', true);
               updateLed();
-            }).attr('src', url);
-            iFrameResize();
+            })
+            .attr('src', url)
+            .iFrameResize({ heightCalculationMethod: 'bodyScroll' });
           }
 
           // Loaded iframe content
