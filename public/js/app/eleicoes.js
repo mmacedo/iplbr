@@ -6,14 +6,14 @@
 
   /**
    * Sigla de um estado ou distrito federal ou BR para Brasil.
-   * /^[a-z]{2}$/
+   * Expressão regular: /^[a-z]{2}$/
    *
    * @typedef {string} ipl.Ue
    */
 
   /**
    * Uma identificação para um cargo única na UE.
-   * /^[a-z]+(_[a-z]+)*$/
+   * Expressão regular: /^[a-z]+(_[a-z]+)*$/
    *
    * @typedef {string} ipl.IdCargo
    */
@@ -28,21 +28,20 @@
 
   /**
    * Um número de representando um ano de eleição ou mandato.
-   * /^(19[8-9]|20[0-1])[0-9]$/
+   * Expressão regular: /^(19[8-9]|20[0-1])[0-9]$/
    *
    * @typedef {number} ipl.Ano
    */
 
   /**
    * Uma identificação para um partido única no ano.
-   * /^[A-Z]{2,}(do[A-Z])?[0-9]{2}$/
+   * Expressão regular: /^[A-Z]{2,}(do[A-Z])?[0-9]{2}$/
    *
    * @typedef {string} ipl.IdPartido
    */
 
   /**
-   * @classdesc
-   * Classe para pesquisa de dados dos resultados das eleições.
+   * @classdesc Classe para pesquisa de dados dos resultados das eleições.
    *
    * @alias ipl.RepositorioEleitoral
    * @constructor

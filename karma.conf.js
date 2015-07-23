@@ -1,18 +1,21 @@
 module.exports = function(config) {
   config.set({
     files: [
+      // Dependências
       'public/js/lodash.min.js',
-      // 'public/js/big.min.js',
+      // Código
       'public/js/app/ipl.js',
-      'public/js/app/eleicao.js',
-      'public/js/app/indice.js',
+      'public/js/app/eleicoes.js',
+      'public/js/app/indices.js',
+      'public/js/app/resultado.js',
+      'public/js/app/esfera.js',
       'public/js/app/cargo.js',
       'public/js/app/composto.js',
-      'public/js/app/partido.js',
+      'public/js/app/partidos.js',
       'public/js/app/configuracao.js',
-      'public/js/app/serie.js',
-      // 'public/js/app/grafico.js',
-      // 'public/js/app/main.js',
+      'public/js/app/cores.js',
+      'public/js/app/series.js',
+      // Testes
       'spec/**/*_spec.js'
     ],
     frameworks: [ 'mocha', 'chai', 'dirty-chai', 'sinon-chai' ],

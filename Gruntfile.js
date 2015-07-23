@@ -10,38 +10,76 @@ module.exports = function(grunt) {
   var serveFile = require('./dashboard/connect-serve-file');
   var serveText = require('./dashboard/connect-serve-text');
 
-  function tabMiddlewares(livereloadPort) {
+  function abaDoDashboard(livereloadPort) {
+    function avisaPaiQueFoiCriado() {
+      var script =
+        'if (window.parent) {' +
+        '  window.parent.postMessage("I am here!", "*");' +
+        '}';
+      return inject('<script>' + script + '</script>', true);
+    }
+    var iframeResizer = 'iframeResizer.contentWindow.min.js';
+    function serveIframeResizer() {
+      return [ '/' + iframeResizer, serveFile('./dashboard/' + iframeResizer) ];
+    }
+    function injetaIframeResizer() {
+      return inject('<script src="/' + iframeResizer + '"></script>');
+    }
+    function injetaLiveReload() {
+      var livereloadUrl = 'http://localhost:' + livereloadPort;
+      var livereloadScriptTag =
+        '<script src="' + livereloadUrl + '/livereload.js?snipver=1">' +
+        '<\\/script>';
+      var escreveTagDoLivereload =
+        '<script>' +
+        'document.write(\'' + livereloadScriptTag + '\');' +
+        '</script>';
+      return inject(escreveTagDoLivereload);
+    }
     return function(connect, options, middlewares) {
-      // Injeta código para avisar dashboard que carregou
-      middlewares.unshift(inject('<script>if(window.parent){window.parent.postMessage("I am here!", "*");}</script>', true));
-      // Injeta iframeResizer.contentWindow.min.js e serve
-      var iframeResizer = 'iframeResizer.contentWindow.min.js';
-      middlewares.unshift([ '/' + iframeResizer, serveFile('./dashboard/' + iframeResizer) ]);
-      middlewares.unshift(inject('<script src="/' + iframeResizer + '"></script>'));
-      // Injeta livereload.js
-      var livereloadUrl = 'http://localhost:' + livereloadPort + '/livereload.js?snipver=1';
-      var livereloadScriptTag = '<script src="' + livereloadUrl + '"><\\/script>';
-      middlewares.unshift(inject("<script>document.write('" + livereloadScriptTag + "');</script>"));
-      // Retorna pilha modificada
+      middlewares.unshift(avisaPaiQueFoiCriado());
+      middlewares.unshift(serveIframeResizer());
+      middlewares.unshift(injetaIframeResizer());
+      middlewares.unshift(injetaLiveReload());
       return middlewares;
     };
   }
 
-  var PORT_KARMA_RUNNER        = 8901;
-  var PORT_KARMA_CI            = 8902;
+  function localhost(port) { return 'http://localhost:' + port; }
 
-  var PORT_LIVERELOAD_SPECS    = 9802;
-  var PORT_LIVERELOAD_COVERAGE = 9803;
-  var PORT_LIVERELOAD_DOCS     = 9804;
-  var PORT_LIVERELOAD_PUBLIC   = 9805;
-  var PORT_LIVERELOAD_DIST     = 9806;
+  var _ = require('lodash');
 
-  var PORT_CONNECT_SPECS       = 9902;
-  var PORT_CONNECT_COVERAGE    = 9903;
-  var PORT_CONNECT_DOCS        = 9904;
-  var PORT_CONNECT_PUBLIC      = 9905;
-  var PORT_CONNECT_DIST        = 9906;
-  var PORT_CONNECT_DASHBOARD   = 9999;
+  function dashboard(directory, tabs) {
+    return function(connect, options, middlewares) {
+      _.forOwn(tabs, function(url, tab) {
+        middlewares.unshift([
+          '/' + _.kebabCase(tab),
+          serveFile(directory + '/index.html', 'text/html')
+        ]);
+      });
+      middlewares.unshift([
+        '/tabs.json',
+        serveText(JSON.stringify(tabs), 'application/json')
+      ]);
+      return middlewares;
+    };
+  }
+
+  var PORTA_KARMA_RUNNER        = 8901;
+  var PORTA_KARMA_CI            = 8902;
+
+  var PORTA_LIVERELOAD_SPECS    = 9802;
+  var PORTA_LIVERELOAD_COVERAGE = 9803;
+  var PORTA_LIVERELOAD_DOCS     = 9804;
+  var PORTA_LIVERELOAD_PUBLIC   = 9805;
+  var PORTA_LIVERELOAD_DIST     = 9806;
+
+  var PORTA_CONNECT_SPECS       = 9902;
+  var PORTA_CONNECT_COVERAGE    = 9903;
+  var PORTA_CONNECT_DOCS        = 9904;
+  var PORTA_CONNECT_PUBLIC      = 9905;
+  var PORTA_CONNECT_DIST        = 9906;
+  var PORTA_CONNECT_DASHBOARD   = 9999;
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -72,12 +110,12 @@ module.exports = function(grunt) {
     },
     karma: {
       ci: {
-        port: PORT_KARMA_CI,
+        port: PORTA_KARMA_CI,
         singleRun: true
       },
       runner: {
-        port: PORT_KARMA_RUNNER,
-        background: true
+        port: PORTA_KARMA_RUNNER,
+        autoWatch: true
       },
       options: {
         configFile: 'karma.conf.js'
@@ -116,13 +154,16 @@ module.exports = function(grunt) {
           'tmp/min/app.min.js': [
             'public/js/ie10-viewport-bug-workaround.js',
             'public/js/app/ipl.js',
-            'public/js/app/eleicao.js',
-            'public/js/app/indice.js',
+            'public/js/app/eleicoes.js',
+            'public/js/app/indices.js',
+            'public/js/app/resultado.js',
+            'public/js/app/esfera.js',
             'public/js/app/cargo.js',
             'public/js/app/composto.js',
-            'public/js/app/partido.js',
+            'public/js/app/partidos.js',
             'public/js/app/configuracao.js',
-            'public/js/app/serie.js',
+            'public/js/app/cores.js',
+            'public/js/app/series.js',
             'public/js/app/grafico.js',
             'public/js/app/main.js'
           ]
@@ -155,94 +196,81 @@ module.exports = function(grunt) {
       app: {
         src: [ 'public/js/app/*.js', 'spec/*_spec.js' ],
         options: {
-          destination: 'tmp/doc'
+          destination: 'tmp/doc',
+          configure: 'jsdoc.conf.json'
         }
       }
     },
     watch: {
-      karma: {
-        files: [ 'karma.conf.js', 'public/js/app/*.js', 'spec/*.js' ],
-        tasks: 'karma:runner:run',
-      },
       specs: {
         files: [ 'tmp/spec/PhantomJS 1.9.8 (Linux 0.0.0)/**/*' ],
-        options: { livereload: PORT_LIVERELOAD_SPECS }
+        options: { livereload: PORTA_LIVERELOAD_SPECS }
       },
       coverage: {
         files: [ 'tmp/coverage/report-html/**/*' ],
-        options: { livereload: PORT_LIVERELOAD_COVERAGE }
+        options: { livereload: PORTA_LIVERELOAD_COVERAGE }
       },
       docs: {
         files: [ 'public/js/app/*.js', 'spec/*.js' ],
         tasks: 'jsdoc',
-        options: { livereload: PORT_LIVERELOAD_DOCS }
+        options: { livereload: PORTA_LIVERELOAD_DOCS }
       },
       public: {
         files: [ 'public/**/*' ],
-        options: { livereload: PORT_LIVERELOAD_PUBLIC }
+        options: { livereload: PORTA_LIVERELOAD_PUBLIC }
       },
       dist: {
         files: [ 'tmp/build/**/*' ],
-        options: { livereload: PORT_LIVERELOAD_DIST }
+        options: { livereload: PORTA_LIVERELOAD_DIST }
       }
     },
     connect: {
       specs: {
         options: {
-          port: PORT_CONNECT_SPECS,
+          port: PORTA_CONNECT_SPECS,
           base: 'tmp/spec/PhantomJS 1.9.8 (Linux 0.0.0)',
-          middleware: tabMiddlewares(PORT_LIVERELOAD_SPECS)
+          middleware: abaDoDashboard(PORTA_LIVERELOAD_SPECS)
         }
       },
       coverage: {
         options: {
-          port: PORT_CONNECT_COVERAGE,
+          port: PORTA_CONNECT_COVERAGE,
           base: 'tmp/coverage/report-html',
-          middleware: tabMiddlewares(PORT_LIVERELOAD_COVERAGE)
+          middleware: abaDoDashboard(PORTA_LIVERELOAD_COVERAGE)
         }
       },
       docs: {
         options: {
-          port: PORT_CONNECT_DOCS,
+          port: PORTA_CONNECT_DOCS,
           base: 'tmp/doc',
-          middleware: tabMiddlewares(PORT_LIVERELOAD_DOCS)
+          middleware: abaDoDashboard(PORTA_LIVERELOAD_DOCS)
         }
       },
       public: {
         options: {
-          port: PORT_CONNECT_PUBLIC,
+          port: PORTA_CONNECT_PUBLIC,
           base: 'public',
-          middleware: tabMiddlewares(PORT_LIVERELOAD_PUBLIC)
+          middleware: abaDoDashboard(PORTA_LIVERELOAD_PUBLIC)
         }
       },
       dist: {
         options: {
-          port: PORT_CONNECT_DIST,
+          port: PORTA_CONNECT_DIST,
           base: 'tmp/build',
-          middleware: tabMiddlewares(PORT_LIVERELOAD_DIST)
+          middleware: abaDoDashboard(PORTA_LIVERELOAD_DIST)
         }
       },
       dashboard: {
         options: {
-          port: PORT_CONNECT_DASHBOARD,
+          port: PORTA_CONNECT_DASHBOARD,
           base: 'dashboard/web',
-          middleware: function(connect, options, middlewares) {
-            var tabs = {
-              'Specs':    localhost(PORT_CONNECT_SPECS),
-              'Coverage': localhost(PORT_CONNECT_COVERAGE),
-              'Docs':     localhost(PORT_CONNECT_DOCS),
-              'Dev.':     localhost(PORT_CONNECT_PUBLIC),
-              'Prod.':    localhost(PORT_CONNECT_DIST),
-            };
-            var _ = require('lodash');
-            var serveIndex = serveFile('dashboard/web/index.html', 'text/html');
-            _.forOwn(tabs, function(url, tab) {
-              middlewares.unshift([ '/' + _.kebabCase(tab), serveIndex ]);
-            });
-            function localhost(port) { return 'http://localhost:' + port; }
-            middlewares.unshift([ '/tabs.json', serveText(JSON.stringify(tabs), 'application/json') ]);
-            return middlewares;
-          }
+          middleware: dashboard('dashboard/web', {
+            Specs:    localhost(PORTA_CONNECT_SPECS),
+            Coverage: localhost(PORTA_CONNECT_COVERAGE),
+            Docs:     localhost(PORTA_CONNECT_DOCS),
+            'Dev.':   localhost(PORTA_CONNECT_PUBLIC),
+            'Prod.':  localhost(PORTA_CONNECT_DIST),
+          })
         }
       }
     },
@@ -250,11 +278,11 @@ module.exports = function(grunt) {
       dashboard: {
         tasks: [
           'runner',
-          'server:specs',
-          'server:coverage',
-          'server:docs',
-          'server',
-          'server:dist',
+          'serve:specs',
+          'serve:coverage',
+          'serve:docs',
+          'serve',
+          'serve:dist',
           'connect:dashboard:keepalive'
         ],
         options: {
@@ -274,11 +302,11 @@ module.exports = function(grunt) {
   grunt.registerTask('minify-js', 'uglify:app');
   grunt.registerTask('build', [ 'minify-html', 'minify-js', 'clean:dist', 'copy:dist' ]);
 
-  grunt.registerTask('runner', [ 'karma:runner:start', 'watch:karma' ]);
-  grunt.registerTask('server:specs', [ 'connect:specs', 'watch:specs' ]);
-  grunt.registerTask('server:coverage', [ 'connect:coverage', 'watch:coverage' ]);
-  grunt.registerTask('server:docs', [ 'jsdoc:app', 'connect:docs', 'watch:docs' ]);
-  grunt.registerTask('server', [ 'connect:public', 'watch:public' ]);
-  grunt.registerTask('server:dist', [ 'connect:dist', 'watch:dist' ]);
+  grunt.registerTask('runner', 'karma:runner:start');
+  grunt.registerTask('serve:specs', [ 'connect:specs', 'watch:specs' ]);
+  grunt.registerTask('serve:coverage', [ 'connect:coverage', 'watch:coverage' ]);
+  grunt.registerTask('serve:docs', [ 'jsdoc:app', 'connect:docs', 'watch:docs' ]);
+  grunt.registerTask('serve', [ 'connect:public', 'watch:public' ]);
+  grunt.registerTask('serve:dist', [ 'connect:dist', 'watch:dist' ]);
   grunt.registerTask('dashboard', 'concurrent:dashboard');
 };

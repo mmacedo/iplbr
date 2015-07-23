@@ -1,7 +1,7 @@
 /* jshint browser: true */
 /* globals ipl, _, jQuery, Big */
 /* exported ipl.criaGrafico */
-/* exported ipl.filtroJurisdicao */
+/* exported ipl.filtroPorRegiao */
 
 ;(function(ipl, _, $, Big) {
   'use strict';
@@ -20,7 +20,7 @@
     regiaoNordeste
   ]).sort();
 
-  function filtroJurisdicao() {
+  function filtroPorRegiao() {
     var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
     if (matches[5] === 'pais') {
       return { ues: brasil, nome: 'brasil' };
@@ -169,12 +169,12 @@
 
   function criaGrafico(id, series, indice, apenas0e100) {
     var $el = $(id), chart = $el.highcharts();
-    var regiao = filtroJurisdicao(), ano = $('#ano').val();
+    var regiao = filtroPorRegiao(), ano = $('#ano').val();
     if (ano === 'TODOS') {
       if (chart == null) {
         chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
       }
-      atualizaGrafico(chart, series.seriesPorJurisdicao(indice, regiao));
+      atualizaGrafico(chart, series.seriesPorRegiao(indice, regiao));
     } else {
       if (chart == null) {
         chart = criaGraficoParaUmUnicoAno($el);
@@ -184,6 +184,6 @@
   }
 
   ipl.criaGrafico      = criaGrafico;
-  ipl.filtroJurisdicao = filtroJurisdicao;
+  ipl.filtroPorRegiao = filtroPorRegiao;
 
 })(ipl, _, jQuery, Big);

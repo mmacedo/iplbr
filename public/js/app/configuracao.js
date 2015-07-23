@@ -4,15 +4,54 @@
 ;(function(ipl, _) {
   'use strict';
 
-  function ConfiguracaoDePartidos(repo) {
-    this.repo = repo;
+  /**
+    * Tabela para criar séries personalizadas com os partidos.
+    *
+    * @typedef {Object} ipl.TabelaDeReescrita
+    * @property {Array<{sigla:string, numero:number}>} mapear
+    * @property {string} resto
+    */
 
-    this.mudancasDeNome    = true;
-    this.incorporacoes     = true;
-    this.fusoes            = true;
+  /**
+   * @classdesc Configura os partidos que irão compor as séries.
+   *
+   * @alias ipl.ConfiguracaoDePartidos
+   * @constructor
+   * @param {ipl.RepositorioDePartidos} partidos - {@link ipl.ConfiguracaoDePartidos~partidos}
+   */
+  function ConfiguracaoDePartidos(partidos) {
+    /**
+     * Repositório de partidos.
+     * @member {ipl.RepositorioDePartidos} ipl.ConfiguracaoDePartidos~partidos
+     */
+    this.partidos = partidos;
+    /**
+     * Habilita a mesclagem de partidos que mudaram de nome.
+     * @member {bolean} ipl.ConfiguracaoDePartidos#mudancasDeNome
+     * @default
+     */
+    this.mudancasDeNome = true;
+    /**
+     * Habilita a mesclagem de partidos que foram incorporados com seus sucessores.
+     * @member {bolean} ipl.ConfiguracaoDePartidos#incorporacoes
+     * @default
+     */
+    this.incorporacoes = true;
+    /**
+     * Habilita a mesclagem de partidos que foram fundidos com seus sucessores.
+     * @member {bolean} ipl.ConfiguracaoDePartidos#fusoes
+     * @default
+     */
+    this.fusoes = true;
+    /**
+     * Habilita a mesclagem de partidos que mudaram de nome com seus sucessores.
+     * @member {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos#tabelaDeReescrita
+     * @default
+     */
     this.tabelaDeReescrita = null;
   }
 
+  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top10 */
   ConfiguracaoDePartidos.top10 = {
     mapear: [
       { de: { sigla: 'PT',    numero: 13 }, para: 'PT' },
@@ -41,6 +80,7 @@
     resto: 'Resto'
   };
 
+  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top3 */
   ConfiguracaoDePartidos.top3 = {
     mapear: [
       { de: { sigla: 'PT',   numero: 13 }, para: 'PT' },
@@ -50,6 +90,7 @@
     resto: 'Resto'
   };
 
+  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.partidosAntigos */
   ConfiguracaoDePartidos.partidosAntigos = {
     mapear: [
       { de: { sigla: 'PDS',    numero: 11 }, para: 'ARENA (1965)' },
@@ -107,6 +148,13 @@
 
   ConfiguracaoDePartidos.prototype = {
 
+    /**
+     * Mescla partidos extintos com seus sucessores de acordo com a configuração.
+     *
+     * @method ipl.ConfiguracaoDePartidos~mesclarPartidosExtintos
+     * @param {Array<Object>} partidos
+     * @returns {Array<Object>}
+     */
     mesclarPartidosExtintos: function(partidos) {
       var migrouUmPartido = false;
 
@@ -127,7 +175,7 @@
 
         migrouUmPartido = true;
 
-        var sucessor = this.repo.buscarSucessor(partido.info);
+        var sucessor = this.partidos.buscarSucessor(partido.info);
 
         return {
           sigla:     sucessor.sigla,
@@ -169,9 +217,16 @@
       return processados;
     },
 
+    /**
+     * Desambígua siglas repetidas.
+     *
+     * @method ipl.ConfiguracaoDePartidos~desambiguarSiglas
+     * @param {Array<Object>} partidos
+     * @returns {Array<Object>}
+     */
     desambiguarSiglas: function(partidos) {
       return _.map(partidos, function(p) {
-        // Desambígua siglas com mesmo nome
+        // Adiciona data de fundação se tem partido mais recente com a mesma sigla
         var siglaDesambiguada = p.info.naoEhUltimo === true ?
           (p.info.sigla + ' (' + p.info.fundado.toString() + ')') :
           p.info.sigla;
@@ -179,6 +234,13 @@
       });
     },
 
+    /**
+     * Agrupa partidos de acordo com a tabela de reescrita configurada.
+     *
+     * @method ipl.ConfiguracaoDePartidos~agruparPartidos
+     * @param {Array<Object>} partidos
+     * @returns {Array<Object>}
+     */
     agruparPartidos: function(partidos) {
 
       // Realiza migrações
@@ -213,7 +275,7 @@
           if (info != null) {
             mesclados = _.without(mesclados, info);
           } else {
-            info = this.repo.buscar(primeiroMapeado.de);
+            info = this.partidos.buscar(primeiroMapeado.de);
           }
         }
 
@@ -232,6 +294,13 @@
 
     },
 
+    /**
+     * Aplica configuração reescrevendo siglas e agrupando partidos somando os índices.
+     *
+     * @method ipl.ConfiguracaoDePartidos#mapearPartidos
+     * @param {Array<Object>} partidos
+     * @returns {Array<Object>}
+     */
     mapearPartidos: function(indicesPorSigla) {
       var partidos = _.map(indicesPorSigla, function(p) {
         return _.assign({}, p, {

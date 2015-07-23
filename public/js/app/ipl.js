@@ -2,6 +2,7 @@
 
 /**
  * Namespace para o código da aplicação.
+ *
  * @namespace ipl
  */
 
@@ -9,8 +10,7 @@
   'use strict';
 
   /**
-   * @classdesc
-   * Imitação minimalista de Map do ES6.
+   * @classdesc Imitação minimalista de Map do ES6.
    *
    * @alias ipl.Cache
    * @constructor
@@ -76,9 +76,7 @@
       }
     },
 
-    /**
-     * Remove todas as entradas do cache.
-     */
+    /** Remove todas as entradas do cache. */
     clear: function() {
       this.size = 0;
       this.__data__ = Object.create(null);

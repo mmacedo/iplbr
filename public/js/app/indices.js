@@ -7,67 +7,58 @@
   /**
    * Interface para um objeto que retorna os dados de um índice.
    *
-   * @interface Indice
+   * @name ipl.Indice
+   * @interface
    */
-
   /**
    * Retornar anos que tem dados para esse índice.
    *
-   * @method Indice#anos
-   * @param {Regiao} regiao
-   * @returns {number}
+   * @method ipl.Indice#anos
+   * @param {ipl.Regiao} regiao
+   * @returns {Array<ipl.Ano>}
    */
-
   /**
    * Retornar se tem dados suficientes no ano para calcular o índice.
    *
-   * @method Indice#temDados
-   * @param {Regiao} regiao
-   * @param {Ano}    ano
+   * @method ipl.Indice#temDados
+   * @param {ipl.Regiao} regiao
+   * @param {ipl.Ano}    ano
    * @returns {boolean}
    */
-
   /**
    * Retornar todas as séries que tem dados para esse índice.
    *
-   * @method Indice#series
-   * @param {Regiao} regiao
-   * @param {Ano}    ano
-   * @returns {number}
+   * @method ipl.Indice#series
+   * @param {ipl.Regiao} regiao
+   * @param {ipl.Ano}    ano
+   * @returns {Array<ipl.IdPartido>}
    */
-
   /**
    * Retornar índice no ano para a série.
    *
-   * @method Indice#calcula
-   * @param {Regiao}    regiao
-   * @param {Ano}       ano
-   * @param {IdPartido} idPartido
+   * @method ipl.Indice#calcula
+   * @param {ipl.Regiao}    regiao
+   * @param {ipl.Ano}       ano
+   * @param {ipl.IdPartido} idPartido
    * @returns {number}
    */
 
   /**
-   * @classdesc
-   * Classe para construção de índices.
+   * @classdesc Classe para construção de índices.
    *
+   * @alias ipl.FabricaDeIndices
    * @constructor
-   * @param {RepositorioEleitoral} repo - {@link FabricaDeIndices~repo}
+   * @param {ipl.RepositorioEleitoral} repo - {@link ipl.FabricaDeIndices~repo}
    */
   function FabricaDeIndices(repo) {
     /**
      * Repositório de dados das eleições.
-     *
-     * @memberOf FabricaDeIndices.prototype
-     * @member {RepositorioEleitoral}
-     * @private
+     * @member {ipl.RepositorioEleitoral} ipl.FabricaDeIndices~repo
      */
     this.repo = repo;
     /**
      * Cache de singletons.
-     *
-     * @memberOf FabricaDeIndices.prototype
-     * @member {ipl.Cache}
-     * @private
+     * @member {ipl.Cache} ipl.FabricaDeIndices~cache
      */
     this.singletons = new ipl.Cache();
   }
@@ -77,6 +68,12 @@
 
   FabricaDeIndices.prototype = {
 
+    /**
+     * Índice de deputados federais.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     deputadosFederais: function() {
       if (!this.singletons.has('deputadosFederais')) {
         var cargo     = new ipl.Cargo(this.repo, 'deputado_federal');
@@ -88,6 +85,12 @@
       return this.singletons.get('deputadosFederais');
     },
 
+    /**
+     * Índice de senadores.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     senadores: function() {
       if (!this.singletons.has('senadores')) {
         var cargo     = new ipl.Cargo(this.repo, 'senador', RENOVACAO_SENADO);
@@ -99,6 +102,12 @@
       return this.singletons.get('senadores');
     },
 
+    /**
+     * Índice de presidentes.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     presidentes: function() {
       if (!this.singletons.has('presidentes')) {
         var cargo     = new ipl.Cargo(this.repo, 'presidente');
@@ -110,6 +119,12 @@
       return this.singletons.get('presidentes');
     },
 
+    /**
+     * Índice de deputados estaduais proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     deputadosEstaduais: function() {
       if (!this.singletons.has('deputadosEstaduais')) {
         var cargo     = new ipl.Cargo(this.repo, 'deputado_estadual');
@@ -121,6 +136,12 @@
       return this.singletons.get('deputadosEstaduais');
     },
 
+    /**
+     * Índice de governadores (estaduais) proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     governadoresEstaduais: function() {
       if (!this.singletons.has('governadoresEstaduais')) {
         var cargo     = new ipl.Cargo(this.repo, 'governador');
@@ -132,6 +153,12 @@
       return this.singletons.get('governadoresEstaduais');
     },
 
+    /**
+     * Índice de deputados distritais proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     deputadosDistritais: function() {
       if (!this.singletons.has('deputadosDistritais')) {
         var cargo     = new ipl.Cargo(this.repo, 'deputado_distrital');
@@ -143,6 +170,12 @@
       return this.singletons.get('deputadosDistritais');
     },
 
+    /**
+     * Índice de governadores (distritais) proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     governadoresDistritais: function() {
       if (!this.singletons.has('governadoresDistritais')) {
         var cargo     = new ipl.Cargo(this.repo, 'governador');
@@ -154,6 +187,12 @@
       return this.singletons.get('governadoresDistritais');
     },
 
+    /**
+     * Índice de vereadores proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     vereadores: function() {
       if (!this.singletons.has('vereadores')) {
         var cargo     = new ipl.Cargo(this.repo, 'vereador');
@@ -165,6 +204,12 @@
       return this.singletons.get('vereadores');
     },
 
+    /**
+     * Índice de prefeitos proporcional à população das UFs.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     prefeitos: function() {
       if (!this.singletons.has('prefeitos')) {
         var cargo     = new ipl.Cargo(this.repo, 'prefeito');
@@ -176,6 +221,12 @@
       return this.singletons.get('prefeitos');
     },
 
+    /**
+     * Índice de todas as esferas proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     indice: function() {
       var chave = 'indice';
       if (!this.singletons.has(chave)) {
@@ -189,6 +240,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice de todas as esferas (só legislativo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     legislativo: function() {
       var chave = 'legislativo';
       if (!this.singletons.has(chave)) {
@@ -202,6 +259,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice de todas as esferas (só executivo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     executivo: function() {
       var chave = 'executivo';
       if (!this.singletons.has(chave)) {
@@ -215,6 +278,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera federal proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     federal: function() {
       var chave = 'federal';
       if (!this.singletons.has(chave)) {
@@ -227,6 +296,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera federal (só legislativo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     legislativoFederal: function() {
       var chave = 'legislativoFederal';
       if (!this.singletons.has(chave)) {
@@ -239,6 +314,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera estadual proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     estadual: function() {
       var chave = 'estadual';
       if (!this.singletons.has(chave)) {
@@ -251,6 +332,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera estadual (só legislativo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     legislativoEstadual: function() {
       var chave = 'legislativoEstadual';
       if (!this.singletons.has(chave)) {
@@ -263,6 +350,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera estadual (só executivo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     executivoEstadual: function() {
       var chave = 'executivoEstadual';
       if (!this.singletons.has(chave)) {
@@ -275,6 +368,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera municipal proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     municipal: function() {
       var chave = 'municipal';
       if (!this.singletons.has(chave)) {
@@ -287,6 +386,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera municipal (só legislativo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     legislativoMunicipal: function() {
       var chave = 'legislativoMunicipal';
       if (!this.singletons.has(chave)) {
@@ -299,6 +404,12 @@
       return this.singletons.get(chave);
     },
 
+    /**
+     * Índice da esfera municipal (só executivo) proporcional à população.
+     *
+     * @returns {ipl.Indice}
+     * @nosideeffects
+     */
     executivoMunicipal: function() {
       var chave = 'executivoMunicipal';
       if (!this.singletons.has(chave)) {

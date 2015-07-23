@@ -8,16 +8,24 @@
   'use strict';
 
   /**
-   * @classdesc
-   * Índice para um legislativo com duas casas de igual poder.
+   * @classdesc Índice para um legislativo com duas casas de igual poder.
    *
+   * @alias ipl.IndiceBicameral
    * @constructor
-   * @param {Indice} menor - {@link IndiceBicameral~menor}
-   * @param {Indice} maior - {@link IndiceBicameral~maior}
-   * @implements {Indice}
+   * @param {ipl.Indice} menor - {@link ipl.IndiceBicameral~menor}
+   * @param {ipl.Indice} maior - {@link ipl.IndiceBicameral~maior}
+   * @implements {ipl.Indice}
    */
   function IndiceBicameral(menor, maior) {
+    /**
+     * Índice da casa menor.
+     * @member {ipl.Indice} ipl.IndiceBicameral~menor
+     */
     this.menor = menor;
+    /**
+     * Índice da casa maior.
+     * @member {ipl.Indice} ipl.IndiceBicameral~maior
+     */
     this.maior = maior;
   }
 
@@ -67,16 +75,24 @@
   };
 
   /**
-   * @classdesc
-   * Índice para uma esfera somando os valores do Distrito Federal.
+   * @classdesc Índice para uma esfera somando os valores do Distrito Federal.
    *
+   * @alias ipl.IndiceSomaDistritoFederal
    * @constructor
-   * @param {Indice} regular   - {@link IndiceSomaDistritoFederal~regular}
-   * @param {Indice} distrital - {@link IndiceSomaDistritoFederal~distrital}
-   * @implements {Indice}
+   * @param {ipl.Indice} regular   - {@link ipl.IndiceSomaDistritoFederal~regular}
+   * @param {ipl.Indice} distrital - {@link ipl.IndiceSomaDistritoFederal~distrital}
+   * @implements {ipl.Indice}
    */
   function IndiceSomaDistritoFederal(regular, distrital) {
-    this.regular   = regular;
+    /**
+     * Índice das UF's (apenas estados).
+     * @member {ipl.Indice} ipl.IndiceSomaDistritoFederal~regular
+     */
+    this.regular = regular;
+    /**
+     * Índice das UF's (apenas DF).
+     * @member {ipl.Indice} ipl.IndiceSomaDistritoFederal~distrital
+     */
     this.distrital = distrital;
   }
 
@@ -126,17 +142,25 @@
   };
 
   /**
-   * @classdesc
-   * Índice para todos os poderes de uma esfera.
+   * @classdesc Índice para todos os poderes de uma esfera.
    *
+   * @alias ipl.IndiceEsfera
    * @constructor
-   * @param {Indice} legislativo - {@link IndiceEsfera~legislativo}
-   * @param {Indice} executivo   - {@link IndiceEsfera~executivo}
-   * @implements {Indice}
+   * @param {ipl.Indice} legislativo - {@link ipl.IndiceEsfera~legislativo}
+   * @param {ipl.Indice} executivo   - {@link ipl.IndiceEsfera~executivo}
+   * @implements {ipl.Indice}
    */
   function IndiceEsfera(legislativo, executivo) {
+    /**
+     * Índice dos cargos do legislativo.
+     * @member {ipl.Indice} ipl.IndiceEsfera~legislativo
+     */
     this.legislativo = legislativo;
-    this.executivo   = executivo;
+    /**
+     * Índice dos cargos do executivo.
+     * @member {ipl.Indice} ipl.IndiceEsfera~executivo
+     */
+    this.executivo = executivo;
   }
 
   IndiceEsfera.prototype = {
@@ -185,18 +209,30 @@
   };
 
   /**
-   * @classdesc
-   * Índice para a média de todos os níveis
+   * @classdesc Índice para a média de todos os níveis
    *
+   * @alias ipl.IndiceTodosOsNiveis
    * @constructor
-   * @param {Indice} federal   - {@link IndiceTodosOsNiveis~federal}
-   * @param {Indice} estadual  - {@link IndiceTodosOsNiveis~estadual}
-   * @param {Indice} municipal - {@link IndiceTodosOsNiveis~municipal}
-   * @implements {Indice}
+   * @param {ipl.Indice} federal   - {@link ipl.IndiceTodosOsNiveis~federal}
+   * @param {ipl.Indice} estadual  - {@link ipl.IndiceTodosOsNiveis~estadual}
+   * @param {ipl.Indice} municipal - {@link ipl.IndiceTodosOsNiveis~municipal}
+   * @implements {ipl.Indice}
    */
   function IndiceTodosOsNiveis(federal, estadual, municipal) {
-    this.federal   = federal;
-    this.estadual  = estadual;
+    /**
+     * Índice dos cargos da esfera federal.
+     * @member {ipl.Indice} ipl.IndiceTodosOsNiveis~federal
+     */
+    this.federal = federal;
+    /**
+     * Índice dos cargos da esfera estadual.
+     * @member {ipl.Indice} ipl.IndiceTodosOsNiveis~estadual
+     */
+    this.estadual = estadual;
+    /**
+     * Índice dos cargos da esfera municipal.
+     * @member {ipl.Indice} ipl.IndiceTodosOsNiveis~municipal
+     */
     this.municipal = municipal;
   }
 

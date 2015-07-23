@@ -1,77 +1,60 @@
 /* globals ipl, _ */
-/* exported ipl.GerenciadorDeCores */
 /* exported ipl.GeradorDeSeries */
 
 ;(function(ipl, _) {
   'use strict';
 
-  function GerenciadorDeCores(partidos, cores) {
-    this.partidos      = partidos;
-    this.cores         = cores || GerenciadorDeCores.CORES_PADRAO;
-    this.pilhasDeCores = {};
-    this.cache         = new ipl.Cache();
-  }
-
-  GerenciadorDeCores.CORES_PADRAO = {
-    verde:        [ 'green' ],
-    vermelho:     [ 'red' ],
-    laranja:      [ 'orange' ],
-    azul:         [ 'blue' ],
-    'azul claro': [ 'lightblue' ],
-    roxo:         [ 'purple' ]
-  };
-
-  GerenciadorDeCores.prototype = {
-
-    proxima: function(cor) {
-      // Inicia uma nova pilha de cores
-      if (!(cor in this.pilhasDeCores)) {
-        this.pilhasDeCores[cor] = [];
-      }
-
-      // Inicia um novo loop nas variantes da cor
-      if (this.pilhasDeCores[cor].length === 0) {
-        this.pilhasDeCores[cor] = this.cores[cor].slice();
-      }
-
-      // Pega uma variante da cor do partido
-      return this.pilhasDeCores[cor].shift();
-    },
-
-    cor: function(partido) {
-      var chave = partido.sigla + partido.numero + partido.fundado;
-      if (!this.cache.has(chave)) {
-        // Se o partido foi renomeado, usa a mesma cor do sucessor
-        if (partido.renomeado != null) {
-          var sucessor = this.partidos.buscarSucessor(partido);
-          var corDoSucessor = this.cor(sucessor);
-          this.cache.set(chave, corDoSucessor);
-          return corDoSucessor;
-        }
-        // Retorna próxima cor da paleta
-        var proximaCor = this.proxima(partido.cor);
-        this.cache.set(chave, proximaCor);
-        return proximaCor;
-      }
-      return this.cache.get(chave);
-    },
-
-  };
-
+  /**
+   * @classdesc Gera séries para os gráficos.
+   *
+   * @alias ipl.GeradorDeSeries
+   * @constructor
+   * @param {ipl.ConfiguracaoDePartidos} configuracao - {@link ipl.GeradorDeSeries~configuracao}
+   * @param {ipl.RepositorioDePartidos} partidos      - {@link ipl.GeradorDeSeries~partidos}
+   * @param {ipl.GerenciadorDeCores} partidos         - {@link ipl.GeradorDeSeries~cores}
+   */
   function GeradorDeSeries(configuracao, partidos, cores) {
+    /**
+     * Configuração de partidos.
+     * @member {ipl.ConfiguracaoDePartidos} ipl.GeradorDeSeries#configuracao
+     */
     this.configuracao = configuracao;
-    this.partidos     = partidos;
-    this.cores        = cores;
-
-    // Faz correções para gráficos em passos
+    /**
+     * Repositório de partidos.
+     * @member {ipl.ConfiguracaoDePartidos} ipl.GeradorDeSeries#partidos
+     */
+    this.partidos = partidos;
+    /**
+     * Gerenciador de cores.
+     * @member {ipl.GerenciadorDeCores} ipl.GeradorDeSeries#cores
+     */
+    this.cores = cores;
+    /**
+     * Faz correções para gráficos em passos.
+     * @member {boolean} ipl.GeradorDeSeries#ehGraficoEmPassos
+     * @default
+     */
     this.ehGraficoEmPassos = false;
-
-    // Faz correções para gráficos de área
-    this.ehGraficoDeArea   = false;
+    /**
+     * Faz correções para gráficos de área.
+     * @member {boolean} ipl.GeradorDeSeries#ehGraficoDeArea
+     * @default
+     */
+    this.ehGraficoDeArea = false;
   }
 
   GeradorDeSeries.prototype = {
 
+    /**
+     * Calcula todos os índices necessários para formatar as séries.
+     *
+     * @method ipl.GeradorDeSeries~geraIndices
+     * @param {ipl.Indice} indice
+     * @param {ipl.Regiao} regiao
+     * @param {Array<ipl.Ano>} anos
+     * @param {Array<ipl.IdPartido>} siglas
+     * @return {Array<{info:ipl.Partido,indices:Array<{ano:ipl.Ano, indice:number}>}>}
+     */
     geraIndices: function(indice, regiao, anos, siglas) {
       return _.map(siglas, function(siglaENumero) {
         // Carrega informações do partido
@@ -86,6 +69,14 @@
       }, this);
     },
 
+    /**
+     * Remover anos e partidos vazios.
+     *
+     * @method ipl.GeradorDeSeries~filtrarAnos
+     * @param {Array<Object>} indicesPorSigla
+     * @param {boolean} manterNulls
+     * @return {Array<Object>}
+     */
     filtrarAnos: function(indicesPorSigla, manterNulls) {
 
       // Filtra anos que o partido existe
@@ -124,12 +115,24 @@
       return partidos;
     },
 
+    /**
+     * Garante que sempre as mesmas cores serão usadas para os mesmos partidos.
+     *
+     * @method ipl.GeradorDeSeries~inicializaCores
+     */
     inicializaCores: function() {
-      // Inicia as cores de todos os partidos para garantir que sempre seja gerada a mesma cor
+      // Realiza primeira chamada de ipl.GerenciadorDeCores#cor na ordem padrão
       _.each(this.partidos.todos(), this.cores.cor, this.cores);
     },
 
-    formataParaHighchartsPorJurisdicao: function(indicesPorSigla) {
+    /**
+     * Formata séries para gráfico de linhas ou área do Highcharts.
+     *
+     * @method ipl.GeradorDeSeries~formataParaGraficoDeLinhasOuAreaHighcharts
+     * @param {Array<Object>} indicesPorSigla
+     * @return {Array<Object>}
+     */
+    formataParaGraficoDeLinhasOuAreaHighcharts: function(indicesPorSigla) {
 
       var tabela = this.configuracao.tabelaDeReescrita;
 
@@ -192,7 +195,14 @@
 
     },
 
-    formataParaHighchartsPorAno: function(indicesPorSigla) {
+    /**
+     * Formata séries para gráfico de torta do Highcharts.
+     *
+     * @method ipl.GeradorDeSeries~formataParaGraficoDeTortaHighcharts
+     * @param {Array<Object>} indicesPorSigla
+     * @return {Array<Object>}
+     */
+    formataParaGraficoDeTortaHighcharts: function(indicesPorSigla) {
 
       var tabela = this.configuracao.tabelaDeReescrita;
 
@@ -239,40 +249,61 @@
 
     },
 
-    seriesPorJurisdicao: function(indice, regiao) {
-      var anos = _.filter(_.uniq(indice.anos(regiao).sort(), true), function(ano) {
+    /**
+     * Gera séries com filtro de região.
+     *
+     * @method ipl.GeradorDeSeries#seriesPorRegiao
+     * @param {ipl.Indice} indice
+     * @param {ipl.Regiao} regiao
+     * @return {Array<Object>}
+     */
+    seriesPorRegiao: function(indice, regiao) {
+      // Fazendo isso aqui fora uma só vez por motivos de performance
+      var anos = _.uniq(indice.anos(regiao).sort(), true);
+      // Filtra anos que tem dados o suficiente para calcular o índice
+      anos = _.filter(anos, function(ano) {
         return indice.temDados(regiao, ano);
       });
       // Adiciona um ano depois da última eleição para o último passo ficar visível
       if (this.ehGraficoEmPassos === true) {
         anos.push(_.max(anos) + 1);
       }
+      // Siglas para todos os anos
       var siglas = _.uniq(_.flatten(_.map(anos, function(ano) {
         return indice.series(regiao, ano);
       })).sort(), true);
       var partidos = this.geraIndices(indice, regiao, anos, siglas);
       partidos = this.configuracao.mapearPartidos(partidos);
       partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
-      var series = this.formataParaHighchartsPorJurisdicao(partidos);
+      var series = this.formataParaGraficoDeLinhasOuAreaHighcharts(partidos);
       return series;
     },
 
-    seriesPorAno: function(indice, regiao, filtroAno) {
-      var ano = filtroAno - 1;
-      if (indice.temDados(regiao, ano) === false) {
-        return this.formataParaHighchartsPorAno([]);
+    /**
+     * Gera séries para um ano específico com filtro de região.
+     *
+     * @method ipl.GeradorDeSeries#seriesPorAno
+     * @param {ipl.Indice} indice
+     * @param {ipl.Regiao} regiao
+     * @param {ipl.Ano} ano
+     * @return {Array<Object>}
+     */
+    seriesPorAno: function(indice, regiao, ano) {
+      var anoDaEleicao = ano - 1;
+      if (indice.temDados(regiao, anoDaEleicao) === false) {
+        // Se não retornar nada, ainda precisa estar em um formato específico
+        return this.formataParaGraficoDeTortaHighcharts([]);
       }
-      var siglas = indice.series(regiao, ano);
-      var partidos = this.geraIndices(indice, regiao, [ ano ], siglas);
+      var siglas = indice.series(regiao, anoDaEleicao);
+      var partidos = this.geraIndices(indice, regiao, [ anoDaEleicao ], siglas);
       partidos = this.configuracao.mapearPartidos(partidos);
       partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
-      var series = this.formataParaHighchartsPorAno(partidos);
+      var series = this.formataParaGraficoDeTortaHighcharts(partidos);
       return series;
     },
 
   };
 
-  ipl.GerenciadorDeCores = GerenciadorDeCores;
-  ipl.GeradorDeSeries    = GeradorDeSeries;
+  ipl.GeradorDeSeries = GeradorDeSeries;
 
 })(ipl, _);

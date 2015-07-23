@@ -258,8 +258,7 @@
   };
 
   /**
-   * @classdesc
-   * Classe para pesquisa de dados dos partidos.
+   * @classdesc Classe para pesquisa de dados dos partidos.
    *
    * @alias ipl.RepositorioDePartidos
    * @constructor
@@ -322,13 +321,17 @@
         // Ex.: PTR -> [ PP (1993), PP (2003) ]
         var possiveisSucessores = _.filter(this.partidos, function(sucessor) {
           return (
-            // O sucessor não pode ter sido extinto antes do predecessor
+            // Se o sucessor foi extinto, não pode ter sido extinto antes do predecessor
             (sucessor.extinto == null || sucessor.extinto >= partido.extinto) &&
-            // Se foi incorporado, o sucessor já deveria existir antes da extinção do predecessor
-            ((partido.incorporado === sucessor.sigla && sucessor.fundado <= partido.extinto) ||
-            // Se foi renomeado ou fundido, o sucessor foi criado após a extinção do predecessor
-             (partido.renomeado   === sucessor.sigla && sucessor.fundado >= partido.extinto) ||
-             (partido.fusao       === sucessor.sigla && sucessor.fundado >= partido.extinto)));
+            // Se foi incorporado, o sucessor deve existir desde **antes** da incorporação
+            ((partido.incorporado === sucessor.sigla &&
+              sucessor.fundado <= partido.extinto) ||
+            // Se foi renomeado, o sucessor foi criado **após** a mudança de nome
+             (partido.renomeado   === sucessor.sigla &&
+              sucessor.fundado >= partido.extinto) ||
+            // Se foi fundido, o sucessor foi criado **após** a fusão
+             (partido.fusao       === sucessor.sigla &&
+              sucessor.fundado >= partido.extinto)));
         });
         // Primeiro partido fundado após a extinção do outro
         // Ex.: PTR -> PP (1993) ao invés de PP (2003)
