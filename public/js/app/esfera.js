@@ -31,7 +31,7 @@
   /**
    * Retornar UEs que tem eleição para o cargo na região.
    *
-   * @method ipl.Esfera#todasAsUesNaMesmaEsfera
+   * @method ipl.Esfera#todasAsUes
    * @param {ipl.Regiao} regiao
    * @returns {Array<ipl.Ue>}
    */
@@ -59,7 +59,7 @@
      * @inheritdoc
      * @nosideeffects
      */
-    todasAsUesNaMesmaEsfera: function() {
+    todasAsUes: function() {
       // Ignora as UFs, só é necessário um valor para qualquer UF ou município
       return [ 'BR' ];
     }
@@ -90,7 +90,7 @@
      * @inheritdoc
      * @nosideeffects
      */
-    todasAsUesNaMesmaEsfera: function(regiao) {
+    todasAsUes: function(regiao) {
       // Soma todos os estados e o distrito federal
       return regiao.ues;
     }
@@ -121,7 +121,7 @@
      * @inheritdoc
      * @nosideeffects
      */
-    todasAsUesNaMesmaEsfera: function(regiao) {
+    todasAsUes: function(regiao) {
       // Soma todos os estados e o distrito federal
       return regiao.ues;
     }
@@ -152,7 +152,7 @@
      * @inheritdoc
      * @nosideeffects
      */
-    todasAsUesNaMesmaEsfera: function(regiao) {
+    todasAsUes: function(regiao) {
       // Soma todos os estados e o distrito federal
       return regiao.ues;
     }

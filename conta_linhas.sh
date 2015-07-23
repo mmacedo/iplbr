@@ -33,11 +33,11 @@ eval cat $web $spec $carga $etc $doc | wc
 # JavaScript
 
 function linhas_de_codigo() {
-  ret=$(eval cat $* | grep -v '^ *$' | grep -v '^ *\([*]\|/[/*]\)' | wc -l)
+  ret=$(eval cat $* | grep -v '^\([ {}(),;[]\|\\]\)*$' | grep -v '^ *\([*]\|/[/*]\)' | wc -l)
 }
 
 function linhas_de_documentacao() {
-  ret=$(eval cat $* | grep -v '^ *$' | grep '^ *\([*]\|/[/*]\)' | wc -l)
+  ret=$(eval cat $* | grep '^ *\([*]\|/[/*]\)' | wc -l)
 }
 
 linhas_de_codigo spec/*_spec.js

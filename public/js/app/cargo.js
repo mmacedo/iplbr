@@ -152,7 +152,7 @@
      * @nosideeffects
      */
     calcula: function(regiao, ano, idPartido) {
-      var todasUes = this.esfera.todasAsUesNaMesmaEsfera(regiao);
+      var todasUes = this.esfera.todasAsUes(regiao);
       var somaDosPesos = _.sum(todasUes, function(ue) {
         var tipoDeEleicao = { cargo: this.cargo.idCargo, ue: ue };
         return this.resultado.peso(tipoDeEleicao, ano);

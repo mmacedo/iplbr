@@ -194,7 +194,7 @@ module.exports = function(grunt) {
     },
     jsdoc: {
       app: {
-        src: [ 'public/js/app/*.js', 'spec/*_spec.js' ],
+        src: 'public/js/app/*.js',
         options: {
           destination: 'tmp/doc',
           configure: 'jsdoc.conf.json'
