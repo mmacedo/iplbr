@@ -262,7 +262,7 @@
    *
    * @alias ipl.RepositorioDePartidos
    * @constructor
-   * @param {?Array<ipl.Partido>} partidos - {@link RepositorioDePartidos~partidos}
+   * @param {?Array<ipl.Partido>} partidos - {@link RepositorioDePartidos#partidos}
    */
   function RepositorioDePartidos(partidos) {
     /**

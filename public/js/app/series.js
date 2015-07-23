@@ -9,9 +9,12 @@
    *
    * @alias ipl.GeradorDeSeries
    * @constructor
-   * @param {ipl.ConfiguracaoDePartidos} configuracao - {@link ipl.GeradorDeSeries~configuracao}
-   * @param {ipl.RepositorioDePartidos} partidos      - {@link ipl.GeradorDeSeries~partidos}
-   * @param {ipl.GerenciadorDeCores} partidos         - {@link ipl.GeradorDeSeries~cores}
+   * @param {ipl.ConfiguracaoDePartidos} configuracao
+   *   {@link ipl.GeradorDeSeries#configuracao}
+   * @param {ipl.RepositorioDePartidos} partidos
+   *   {@link ipl.GeradorDeSeries#partidos}
+   * @param {ipl.GerenciadorDeCores} partidos
+   *   {@link ipl.GeradorDeSeries#cores}
    */
   function GeradorDeSeries(configuracao, partidos, cores) {
     /**
@@ -72,12 +75,12 @@
     /**
      * Remover anos e partidos vazios.
      *
-     * @method ipl.GeradorDeSeries~filtrarAnos
+     * @method ipl.GeradorDeSeries~filtraAnos
      * @param {Array<Object>} indicesPorSigla
      * @param {boolean} manterNulls
      * @return {Array<Object>}
      */
-    filtrarAnos: function(indicesPorSigla, manterNulls) {
+    filtraAnos: function(indicesPorSigla, manterNulls) {
 
       // Filtra anos que o partido existe
       var partidos = _.map(indicesPorSigla, function(p) {
@@ -270,11 +273,11 @@
       }
       // Siglas para todos os anos
       var siglas = _.uniq(_.flatten(_.map(anos, function(ano) {
-        return indice.series(regiao, ano);
+        return indice.partidos(regiao, ano);
       })).sort(), true);
       var partidos = this.geraIndices(indice, regiao, anos, siglas);
       partidos = this.configuracao.mapearPartidos(partidos);
-      partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
+      partidos = this.filtraAnos(partidos, this.ehGraficoDeArea);
       var series = this.formataParaGraficoDeLinhasOuAreaHighcharts(partidos);
       return series;
     },
@@ -294,10 +297,10 @@
         // Se não retornar nada, ainda precisa estar em um formato específico
         return this.formataParaGraficoDeTortaHighcharts([]);
       }
-      var siglas = indice.series(regiao, anoDaEleicao);
+      var siglas = indice.partidos(regiao, anoDaEleicao);
       var partidos = this.geraIndices(indice, regiao, [ anoDaEleicao ], siglas);
       partidos = this.configuracao.mapearPartidos(partidos);
-      partidos = this.filtrarAnos(partidos, this.ehGraficoDeArea);
+      partidos = this.filtraAnos(partidos, this.ehGraficoDeArea);
       var series = this.formataParaGraficoDeTortaHighcharts(partidos);
       return series;
     },

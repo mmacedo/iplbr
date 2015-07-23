@@ -128,7 +128,7 @@
      * @inheritdoc
      * @nosideeffects
      */
-    series: function(regiao, ano) {
+    partidos: function(regiao, ano) {
       var ues = this.esfera.uesComDados(regiao);
       var partidos = _.map(ues, function(ue) {
         return this.cargo.partidos(ue, ano);

@@ -28,7 +28,7 @@
   /**
    * Retornar todas as séries que tem dados para esse índice.
    *
-   * @method ipl.Indice#series
+   * @method ipl.Indice#partidos
    * @param {ipl.Regiao} regiao
    * @param {ipl.Ano}    ano
    * @returns {Array<ipl.IdPartido>}
@@ -343,7 +343,7 @@
       if (!this.singletons.has(chave)) {
         var regular   = this.deputadosEstaduais();
         var distrital = this.deputadosDistritais();
-        var indice = new ipl.IndiceSomaDistritoFederal(regular, distrital);
+        var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
         return indice;
       }
@@ -361,7 +361,7 @@
       if (!this.singletons.has(chave)) {
         var regular   = this.governadoresEstaduais();
         var distrital = this.governadoresDistritais();
-        var indice = new ipl.IndiceSomaDistritoFederal(regular, distrital);
+        var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
         return indice;
       }
@@ -397,7 +397,7 @@
       if (!this.singletons.has(chave)) {
         var regular   = this.vereadores();
         var distrital = this.deputadosDistritais();
-        var indice = new ipl.IndiceSomaDistritoFederal(regular, distrital);
+        var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
         return indice;
       }
@@ -415,7 +415,7 @@
       if (!this.singletons.has(chave)) {
         var regular   = this.prefeitos();
         var distrital = this.governadoresDistritais();
-        var indice = new ipl.IndiceSomaDistritoFederal(regular, distrital);
+        var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
         return indice;
       }

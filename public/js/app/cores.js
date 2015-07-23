@@ -19,8 +19,10 @@
    *
    * @alias ipl.GerenciadorDeCores
    * @constructor
-   * @param {ipl.RepositorioDePartidos} partidos                                                 - {@link ipl.GerenciadorDeCores~partidos}
-   * @param {Object<ipl.Cor,Array<ipl.Tom>>} [cores={@link ipl.GerenciadorDeCores.CORES_PADRAO}] - {@link ipl.GerenciadorDeCores~cores}
+   * @param {ipl.RepositorioDePartidos} partidos - {@link ipl.GerenciadorDeCores~partidos}
+   * @param {Object<ipl.Cor,Array<ipl.Tom>>}
+   *   [cores={@link ipl.GerenciadorDeCores.CORES_PADRAO}]
+   *   {@link ipl.GerenciadorDeCores~cores}
    */
   function GerenciadorDeCores(partidos, cores) {
     /**

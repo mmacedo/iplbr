@@ -1,6 +1,6 @@
 /* globals ipl, _ */
 /* exported ipl.IndiceBicameral */
-/* exported ipl.IndiceSomaDistritoFederal */
+/* exported ipl.IndiceSomaDf */
 /* exported ipl.IndiceEsfera */
 /* exported ipl.IndiceTodosOsNiveis */
 
@@ -46,10 +46,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    series: function(regiao, ano) {
+    partidos: function(regiao, ano) {
       return _.flatten([
-        this.menor.series(regiao, ano),
-        this.maior.series(regiao, ano)
+        this.menor.partidos(regiao, ano),
+        this.maior.partidos(regiao, ano)
       ]);
     },
 
@@ -77,26 +77,26 @@
   /**
    * @classdesc Índice para uma esfera somando os valores do Distrito Federal.
    *
-   * @alias ipl.IndiceSomaDistritoFederal
+   * @alias ipl.IndiceSomaDf
    * @constructor
-   * @param {ipl.Indice} regular   - {@link ipl.IndiceSomaDistritoFederal~regular}
-   * @param {ipl.Indice} distrital - {@link ipl.IndiceSomaDistritoFederal~distrital}
+   * @param {ipl.Indice} regular   - {@link ipl.IndiceSomaDf~regular}
+   * @param {ipl.Indice} distrital - {@link ipl.IndiceSomaDf~distrital}
    * @implements {ipl.Indice}
    */
-  function IndiceSomaDistritoFederal(regular, distrital) {
+  function IndiceSomaDf(regular, distrital) {
     /**
      * Índice das UF's (apenas estados).
-     * @member {ipl.Indice} ipl.IndiceSomaDistritoFederal~regular
+     * @member {ipl.Indice} ipl.IndiceSomaDf~regular
      */
     this.regular = regular;
     /**
      * Índice das UF's (apenas DF).
-     * @member {ipl.Indice} ipl.IndiceSomaDistritoFederal~distrital
+     * @member {ipl.Indice} ipl.IndiceSomaDf~distrital
      */
     this.distrital = distrital;
   }
 
-  IndiceSomaDistritoFederal.prototype = {
+  IndiceSomaDf.prototype = {
 
     /**
      * @inheritdoc
@@ -113,10 +113,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    series: function(regiao, ano) {
+    partidos: function(regiao, ano) {
       return _.flatten([
-        this.regular.series(regiao, ano),
-        this.distrital.series(regiao, ano)
+        this.regular.partidos(regiao, ano),
+        this.distrital.partidos(regiao, ano)
       ]);
     },
 
@@ -180,10 +180,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    series: function(regiao, ano) {
+    partidos: function(regiao, ano) {
       return _.flatten([
-        this.legislativo.series(regiao, ano),
-        this.executivo.series(regiao, ano)
+        this.legislativo.partidos(regiao, ano),
+        this.executivo.partidos(regiao, ano)
       ]);
     },
 
@@ -254,11 +254,11 @@
      * @inheritdoc
      * @nosideeffects
      */
-    series: function(regiao, ano) {
+    partidos: function(regiao, ano) {
       return _.flatten([
-        this.federal.series(regiao, ano),
-        this.estadual.series(regiao, ano),
-        this.municipal.series(regiao, ano)
+        this.federal.partidos(regiao, ano),
+        this.estadual.partidos(regiao, ano),
+        this.municipal.partidos(regiao, ano)
       ]);
     },
 
@@ -286,7 +286,7 @@
   };
 
   ipl.IndiceBicameral           = IndiceBicameral;
-  ipl.IndiceSomaDistritoFederal = IndiceSomaDistritoFederal;
+  ipl.IndiceSomaDf = IndiceSomaDf;
   ipl.IndiceEsfera              = IndiceEsfera;
   ipl.IndiceTodosOsNiveis       = IndiceTodosOsNiveis;
 

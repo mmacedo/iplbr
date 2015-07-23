@@ -126,4 +126,22 @@ describe('ipl.ConfiguracaoDePartidos', function() {
 
   });
 
+  describe('#desambiguarSiglas', function() {
+
+    xit('TODO');
+
+  });
+
+  describe('#agruparPartidos', function() {
+
+    xit('TODO');
+
+  });
+
+  describe('#mapearPartidos', function() {
+
+    xit('TODO');
+
+  });
+
 });
