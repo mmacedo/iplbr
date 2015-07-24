@@ -11,10 +11,19 @@ module.exports = function(grunt) {
   var serveText = require('./dashboard/connect-serve-text');
 
   function abaDoDashboard(livereloadPort) {
-    function avisaPaiQueFoiCriado() {
+    var iframeUrl = 'iframeUrl.js';
+    function serveIframeUrl() {
+      return [ '/' + iframeUrl, serveFile('./dashboard/' + iframeUrl) ];
+    }
+    function injetaIframeUrl() {
+      return inject('<script src="/' + iframeUrl + '"></script>', true);
+    }
+    function contaUrlParaDashboard() {
+      var envia = 'window.parent.postMessage(window.location,"*");';
       var script =
-        'if (window.parent) {' +
-        '  window.parent.postMessage("I am here!", "*");' +
+        'if(window.parent){' +
+         envia +
+        'setInterval(function(){' + envia + '},100);' +
         '}';
       return inject('<script>' + script + '</script>', true);
     }
@@ -37,7 +46,8 @@ module.exports = function(grunt) {
       return inject(escreveTagDoLivereload);
     }
     return function(connect, options, middlewares) {
-      middlewares.unshift(avisaPaiQueFoiCriado());
+      middlewares.unshift(serveIframeUrl());
+      middlewares.unshift(injetaIframeUrl());
       middlewares.unshift(serveIframeResizer());
       middlewares.unshift(injetaIframeResizer());
       middlewares.unshift(injetaLiveReload());

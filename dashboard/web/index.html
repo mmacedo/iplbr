@@ -49,6 +49,22 @@
         padding-left: 5px; padding-right: 5px;
       }
     }
+    .url-bar {
+      width: 100%;
+      font-size: 125%;
+      height: 2em; line-height: 2em;
+      font-family: monospace;
+      padding: 0 15px;
+    }
+    .url {
+      display: inline-block;
+    }
+    .url > .url-protocol {}
+    .url > .url-host {}
+    .url > .url-path { font-weight: bold; color: black; }
+    .url > .url-search { font-weight: bold; color: crimson; }
+    .url > .url-hash { font-weight: bold; color: navy; }
+    .url:empty ~ * { display: none; }
     .tab { display: none; }
     .tab.active { display: block; }
     iframe {
@@ -97,45 +113,85 @@
   <script src="js/iframeResizer.min.js"></script>
   <script src="js/lodash-3.10.0.min.js"></script>
 
+  <script id="template-nav" type="application/lodash-template">
+    <li class="show-button" id="show_<%- id %>">
+      <a href="/<%- id %>">
+        <span class="led led-yellow"></span> <%- title %>
+      </a>
+    </li>
+    <li class="open-button" id="open_<%- id %>">
+      <a href="<%- url %>" target="_new">
+        <span class="glyphicon glyphicon-new-window"></span>
+      </a>
+    </li>
+    <li class="refresh-button" id="refresh_<%- id %>">
+      <a href="/<%- id %>">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </a>
+    </li>
+  </script>
+
+  <script id="template-tab" type="application/lodash-template">
+    <div id="<%- id %>" class="tab">
+      <div class="url-bar">
+        <div class="url"></div>
+        <a target="_new" class="open-button" id="open_current_<%- id %>"><span class="glyphicon glyphicon-new-window"></span></a>
+        <a class="refresh-button" id="refresh_current_<%- id %>"><span class="glyphicon glyphicon-refresh"></span></a>
+      </div>
+      <iframe scrolling="no"></iframe>
+    </div>
+  </script>
+
+  <script id="template-url" type="application/lodash-template">
+    <span class="url-protocol"><%- protocol %>//</span><span class="url-host"><%- host %></span><span class="url-path"><%- pathname %></span><span class="url-search"><%- search %></span><span class="url-hash"><%- hash %></span>
+  </script>
+
   <script type="text/javascript">
     jQuery(function($) {
+      var templates = {};
+      $('script[type="application/lodash-template"]').each(function() {
+        var $el = $(this);
+        var id = _.camelCase($el.attr('id').replace(/^template-/, ''));
+        templates[id] = _.template($el.text());
+      });
+
       $.getJSON('/tabs.json').done(function(json) {
         var $nav  = $('#navbar > ul.nav').empty();
         var $tabs = $('#content').empty();
-        var navTmpl = _.template(
-          '<li class="show-button" id="show_<%- id %>">' +
-          '<a href="/<%- id %>"><span class="led led-yellow"></span> <%- title %></a>' +
-          '</li>' +
-          '<li class="open-button" id="open_<%- id %>">' +
-          '<a href="<%- url %>" target="_new"><span class="glyphicon glyphicon-new-window"></span></a>' +
-          '</li>' +
-          '<li class="refresh-button" id="refresh_<%- id %>">' +
-          '<a href="/"><span class="glyphicon glyphicon-refresh"></span></a>' +
-          '</li>');
-        var tabTmpl = _.template(
-          '<div id="<%- id %>" class="tab">' +
-          '<iframe scrolling="no"></iframe>' +
-          '</div>');
         _.each(json, function(value, key) {
           // Add tab
           var title = key, id = _.kebabCase(title), url = value;
           var context = { id: id, title: title, url: url };
-          $nav.append(navTmpl(context));
-          $tabs.append(tabTmpl(context));
+          $nav.append(templates.nav(context));
+          $tabs.append(templates.tab(context));
 
-          var $iframe = $('#' + id + ' > iframe');
-          var $led    = $('#show_' + id + ' .led');
+          var $url        = $('#' + id + ' .url');
+          var $urlOpen    = $('#open_current_' + id);
+          var $urlRefresh = $('#refresh_current_' + id);
+          var $iframe     = $('#' + id + ' > iframe');
+          var $led        = $('#show_' + id + ' .led');
 
           var updateLed = _.debounce(function updateLed() {
-            var colour = !$iframe.data('loaded') ?
+            var colour = !$iframe.data('loadFired') ?
               'yellow' :
-              $iframe.data('messaged') ? 'green' : 'red';
+              $iframe.data('isUp') ? 'green' : 'red';
             $led.attr('class', 'led led-' + colour);
           }, 100);
 
+          var lastHref = url;
+          function updateUrl(loc) {
+            if (loc.href === lastHref) {
+              return;
+            }
+            lastHref = loc.href;
+            $urlOpen.attr('href', loc.href);
+            $urlRefresh.attr('href', loc.href);
+            $url.html(templates.url(loc));
+          }
+
           function reloadIframe() {
             $iframe.load(function() {
-              $iframe.data('loaded', true);
+              $iframe.data('loadFired', true);
               updateLed();
             })
             .attr('src', url)
@@ -145,20 +201,28 @@
           // Loaded iframe content
           $(window).on('message', function(e) {
             if (e.originalEvent.origin === url) {
-              $iframe.data('messaged', true);
+              $iframe.data('isUp', true);
               updateLed();
+              if (e.originalEvent.data.location) {
+                updateUrl(JSON.parse(e.originalEvent.data.location));
+              }
             }
           });
 
           // Refresh button
           $('#refresh_' + id).click(function() {
             $led.attr('class', 'led led-yellow');
-            var active = $('#' + id).replaceWith(tabTmpl(context)).hasClass('active');
+            var active = $('#' + id).replaceWith(templates.tab(context)).hasClass('active');
             $iframe = $('#' + id + ' > iframe');
             reloadIframe();
             if (active) {
               $('#' + id).addClass('active');
             }
+            return false;
+          });
+
+          $urlRefresh.click(function() {
+            $iframe.get(0).contentWindow.postMessage('RELOAD', url);
             return false;
           });
 
