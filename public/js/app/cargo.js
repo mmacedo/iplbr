@@ -6,8 +6,7 @@
   'use strict';
 
   /**
-   * @classdesc
-   * Objeto com dados das eleições para um cargo.
+   * @classdesc Objeto com resultados das eleições para um cargo.
    *
    * @alias ipl.Cargo
    * @constructor
@@ -77,13 +76,95 @@
       var tipoDeEleicao = { cargo: this.idCargo, ue: ue };
       var mandatosAtivos = this.repo.mandatosAtivos(tipoDeEleicao, ano + 1);
       return mandatosAtivos.length === this.eleicoesParaRenovar;
-    }
+    },
+
+    /**
+     * Retorna representantes pelo partido no ano.
+     *
+     * @param {ipl.Ue} ue
+     * @param {ipl.Ano} ano
+     * @param {ipl.IdPartido} serie
+     * @returns {number}
+     * @nosideeffects
+     */
+    quantidade: function(ue, ano, partido) {
+      var tipoDeEleicao = { cargo: this.idCargo, ue: ue };
+      var mandatos = this.repo.mandatosAtivos(tipoDeEleicao, ano + 1);
+      return _.sum(mandatos, function(eleicao) {
+        return this.repo.quantidade(tipoDeEleicao, eleicao, partido);
+      }, this);
+    },
+
+    /**
+     * Retorna total de representantes no ano.
+     *
+     * @param {ipl.Ue} ue
+     * @param {ipl.Ano} ano
+     * @returns {number}
+     * @nosideeffects
+     */
+    total: function(ue, ano) {
+      var tipoDeEleicao = { cargo: this.idCargo, ue: ue };
+      var mandatos = this.repo.mandatosAtivos(tipoDeEleicao, ano + 1);
+      return _.sum(mandatos, function(eleicao) {
+        return this.repo.total(tipoDeEleicao, eleicao);
+      }, this);
+    },
 
   };
 
   /**
-   * @classdesc
-   * Índice para um único cargo.
+   * @classdesc Resultados com valores proporcionais à população da UE representada.
+   *
+   * @alias ipl.CargoPorPopulacao
+   * @constructor
+   * @param {ipl.RepositorioEleitoral} repo   - {@link ipl.Cargo~repo}
+   * @param {IdCargo} idCargo                 - {@link ipl.Cargo~idCargo}
+   * @param {boolean} [eleicoesParaRenovar=1] - {@link ipl.Cargo~eleicoesParaRenovar}
+   * @extends {ipl.Cargo}
+   */
+  function CargoPorPopulacao() { Cargo.apply(this, arguments); }
+
+  CargoPorPopulacao.prototype = Object.create(Cargo.prototype, {
+    constructor: { value: CargoPorPopulacao },
+
+    /**
+     * @member CargoPorPopulacao#quantidade
+     * @inheritdoc
+     */
+    quantidade: { value: function(ue, ano, partido) {
+      var tipoDeEleicao = { cargo: this.idCargo, ue: ue };
+      var populacaoDoAno = this.repo.populacao(ue, ano);
+      var mandatos = this.repo.mandatosAtivos(tipoDeEleicao, ano + 1);
+      var total = _.sum(mandatos, function(eleicao) {
+        return this.repo.total(tipoDeEleicao, eleicao);
+      }, this);
+      return _.sum(mandatos, function(eleicao) {
+        var preCalculado = this.repo.proporcionalAPopulacao(tipoDeEleicao, eleicao, partido);
+        if (preCalculado === 0) {
+          return 0;
+        }
+        if (preCalculado != null) {
+          var populacaoDoAnoDaEleicao = this.repo.populacao(ue, eleicao);
+          return preCalculado * (populacaoDoAno / populacaoDoAnoDaEleicao);
+        }
+        var quantidade = this.repo.quantidade(tipoDeEleicao, eleicao, partido);
+        return (quantidade / total) * populacaoDoAno;
+      }, this);
+    } },
+
+    /**
+     * @member CargoPorPopulacao#total
+     * @inheritdoc
+     */
+    total: { value: function(ue, ano) {
+      return this.repo.populacao(ue, ano);
+    } }
+
+  });
+
+  /**
+   * @classdesc Índice para um único cargo.
    *
    * @alias ipl.IndicePorCargo
    * @constructor
@@ -103,11 +184,6 @@
      * @member {ipl.Esfera} ipl.IndicePorCargo~esfera
      */
     this.esfera = esfera;
-    /**
-     * Resultados das eleições.
-     * @member {ipl.Resultado} ipl.IndicePorCargo~resultado
-     */
-    this.resultado = resultado;
   }
 
   IndicePorCargo.prototype = {
@@ -153,24 +229,21 @@
      */
     calcula: function(regiao, ano, idPartido) {
       var todasUes = this.esfera.todasAsUes(regiao);
-      var somaDosPesos = _.sum(todasUes, function(ue) {
-        var tipoDeEleicao = { cargo: this.cargo.idCargo, ue: ue };
-        return this.resultado.peso(tipoDeEleicao, ano);
+      var total = _.sum(todasUes, function(ue) {
+        return this.cargo.total(ue, ano);
       }, this);
       var uesComIndice = this.esfera.uesComDados(regiao);
       var indice = _.sum(uesComIndice, function(ue) {
-        var tipoDeEleicao = { cargo: this.cargo.idCargo, ue: ue };
-        var quantidade = this.resultado.quantidade(tipoDeEleicao, ano, idPartido);
-        var total      = this.resultado.total(tipoDeEleicao, ano);
-        var peso       = this.resultado.peso(tipoDeEleicao, ano);
-        return (quantidade / total) * (peso / somaDosPesos);
+        var quantidade = this.cargo.quantidade(ue, ano, idPartido);
+        return quantidade / total;
       }, this);
       return indice;
     }
 
   };
 
-  ipl.Cargo          = Cargo;
-  ipl.IndicePorCargo = IndicePorCargo;
+  ipl.Cargo             = Cargo;
+  ipl.CargoPorPopulacao = CargoPorPopulacao;
+  ipl.IndicePorCargo    = IndicePorCargo;
 
 })(ipl, _);

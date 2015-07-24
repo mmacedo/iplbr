@@ -166,7 +166,6 @@ module.exports = function(grunt) {
             'public/js/app/ipl.js',
             'public/js/app/eleicoes.js',
             'public/js/app/indices.js',
-            'public/js/app/resultado.js',
             'public/js/app/esfera.js',
             'public/js/app/cargo.js',
             'public/js/app/composto.js',

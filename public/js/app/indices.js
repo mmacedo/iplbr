@@ -76,10 +76,9 @@
      */
     deputadosFederais: function() {
       if (!this.singletons.has('deputadosFederais')) {
-        var cargo     = new ipl.Cargo(this.repo, 'deputado_federal');
-        var esfera    = new ipl.EsferaFederal();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'deputado_federal');
+        var esfera = new ipl.EsferaFederal();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('deputadosFederais', indice);
       }
       return this.singletons.get('deputadosFederais');
@@ -93,10 +92,9 @@
      */
     senadores: function() {
       if (!this.singletons.has('senadores')) {
-        var cargo     = new ipl.Cargo(this.repo, 'senador', RENOVACAO_SENADO);
-        var esfera    = new ipl.EsferaFederal();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'senador', RENOVACAO_SENADO);
+        var esfera = new ipl.EsferaFederal();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('senadores', indice);
       }
       return this.singletons.get('senadores');
@@ -110,10 +108,9 @@
      */
     presidentes: function() {
       if (!this.singletons.has('presidentes')) {
-        var cargo     = new ipl.Cargo(this.repo, 'presidente');
-        var esfera    = new ipl.EsferaFederal();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'presidente');
+        var esfera = new ipl.EsferaFederal();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('presidentes', indice);
       }
       return this.singletons.get('presidentes');
@@ -127,10 +124,9 @@
      */
     deputadosEstaduais: function() {
       if (!this.singletons.has('deputadosEstaduais')) {
-        var cargo     = new ipl.Cargo(this.repo, 'deputado_estadual');
-        var esfera    = new ipl.EsferaEstadual();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'deputado_estadual');
+        var esfera = new ipl.EsferaEstadual();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('deputadosEstaduais', indice);
       }
       return this.singletons.get('deputadosEstaduais');
@@ -144,10 +140,9 @@
      */
     governadoresEstaduais: function() {
       if (!this.singletons.has('governadoresEstaduais')) {
-        var cargo     = new ipl.Cargo(this.repo, 'governador');
-        var esfera    = new ipl.EsferaEstadual();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'governador');
+        var esfera = new ipl.EsferaEstadual();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('governadoresEstaduais', indice);
       }
       return this.singletons.get('governadoresEstaduais');
@@ -161,10 +156,9 @@
      */
     deputadosDistritais: function() {
       if (!this.singletons.has('deputadosDistritais')) {
-        var cargo     = new ipl.Cargo(this.repo, 'deputado_distrital');
-        var esfera    = new ipl.EsferaDistrital();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'deputado_distrital');
+        var esfera = new ipl.EsferaDistrital();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('deputadosDistritais', indice);
       }
       return this.singletons.get('deputadosDistritais');
@@ -178,10 +172,9 @@
      */
     governadoresDistritais: function() {
       if (!this.singletons.has('governadoresDistritais')) {
-        var cargo     = new ipl.Cargo(this.repo, 'governador');
-        var esfera    = new ipl.EsferaDistrital();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'governador');
+        var esfera = new ipl.EsferaDistrital();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('governadoresDistritais', indice);
       }
       return this.singletons.get('governadoresDistritais');
@@ -195,10 +188,9 @@
      */
     vereadores: function() {
       if (!this.singletons.has('vereadores')) {
-        var cargo     = new ipl.Cargo(this.repo, 'vereador');
-        var esfera    = new ipl.EsferaMunicipal();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'vereador');
+        var esfera = new ipl.EsferaMunicipal();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('vereadores', indice);
       }
       return this.singletons.get('vereadores');
@@ -212,10 +204,9 @@
      */
     prefeitos: function() {
       if (!this.singletons.has('prefeitos')) {
-        var cargo     = new ipl.Cargo(this.repo, 'prefeito');
-        var esfera    = new ipl.EsferaMunicipal();
-        var resultado = new ipl.ResultadoPorPopulacao(this.repo);
-        var indice    = new ipl.IndicePorCargo(cargo, esfera, resultado);
+        var cargo  = new ipl.CargoPorPopulacao(this.repo, 'prefeito');
+        var esfera = new ipl.EsferaMunicipal();
+        var indice = new ipl.IndicePorCargo(cargo, esfera);
         this.singletons.set('prefeitos', indice);
       }
       return this.singletons.get('prefeitos');
@@ -235,7 +226,6 @@
         var municipal = this.municipal();
         var indice = new ipl.IndiceTodosOsNiveis(federal, estadual, municipal);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -254,7 +244,6 @@
         var municipal = this.legislativoMunicipal();
         var indice = new ipl.IndiceTodosOsNiveis(federal, estadual, municipal);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -273,7 +262,6 @@
         var municipal = this.executivoMunicipal();
         var indice = new ipl.IndiceTodosOsNiveis(federal, estadual, municipal);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -291,7 +279,6 @@
         var executivo   = this.executivoFederal();
         var indice = new ipl.IndiceEsfera(legislativo, executivo);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -309,7 +296,6 @@
         var maior = this.senadores();
         var indice = new ipl.IndiceBicameral(menor, maior);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -327,7 +313,6 @@
         var executivo   = this.executivoEstadual();
         var indice = new ipl.IndiceEsfera(legislativo, executivo);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -345,7 +330,6 @@
         var distrital = this.deputadosDistritais();
         var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -363,7 +347,6 @@
         var distrital = this.governadoresDistritais();
         var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -381,7 +364,6 @@
         var executivo   = this.executivoMunicipal();
         var indice = new ipl.IndiceEsfera(legislativo, executivo);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -399,7 +381,6 @@
         var distrital = this.deputadosDistritais();
         var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     },
@@ -417,7 +398,6 @@
         var distrital = this.governadoresDistritais();
         var indice = new ipl.IndiceSomaDf(regular, distrital);
         this.singletons.set(chave, indice);
-        return indice;
       }
       return this.singletons.get(chave);
     }
