@@ -1,12 +1,15 @@
+# Check out as LF (it already checks in as LF)
 * text=auto
 
 # λ find . -type f | grep -v '/.git/' | grep -v '/node_modules/' | grep -v ./tmp | awk -F"." '{print $NF}' | sed 's|^/||' | sort | uniq
 
+# Text files without extensions
 .jscs        eol=lf
 .jshintrc    eol=lf
 Gemfile      eol=lf
 Gemfile.lock eol=lf
 
+# Text files
 *.css  eol=lf
 *.html eol=lf
 *.js   eol=lf
@@ -15,12 +18,18 @@ Gemfile.lock eol=lf
 *.rb   eol=lf
 *.sh   eol=lf
 *.txt  eol=lf
-*.xml  eol=lf
 *.yml  eol=lf
 
+# Files for Windows
+browserconfig.xml eol=crlf
+
+# Files that I don't care to touch
+fonts/*   binary
+*.min.js  binary
+*.min.css binary
+
+# Minified files that don't have generic name
 public/eleitos.json                     binary
 public/highcharts/highcharts.js         binary
 public/highcharts/exporting.js          binary
 public/highcharts/no-data-to-display.js binary
-*.min.js                                binary
-*.min.css                               binary
