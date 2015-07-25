@@ -221,7 +221,7 @@
         laranja:      [ '#f7a35c', '#edb47e' ],
         azul:         [ '#7cb5ec', '#3366cc', '#90b1d8', '#6699ff' ],
         'azul claro': [ '#7eedeb', '#00ced1' ],
-        roxo:         [ '#be55d9', '#7e80ed', '#996699' ],
+        roxo:         [ '#be55d9', '#7e80ed', '#996699' ]
       });
       var series = new ipl.GeradorDeSeries(cfg, partidos, cores);
 

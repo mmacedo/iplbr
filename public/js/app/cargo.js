@@ -109,7 +109,7 @@
       return _.sum(mandatos, function(eleicao) {
         return this.repo.total(tipoDeEleicao, eleicao);
       }, this);
-    },
+    }
 
   };
 

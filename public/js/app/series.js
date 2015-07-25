@@ -303,7 +303,7 @@
       partidos = this.filtraAnos(partidos, this.ehGraficoDeArea);
       var series = this.formataParaGraficoDeTortaHighcharts(partidos);
       return series;
-    },
+    }
 
   };
 

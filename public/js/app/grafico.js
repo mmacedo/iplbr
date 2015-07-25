@@ -66,7 +66,7 @@
         minorTickInterval: area ? 10 : null,
         min: 0,
         ceiling: 100,
-        reversedStacks: true,
+        reversedStacks: true
       },
       xAxis: {
         type: 'datetime',
@@ -77,12 +77,12 @@
             color: 'black',
             value: Date.UTC(1985, 1, 1),
             width: 3,
-            label: { text: 'Nova República', style: { fontSize: 'larger' } },
+            label: { text: 'Nova República', style: { fontSize: 'larger' } }
           }, {
             color: 'black',
             value: Date.UTC(1988, 9, 5),
             width: 3,
-            label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } },
+            label: { text: 'Constituição de 1988', style: { fontSize: 'larger' } }
           }
         ]
       },
@@ -124,7 +124,7 @@
         },
         area: {
           stacking: area?'normal':null,
-          states: { hover: { enabled: false } },
+          states: { hover: { enabled: false } }
         }
       }
     }).highcharts();

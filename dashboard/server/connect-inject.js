@@ -1,3 +1,13 @@
+'use strict';
+
+function reverse(text) {
+  return text.split('').reverse().join('');
+}
+
+function callReversed(text, mapFunction) {
+  return reverse(mapFunction(reverse(text)));
+}
+
 module.exports = function connectInject(snippet, asEarlyAsPossible) {
   return function inject(req, res, next) {
     var filepath = require('url').parse(req.url).pathname;
@@ -12,7 +22,7 @@ module.exports = function connectInject(snippet, asEarlyAsPossible) {
     var write = res.write;
     var end = res.end;
 
-    res.write = function (string, encoding) {
+    res.write = function(string, encoding) {
       if (injected === true) {
         return write.call(res, string, encoding);
       }
@@ -25,7 +35,7 @@ module.exports = function connectInject(snippet, asEarlyAsPossible) {
       return true;
     };
 
-    res.writeHead = function () {
+    res.writeHead = function() {
       if (injected === true) {
         return writeHead.apply(res, arguments);
       }
@@ -38,7 +48,7 @@ module.exports = function connectInject(snippet, asEarlyAsPossible) {
       writeHead.apply(res, arguments);
     };
 
-    res.end = function (string, encoding) {
+    res.end = function(string, encoding) {
       if (injected === true) {
         return end.call(res, string, encoding);
       }
@@ -48,11 +58,12 @@ module.exports = function connectInject(snippet, asEarlyAsPossible) {
 
         // Include, if necessary, replacing the entire res.data with the included snippet.
         if (asEarlyAsPossible === true) {
-          function reverse(s) { return s.split('').reverse().join(''); }
           // Reverse string and regex to fake a negative look-behind
-          res.data = reverse(reverse(res.data).replace(/>daeh<(?![\s\S]*>daeh<)/i, function(w) {
-            return reverse(snippet) + w;
-          }));
+          res.data = callReversed(res.data, function(text) {
+            return text.replace(/>daeh<(?![\s\S]*>daeh<)/i, function(w) {
+              return reverse(snippet) + w;
+            });
+          });
         } else {
           res.data = res.data.replace(/<\/body>(?![\s\S]*<\/body>)/i, function(w) {
             return snippet + w;

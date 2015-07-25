@@ -6,74 +6,9 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
   require('load-grunt-tasks')(grunt);
 
-  var inject    = require('./dashboard/connect-inject');
-  var serveFile = require('./dashboard/connect-serve-file');
-  var serveText = require('./dashboard/connect-serve-text');
-
-  function abaDoDashboard(livereloadPort) {
-    var iframeUrl = 'iframeUrl.js';
-    function serveIframeUrl() {
-      return [ '/' + iframeUrl, serveFile('./dashboard/' + iframeUrl) ];
-    }
-    function injetaIframeUrl() {
-      return inject('<script src="/' + iframeUrl + '"></script>', true);
-    }
-    function contaUrlParaDashboard() {
-      var envia = 'window.parent.postMessage(window.location,"*");';
-      var script =
-        'if(window.parent){' +
-         envia +
-        'setInterval(function(){' + envia + '},100);' +
-        '}';
-      return inject('<script>' + script + '</script>', true);
-    }
-    var iframeResizer = 'iframeResizer.contentWindow.min.js';
-    function serveIframeResizer() {
-      return [ '/' + iframeResizer, serveFile('./dashboard/' + iframeResizer) ];
-    }
-    function injetaIframeResizer() {
-      return inject('<script src="/' + iframeResizer + '"></script>');
-    }
-    function injetaLiveReload() {
-      var livereloadUrl = 'http://localhost:' + livereloadPort;
-      var livereloadScriptTag =
-        '<script src="' + livereloadUrl + '/livereload.js?snipver=1">' +
-        '<\\/script>';
-      var escreveTagDoLivereload =
-        '<script>' +
-        'document.write(\'' + livereloadScriptTag + '\');' +
-        '</script>';
-      return inject(escreveTagDoLivereload);
-    }
-    return function(connect, options, middlewares) {
-      middlewares.unshift(serveIframeUrl());
-      middlewares.unshift(injetaIframeUrl());
-      middlewares.unshift(serveIframeResizer());
-      middlewares.unshift(injetaIframeResizer());
-      middlewares.unshift(injetaLiveReload());
-      return middlewares;
-    };
-  }
+  var dashboard = require('./dashboard/server/dashboard');
 
   function localhost(port) { return 'http://localhost:' + port; }
-
-  var _ = require('lodash');
-
-  function dashboard(directory, tabs) {
-    return function(connect, options, middlewares) {
-      _.forOwn(tabs, function(url, tab) {
-        middlewares.unshift([
-          '/' + _.kebabCase(tab),
-          serveFile(directory + '/index.html', 'text/html')
-        ]);
-      });
-      middlewares.unshift([
-        '/tabs.json',
-        serveText(JSON.stringify(tabs), 'application/json')
-      ]);
-      return middlewares;
-    };
-  }
 
   var PORTA_KARMA_RUNNER        = 8901;
   var PORTA_KARMA_CI            = 8902;
@@ -94,10 +29,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     htmllint: {
-      all: 'public/index.html'
+      all: 'public/index.html',
+      dashboard: 'dashboard/web/index.html'
     },
     bootlint: {
-      all: 'public/index.html'
+      all: 'public/index.html',
+      dashboard: 'dashboard/web/index.html'
     },
     jshint: {
       app: [ 'Gruntfile.js', 'public/js/app/*.js' ],
@@ -107,6 +44,16 @@ module.exports = function(grunt) {
           jshintrc: 'spec/.jshintrc'
         }
       },
+      dashboardNode: {
+        src: 'dashboard/server/*.js',
+        options: {
+          jshintrc: 'dashboard/server/.jshintrc'
+        }
+      },
+      dashboard: [
+        'dashboard/iframe/iframeUrl.js',
+        'dashboard/web/js/index.js'
+      ],
       options: {
         jshintrc: '.jshintrc'
       }
@@ -114,6 +61,11 @@ module.exports = function(grunt) {
     jscs: {
       app: [ 'Gruntfile.js', 'public/js/app/*.js' ],
       spec: 'spec/*.js',
+      dashboard: [
+        'dashboard/server/*.js',
+        'dashboard/iframe/iframeUrl.js',
+        'dashboard/web/js/index.js'
+      ],
       options: {
         config: '.jscsrc'
       }
@@ -238,48 +190,66 @@ module.exports = function(grunt) {
         options: {
           port: PORTA_CONNECT_SPECS,
           base: 'tmp/spec/PhantomJS 1.9.8 (Linux 0.0.0)',
-          middleware: abaDoDashboard(PORTA_LIVERELOAD_SPECS)
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboardTab(middlewares, PORTA_LIVERELOAD_SPECS);
+            return middlewares;
+          }
         }
       },
       coverage: {
         options: {
           port: PORTA_CONNECT_COVERAGE,
           base: 'tmp/coverage/report-html',
-          middleware: abaDoDashboard(PORTA_LIVERELOAD_COVERAGE)
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboardTab(middlewares, PORTA_LIVERELOAD_COVERAGE);
+            return middlewares;
+          }
         }
       },
       docs: {
         options: {
           port: PORTA_CONNECT_DOCS,
           base: 'tmp/doc',
-          middleware: abaDoDashboard(PORTA_LIVERELOAD_DOCS)
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboardTab(middlewares, PORTA_LIVERELOAD_DOCS);
+            return middlewares;
+          }
         }
       },
       public: {
         options: {
           port: PORTA_CONNECT_PUBLIC,
           base: 'public',
-          middleware: abaDoDashboard(PORTA_LIVERELOAD_PUBLIC)
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboardTab(middlewares, PORTA_LIVERELOAD_PUBLIC);
+            return middlewares;
+          }
         }
       },
       dist: {
         options: {
           port: PORTA_CONNECT_DIST,
           base: 'tmp/build',
-          middleware: abaDoDashboard(PORTA_LIVERELOAD_DIST)
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboardTab(middlewares, PORTA_LIVERELOAD_DIST);
+            return middlewares;
+          }
         }
       },
       dashboard: {
         options: {
           port: PORTA_CONNECT_DASHBOARD,
           base: 'dashboard/web',
-          middleware: dashboard('dashboard/web', {
-            Specs:    localhost(PORTA_CONNECT_SPECS),
-            Coverage: localhost(PORTA_CONNECT_COVERAGE),
-            Docs:     localhost(PORTA_CONNECT_DOCS),
-            'Dev.':   localhost(PORTA_CONNECT_PUBLIC),
-            'Prod.':  localhost(PORTA_CONNECT_DIST),
-          })
+          middleware: function(connect, options, middlewares) {
+            dashboard.injectDashboard(middlewares, {
+              Specs:    localhost(PORTA_CONNECT_SPECS),
+              Coverage: localhost(PORTA_CONNECT_COVERAGE),
+              Docs:     localhost(PORTA_CONNECT_DOCS),
+              'Dev.':   localhost(PORTA_CONNECT_PUBLIC),
+              'Prod.':  localhost(PORTA_CONNECT_DIST)
+            });
+            return middlewares;
+          }
         }
       }
     },
@@ -303,9 +273,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('check-html', [ 'htmllint', 'bootlint' ]);
   grunt.registerTask('check-js', [ 'jshint', 'jscs' ]);
+  grunt.registerTask('lint', [ 'check-html', 'check-js' ]);
+
   grunt.registerTask('test', 'karma:ci:start');
 
-  grunt.registerTask('default', [ 'check-html', 'check-js', 'test', 'jsdoc' ]);
+  grunt.registerTask('default', [ 'lint', 'test', 'jsdoc' ]);
 
   grunt.registerTask('minify-html', [ 'preprocess:html', 'htmlmin:app' ]);
   grunt.registerTask('minify-js', 'uglify:app');

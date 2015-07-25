@@ -75,7 +75,7 @@
       { de: { sigla: 'PTB',   numero: 14 }, para: 'PTB' },
       { de: { sigla: 'PAN',   numero: 26 }, para: 'PTB' },
       { de: { sigla: 'PSD',   numero: 41 }, para: 'PTB' },
-      { de: { sigla: 'PSD',   numero: 55 }, para: 'PSD' },
+      { de: { sigla: 'PSD',   numero: 55 }, para: 'PSD' }
     ],
     resto: 'Resto'
   };
@@ -85,7 +85,7 @@
     mapear: [
       { de: { sigla: 'PT',   numero: 13 }, para: 'PT' },
       { de: { sigla: 'PMDB', numero: 15 }, para: 'PMDB' },
-      { de: { sigla: 'PSDB', numero: 45 }, para: 'PSDB' },
+      { de: { sigla: 'PSDB', numero: 45 }, para: 'PSDB' }
     ],
     resto: 'Resto'
   };
@@ -317,7 +317,7 @@
       } else {
         return this.agruparPartidos(partidos);
       }
-    },
+    }
 
   };
 

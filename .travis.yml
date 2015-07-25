@@ -6,9 +6,9 @@ node_js:
 before_script:
   - npm install -g grunt-cli
 script:
-  - npm run check-html
-  - npm run check-js
+  - npm run lint
   - npm test
+  - npm run docs
   - npm run build
 after_script:
   - npm run coveralls

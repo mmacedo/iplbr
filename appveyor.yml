@@ -18,7 +18,7 @@ before_test:
 test_script:
   - node --version
   - npm --version
-  - npm run check-html
-  - npm run check-js
+  - npm run lint
   - npm test
+  - npm run docs
   - npm run build

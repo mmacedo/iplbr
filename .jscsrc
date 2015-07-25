@@ -10,6 +10,7 @@
       "beforeOpeningRoundBrace": true
   },
   "disallowSpacesInsideParentheses": true,
+  "disallowTrailingComma": true,
   "disallowTrailingWhitespace": true,
   "maximumLineLength": {
     "value": 95,

@@ -104,7 +104,7 @@
         return proximaCor;
       }
       return this.cache.get(chave);
-    },
+    }
 
   };
 

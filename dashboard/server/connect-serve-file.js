@@ -1,17 +1,20 @@
+'use strict';
+
 module.exports = function connectServeFile(file, mimeType) {
+  var fullPath = require('path').join(__dirname, file);
+  var fs = require('fs');
   return function serveFile(req, res) {
-    var fs = require('fs');
-    fs.stat(file, function(err, stats) {
+    fs.stat(fullPath, function(err, stats) {
       if (err) {
         res.write(JSON.stringify(err));
         res.end();
       } else {
         res.writeHead(200, {
-          'Content-Type' : mimeType || 'application/javascript',
+          'Content-Type':   mimeType || 'application/javascript',
           'Content-Length': stats.size
         });
 
-        fs.createReadStream(file).pipe(res);
+        fs.createReadStream(fullPath).pipe(res);
       }
     });
   };

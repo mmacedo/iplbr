@@ -30,7 +30,7 @@
         cor:   'vermelho' },
       { sigla: 'PSDB',   numero: 45, fundado: 1988,
         nome:  'Partido da Social Democracia Brasileira',
-        cor:   'azul' },
+        cor:   'azul' }
     ],
     medios: [
       { sigla: 'PTB',    numero: 14, fundado: 1979,
@@ -53,7 +53,7 @@
         cor:   'azul claro' },
       { sigla: 'PSD',    numero: 55, fundado: 2011,
         nome:  'Partido Social Democrático',
-        cor:   'verde' },
+        cor:   'verde' }
     ],
     pequenos: [
       { sigla: 'PSC',    numero: 20, fundado: 1985,
@@ -79,7 +79,7 @@
         cor:   'laranja' },
       { sigla: 'SD',     numero: 77, fundado: 2013,
         nome:  'Solidariedade',
-        cor:   'laranja' },
+        cor:   'laranja' }
     ],
     nanicos: [
       { sigla: 'PMN',    numero: 33, fundado: 1986,
@@ -108,7 +108,7 @@
         cor:   'azul' },
       { sigla: 'PEN',    numero: 51, fundado: 2011,
         nome:  'Partido Ecológico Nacional',
-        cor:   'verde' },
+        cor:   'verde' }
     ],
     fora_do_congresso: [
       { sigla: 'PTdoB',  numero: 70, fundado: 1989,
@@ -125,7 +125,7 @@
         cor:   'vermelho' },
       { sigla: 'PPL',    numero: 54, fundado: 2009,
         nome:  'Partido Pátria Livre',
-        cor:   'verde' },
+        cor:   'verde' }
     ],
     mudancas_de_nome: [
       { sigla: 'PJ',     numero: 36, fundado: 1985,
@@ -175,7 +175,7 @@
       { sigla: 'PFL',    numero: 25, fundado: 1985,
         extinto: 2007, renomeado: 'DEM',
         nome:  'Partido da Frente Liberal',
-        cor:   'azul claro' },
+        cor:   'azul claro' }
     ],
     incorporacoes: [
       { sigla: 'PASART', numero: 30, fundado: 1985,
@@ -209,7 +209,7 @@
       { sigla: 'PAN',    numero: 26, fundado: 1998,
         extinto: 2006, incorporado: 'PTB',
         nome:  'Partido dos Aposentados da Nação',
-        cor:   'laranja' },
+        cor:   'laranja' }
     ],
     fusoes: [
       { sigla: 'PDS',    numero: 11, fundado: 1980,
@@ -235,7 +235,7 @@
       { sigla: 'PRONA',  numero: 56, fundado: 1989,
         extinto: 2006, fusao: 'PR',
         nome:  'Partido de Reedificação da Ordem Nacional',
-        cor:   'azul' },
+        cor:   'azul' }
     ],
     extintos: [
       { sigla: 'PMB',    numero: 26, fundado: 1985,
@@ -253,8 +253,8 @@
       { sigla: 'PRS',    numero: 71, fundado: 1990,
         extinto: 1992,
         nome:  'Partido das Reformas Sociais',
-        cor:   'roxo' },
-    ],
+        cor:   'roxo' }
+    ]
   };
 
   /**
@@ -340,7 +340,7 @@
         return sucessor;
       }
       return this.cache.get(chave);
-    },
+    }
 
   };
 

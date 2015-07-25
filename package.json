@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "check-html": "grunt check-html --force",
-    "check-js": "grunt check-js --force",
+    "lint": "grunt lint --force",
     "test": "grunt test",
+    "docs": "grunt jsdoc",
     "build": "grunt build",
-    "coveralls": "grunt coveralls --force",
+    "coveralls": "grunt coveralls",
     "codecov.io": "cat tmp/coverage/report-lcov/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
   },
   "devDependencies": {
