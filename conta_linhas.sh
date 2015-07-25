@@ -32,26 +32,37 @@ eval cat $web $spec $carga $etc $doc | wc
 
 # JavaScript
 
+regex_vazio='^[^a-zA-Z0-9]*$'
+regex_comentario='^ *\([*]\|/[/*]\)'
+
 function linhas_de_codigo() {
-  ret=$(eval cat $* | grep -v '^\([ {}(),;[]\|\\]\)*$' | grep -v '^ *\([*]\|/[/*]\)' | wc -l)
+  ret=$(eval cat $* | grep -v "$regex_vazio" | grep -v "$regex_comentario" | wc -l)
+}
+
+function linhas_vazias() {
+  ret=$(eval cat $* | grep "$regex_vazio" | grep -v "$regex_comentario" | wc -l)
 }
 
 function linhas_de_documentacao() {
-  ret=$(eval cat $* | grep '^ *\([*]\|/[/*]\)' | wc -l)
+  ret=$(eval cat $* | grep "$regex_comentario" | wc -l)
 }
 
 linhas_de_codigo spec/*_spec.js
 spec=$ret
 linhas_de_codigo public/js/app/*.js
-total=$ret
+codigo=$ret
 linhas_de_documentacao public/js/app/*.js
 documentacao=$ret
+linhas_vazias public/js/app/*.js
+vazias=$ret
 
 echo
 echo   "----------"
 echo   "JavaScript"
 echo   "----------"
 echo
-printf "Código:       %7s\n" $total
-printf "Documentação: %7s\n" $documentacao
-printf "Testes:       %7s\n" $spec
+printf "Código:       %5s\n" $codigo
+printf "Documentação: %5s\n" $documentacao
+printf "Vazias:       %5s\n" $vazias
+echo
+printf "Testes:       %5s\n" $spec
