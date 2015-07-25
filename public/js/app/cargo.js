@@ -11,7 +11,7 @@
    * @alias ipl.Cargo
    * @constructor
    * @param {ipl.RepositorioEleitoral} repo   - {@link ipl.Cargo~repo}
-   * @param {IdCargo} idCargo                 - {@link ipl.Cargo~idCargo}
+   * @param {ipl.IdCargo} idCargo             - {@link ipl.Cargo~idCargo}
    * @param {boolean} [eleicoesParaRenovar=1] - {@link ipl.Cargo~eleicoesParaRenovar}
    */
   function Cargo(repo, idCargo, eleicoesParaRenovar) {
@@ -48,7 +48,7 @@
     },
 
     /**
-     * Retorna todos os partidos que elegeram cargo no ano.
+     * Retorna todos os partidos que tem representantes no ano.
      *
      * @param {ipl.Ue} ue
      * @param {ipl.Ano} ano
@@ -65,7 +65,7 @@
     },
 
     /**
-     * Retorna se teve eleição para o cargo no ano.
+     * Retorna se tem representante no ano.
      *
      * @param {ipl.Ue} ue
      * @param {ipl.Ano} ano
@@ -119,7 +119,7 @@
    * @alias ipl.CargoPorPopulacao
    * @constructor
    * @param {ipl.RepositorioEleitoral} repo   - {@link ipl.Cargo~repo}
-   * @param {IdCargo} idCargo                 - {@link ipl.Cargo~idCargo}
+   * @param {ipl.IdCargo} idCargo             - {@link ipl.Cargo~idCargo}
    * @param {boolean} [eleicoesParaRenovar=1] - {@link ipl.Cargo~eleicoesParaRenovar}
    * @extends {ipl.Cargo}
    */
@@ -168,12 +168,11 @@
    *
    * @alias ipl.IndicePorCargo
    * @constructor
-   * @param {ipl.Cargo} cargo     - {@link IndicePorCargo~cargo}
-   * @param {Esfera} esfera       - {@link IndicePorCargo~esfera}
-   * @param {Resultado} resultado - {@link IndicePorCargo~resultado}
+   * @param {ipl.Cargo} cargo   - {@link ipl.IndicePorCargo~cargo}
+   * @param {ipl.Esfera} esfera - {@link ipl.IndicePorCargo~esfera}
    * @implements {ipl.Indice}
    */
-  function IndicePorCargo(cargo, esfera, resultado) {
+  function IndicePorCargo(cargo, esfera) {
     /**
      * Cargo.
      * @member {ipl.Cargo} ipl.IndicePorCargo~cargo
@@ -192,12 +191,12 @@
      * @inheritdoc
      * @nosideeffects
      */
-    anos: function(regiao) {
+    eleicoes: function(regiao) {
       var ues = this.esfera.uesComDados(regiao);
-      var anos = _.map(ues, function(ue) {
+      var eleicoes = _.map(ues, function(ue) {
         return this.cargo.eleicoes(ue);
       }, this);
-      return _.flatten(anos);
+      return _.flatten(eleicoes);
     },
 
     /**

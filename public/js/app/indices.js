@@ -11,9 +11,9 @@
    * @interface
    */
   /**
-   * Retornar anos que tem dados para esse índice.
+   * Retornar anos de eleições para esse índice.
    *
-   * @method ipl.Indice#anos
+   * @method ipl.Indice#eleicoes
    * @param {ipl.Regiao} regiao
    * @returns {Array<ipl.Ano>}
    */

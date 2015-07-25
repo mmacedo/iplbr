@@ -35,10 +35,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    anos: function(regiao) {
+    eleicoes: function(regiao) {
       return _.flatten([
-        this.menor.anos(regiao),
-        this.maior.anos(regiao)
+        this.menor.eleicoes(regiao),
+        this.maior.eleicoes(regiao)
       ]);
     },
 
@@ -102,10 +102,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    anos: function(regiao) {
+    eleicoes: function(regiao) {
       return _.flatten([
-        this.regular.anos(regiao),
-        this.distrital.anos(regiao)
+        this.regular.eleicoes(regiao),
+        this.distrital.eleicoes(regiao)
       ]);
     },
 
@@ -169,10 +169,10 @@
      * @inheritdoc
      * @nosideeffects
      */
-    anos: function(regiao) {
+    eleicoes: function(regiao) {
       return _.flatten([
-        this.legislativo.anos(regiao),
-        this.executivo.anos(regiao)
+        this.legislativo.eleicoes(regiao),
+        this.executivo.eleicoes(regiao)
       ]);
     },
 
@@ -242,11 +242,11 @@
      * @inheritdoc
      * @nosideeffects
      */
-    anos: function(regiao) {
+    eleicoes: function(regiao) {
       return _.flatten([
-        this.federal.anos(regiao),
-        this.estadual.anos(regiao),
-        this.municipal.anos(regiao)
+        this.federal.eleicoes(regiao),
+        this.estadual.eleicoes(regiao),
+        this.municipal.eleicoes(regiao)
       ]);
     },
 

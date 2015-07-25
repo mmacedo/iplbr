@@ -262,7 +262,7 @@
      */
     seriesPorRegiao: function(indice, regiao) {
       // Fazendo isso aqui fora uma só vez por motivos de performance
-      var anos = _.uniq(indice.anos(regiao).sort(), true);
+      var anos = _.uniq(indice.eleicoes(regiao).sort(), true);
       // Filtra anos que tem dados o suficiente para calcular o índice
       anos = _.filter(anos, function(ano) {
         return indice.temDados(regiao, ano);

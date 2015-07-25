@@ -4,39 +4,108 @@ describe('ipl.Cargo', function() {
 
   describe('#eleicoes', function() {
 
-    it('deve retornar anos das eleições para o cargo');
+    it('deve retornar anos das eleições para o cargo', function() {
+      var json = { BR: { deputado_federal: { 2010: {}, 2014: {}, 2018: {} } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'deputado_federal');
+      expect(cargo.eleicoes('BR')).to.eql([ 2010, 2014, 2018 ]);
+    });
 
-    it('não deve retornar a primeira eleição se só renova metade cada eleição');
+    it('não deve retornar a primeira eleição se só renova metade cada eleição', function() {
+      var json = { BR: { senador: { 2010: {}, 2014: {}, 2018: {} } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'senador', 2);
+      expect(cargo.eleicoes('BR')).to.eql([ 2014, 2018 ]);
+    });
 
-    it('deve retornar apenas os anos das eleições da ue');
+    it('deve retornar apenas os anos das eleições da ue', function() {
+      var json = { SC: { vereador: { 2010: {} } }, SP: { vereador: { 2014: {} } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'vereador');
+      expect(cargo.eleicoes('SC')).to.eql([ 2010 ]);
+    });
 
   });
 
   describe('#partidos', function() {
 
-    it('deve retornar partidos que elegeram na eleição para o cargo');
+    it('deve retornar partidos que elegeram na eleição para o cargo', function() {
+      var json = { BR: { deputado_federal: { 2010: { por_sigla: { a1: 1, a2: 1 } } } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'deputado_federal');
+      expect(cargo.partidos('BR', 2010)).to.eql([ 'a1', 'a2' ]);
+    });
 
-    it('deve retornar apenas os partidos que elegeram no ano');
+    it('deve retornar apenas os partidos que elegeram na última eleição', function() {
+      var json = { BR: { deputado_federal: {
+        2010: { por_sigla: { a1: 1 } },
+        2014: { por_sigla: { a2: 1 } }
+      } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'deputado_federal');
+      expect(cargo.partidos('BR', 2010)).to.eql([ 'a1' ]);
+      expect(cargo.partidos('BR', 2011)).to.eql([ 'a1' ]);
+      expect(cargo.partidos('BR', 2012)).to.eql([ 'a1' ]);
+      expect(cargo.partidos('BR', 2013)).to.eql([ 'a1' ]);
+    });
 
-    it('deve retornar apenas os partidos das eleições na ue');
+    it('deve retornar apenas os partidos das eleições na ue', function() {
+      var json = {
+        SC: { vereador: { 2010: { por_sigla: { a1: 1 } } } },
+        SP: { vereador: { 2010: { por_sigla: { a2: 1 } } } }
+      };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'vereador');
+      expect(cargo.partidos('SC', 2010)).to.eql([ 'a1' ]);
+    });
 
-    it('deve retornar os partidos de todos os mandatos ativos');
+    it('deve retornar também partidos da eleição passada se só renova metade', function() {
+      var json = { BR: { senador: {
+        2010: { por_sigla: { a1: 1, a2: 1 } },
+        2014: { por_sigla: { a1: 1, a3: 1 } }
+      } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'senador', 2);
+      expect(cargo.partidos('BR', 2014)).to.eql([ 'a1', 'a2', 'a3' ]);
+      expect(cargo.partidos('BR', 2015)).to.eql([ 'a1', 'a2', 'a3' ]);
+      expect(cargo.partidos('BR', 2016)).to.eql([ 'a1', 'a2', 'a3' ]);
+      expect(cargo.partidos('BR', 2017)).to.eql([ 'a1', 'a2', 'a3' ]);
+    });
 
   });
 
   describe('#temDados', function() {
 
-    it('deve retornar true se tem eleição no ano');
+    it('deve retornar true se tem um mandato ativo', function() {
+      var json = { BR: { deputado_federal: { 2010: { mandato: 4 } } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'deputado_federal');
+      expect(cargo.temDados('BR', 2010)).to.be.true();
+      expect(cargo.temDados('BR', 2011)).to.be.true();
+      expect(cargo.temDados('BR', 2012)).to.be.true();
+      expect(cargo.temDados('BR', 2013)).to.be.true();
+    });
 
-    it('deve retornar true se tem um mandato ativo');
+    it('deve retornar false se não tem mandato ativo', function() {
+      var json = { BR: { deputado_federal: { 2010: { mandato: 4 } } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'deputado_federal');
+      expect(cargo.temDados('BR', 2009)).to.be.false();
+      expect(cargo.temDados('BR', 2014)).to.be.false();
+    });
 
-    it('deve retornar false se não tem mandato ativo');
+    it('deve retornar false se não tem mandato ativo na UE', function() {
+      var json = { SC: { vereador: { 2010: {} } }, SP: { vereador: { 2014: {} } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'vereador');
+      expect(cargo.temDados('SC', 2014)).to.be.true();
+    });
 
-    it('deve retornar false se não tem mandato ativo na UE');
+    it('deve retornar true se tem dois mandatos ativos e só renova metade', function() {
+      var json = { BR: { senador: { 2010: { mandato: 8 }, 2014: { mandato: 8 } } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'senador', 2);
+      expect(cargo.temDados('BR', 2014)).to.be.true();
+      expect(cargo.temDados('BR', 2015)).to.be.true();
+      expect(cargo.temDados('BR', 2016)).to.be.true();
+      expect(cargo.temDados('BR', 2017)).to.be.true();
+    });
 
-    it('deve retornar true se tem dois mandatos ativos e só renova metade');
-
-    it('deve retornar false se tem um mandato ativo e só renova metade');
+    it('deve retornar false se tem um mandato ativo e só renova metade', function() {
+      var json = { BR: { senador: { 2010: { mandato: 8 }, 2014: { mandato: 8 } } } };
+      var cargo = new ipl.Cargo(new ipl.RepositorioEleitoral(json), 'senador', 2);
+      expect(cargo.temDados('BR', 2013)).to.be.false();
+      expect(cargo.temDados('BR', 2018)).to.be.false();
+    });
 
   });
 
@@ -269,55 +338,84 @@ describe('ipl.CargoPorPopulacao', function() {
 
 describe('ipl.IndicePorCargo', function() {
 
-  describe('#anos', function() {
+  beforeEach(function() {
+    this.cargo = sinon.createStubInstance(ipl.Cargo);
+    this.esfera = {
+      uesComDados: function() { return [ 'X' ]; },
+      todasAsUes:  function() { return [ 'X' ]; }
+    };
+  });
 
-    it('deve retornar anos que tem dados para o cargo');
+  describe('#eleicoes', function() {
 
-    it('deve retornar vazio se não tem dados para o cargo');
+    it('deve retornar anos que tem eleição para o cargo', function() {
+      this.cargo.eleicoes.returns([ 2010 ]);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.eleicoes(null)).to.eql([ 2010 ]);
+    });
 
-    it('deve retornar vazio se não tem dados para a UE');
-
-    it('não deve retornar ano que só tem metade do _senado_');
+    it('deve retornar vazio se não tem eleição para o cargo', function() {
+      this.cargo.eleicoes.returns([]);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.eleicoes(null)).to.eql([]);
+    });
 
   });
 
   describe('#partidos', function() {
 
-    it('deve retornar partidos que tem eleitos do cargo');
+    it('deve retornar partidos que tem representantes do cargo', function() {
+      this.cargo.partidos.returns([ 'a1' ]);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.partidos(null, null)).to.eql([ 'a1' ]);
+    });
 
-    it('deve retornar vazio se não tem eleição no ano');
-
-    it('deve retornar vazio se não tem cargo na UE');
+    it('deve retornar vazio se não há representantes do cargo', function() {
+      this.cargo.partidos.returns([]);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.partidos(null, null)).to.eql([]);
+    });
 
   });
 
   describe('#temDados', function() {
 
-    it('deve retornar true se tem eleição no ano');
+    it('deve retornar true se tem dados no ano', function() {
+      this.cargo.temDados.returns(true);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.temDados(null, null)).to.be.true();
+    });
 
-    it('deve retornar true se tem um mandato ativo');
-
-    it('deve retornar false se não tem mandato ativo');
-
-    it('deve retornar false se não tem mandato ativo na UE');
-
-    it('deve retornar true se tem dois mandatos ativos e só renova metade');
-
-    it('deve retornar false se tem um mandato ativo e só renova metade');
+    it('deve retornar false se não tem dados no ano', function() {
+      this.cargo.temDados.returns(false);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.temDados(null, null)).to.be.false();
+    });
 
   });
 
   describe('#calcula', function() {
 
-    it('deve retornar a proporção da quantidade pelo total');
+    it('deve retornar a proporção da quantidade pelo total', function() {
+      this.cargo.quantidade.returns(5);
+      this.cargo.total.returns(10);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.calcula(null, null, null)).to.eql(0.5);
+    });
 
-    it('deve retornar a proporção multiplicada pelo peso');
+    it('deve retornar zero se não tem eleitos pelo partido', function() {
+      this.cargo.quantidade.returns(0);
+      this.cargo.total.returns(10);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.calcula(null, null, null)).to.eql(0);
+    });
 
-    it('deve retornar zero se não tem eleitos pelo partido');
-
-    it('deve retornar zero se não tem eleitos no ano');
-
-    it('deve retornar índices que somam 1 no ano');
+    it('deve retornar zero se não tem eleitos no ano', function() {
+      this.cargo.quantidade.returns(0);
+      this.cargo.total.returns(10);
+      var indice = new ipl.IndicePorCargo(this.cargo, this.esfera);
+      expect(indice.calcula(null, null, null)).to.eql(0);
+    });
 
   });
 
