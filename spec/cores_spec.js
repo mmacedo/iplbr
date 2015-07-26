@@ -11,6 +11,14 @@ describe('ipl.GerenciadorDeCores', function() {
     this.paletaComDoisTons = { vermelho: [ this.tom1, this.tom2 ] };
   });
 
+  describe('constructor', function() {
+
+    it('deve usar .CORES_PADRAO por padrão', function() {
+      var g = new ipl.GerenciadorDeCores(null);
+      expect(g.cores).to.equal(ipl.GerenciadorDeCores.CORES_PADRAO);
+    });
+  });
+
   describe('#proxima', function() {
 
     it('deve retornar uma cor da paleta', function() {

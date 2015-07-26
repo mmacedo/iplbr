@@ -161,7 +161,24 @@
      * @member {ipl.Indice} ipl.IndiceEsfera~executivo
      */
     this.executivo = executivo;
+    /**
+     * Peso do legislativo.
+     * @member {number} ipl.IndiceEsfera#pesoDoLegislativo
+     * @default
+     */
+    this.pesoDoLegislativo = IndiceEsfera.PESO_LEGISLATIVO;
+    /**
+     * Peso do executivo.
+     * @member {number} ipl.IndiceEsfera#pesoDoExecutivo
+     * @default
+     */
+    this.pesoDoExecutivo = IndiceEsfera.PESO_EXECUTIVO;
   }
+
+  /** @const {number} ipl.IndiceEsfera.PESO_LEGISLATIVO */
+  IndiceEsfera.PESO_LEGISLATIVO = 0.75;
+  /** @const {number} ipl.IndiceEsfera.PESO_EXECUTIVO */
+  IndiceEsfera.PESO_EXECUTIVO   = 1 - IndiceEsfera.PESO_LEGISLATIVO;
 
   IndiceEsfera.prototype = {
 
@@ -203,7 +220,7 @@
     calcula: function(regiao, ano, idPartido) {
       var legislativo = this.legislativo.calcula(regiao, ano, idPartido);
       var executivo   = this.executivo.calcula(regiao, ano, idPartido);
-      return legislativo * 0.75 + executivo * 0.25;
+      return legislativo * this.pesoDoLegislativo + executivo * this.pesoDoExecutivo;
     }
 
   };
@@ -285,9 +302,9 @@
 
   };
 
-  ipl.IndiceBicameral           = IndiceBicameral;
-  ipl.IndiceSomaDf = IndiceSomaDf;
-  ipl.IndiceEsfera              = IndiceEsfera;
-  ipl.IndiceTodosOsNiveis       = IndiceTodosOsNiveis;
+  ipl.IndiceBicameral     = IndiceBicameral;
+  ipl.IndiceSomaDf        = IndiceSomaDf;
+  ipl.IndiceEsfera        = IndiceEsfera;
+  ipl.IndiceTodosOsNiveis = IndiceTodosOsNiveis;
 
 })(ipl, _);

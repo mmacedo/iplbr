@@ -6,3 +6,6 @@ exclude_paths:
 - "public/js/*.min.js"
 - "public/js/ie10-viewport-bug-workaround.js"
 - "public/js/highcharts/*.js"
+- "dashboard/iframe/*.min.js"
+- "dashboard/web/js/ie10-viewport-bug-workaround.js"
+- "dashboard/web/js/*.min.js"
