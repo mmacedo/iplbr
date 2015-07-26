@@ -2,7 +2,7 @@
 
 describe('ipl.ConfiguracaoDePartidos', function() {
 
-  describe('#mesclarPartidosExtintos', function() {
+  describe('#mesclaPartidosExtintos', function() {
 
     function geraInput(partido) {
       return {
@@ -22,9 +22,9 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var partidos = [ a, b ];
       var repo = new ipl.RepositorioDePartidos(partidos);
       var cfg = new ipl.ConfiguracaoDePartidos(repo);
-      _.set(cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
+      _.assign(cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       var dados = _.map(partidos, geraInput);
-      var resultado = cfg.mesclarPartidosExtintos(dados);
+      var resultado = cfg.mesclaPartidosExtintos(dados);
       expect(resultado).to.eql(dados);
     });
 
@@ -42,7 +42,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       it('deve mesclar se estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = true;
         sinon.spy(this.repo, 'buscarSucessor');
-        var resultado = this.cfg.mesclarPartidosExtintos(this.dados);
+        var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(1);
         expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).not.to.be.ok();
         expect(this.repo.buscarSucessor).to.have.been.called();
@@ -51,7 +51,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       it('não deve mesclar se não estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = false;
         sinon.spy(this.repo, 'buscarSucessor');
-        var resultado = this.cfg.mesclarPartidosExtintos(this.dados);
+        var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(2);
         expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).to.be.ok();
         expect(this.repo.buscarSucessor).not.to.have.been.called();
@@ -72,19 +72,19 @@ describe('ipl.ConfiguracaoDePartidos', function() {
         this.partidos = [ a, b, c, d, e ];
         var repo = new ipl.RepositorioDePartidos(this.partidos);
         this.cfg = new ipl.ConfiguracaoDePartidos(repo);
-        _.set(this.cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
+        _.assign(this.cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       });
 
       it('deve manter a data de fundação do mais antigo', function() {
         var dados = _.map(this.partidos, geraInput);
-        var resultado = this.cfg.mesclarPartidosExtintos(dados);
+        var resultado = this.cfg.mesclaPartidosExtintos(dados);
         expect(resultado.length).to.equal(1);
         expect(resultado[0].fundado).to.equal(this.maisAntigo.fundado);
       });
 
       it('deve manter a data de dissolução do último extinto', function() {
         var dados = _.map(this.partidos, geraInput);
-        var resultado = this.cfg.mesclarPartidosExtintos(dados);
+        var resultado = this.cfg.mesclaPartidosExtintos(dados);
         expect(resultado.length).to.equal(1);
         expect(resultado[0].extinto).to.equal(this.ultimoExtinto.extinto);
       });
@@ -92,7 +92,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       it('não deve ser extinto se algum deles não foi extinto', function() {
         this.ultimoExtinto.extinto = null;
         var dados = _.map(this.partidos, geraInput);
-        var resultado = this.cfg.mesclarPartidosExtintos(dados);
+        var resultado = this.cfg.mesclaPartidosExtintos(dados);
         expect(resultado.length).to.equal(1);
         expect(resultado[0].extinto).to.be.null();
       });
@@ -107,6 +107,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var partidos = [ a, b, c, d ];
       var repo = new ipl.RepositorioDePartidos(partidos);
       var cfg = new ipl.ConfiguracaoDePartidos(repo);
+      _.assign(cfg, { mudancasDeNome: true, incorporacoes: true, fusoes: true });
       // jscs:disable maximumLineLength
       var indices = [
         [              { ano: 2002, indice: 1 }, { ano: 2006, indice: 1 } ],
@@ -119,28 +120,181 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       });
       var esperado = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 7 }, { ano: 2010, indice: 3 }, { ano: 2014, indice: 1 } ];
       // jscs:enable maximumLineLength
-      var resultado = cfg.mesclarPartidosExtintos(dados);
+      var resultado = cfg.mesclaPartidosExtintos(dados);
       expect(resultado.length).to.equal(1);
       expect(resultado[0].indices).to.eql(esperado);
     });
 
   });
 
-  describe('#desambiguarSiglas', function() {
+  describe('#desambiguaSiglas', function() {
 
-    xit('TODO');
+    it('deve retornar inalterado se não tem siglas repetidas', function() {
+      var a = { sigla: 'A', fundado: 1979 };
+      var b = { sigla: 'B', fundado: 1979 };
+      var partidos = new ipl.RepositorioDePartidos([ a, b ]);
+      var cfg = new ipl.ConfiguracaoDePartidos(partidos);
+      var resultado = cfg.desambiguaSiglas([ { info: a }, { info: b } ]);
+      var esperado = [ { sigla: 'A', info: a }, { sigla: 'B', info: b } ];
+      expect(resultado).to.eql(esperado);
+    });
+
+    it('deve desambiguar o mais antigo se tiver sigla repretida', function() {
+      var a1 = { sigla: 'A', fundado: 1979, naoEhUltimo: true };
+      var a2 = { sigla: 'A', fundado: 1980 };
+      var partidos = new ipl.RepositorioDePartidos([ a1, a2 ]);
+      var cfg = new ipl.ConfiguracaoDePartidos(partidos);
+      var resultado = cfg.desambiguaSiglas([ { info: a1 }, { info: a2 } ]);
+      var esperado = [ { sigla: 'A (1979)', info: a1 }, { sigla: 'A', info: a2 } ];
+      expect(resultado).to.eql(esperado);
+    });
 
   });
 
-  describe('#agruparPartidos', function() {
+  describe('#agrupaPartidos', function() {
 
-    xit('TODO');
+    it('deve retornar como resto se não estiver mapeado', function() {
+      var partido = { sigla: 'A', numero: 1 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ partido ]));
+      cfg.tabelaDeReescrita = { mapear: [], resto: 'Resto' };
+      var resultado = cfg.agrupaPartidos([ { info: partido } ]);
+      expect(resultado[0].sigla).to.equal('Resto');
+    });
+
+    it('deve retornar nova sigla se estiver mapeado', function() {
+      var partido = { sigla: 'A', numero: 1 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ partido ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: { sigla: 'A', numero: 1 }, para: 'B' } ] };
+      var resultado = cfg.agrupaPartidos([ { info: partido } ]);
+      expect(resultado[0].sigla).to.equal('B');
+    });
+
+    it('deve mesclar se mais de um não estiver mapeado', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [], resto: 'Resto' };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, indices: [] }, { info: b, indices: [] }
+      ]);
+      expect(resultado[0].sigla).to.equal('Resto');
+    });
+
+    it('deve mesclar se mais de um estiver mapeado para a mesma sigla', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, indices: [] }, { info: b, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].sigla).to.equal('C');
+    });
+
+    it('deve somar os índices', function() {
+      // jscs:disable maximumLineLength
+      var a = { sigla: 'A', numero: 1 };
+      var a_indices = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 1 } ];
+      var b = { sigla: 'B', numero: 2 };
+      var b_indices = [                           { ano: 2006, indice: 2 }, { ano: 2010, indice: 1 } ];
+      var c_indices = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 3 }, { ano: 2010, indice: 1 } ];
+      // jscs:enable maximumLineLength
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, indices: a_indices }, { info: b, indices: b_indices }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].indices).to.eql(c_indices);
+    });
+
+    it('deve retornar informações do primeiro mapeado', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: b, para: 'C' }, { de: a, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, indices: [] }, { info: b, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].info).to.equal(b);
+    });
+
+    it('deve manter a data de fundação do mais antigo', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, fundado: 1980, indices: [] }, { info: b, fundado: 1979, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].fundado).to.equal(1979);
+    });
+
+    it('deve retornar a data de dissolução do último extinto', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, extinto: 1980, indices: [] }, { info: b, extinto: 1979, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].extinto).to.equal(1980);
+    });
+
+    it('não deve ser extinto se algum deles não foi extinto', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
+      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      var resultado = cfg.agrupaPartidos([
+        { info: a, indices: [] }, { info: b, extinto: 1979, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].extinto).to.be.null();
+    });
 
   });
 
-  describe('#mapearPartidos', function() {
+  describe('#mapeiaPartidos', function() {
 
-    xit('TODO');
+    it('deve retornar as propriedades necessárias', function() {
+      var info = { sigla: 'A', numero: 1, fundado: 1979, extinto: 1980 };
+      var indices = [ { ano: 1979, indice: 1 } ];
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ info ]));
+      var resultado = cfg.mapeiaPartidos([ {  info: info, indices: indices } ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0]).to.have.all.keys([
+        'info', 'indices', 'mesclados',
+        'sigla', 'numero', 'fundado', 'extinto'
+      ]);
+    });
+
+    it('deve chamar desambiguaSiglas se não tem tabela de reescrita', function() {
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([]));
+      cfg.tabelaDeReescrita = null;
+      sinon.spy(cfg, 'desambiguaSiglas');
+      cfg.mapeiaPartidos();
+      expect(cfg.desambiguaSiglas).to.have.been.called();
+    });
+
+    it('deve chamar agrupaPartidos se tem tabela de reescrita', function() {
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([]));
+      cfg.tabelaDeReescrita = {};
+      sinon.spy(cfg, 'agrupaPartidos');
+      cfg.mapeiaPartidos();
+      expect(cfg.agrupaPartidos).to.have.been.called();
+    });
+
+    it('deve chamar mesclaPartidosExtintos se tem configuração', function() {
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([]));
+      sinon.spy(cfg, 'mesclaPartidosExtintos');
+      cfg.mapeiaPartidos();
+      expect(cfg.mesclaPartidosExtintos).to.have.been.called();
+    });
 
   });
 

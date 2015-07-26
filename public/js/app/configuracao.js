@@ -5,12 +5,12 @@
   'use strict';
 
   /**
-    * Tabela para criar séries personalizadas com os partidos.
-    *
-    * @typedef {Object} ipl.TabelaDeReescrita
-    * @property {Array<{sigla:string, numero:number}>} mapear
-    * @property {string} resto
-    */
+   * Tabela para criar séries personalizadas com os partidos.
+   *
+   * @typedef {Object} ipl.TabelaDeReescrita
+   * @property {Array<{sigla:string, numero:number}>} mapear
+   * @property {string} resto
+   */
 
   /**
    * @classdesc Configura os partidos que irão compor as séries.
@@ -36,13 +36,13 @@
      * @member {bolean} ipl.ConfiguracaoDePartidos#incorporacoes
      * @default
      */
-    this.incorporacoes = true;
+    this.incorporacoes = false;
     /**
      * Habilita a mesclagem de partidos que foram fundidos com seus sucessores.
      * @member {bolean} ipl.ConfiguracaoDePartidos#fusoes
      * @default
      */
-    this.fusoes = true;
+    this.fusoes = false;
     /**
      * Habilita a mesclagem de partidos que mudaram de nome com seus sucessores.
      * @member {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos#tabelaDeReescrita
@@ -126,23 +126,52 @@
     resto: 'Resto'
   };
 
-  function somarIndicesDosRepetidos(agrupadosPorSigla, callback, thisArg) {
-    return _.map(agrupadosPorSigla, function(partidos) {
-
-      if (partidos.length === 1) {
-        return partidos[0];
+  /**
+   * @typedef ipl.Indice
+   * @property {ipl.Ano} ano
+   * @property {number} indice
+   */
+  /**
+   * @typedef ipl.Serie
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.Indice>} indices
+   */
+  /**
+   * @typedef ipl.Serie2
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.Indice>} indices
+   * @property {string} sigla
+   * @property {number} numero
+   * @property {ipl.Ano} fundado
+   * @property {?ipl.Ano} extinto
+   * @property {Array<ipl.Partido>} mesclados
+   */
+  /**
+   * @callback ipl.somaIndicesCallback
+   * @param {Array<ipl.Serie2>} conjuntoDePartidos
+   * @param {Array<ipl.Indice>} somasDosIndices
+   * @inner
+   */
+  /**
+   * Agrupa cada conjunto de partido somando índices e aplicando função.
+   *
+   * @function ipl.somaIndices
+   * @param {Array<ipl.Serie2>} conjuntosDePartidos - Lista de partidos para mesclar.
+   * @param {ipl.somaIndicesCallback} callback - Retorna um único partido mesclado.
+   * @param {Object} [thisArg] - Objeto this no callback.
+   * @inner
+   */
+  function somaIndices(conjuntosDePartidos, callback, thisArg) {
+    return _.map(conjuntosDePartidos, function(conjunto) {
+      if (conjunto.length === 1) {
+        return conjunto[0];
       }
-
-      var todasAsLinhas = _.flatten(_.pluck(partidos, 'indices'));
-
-      var linhasPorAno = _.values(_.groupBy(todasAsLinhas, 'ano'));
-
-      var somasDosIndicesPorAno = _.map(linhasPorAno, function(linhas) {
-        return { ano: linhas[0].ano, indice: _.sum(linhas, 'indice') };
+      var todosOsIndices = _.flatten(_.pluck(conjunto, 'indices'));
+      var indicesPorAno = _.values(_.groupBy(todosOsIndices, 'ano'));
+      var somasDosIndicesPorAno = _.map(indicesPorAno, function(indices) {
+        return { ano: indices[0].ano, indice: _.sum(indices, 'indice') };
       });
-
-      return callback.call(thisArg, partidos, somasDosIndicesPorAno);
-
+      return callback.call(thisArg, conjunto, somasDosIndicesPorAno);
     });
   }
 
@@ -151,11 +180,11 @@
     /**
      * Mescla partidos extintos com seus sucessores de acordo com a configuração.
      *
-     * @method ipl.ConfiguracaoDePartidos~mesclarPartidosExtintos
-     * @param {Array<Object>} partidos
-     * @returns {Array<Object>}
+     * @method ipl.ConfiguracaoDePartidos~mesclaPartidosExtintos
+     * @param {Array<ipl.Serie2>} partidos
+     * @returns {Array<ipl.Serie2>}
      */
-    mesclarPartidosExtintos: function(partidos) {
+    mesclaPartidosExtintos: function(partidos) {
       var migrouUmPartido = false;
 
       // Procurar partidos sucessores
@@ -197,7 +226,7 @@
         }));
 
         // Soma índices
-        var mesclados = somarIndicesDosRepetidos(porPartido, function(lista, somas) {
+        var mesclados = somaIndices(porPartido, function(lista, somas) {
           return {
             sigla:     lista[0].sigla,
             numero:    lista[0].numero,
@@ -210,7 +239,7 @@
         });
 
         // Reaplica migrações nos novos dados
-        return this.mesclarPartidosExtintos(mesclados);
+        return this.mesclaPartidosExtintos(mesclados);
 
       }
 
@@ -219,12 +248,17 @@
 
     /**
      * Desambígua siglas repetidas.
-     *
-     * @method ipl.ConfiguracaoDePartidos~desambiguarSiglas
-     * @param {Array<Object>} partidos
-     * @returns {Array<Object>}
+     * @example
+     * // [ { sigla: 'PSD' }, { sigla: 'PSD (1987)' } ]
+     * desambiguaSiglas([
+     *   { sigla: 'PSD', numero: 55, fundado: 2011 },
+     *   { sigla: 'PSD', numero: 41, fundado: 1987 }
+     * ])
+     * @method ipl.ConfiguracaoDePartidos~desambiguaSiglas
+     * @param {Array<ipl.Serie2>} partidos
+     * @returns {Array<ipl.Serie2>}
      */
-    desambiguarSiglas: function(partidos) {
+    desambiguaSiglas: function(partidos) {
       return _.map(partidos, function(p) {
         // Adiciona data de fundação se tem partido mais recente com a mesma sigla
         var siglaDesambiguada = p.info.naoEhUltimo === true ?
@@ -237,13 +271,13 @@
     /**
      * Agrupa partidos de acordo com a tabela de reescrita configurada.
      *
-     * @method ipl.ConfiguracaoDePartidos~agruparPartidos
-     * @param {Array<Object>} partidos
-     * @returns {Array<Object>}
+     * @method ipl.ConfiguracaoDePartidos~agrupaPartidos
+     * @param {Array<ipl.Serie2>} partidos
+     * @returns {Array<ipl.Serie2>}
      */
-    agruparPartidos: function(partidos) {
+    agrupaPartidos: function(partidos) {
 
-      // Realiza migrações
+      // Encontra novas siglas
       var migrados = _.map(partidos, function(p) {
         var de = { de: _.pick(p, [ 'sigla', 'numero' ]) };
         var config = _.find(this.tabelaDeReescrita.mapear, de);
@@ -258,8 +292,7 @@
       var porSigla = _.values(_.groupBy(migrados, 'sigla'));
 
       // Soma índices
-      var mesclados = somarIndicesDosRepetidos(porSigla, function(partidos, somas) {
-
+      var mesclados = somaIndices(porSigla, function(partidos, somas) {
         var sigla = partidos[0].sigla;
 
         var todosOsPartidos = _.flatten(_.map(partidos, function(p) {
@@ -268,15 +301,9 @@
 
         var info = null, mesclados = todosOsPartidos;
         if (sigla !== this.tabelaDeReescrita.resto) {
-
           var primeiroMapeado = _.find(this.tabelaDeReescrita.mapear, 'para', sigla);
           info = _.find(todosOsPartidos, primeiroMapeado.de);
-
-          if (info != null) {
-            mesclados = _.without(mesclados, info);
-          } else {
-            info = this.partidos.buscar(primeiroMapeado.de);
-          }
+          mesclados = _.without(mesclados, info);
         }
 
         return {
@@ -287,7 +314,6 @@
           info:      info,
           mesclados: mesclados
         };
-
       }, this);
 
       return mesclados;
@@ -297,11 +323,11 @@
     /**
      * Aplica configuração reescrevendo siglas e agrupando partidos somando os índices.
      *
-     * @method ipl.ConfiguracaoDePartidos#mapearPartidos
-     * @param {Array<Object>} partidos
-     * @returns {Array<Object>}
+     * @method ipl.ConfiguracaoDePartidos#mapeiaPartidos
+     * @param {Array<ipl.Serie>} partidos
+     * @returns {Array<ipl.Serie2>}
      */
-    mapearPartidos: function(indicesPorSigla) {
+    mapeiaPartidos: function(indicesPorSigla) {
       var partidos = _.map(indicesPorSigla, function(p) {
         return _.assign({}, p, {
           sigla:     p.info.sigla,
@@ -311,11 +337,11 @@
           mesclados: []
         });
       });
-      partidos = this.mesclarPartidosExtintos(partidos);
+      partidos = this.mesclaPartidosExtintos(partidos);
       if (this.tabelaDeReescrita == null) {
-        return this.desambiguarSiglas(partidos);
+        return this.desambiguaSiglas(partidos);
       } else {
-        return this.agruparPartidos(partidos);
+        return this.agrupaPartidos(partidos);
       }
     }
 

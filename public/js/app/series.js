@@ -276,7 +276,7 @@
         return indice.partidos(regiao, ano);
       })).sort(), true);
       var partidos = this.geraIndices(indice, regiao, anos, siglas);
-      partidos = this.configuracao.mapearPartidos(partidos);
+      partidos = this.configuracao.mapeiaPartidos(partidos);
       partidos = this.filtraAnos(partidos, this.ehGraficoDeArea);
       var series = this.formataParaGraficoDeLinhasOuAreaHighcharts(partidos);
       return series;
@@ -299,7 +299,7 @@
       }
       var siglas = indice.partidos(regiao, anoDaEleicao);
       var partidos = this.geraIndices(indice, regiao, [ anoDaEleicao ], siglas);
-      partidos = this.configuracao.mapearPartidos(partidos);
+      partidos = this.configuracao.mapeiaPartidos(partidos);
       partidos = this.filtraAnos(partidos, this.ehGraficoDeArea);
       var series = this.formataParaGraficoDeTortaHighcharts(partidos);
       return series;
