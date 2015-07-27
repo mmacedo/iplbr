@@ -24,7 +24,7 @@ describe('ipl.RepositorioDePartidos', function() {
 
   });
 
-  describe('#buscar', function() {
+  describe('#busca', function() {
 
     var a =  { sigla: 'A', numero: 1, fundado: 1979 };
     var b1 = { sigla: 'B', numero: 2, fundado: 1979 };
@@ -33,26 +33,26 @@ describe('ipl.RepositorioDePartidos', function() {
     it('dever retornar partido', function() {
       var repo = new ipl.RepositorioDePartidos([ a, b1, b2 ]);
       var filtro = { sigla: b2.sigla, numero: b2.numero };
-      var resultado = repo.buscar(filtro);
+      var resultado = repo.busca(filtro);
       expect(resultado).to.eql(b2);
     });
 
     it('dever jogar exceção se não encontrar partido', function() {
       var repo = new ipl.RepositorioDePartidos([ a, b1 ]);
       var filtro = { sigla: b2.sigla, numero: b2.numero };
-      function chamada() { repo.buscar(filtro); }
+      function chamada() { repo.busca(filtro); }
       expect(chamada).to.throw();
     });
 
   });
 
-  describe('#buscarSucessor', function() {
+  describe('#buscaSucessor', function() {
 
     it('deve retornar sucessor se foi incorporado', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       var repo = new ipl.RepositorioDePartidos([ a, b ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b);
     });
 
@@ -61,7 +61,7 @@ describe('ipl.RepositorioDePartidos', function() {
       var b_apos  = { sigla: 'B', numero: 21, fundado: 2014 };
       var b_antes = { sigla: 'B', numero: 22, fundado: 1979 };
       var repo = new ipl.RepositorioDePartidos([ a, b_apos, b_antes ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b_antes);
     });
 
@@ -69,7 +69,7 @@ describe('ipl.RepositorioDePartidos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, renomeado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       var repo = new ipl.RepositorioDePartidos([ a, b ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b);
     });
 
@@ -78,7 +78,7 @@ describe('ipl.RepositorioDePartidos', function() {
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       var repo = new ipl.RepositorioDePartidos([ a, b_antes, b_apos ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b_apos);
     });
 
@@ -86,7 +86,7 @@ describe('ipl.RepositorioDePartidos', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, fusao: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 2012 };
       var repo = new ipl.RepositorioDePartidos([ a, b ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b);
     });
 
@@ -95,7 +95,7 @@ describe('ipl.RepositorioDePartidos', function() {
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 2012 };
       var repo = new ipl.RepositorioDePartidos([ a, b_antes, b_apos ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b_apos);
     });
 
@@ -104,17 +104,17 @@ describe('ipl.RepositorioDePartidos', function() {
       var b_antes = { sigla: 'B', numero: 21, fundado: 1979, extinto: 2010 };
       var b_apos  = { sigla: 'B', numero: 22, fundado: 1979, extinto: 2014 };
       var repo = new ipl.RepositorioDePartidos([ a, b_antes, b_apos ]);
-      var resultado = repo.buscarSucessor(a);
+      var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b_apos);
     });
 
-    it('deve buscar do cache se chamar duas vezes', function() {
+    it('deve busca do cache se chamar duas vezes', function() {
       var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
       var b = { sigla: 'B', numero: 2, fundado: 1979 };
       var repo = new ipl.RepositorioDePartidos([ a, b ]);
       sinon.spy(repo.cache, 'get');
-      repo.buscarSucessor(a);
-      repo.buscarSucessor(a);
+      repo.buscaSucessor(a);
+      repo.buscaSucessor(a);
       expect(repo.cache.get).to.have.been.called();
       expect(repo.cache.get).to.have.callCount(1);
     });

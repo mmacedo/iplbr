@@ -93,7 +93,7 @@
       if (!this.cache.has(chave)) {
         // Se o partido foi renomeado, usa a mesma cor do sucessor
         if (partido.renomeado != null) {
-          var sucessor = this.partidos.buscarSucessor(partido);
+          var sucessor = this.partidos.buscaSucessor(partido);
           var corDoSucessor = this.cor(sucessor);
           this.cache.set(chave, corDoSucessor);
           return corDoSucessor;

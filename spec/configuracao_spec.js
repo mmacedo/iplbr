@@ -41,20 +41,20 @@ describe('ipl.ConfiguracaoDePartidos', function() {
 
       it('deve mesclar se estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = true;
-        sinon.spy(this.repo, 'buscarSucessor');
+        sinon.spy(this.repo, 'buscaSucessor');
         var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(1);
         expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).not.to.be.ok();
-        expect(this.repo.buscarSucessor).to.have.been.called();
+        expect(this.repo.buscaSucessor).to.have.been.called();
       });
 
       it('não deve mesclar se não estiver configurado para mesclar', function() {
         this.cfg.incorporacoes = false;
-        sinon.spy(this.repo, 'buscarSucessor');
+        sinon.spy(this.repo, 'buscaSucessor');
         var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(2);
         expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).to.be.ok();
-        expect(this.repo.buscarSucessor).not.to.have.been.called();
+        expect(this.repo.buscaSucessor).not.to.have.been.called();
       });
 
     });
@@ -216,6 +216,26 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       cfg.tabelaDeReescrita = { mapear: [ { de: b, para: 'C' }, { de: a, para: 'C' } ] };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, indices: [] }
+      ]);
+      expect(resultado).to.have.length(1);
+      expect(resultado[0].info).to.equal(b);
+    });
+
+    it('deve retornar informações do primeiro mapeado que tem dados', function() {
+      var a = { sigla: 'A', numero: 1 };
+      var b = { sigla: 'B', numero: 2 };
+      var c = { sigla: 'C', numero: 3 };
+      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b, c ]));
+      cfg.tabelaDeReescrita = { mapear: [
+        { de: a, para: 'D' },
+        { de: b, para: 'D' },
+        { de: c, para: 'D' }
+      ] };
+      var resultado = cfg.agrupaPartidos([
+        // a não elegeu representantes
+        // logo, não foi retornada em ipl.Indice#partidos
+        // logo, não foi passada nesse método
+        { info: b, indices: [] }, { info: c, indices: [] }
       ]);
       expect(resultado).to.have.length(1);
       expect(resultado[0].info).to.equal(b);

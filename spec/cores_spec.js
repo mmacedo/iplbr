@@ -11,7 +11,7 @@ describe('ipl.GerenciadorDeCores', function() {
     this.paletaComDoisTons = { vermelho: [ this.tom1, this.tom2 ] };
   });
 
-  describe('constructor', function() {
+  describe('(construtor)', function() {
 
     it('deve usar .CORES_PADRAO por padrão', function() {
       var g = new ipl.GerenciadorDeCores(null);

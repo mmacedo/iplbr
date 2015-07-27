@@ -13,6 +13,35 @@
    */
 
   /**
+   * Ponto da série.
+   *
+   * @typedef ipl.PontoDaSerie
+   * @property {ipl.Ano} ano
+   * @property {number} indice
+   */
+
+  /**
+   * Série (formato mínimo).
+   *
+   * @typedef ipl.Serie
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.PontoDaSerie>} indices
+   */
+
+  /**
+   * Série (formato com dados produzidos pela mesclagem).
+   *
+   * @typedef ipl.Serie2
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.PontoDaSerie>} indices
+   * @property {string} sigla
+   * @property {number} numero
+   * @property {ipl.Ano} fundado
+   * @property {?ipl.Ano} extinto
+   * @property {Array<ipl.Partido>} mesclados
+   */
+
+  /**
    * @classdesc Configura os partidos que irão compor as séries.
    *
    * @alias ipl.ConfiguracaoDePartidos
@@ -60,11 +89,11 @@
       { de: { sigla: 'PSB',   numero: 40 }, para: 'PSB' },
       { de: { sigla: 'PFL',   numero: 25 }, para: 'DEM' },
       { de: { sigla: 'DEM',   numero: 25 }, para: 'DEM' },
-      { de: { sigla: 'PST',   numero: 52 }, para: 'PP' },
-      { de: { sigla: 'PTR',   numero: 28 }, para: 'PP' },
-      { de: { sigla: 'PP',    numero: 39 }, para: 'PP' },
       { de: { sigla: 'PDS',   numero: 11 }, para: 'PP' },
       { de: { sigla: 'PDC',   numero: 17 }, para: 'PP' },
+      { de: { sigla: 'PTR',   numero: 28 }, para: 'PP' },
+      { de: { sigla: 'PST',   numero: 52 }, para: 'PP' },
+      { de: { sigla: 'PP',    numero: 39 }, para: 'PP' },
       { de: { sigla: 'PPR',   numero: 11 }, para: 'PP' },
       { de: { sigla: 'PPB',   numero: 11 }, para: 'PP' },
       { de: { sigla: 'PP',    numero: 11 }, para: 'PP' },
@@ -73,8 +102,8 @@
       { de: { sigla: 'PR',    numero: 22 }, para: 'PR' },
       { de: { sigla: 'PDT',   numero: 12 }, para: 'PDT' },
       { de: { sigla: 'PTB',   numero: 14 }, para: 'PTB' },
-      { de: { sigla: 'PAN',   numero: 26 }, para: 'PTB' },
       { de: { sigla: 'PSD',   numero: 41 }, para: 'PTB' },
+      { de: { sigla: 'PAN',   numero: 26 }, para: 'PTB' },
       { de: { sigla: 'PSD',   numero: 55 }, para: 'PSD' }
     ],
     resto: 'Resto'
@@ -127,29 +156,9 @@
   };
 
   /**
-   * @typedef ipl.Indice
-   * @property {ipl.Ano} ano
-   * @property {number} indice
-   */
-  /**
-   * @typedef ipl.Serie
-   * @property {ipl.Partido} info
-   * @property {Array<ipl.Indice>} indices
-   */
-  /**
-   * @typedef ipl.Serie2
-   * @property {ipl.Partido} info
-   * @property {Array<ipl.Indice>} indices
-   * @property {string} sigla
-   * @property {number} numero
-   * @property {ipl.Ano} fundado
-   * @property {?ipl.Ano} extinto
-   * @property {Array<ipl.Partido>} mesclados
-   */
-  /**
    * @callback ipl.somaIndicesCallback
    * @param {Array<ipl.Serie2>} conjuntoDePartidos
-   * @param {Array<ipl.Indice>} somasDosIndices
+   * @param {Array<ipl.PontoDaSerie>} somasDosIndices
    * @inner
    */
   /**
@@ -204,7 +213,7 @@
 
         migrouUmPartido = true;
 
-        var sucessor = this.partidos.buscarSucessor(partido.info);
+        var sucessor = this.partidos.buscaSucessor(partido.info);
 
         return {
           sigla:     sucessor.sigla,
@@ -295,14 +304,16 @@
       var mesclados = somaIndices(porSigla, function(partidos, somas) {
         var sigla = partidos[0].sigla;
 
-        var todosOsPartidos = _.flatten(_.map(partidos, function(p) {
+        var todosMesclados = _.flatten(_.map(partidos, function(p) {
           return [ p.info ].concat(p.mesclados);
         }));
 
-        var info = null, mesclados = todosOsPartidos;
+        var info = null, mesclados = todosMesclados;
         if (sigla !== this.tabelaDeReescrita.resto) {
-          var primeiroMapeado = _.find(this.tabelaDeReescrita.mapear, 'para', sigla);
-          info = _.find(todosOsPartidos, primeiroMapeado.de);
+          info = _(this.tabelaDeReescrita.mapear)
+            .filter('para', sigla)
+            .map(function(mapa) { return _.find(todosMesclados, mapa.de); })
+            .find();
           mesclados = _.without(mesclados, info);
         }
 

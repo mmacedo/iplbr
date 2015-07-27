@@ -299,7 +299,7 @@
      * @returns {ipl.Partido}
      * @nosideeffects
      */
-    buscar: function(filtro) {
+    busca: function(filtro) {
       var partido = _.find(this.partidos, filtro);
       if (partido == null) {
         throw 'Partido ' + JSON.stringify(filtro) + ' não encontrado!';
@@ -314,8 +314,8 @@
      * @returns {ipl.Partido} Partido sucessor.
      * @nosideeffects
      */
-    buscarSucessor: function(partido) {
-      var chave = 'buscarSucessor' + partido.sigla + partido.numero + partido.fundado;
+    buscaSucessor: function(partido) {
+      var chave = 'buscaSucessor' + partido.sigla + partido.numero + partido.fundado;
       if (!this.cache.has(chave)) {
         // Partidos com o nome correto e fundados após a extinção desse
         // Ex.: PTR -> [ PP (1993), PP (2003) ]
