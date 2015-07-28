@@ -61,9 +61,9 @@ linhas_vazias public/js/app/*.js
 vazias=$ret
 
 echo
-echo   "----------"
-echo   "JavaScript"
-echo   "----------"
+echo   "--------------------------"
+echo   "JavaScript - public/js/app"
+echo   "--------------------------"
 echo
 printf "Código:       %5s\n" $codigo
 printf "Documentação: %5s\n" $documentacao

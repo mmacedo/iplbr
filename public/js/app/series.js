@@ -47,7 +47,10 @@
   }
 
   /** @const {ipl.Tom} */
-  var COR_SERIE_RESTO = '#333';
+  GeradorDeSeries.COR_RESTO = '#333';
+
+  /** @const {string} */
+  GeradorDeSeries.LINHA_RESTO = 'dash';
 
   GeradorDeSeries.prototype = {
 
@@ -112,9 +115,7 @@
             });
           }
         }
-        var essencial = _.pick(p, [ 'sigla', 'info', 'mesclados' ]);
-        essencial.indices = indices;
-        return essencial;
+        return _.extend({}, p, { indices: indices });
       });
     },
 
@@ -161,10 +162,13 @@
         var serie = { name: p.sigla, data: indicesOrdenados, partidos: partidos };
         // Aparência da série
         if (tabela != null && p.sigla === tabela.resto) {
-          // Resto
-          serie.color = COR_SERIE_RESTO;
+          // Resto:
+          // Cor preta
+          serie.color = GeradorDeSeries.COR_RESTO;
           // Linha tracejada
-          if (this.ehGraficoDeArea === false) { serie.dashStyle = 'dash'; }
+          if (this.ehGraficoDeArea === false) {
+            serie.dashStyle = GeradorDeSeries.LINHA_RESTO;
+          }
           // Substitui null por 0 para mostrar resto em todos os anos
           serie.data = _.map(serie.data, function(p) { return { x: p.x, y: p.y || 0 }; });
         } else {
@@ -184,9 +188,9 @@
           }
           return total + ponto.y;
         }, 0, this);
-        // Mantém o resto por último (adiciona 9999 nos demais)
+        // Mantém o resto por último (adiciona 100000 nos demais)
         if (tabela != null) {
-          somaDosIndices += (tabela.resto === p.name) ? 0 : 9999;
+          somaDosIndices += (tabela.resto === p.name) ? 0 : 100000;
         }
         return somaDosIndices;
       }, this).reverse();
@@ -205,18 +209,19 @@
       this.inicializaCores();
       // Converte série para o formato esperado pelo Highcharts
       var series = _.map(seriesNaoFormatadas, function(p) {
-        var serie = { name: p.sigla, y: p.indices[0].indice * 100 };
+        var partidos = p.info != null ? [ p.info ].concat(p.mesclados) : p.mesclados;
+        var serie = { name: p.sigla, y: p.indices[0].indice * 100, partidos: partidos };
         // Cor da série
         var ehResto = tabela != null && p.sigla === tabela.resto;
-        serie.color = ehResto ? COR_SERIE_RESTO : this.cores.cor(p.info);
+        serie.color = ehResto ? GeradorDeSeries.COR_RESTO : this.cores.cor(p.info);
         return serie;
       }, this);
       // Ordena pelo índice (descendente)
       series = _.sortBy(series, function(p) {
         var indice = p.y;
-        // Mantém o resto por último (adiciona 9999 nos demais)
+        // Mantém o resto por último (adiciona 100000 nos demais)
         if (tabela != null) {
-          indice += (tabela.resto === p.name) ? 0 : 9999;
+          indice += (tabela.resto === p.name) ? 0 : 100000;
         }
         return indice;
       }).reverse();

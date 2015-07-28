@@ -232,9 +232,9 @@ describe('ipl.ConfiguracaoDePartidos', function() {
         { de: c, para: 'D' }
       ] };
       var resultado = cfg.agrupaPartidos([
-        // a não elegeu representantes
-        // logo, não foi retornada em ipl.Indice#partidos
-        // logo, não foi passada nesse método
+        // Não elegeu representantes
+        //  logo, não foi retornada em ipl.Indice#partidos
+        //  logo, não foi passada nesse método
         { info: b, indices: [] }, { info: c, indices: [] }
       ]);
       expect(resultado).to.have.length(1);

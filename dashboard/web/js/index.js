@@ -101,6 +101,7 @@ jQuery(function($) {
       }
       showTab(null);
       history.pushState({ tab: null }, 'Dashboard', '/');
+      return false;
     });
 
     $(document).on('click', '#navbar > .nav > .show-button > a', function(e) {
