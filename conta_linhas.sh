@@ -6,9 +6,10 @@ function imprime_contagem() {
   eval ls -dS $* 2>/dev/null | xargs wc
 }
 
-web='public/index.html public/js/app/*.js'
+web='public/index.html public/js/app/*.js public/css/{index,bandeiras}.css'
 spec='spec/*_spec.js'
 carga='carga/*.rb carga/eleitos/presidentes.txt carga/eleitos/governadores_bionicos.txt'
+img='img/**/*.fish'
 etc='Gemfile *.{js,json,sh,yml} .*{rc,.yml} spec/.*rc .git{ignore,attributes}'
 dashboard='dashboard/server/*.js dashboard/iframe/iframeUrl.js dashboard/web/index.html dashboard/web/js/index.js dashboard/web/css/led.css'
 doc='*.md carga/*.md'
@@ -23,7 +24,7 @@ echo doc:
 imprime_contagem $doc
 echo
 echo carga:
-imprime_contagem $carga
+imprime_contagem $carga $img
 echo
 echo etc:
 imprime_contagem $etc

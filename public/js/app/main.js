@@ -19,6 +19,14 @@
     }
   });
 
+  $.fn.selectpicker.defaults = {
+    noneSelectedText: 'Nada selecionado',
+    noneResultsText: 'Nada encontrado contendo {0}',
+    countSelectedText: 'Selecionado {0} de {1}',
+    maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
+    multipleSeparator: ', '
+  };
+
   function atualizaConfiguracao(cfg, series, apenas0e100) {
     cfg.mudancasDeNome    = $('#mudancas_de_nome').is(':checked:enabled');
     cfg.incorporacoes     = $('#incorporacoes').is(':checked:enabled');
@@ -187,7 +195,11 @@
     });
 
     // Precisa atualizar séries (destrói gráfico e recria)
-    $(document).on('change', '.cfg.cfg-grafico', function() {
+    $(document).on('change', '.cfg.cfg-grafico', function(e) {
+      if ($(e.currentTarget).is('.bootstrap-select')) {
+        return;
+      }
+
       adicionaHistoria();
 
       // Destrói todos os gráficos (update tá com bug quando muda para tipo area)

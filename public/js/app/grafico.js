@@ -21,7 +21,7 @@
   ]).sort();
 
   function filtroPorRegiao() {
-    var matches = $('#jurisdicao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
+    var matches = $('#regiao').val().match(/(uf)-([a-z]{2})|(regiao)-([a-z]{1,2})|(pais)/);
     if (matches[5] === 'pais') {
       return { ues: brasil, nome: 'brasil' };
     } else if (matches[3] === 'regiao') {

@@ -95,6 +95,16 @@ module.exports = function(grunt) {
         dest: 'tmp/min/index.html'
       }
     },
+    cssmin: {
+      app: {
+        files: {
+          'tmp/min/app.min.css': [
+            'public/css/index.css',
+            'public/css/bandeiras.css'
+          ]
+        }
+      }
+    },
     htmlmin: {
       app: {
         options: {
@@ -140,10 +150,11 @@ module.exports = function(grunt) {
     copy: {
       dist: {
         files: [
-          { 'tmp/build/index.html': 'tmp/min/index.html' },
-          { 'tmp/build/js/big.min.js': 'public/js/big.min.js' },
-          { 'tmp/build/js/app.min.js': 'tmp/min/app.min.js' },
-          { 'tmp/build/eleitos.json': 'public/eleitos.json' },
+          { 'tmp/build/index.html':     'tmp/min/index.html' },
+          { 'tmp/build/js/big.min.js':  'public/js/big.min.js' },
+          { 'tmp/build/js/app.min.js':  'tmp/min/app.min.js' },
+          { 'tmp/build/js/app.min.css': 'tmp/min/app.min.css' },
+          { 'tmp/build/eleitos.json':   'public/eleitos.json' },
           {
             dest: 'tmp/build/favicons/',
             src: 'public/favicons/*',
@@ -280,8 +291,10 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [ 'lint', 'test', 'jsdoc' ]);
 
   grunt.registerTask('minify-html', [ 'preprocess:html', 'htmlmin:app' ]);
+  grunt.registerTask('minify-css', 'cssmin:app');
   grunt.registerTask('minify-js', 'uglify:app');
-  grunt.registerTask('build', [ 'minify-html', 'minify-js', 'clean:dist', 'copy:dist' ]);
+  grunt.registerTask('build',
+    [ 'minify-html', 'minify-css', 'minify-js', 'clean:dist', 'copy:dist' ]);
 
   grunt.registerTask('runner', 'karma:runner:start');
   grunt.registerTask('serve:specs', [ 'connect:specs', 'watch:specs' ]);
