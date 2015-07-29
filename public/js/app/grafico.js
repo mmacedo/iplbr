@@ -170,7 +170,7 @@
   function criaGrafico(id, series, indice, apenas0e100) {
     var $el = $(id), chart = $el.highcharts();
     var regiao = filtroPorRegiao(), ano = $('#ano').val();
-    if (ano === 'TODOS') {
+    if (ano === 'todos') {
       if (chart == null) {
         chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
       }

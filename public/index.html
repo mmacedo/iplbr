@@ -75,203 +75,138 @@
 
     <h1>Índice de Poder Legislativo</h1>
 
-    <div class="panel-group" role="tablist" aria-multiselectable="true">
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_o_que_e">
-          <h2 class="panel-title">
-            <a data-toggle="collapse" href="#metodologia" aria-expanded="false" aria-controls="metodologia">O que é?</a>
-          </h2>
-        </div>
-        <div id="metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_o_que_e">
-          <div class="panel-body">
-            <h3>O que é</h3>
-            <p>Uma tentativa de mensurar o poder de cada partido, analisando os resultados das eleições e o poder relativo de aprovar legislação de cada representante eleito.</p>
-            <h3>Esferas</h3>
-            <p>No Brasil há três esferas:</p>
-            <ul>
-              <li>A esfera federal, também conhecida como União;</li>
-              <li>A esfera estadual, que compreende os estados e o Distrito Federal;</li>
-              <li>A esfera municipal, que compreende os municípios, com exceção de Brasília onde o Distrito Federal acumula as funções do seu único município.</li>
-            </ul>
-            <p>O índice dá um peso igual para cada esfera:</p>
-            <pre>IPL-Nacional = (IPL-Federal / 3) + (IPL-Estadual / 3) + (IPL-Municipal / 3)</pre>
-            <h3>Poderes</h3>
-            <p>No Brasil há três poderes oficiais:</p>
-            <ul>
-              <li>O judiciário deve ser imparcial e apartidário;</li>
-              <li>O legislativo é encarregado de aprovar legislação;</li>
-              <li>O executivo que não tem poder independente de aprovar legislação (governo por decreto é possível apenas em estado de exceção), mas pode influenciar a sua aprovação através do poder de veto.</li>
-            </ul>
-            <h4>Poder de veto</h4>
-            <p>O processo de aprovação de leis no Brasil usa as seguintes regras:</p>
-            <ul>
-              <li>Para aprovar legislação é necessário maioria simples, que é 50% + 1 dos presentes;</li>
-              <li>Para realizar votação é necessário quórum de 50% + 1 dos membros da casa;</li>
-              <li>Uma vez aprovada no legislativo, o executivo da respectiva esfera tem o poder de vetar essa legislação;</li>
-              <li>O legislativo tem a chance de sobrescrever o veto, para tanto é necessário aprovar o projeto com maioria absoluta, que é 50% + 1 dos membros da casa.</li>
-            </ul>
-            <p>Se o projeto for sancionado pelo executivo, o mínimo de votos necessários para aprovar a legislação é de aproximadamente 25%:</p>
-            <pre>Quórum  = Número de membros da casa * 50% + 1
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="cabecalho_o_que_e">
+        <h2 class="panel-title">
+          <a data-toggle="collapse" href="#metodologia" aria-expanded="false" aria-controls="metodologia">O que é?</a>
+        </h2>
+      </div>
+      <div id="metodologia" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_o_que_e">
+        <div class="panel-body">
+          <h3>O que é</h3>
+          <p>Uma tentativa de mensurar o poder de cada partido, analisando os resultados das eleições e o poder relativo de aprovar legislação de cada representante eleito.</p>
+          <h3>Esferas</h3>
+          <p>No Brasil há três esferas:</p>
+          <ul>
+            <li>A esfera federal, também conhecida como União;</li>
+            <li>A esfera estadual, que compreende os estados e o Distrito Federal;</li>
+            <li>A esfera municipal, que compreende os municípios, com exceção de Brasília onde o Distrito Federal acumula as funções do seu único município.</li>
+          </ul>
+          <p>O índice dá um peso igual para cada esfera:</p>
+          <pre>IPL-Nacional = (IPL-Federal / 3) + (IPL-Estadual / 3) + (IPL-Municipal / 3)</pre>
+          <h3>Poderes</h3>
+          <p>No Brasil há três poderes oficiais:</p>
+          <ul>
+            <li>O judiciário deve ser imparcial e apartidário;</li>
+            <li>O legislativo é encarregado de aprovar legislação;</li>
+            <li>O executivo que não tem poder independente de aprovar legislação (governo por decreto é possível apenas em estado de exceção), mas pode influenciar a sua aprovação através do poder de veto.</li>
+          </ul>
+          <h4>Poder de veto</h4>
+          <p>O processo de aprovação de leis no Brasil usa as seguintes regras:</p>
+          <ul>
+            <li>Para aprovar legislação é necessário maioria simples, que é 50% + 1 dos presentes;</li>
+            <li>Para realizar votação é necessário quórum de 50% + 1 dos membros da casa;</li>
+            <li>Uma vez aprovada no legislativo, o executivo da respectiva esfera tem o poder de vetar essa legislação;</li>
+            <li>O legislativo tem a chance de sobrescrever o veto, para tanto é necessário aprovar o projeto com maioria absoluta, que é 50% + 1 dos membros da casa.</li>
+          </ul>
+          <p>Se o projeto for sancionado pelo executivo, o mínimo de votos necessários para aprovar a legislação é de aproximadamente 25%:</p>
+          <pre>Quórum  = Número de membros da casa * 50% + 1
 Maioria = Quórum * 50% + 1 = ~ 25%
 
 Ex.: Para uma casa de 513 membros
 Quórum  = 513 * 50% + 1 = 257
 Maioria = 257 * 50% + 1 = 129 = ~ 25,1462% do total e ~ 50,1946% dos presentes</pre>
-            <p>Se o projeto for vetado e apenas 50% + 1 estiver presente, serão necessários 50% + 1 dos votos da casa ou 100% dos votos presentes. Aumentando o número de presentes a porcentagem de votos necessários para aprovação cai chegando a 50% + 1 quando toda a casa estiver presente. Logo, o executivo tem o poder de elevar o requisito de votos através do veto de zero à 50% - 1 dos membros da casa, dependendo do número de presentes.</p>
-            <p>Levando isso em consideração o executivo é dado nesse índice o peso de 25% (média aproximada dos dois extremos):</p>
-            <pre>IPL-esfera = (IPL-esfera-legislativo * 0,75) + (IPL-esfera-executivo * 0,25)</pre>
-            <h4>IPL-Federal</h4>
-            <p>Na esfera federal, o poder executivo é realizado pelo presidente e o poder legislativo é realizado pelo Congresso Nacional, que é composto pela Câmara dos Deputados e o Senado Federal. Todas as votação de projetos de lei e vetos devem passar pelas duas casas.</p>
-            <pre>IPL-executivo   =   Presidentes        / Total de Presidentes
+          <p>Se o projeto for vetado e apenas 50% + 1 estiver presente, serão necessários 50% + 1 dos votos da casa ou 100% dos votos presentes. Aumentando o número de presentes a porcentagem de votos necessários para aprovação cai chegando a 50% + 1 quando toda a casa estiver presente. Logo, o executivo tem o poder de elevar o requisito de votos através do veto de zero à 50% - 1 dos membros da casa, dependendo do número de presentes.</p>
+          <p>Levando isso em consideração o executivo é dado nesse índice o peso de 25% (média aproximada dos dois extremos):</p>
+          <pre>IPL-esfera = (IPL-esfera-legislativo * 0,75) + (IPL-esfera-executivo * 0,25)</pre>
+          <h4>IPL-Federal</h4>
+          <p>Na esfera federal, o poder executivo é realizado pelo presidente e o poder legislativo é realizado pelo Congresso Nacional, que é composto pela Câmara dos Deputados e o Senado Federal. Todas as votação de projetos de lei e vetos devem passar pelas duas casas.</p>
+          <pre>IPL-executivo   =   Presidentes        / Total de Presidentes
 IPL-legislativo = ((Deputados Federais / Total de Deputados Federais) / 2) +
-                  ((Senadores          / Total de Senadores)          / 2)</pre>
-            <h4>IPL-Estadual</h4>
-            <p>Na esfera estadual, o poder executivo é realizado pelo governador e o poder legislativo é realizado pelas assembléias legislativas.</p>
-            <pre>IPL-executivo   = Governadores                      / Total de Governadores
+                ((Senadores          / Total de Senadores)          / 2)</pre>
+          <h4>IPL-Estadual</h4>
+          <p>Na esfera estadual, o poder executivo é realizado pelo governador e o poder legislativo é realizado pelas assembléias legislativas.</p>
+          <pre>IPL-executivo   = Governadores                      / Total de Governadores
 IPL-legislativo = Deputados Estaduais ou Distritais / Total de Deputados Estaduais ou Distritais</pre>
-            <h4>IPL-Municipal</h4>
-            <p>Na esfera municipal, o poder executivo é realizado pelo prefeito e o poder legislativo é realizado pelas câmaras de vereadores.</p>
-            <pre>IPL-executivo   = Prefeitos  / Total de Prefeitos
+          <h4>IPL-Municipal</h4>
+          <p>Na esfera municipal, o poder executivo é realizado pelo prefeito e o poder legislativo é realizado pelas câmaras de vereadores.</p>
+          <pre>IPL-executivo   = Prefeitos  / Total de Prefeitos
 IPL-legislativo = Vereadores / Total de Vereadores</pre>
-            <h3>Distrito Federal</h3>
-            <p>Para o Distrito Federal, o índice municipal é apenas uma cópia do índice estadual, já que apesar de se assemelhar a um estado, os poderes distritais acumulam as funções dadas aos estados e aos municípios.</p>
-            <h3>Unidades da Federação e Municípios</h3>
-            <p>O índice federal de um estado ou município é sempre o mesmo, assim como o índice estadual para municípios da mesma <abbr title="Unidade da Federação">UF</abbr>.</p>
-            <p>Para calcular o índice estadual ou municipal do país é necessário juntar os índices de todas as UFs e municípios, respectivamente. Há várias formas para realizar esse cálculo:</p>
-            <ul>
-              <li>O método nominal é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo todos os vereadores no país teriam o mesmo peso e todos os prefeitos no país teriam o mesmo peso. O problema desse método é que o número de vereadores de um município variam, enquanto o prefeito de São Paulo receberia o peso 1/5.566*0,25, a câmara de vereadores de São Paulo receberia 55/57.239*0,75 ou aproximadamente 1/1.040,71*0,75.</li>
-              <li>O método legislativo dá ao executivo o mesmo peso do legislativo, portanto o prefeito de São Paulo receberia o peso de 55/57.239*0,25 ao invés de 1/5.566*0,25. O problema é que dar peso igual para todos os membros do legislativo dá ao município o peso relativo ao tamanho da casa, que pode não ser uma medida justa. Em 2012, São Paulo com uma população de 11.376.685 tinha o peso de 1/1.040 e Blumenau com uma população de 316.139 tinha o peso de 1/3.815,93, 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
-              <li>No método população é dado o peso para determinada <abbr title="Unidade Eleitoral">UE</abbr> proporcional a última estimativa de população dada pelo IBGE antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685/193.917.083 ou 1/17,05 e Blumenau teria o peso 316.139/193.917.083 ou 1/613,39. Esse é o método utilizado para o cálculo desse índice.</li>
-            </ul>
-            <h3>Problemas</h3>
-            <p>A soma total dos índices dos partidos está entre 99% e 101%, quando deveria ser exatamente 100%. Há vários problemas que impedem de fechar o resultado correto:</p>
-            <ul>
-              <li>A soma das estimativas de população dadas pelo IBGE podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
-              <li>Alguns municípios recém emancipados tiverem eleição em ano em que o IBGE ainda não tinha dado estimativa, portanto estimativa do próximo ano foi utilizada.</li>
-              <li>Histórico das eleições municipais dado pelo TSE é bastante faltoso.</li>
-            </ul>
-            <h3>Fórmula</h3>
-            Para realizar o índice nacional:
-            <pre>Executivo Federal   = Presidentes / 1
+          <h3>Distrito Federal</h3>
+          <p>Para o Distrito Federal, o índice municipal é apenas uma cópia do índice estadual, já que apesar de se assemelhar a um estado, os poderes distritais acumulam as funções dadas aos estados e aos municípios.</p>
+          <h3>Unidades da Federação e Municípios</h3>
+          <p>O índice federal de um estado ou município é sempre o mesmo, assim como o índice estadual para municípios da mesma <abbr title="Unidade da Federação">UF</abbr>.</p>
+          <p>Para calcular o índice estadual ou municipal do país é necessário juntar os índices de todas as UFs e municípios, respectivamente. Há várias formas para realizar esse cálculo:</p>
+          <ul>
+            <li>O método nominal é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo todos os vereadores no país teriam o mesmo peso e todos os prefeitos no país teriam o mesmo peso. O problema desse método é que o número de vereadores de um município variam, enquanto o prefeito de São Paulo receberia o peso 1/5.566*0,25, a câmara de vereadores de São Paulo receberia 55/57.239*0,75 ou aproximadamente 1/1.040,71*0,75.</li>
+            <li>O método legislativo dá ao executivo o mesmo peso do legislativo, portanto o prefeito de São Paulo receberia o peso de 55/57.239*0,25 ao invés de 1/5.566*0,25. O problema é que dar peso igual para todos os membros do legislativo dá ao município o peso relativo ao tamanho da casa, que pode não ser uma medida justa. Em 2012, São Paulo com uma população de 11.376.685 tinha o peso de 1/1.040 e Blumenau com uma população de 316.139 tinha o peso de 1/3.815,93, 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
+            <li>No método população é dado o peso para determinada <abbr title="Unidade Eleitoral">UE</abbr> proporcional a última estimativa de população dada pelo IBGE antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685/193.917.083 ou 1/17,05 e Blumenau teria o peso 316.139/193.917.083 ou 1/613,39. Esse é o método utilizado para o cálculo desse índice.</li>
+          </ul>
+          <h3>Problemas</h3>
+          <p>A soma total dos índices dos partidos está entre 99% e 101%, quando deveria ser exatamente 100%. Há vários problemas que impedem de fechar o resultado correto:</p>
+          <ul>
+            <li>A soma das estimativas de população dadas pelo IBGE podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
+            <li>Alguns municípios recém emancipados tiverem eleição em ano em que o IBGE ainda não tinha dado estimativa, portanto estimativa do próximo ano foi utilizada.</li>
+            <li>Histórico das eleições municipais dado pelo TSE é bastante faltoso.</li>
+          </ul>
+          <h3>Fórmula</h3>
+          Para realizar o índice nacional:
+          <pre>Executivo Federal   = Presidentes / 1
 Legislativo Federal = (Deputados Federais / Total de Deputados Federais / 2) +
-                      (Senadores          / Total de Senadores          / 2)
+                    (Senadores          / Total de Senadores          / 2)
 Esfera Federal = Executivo Federal * 0,25 + Legislativo Federal * 0,75
 
 Executivo Estadual   = ⅀(UF)((Governadores na UF / 1) *
-                              (População da UF / População do Brasil))
+                            (População da UF / População do Brasil))
 Legislativo Estadual = ⅀(UF)((Deputados Estaduais e Distritais na UF / Total de Deputados Estaduais e Distritais na UF) *
-                              (População da UF / População do Brasil))
+                            (População da UF / População do Brasil))
 Esfera Estadual = Executivo Estadual * 0,25 + Legislativo Estadual * 0,75
 
 Executivo Municipal   = ⅀(Município)((Prefeitos no Município ou Governadores do DF / 1) *
-                                      (População do Município / População do Brasil))
+                                    (População do Município / População do Brasil))
 Legislativo Municipal = ⅀(Município)((Vereadores no Município ou Deputados Distritais no DF / Total de Vereadores no Município ou Total de Deputados Federais no DF) *
-                                      (População do Município / População do Brasil))
+                                    (População do Município / População do Brasil))
 Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
 Índice = Esfera Federal / 3 + Esfera Estadual / 3 + Esfera Municipal / 3</pre>
-          </div>
         </div>
       </div>
+    </div>
 
-
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_perguntas_frequentes">
-          <h2 class="panel-title">
-            <a data-toggle="collapse" href="#faq" aria-expanded="false" aria-controls="faq">Perguntas Frequentes</a>
-          </h2>
-        </div>
-        <div id="faq" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_perguntas_frequentes">
-          <div class="panel-body">
-            <h3>Por que os dados começam nas eleições de 1982?</h3>
-            <p>Essas são as primeiras eleições após a Lei da Anistia e o retorno do pluripartidarismo, embora os municípios, os territórios, o Distrito Federal, o recém-criado estado de Rondônia e o Senado Federal continuaram com representantes não-eleitos:</p>
-            <ol>
-              <li value="1985">Pela primeira vez 201 municípios puderam escolher seus prefeitos, incluindo as capitais.</li>
-              <li value="1986">O estado de Rondônia e o Distrito Federal elegeram pela primeira vez seus representantes. Em 1986 também foram substituídos os senadores biônicos de 1978.</li>
-              <li value="1988">Pela primeira vez todos os municípios puderam escolher seus representantes.</li>
-              <li value="1990">Os territórios federais de Amapá e Roraima foram elevados à estado pela Constituição de 1988 e escolheram pela primeira vez seus representantes. O Tocantins também teve sua primeira eleição, mas esse foi emancipado do estado de Goiás, que já escolhia seus representantes.</li>
-            </ol>
-            <h3>Por que o índice total é calculado só a partir das eleições 1996?</h3>
-            <p>É a primeira eleição em que há dados das eleições para todos os representantes cumprindo mandato (primeira municipal com dados).</p>
-            <h3>Por que não há dados para as eleições municipais de 1985, 1988 e 1992?</h3>
-            <p>As eleições de 1985 foram realizadas em apenas algumas cidades. Não há os dados necessários sobre as eleições de 1988 e 1992 no site do TSE.</p>
-            <h3>Por que partido X está com cor X ao invés da cor Y?</h3>
-            <p>Há várias dificuldades de utilizar as cores do partido: os partidos tem múltiplas cores, as cores não ficam bem no gráfico, as cores repetem muito entre partidos, etc. Portanto, as cores são escolhidas de forma arbritária para facilitar a compreensão do gráfico. Na maioria dos casos, as cores são tons de uma das cores do partido.</p>
-            <h3>Por que o índice federal para localidade X não é proporcional aos representantes de X?</h3>
-            <p>Os representantes do nível federal tem poderes legislativos que afetam todo o território nacional, não apenas a unidade da federação pela qual eles foram eleitos.</p>
-            <h3>Por que o número de representantes do partido X está errado na data X?</h3>
-            <p>O índice não rastreia mudanças de partido, renúncias, impeachmants, cassações, eleições complementares, etc. O número de representantes de cada partido é baseado exclusivamente no número de eleitos das eleições nacionais.</p>
-            <h3>Por que há representantes para o Distrito Federal na esfera municipal?</h3>
-            <p>Os representantes do Distrito Federal acumulam os poderes legislativos estaduais e municipais. O índice municipal para o Distrito Federal é igual ao índice estadual.</p>
-            <h3>Por que alguns indíces parecem não somar 100%?</h3>
-            <p>Há mais de um problema que pode causar isso:</p>
-            <ul>
-              <li>A lista de cidades do IBGE em suas estimativas de população difere da lista de cidades onde houve eleição. Essa lista pode diferir ainda mais quando não há estimativas de população para um ano que teve eleição e é necessário estimativas de um ano diferente.</li>
-              <li>Não está listado nenhum representante eleito para o cargo e a localidade.</li>
-            </ul>
-          </div>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="cabecalho_perguntas_frequentes">
+        <h2 class="panel-title">
+          <a data-toggle="collapse" href="#faq" aria-expanded="false" aria-controls="faq">Perguntas Frequentes</a>
+        </h2>
       </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="cabecalho_cfg_partidos">
-          <h2 class="panel-title">
-            <a class="collapsed" data-toggle="collapse" href="#panel_cfg_partidos" aria-expanded="false" aria-controls="panel_cfg_partidos">Partidos</a>
-            <small id="cfg_partidos" class="pull-right">
-              <span class="cfg_label">Pré-definição: Top 10</span>
-              <a class="cfg_remover" href="">(remover)</a>
-            </small>
-          </h2>
-        </div>
-        <div id="panel_cfg_partidos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_cfg_partidos">
-          <div class="panel-body">
-
-            <div class="form-group">
-              <label for="configuracao_predefinida">Seleção</label>
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_todos" class="cfg cfg-indice" autocomplete="off"> Todos
-                </label>
-                <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top10" class="cfg cfg-indice" autocomplete="off" checked> Top 10
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_top3" class="cfg cfg-indice" autocomplete="off"> Top 3
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="configuracao_predefinida" id="configuracao_antigos" class="cfg cfg-indice" autocomplete="off"> Antigos
-                </label>
-              </div>
-            </div>
-
-            <div id="panel_retroativo" class="panel panel-default collapse">
-              <div class="panel-heading">Aplicar retroativo</div>
-              <div class="panel-body">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="mudancas_de_nome" class="cfg cfg-indice" checked>
-                    Mudanças de nome
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="incorporacoes" class="cfg cfg-indice">
-                    Incorporações
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="fusoes" class="cfg cfg-indice">
-                    Fusões
-                  </label>
-                </div>
-              </div>
-            </div>
-
-          </div>
+      <div id="faq" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho_perguntas_frequentes">
+        <div class="panel-body">
+          <h3>Por que os dados começam nas eleições de 1982?</h3>
+          <p>Essas são as primeiras eleições após a Lei da Anistia e o retorno do pluripartidarismo, embora os municípios, os territórios, o Distrito Federal, o recém-criado estado de Rondônia e o Senado Federal continuaram com representantes não-eleitos:</p>
+          <ol>
+            <li value="1985">Pela primeira vez 201 municípios puderam escolher seus prefeitos, incluindo as capitais.</li>
+            <li value="1986">O estado de Rondônia e o Distrito Federal elegeram pela primeira vez seus representantes. Em 1986 também foram substituídos os senadores biônicos de 1978.</li>
+            <li value="1988">Pela primeira vez todos os municípios puderam escolher seus representantes.</li>
+            <li value="1990">Os territórios federais de Amapá e Roraima foram elevados à estado pela Constituição de 1988 e escolheram pela primeira vez seus representantes. O Tocantins também teve sua primeira eleição, mas esse foi emancipado do estado de Goiás, que já escolhia seus representantes.</li>
+          </ol>
+          <h3>Por que o índice total é calculado só a partir das eleições 1996?</h3>
+          <p>É a primeira eleição em que há dados das eleições para todos os representantes cumprindo mandato (primeira municipal com dados).</p>
+          <h3>Por que não há dados para as eleições municipais de 1985, 1988 e 1992?</h3>
+          <p>As eleições de 1985 foram realizadas em apenas algumas cidades. Não há os dados necessários sobre as eleições de 1988 e 1992 no site do TSE.</p>
+          <h3>Por que partido X está com cor X ao invés da cor Y?</h3>
+          <p>Há várias dificuldades de utilizar as cores do partido: os partidos tem múltiplas cores, as cores não ficam bem no gráfico, as cores repetem muito entre partidos, etc. Portanto, as cores são escolhidas de forma arbritária para facilitar a compreensão do gráfico. Na maioria dos casos, as cores são tons de uma das cores do partido.</p>
+          <h3>Por que o índice federal para localidade X não é proporcional aos representantes de X?</h3>
+          <p>Os representantes do nível federal tem poderes legislativos que afetam todo o território nacional, não apenas a unidade da federação pela qual eles foram eleitos.</p>
+          <h3>Por que o número de representantes do partido X está errado na data X?</h3>
+          <p>O índice não rastreia mudanças de partido, renúncias, impeachmants, cassações, eleições complementares, etc. O número de representantes de cada partido é baseado exclusivamente no número de eleitos das eleições nacionais.</p>
+          <h3>Por que há representantes para o Distrito Federal na esfera municipal?</h3>
+          <p>Os representantes do Distrito Federal acumulam os poderes legislativos estaduais e municipais. O índice municipal para o Distrito Federal é igual ao índice estadual.</p>
+          <h3>Por que alguns indíces parecem não somar 100%?</h3>
+          <p>Há mais de um problema que pode causar isso:</p>
+          <ul>
+            <li>A lista de cidades do IBGE em suas estimativas de população difere da lista de cidades onde houve eleição. Essa lista pode diferir ainda mais quando não há estimativas de população para um ano que teve eleição e é necessário estimativas de um ano diferente.</li>
+            <li>Não está listado nenhum representante eleito para o cargo e a localidade.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -330,31 +265,87 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
             <label class="control-label col-sm-2" for="ano">Ano</label>
             <div class="col-sm-10">
               <select id="ano" class="selectpicker form-control cfg cfg-grafico" data-live-search="true">
-                <option value="TODOS">Todos</option>
-                <option value="2015">2015</option>
-                <option value="2013">2013</option>
-                <option value="2011">2011</option>
-                <option value="2009">2009</option>
-                <option value="2007">2007</option>
-                <option value="2005">2005</option>
-                <option value="2003">2003</option>
-                <option value="2001">2001</option>
-                <option value="1999">1999</option>
-                <option value="1997">1997</option>
-                <option value="1995">1995</option>
-                <option value="1991">1991</option>
-                <option value="1990">1990</option>
-                <option value="1989">1989</option>
-                <option value="1987">1987</option>
-                <option value="1983">1983</option>
+                <optgroup>
+                  <option value="todos">Todos</option>
+                </optgroup>
+                <optgroup>
+                  <option value="2015">2015</option>
+                  <option value="2013">2013</option>
+                  <option value="2011">2011</option>
+                </optgroup>
+                <optgroup label="Era Lula">
+                  <option value="2009">2009</option>
+                  <option value="2007">2007</option>
+                  <option value="2005">2005</option>
+                  <option value="2003">2003</option>
+                </optgroup>
+                <optgroup label="Era FHC">
+                  <option value="2001">2001</option>
+                  <option value="1999">1999</option>
+                  <option value="1997">1997</option>
+                  <option value="1995">1995</option>
+                </optgroup>
+                <optgroup label="Era Collor">
+                  <option value="1991">1991</option>
+                  <option value="1990">1990</option>
+                </optgroup>
+                <optgroup label="Redemocratização">
+                  <option value="1989">1989</option>
+                  <option value="1987">1987</option>
+                  <option value="1983">1983</option>
+                </optgroup>
               </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="partido">Partidos</label>
+            <div class="col-sm-10">
+              <select id="partidos" class="selectpicker form-control cfg cfg-grafico" data-live-search="true">
+                <optgroup>
+                  <option value="todos">Todos</option>
+                </optgroup>
+                <optgroup>
+                  <option value="top3">Top 3</option>
+                  <option value="top10" selected>Top 10</option>
+                  <option value="antigos">Antigos</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+              <div id="painel_mesclagem" class="panel panel-default collapse">
+                <div class="panel-heading">Mesclar retroativo</div>
+                <div class="panel-body">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="mudancas_de_nome" class="cfg cfg-indice" checked>
+                      Renomeados
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="incorporacoes" class="cfg cfg-indice">
+                      Incorporados
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="fusoes" class="cfg cfg-indice">
+                      Fundidos
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </form>
       </div>
     </div>
 
-    <div id="panel_tipo_de_grafico" class="panel panel-default">
+    <div id="painel_tipo_de_grafico" class="panel panel-default collapse in">
       <div class="panel-body">
         <div class="container-fluid">
           <div class="row">

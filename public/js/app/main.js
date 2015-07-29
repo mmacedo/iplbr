@@ -28,78 +28,57 @@
   };
 
   function atualizaConfiguracao(cfg, series, apenas0e100) {
-    cfg.mudancasDeNome    = $('#mudancas_de_nome').is(':checked:enabled');
-    cfg.incorporacoes     = $('#incorporacoes').is(':checked:enabled');
-    cfg.fusoes            = $('#fusoes').is(':checked:enabled');
+    var partidos = $('#partidos').val();
 
-    if ($('#configuracao_todos').is(':checked')) {
+    if (partidos === 'todos') {
+      cfg.mudancasDeNome    = false;
+      cfg.incorporacoes     = false;
+      cfg.fusoes            = false;
       cfg.tabelaDeReescrita = null;
-    } else if ($('#configuracao_top10').is(':checked')) {
-      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.top10;
-    } else if ($('#configuracao_top3').is(':checked')) {
-      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.top3;
-    } else if ($('#configuracao_antigos').is(':checked')) {
-      cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos.partidosAntigos;
+    } else {
+      cfg.mudancasDeNome = $('#mudancas_de_nome').is(':checked:enabled');
+      cfg.incorporacoes  = $('#incorporacoes').is(':checked:enabled');
+      cfg.fusoes         = $('#fusoes').is(':checked:enabled');
+
+      if (partidos.match(/^(top3|top10|antigos)$/)) {
+        cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos[partidos];
+      }
     }
 
-    series.ehGraficoEmPassos = apenas0e100 === true || $('#passos').is(':checked:enabled');
-    series.ehGraficoDeArea   = apenas0e100 === true || $('#tipo_area').is(':checked');
+    if (apenas0e100 === true) {
+      series.ehGraficoEmPassos = true;
+      series.ehGraficoDeArea   = true;
+    } else {
+      series.ehGraficoEmPassos = $('#passos').is(':checked:enabled');
+      series.ehGraficoDeArea   = $('#tipo_area').is(':checked');
+    }
   }
 
   function atualizaTela(estado) {
-    var titulo;
     fazerMudancas(function() {
-      if (estado.selecao === 'todos') {
-        titulo = 'Todos';
-        $('#configuracao_todos').click();
+      $('#partidos').selectpicker('val', estado.partidos).change();
+      if (estado.partidos === 'todos') {
         $('#mudancas_de_nome').prop('checked', true);
         $('#incorporacoes, #fusoes').prop('checked', false);
-      } else if (estado.selecao === 'top3') {
-        titulo = 'Top 3';
-        $('#configuracao_top3').click();
-      } else if (estado.selecao === 'top10') {
-        titulo = 'Top 10';
-        $('#configuracao_top10').click();
-      } else if (estado.selecao === 'antigos') {
-        titulo = 'Antigos';
-        $('#configuracao_antigos').click();
       }
     });
-    return titulo;
+    return $('#partidos [val="' + estado.partidos + '"]').text();
   }
 
   function adicionaHistoria() {
-
     if (window.fazendoMudancas === true) {
       return;
     }
-
-    var titulo, selecao;
-    if ($('#configuracao_todos').is(':checked')) {
-      titulo = 'Todos';
-      selecao = 'todos';
-    } else if ($('#configuracao_top10').is(':checked')) {
-      titulo = 'Top 10';
-      selecao = 'top10';
-    } else if ($('#configuracao_top3').is(':checked')) {
-      titulo = 'Top 3';
-      selecao = 'top3';
-    } else if ($('#configuracao_antigos').is(':checked')) {
-      titulo = 'Antigos';
-      selecao = 'antigos';
-    }
-
-    history.pushState({ selecao: selecao }, titulo, '#' + selecao);
+    var partido = $('#partidos').val();
+    var titulo  = $('#partidos :selected').text();
+    history.pushState({ partidos: partido }, titulo, '#' + partido);
   }
 
   function atualizaGuia() {
-
     if (window.fazendoMudancas === true) {
       return;
     }
-
     $('#tablist_graficos > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
-
   }
 
   function fazerMudancas(mudancas) {
@@ -111,69 +90,26 @@
 
   $(function() {
 
-    // Restaura configurações de partidos
-    $(document).on('click', '#cfg_partidos > a.cfg_remover', function() {
-      fazerMudancas(function() {
-        $('#configuracao_todos').trigger('click');
-        $('#mudancas_de_nome').prop('checked', true);
-        $('#incorporacoes, #fusoes').prop('checked', false);
-      });
-      adicionaHistoria();
-      return false;
-    });
-
-    // Esconde link para remover configurãção quando expandir o painel
-    $(document).on('show.bs.collapse', '#panel_cfg_partidos', function() {
-      $('#cfg_partidos').hide();
-    }).on('hidden.bs.collapse', '#panel_cfg_partidos', function() {
-      if ($('#cfg_partidos > .cfg_label').text() !== '') {
-        $('#cfg_partidos').show();
-      } else {
-        $('#cfg_partidos').hide();
-      }
-    });
-
-    // Esconde painel de personalização quando selecionar pré-definição
-    $(document).on('change', '[name="configuracao_predefinida"]', function() {
-      if ($('#configuracao_todos').is(':checked')) {
-        $('#panel_retroativo').addClass('in');
-      } else {
-        $('#panel_retroativo').removeClass('in');
-      }
-    });
-
     // Esconde tipo de gráfico quando o ano for selecionado (apenas torta)
     $(document).on('change', '#ano', function() {
-      if ($('#ano').val() === 'TODOS') {
-        $('#panel_tipo_de_grafico').addClass('in');
+      if ($('#ano').val() === 'todos') {
+        $('#painel_tipo_de_grafico').addClass('in');
       } else {
-        $('#panel_tipo_de_grafico').removeClass('in');
+        $('#painel_tipo_de_grafico').removeClass('in');
       }
     });
 
-    // Mostra botão para remover pré-definição
-    $(document).on('change', '.cfg.cfg-indice', function() {
-      if ($('#configuracao_todos').is(':checked')) {
-        $('#cfg_partidos .cfg_label').text('');
-        $('#cfg_partidos').hide();
+    // Esconde painel de mesclagem quando o partido for selecionado
+    $(document).on('change', '#partidos', function() {
+      console.log('a');
+      if ($('#partidos').val() === 'todos') {
+        $('#painel_mesclagem').addClass('in');
       } else {
-        if ($('#configuracao_top10').is(':checked')) {
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 10');
-        } else if ($('#configuracao_top3').is(':checked')) {
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Top 3');
-        } else if ($('#configuracao_antigos').is(':checked')) {
-          $('#cfg_partidos .cfg_label').text('Pré-definição: Antigos');
-        }
-
-        if ($('#panel_cfg_partidos').hasClass('in')) {
-          $('#cfg_partidos').hide();
-        } else {
-          $('#cfg_partidos').show();
-        }
+        $('#painel_mesclagem').removeClass('in');
       }
     });
 
-    // Esconde 'Em passos' quando o tipo de gráfico não permitir isso
+    // Desabilita 'Em passos' quando o tipo de gráfico não permitir isso
     $(document).on('change', '[name="tipo_de_grafico"]', function() {
       if ($('#tipo_curvas').is(':checked')) {
         $('#passos')
@@ -214,8 +150,8 @@
 
     // Redesenha gráficos que estavam em elementos escondidos
     $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function() {
-      var panel_id = $(this).attr('aria-controls');
-      $('#' + panel_id + ' [data-highcharts-chart]').each(function() {
+      var idPainel = $(this).attr('aria-controls');
+      $('#' + idPainel + ' [data-highcharts-chart]').each(function() {
         $(this).highcharts().redraw();
         $(this).highcharts().reflow();
       });
@@ -309,7 +245,7 @@
       if (history.state == null) {
         // Primeiro carregamento da tela
         var hash   = window.location.hash ? window.location.hash.replace(/^#/, '') : 'top10';
-        var estado = { selecao: hash };
+        var estado = { partidos: hash };
         var titulo = atualizaTela(estado);
         history.replaceState(estado, titulo, '#' + hash);
       } else {

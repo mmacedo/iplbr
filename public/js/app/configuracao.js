@@ -119,8 +119,8 @@
     resto: 'Resto'
   };
 
-  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.partidosAntigos */
-  ConfiguracaoDePartidos.partidosAntigos = {
+  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.antigos */
+  ConfiguracaoDePartidos.antigos = {
     mapear: [
       { de: { sigla: 'PDS',    numero: 11 }, para: 'ARENA (1965)' },
       { de: { sigla: 'PPR',    numero: 11 }, para: 'ARENA (1965)' },
