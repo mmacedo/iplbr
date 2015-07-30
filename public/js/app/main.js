@@ -20,28 +20,34 @@
   });
 
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Nada selecionado',
-    noneResultsText: 'Nada encontrado contendo {0}',
+    noneSelectedText:  'Nada selecionado',
+    noneResultsText:   'Nada encontrado contendo {0}',
     countSelectedText: 'Selecionado {0} de {1}',
-    maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
+    maxOptionsText:    [
+      'Limite excedido (máx. {n} {var})',
+      'Limite do grupo excedido (máx. {n} {var})',
+      [ 'itens', 'item' ]
+    ],
     multipleSeparator: ', '
   };
 
   function atualizaConfiguracao(cfg, series, apenas0e100) {
-    var partidos = $('#partidos').val();
+    var partidos = ipl.filtroDePartidos();
 
-    if (partidos === 'todos') {
-      cfg.mudancasDeNome    = false;
-      cfg.incorporacoes     = false;
-      cfg.fusoes            = false;
-      cfg.tabelaDeReescrita = null;
-    } else {
+    if (partidos === null) {
       cfg.mudancasDeNome = $('#mudancas_de_nome').is(':checked:enabled');
       cfg.incorporacoes  = $('#incorporacoes').is(':checked:enabled');
       cfg.fusoes         = $('#fusoes').is(':checked:enabled');
+      cfg.tabelaDeReescrita = null;
+    } else {
+      cfg.mudancasDeNome    = partidos.partido != null;
+      cfg.incorporacoes     = false;
+      cfg.fusoes            = false;
 
-      if (partidos.match(/^(top3|top10|antigos)$/)) {
-        cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos[partidos];
+      if (partidos.selecao != null) {
+        cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos[partidos.selecao];
+      } else {
+        cfg.tabelaDeReescrita = null;
       }
     }
 
@@ -55,30 +61,42 @@
   }
 
   function atualizaTela(estado) {
+    var valor = estado.partidos === 'todos' ?
+      'todos' :
+      estado.partidos.match(/^(top10|top3|antigos)$/) ?
+      'selecao-' + estado.partidos :
+      estado.partidos.match(/^[a-z]{2,}[0-9]{2}$/) ?
+      'partido-' + estado.partidos :
+      null;
     fazerMudancas(function() {
-      $('#partidos').selectpicker('val', estado.partidos).change();
-      if (estado.partidos === 'todos') {
+      $('#partidos').selectpicker('val', valor).change();
+      if (valor === 'todos') {
         $('#mudancas_de_nome').prop('checked', true);
         $('#incorporacoes, #fusoes').prop('checked', false);
       }
     });
-    return $('#partidos [val="' + estado.partidos + '"]').text();
+    return $('#partidos [value="' + valor + '"]').text();
   }
 
   function adicionaHistoria() {
     if (window.fazendoMudancas === true) {
       return;
     }
-    var partido = $('#partidos').val();
+    var filtro = ipl.filtroDePartidos();
+    var partidos = filtro ? filtro.selecao || filtro.partido : 'todos';
     var titulo  = $('#partidos :selected').text();
-    history.pushState({ partidos: partido }, titulo, '#' + partido);
+    history.pushState({ partidos: partidos }, titulo, '#' + partidos);
   }
 
   function atualizaGuia() {
     if (window.fazendoMudancas === true) {
       return;
     }
-    $('#tablist_graficos > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+    if ($('#painel_grafico_partido').hasClass('in')) {
+      $('#painel_grafico_partido').trigger('shown.ipl');
+    } else {
+      $('#tablist_graficos > li.active > a[data-toggle="tab"]').trigger('shown.bs.tab');
+    }
   }
 
   function fazerMudancas(mudancas) {
@@ -101,11 +119,20 @@
 
     // Esconde painel de mesclagem quando o partido for selecionado
     $(document).on('change', '#partidos', function() {
-      console.log('a');
       if ($('#partidos').val() === 'todos') {
         $('#painel_mesclagem').addClass('in');
       } else {
         $('#painel_mesclagem').removeClass('in');
+      }
+    });
+
+    $(document).on('change', '#ano, #partidos', function() {
+      if ($('#ano').val() !== 'todos' && _.startsWith($('#partidos').val(), 'partido-')) {
+        $('#painel_graficos').removeClass('in');
+        $('#painel_grafico_partido').addClass('in');
+      } else {
+        $('#painel_graficos').addClass('in');
+        $('#painel_grafico_partido').removeClass('in');
       }
     });
 
@@ -124,27 +151,18 @@
       }
     });
 
-    // Precisa atualizar séries (remove série e readiciona)
-    $(document).on('change', '.cfg.cfg-indice', function() {
-      adicionaHistoria();
-      atualizaGuia();
-    });
-
-    // Precisa atualizar séries (destrói gráfico e recria)
-    $(document).on('change', '.cfg.cfg-grafico', function(e) {
+    $(document).on('change', '.campo-configuracao', function(e) {
+      // Não recria quando digita no Live Search do Bootstrap Select
       if ($(e.currentTarget).is('.bootstrap-select')) {
         return;
       }
-
       adicionaHistoria();
-
       // Destrói todos os gráficos (update tá com bug quando muda para tipo area)
       _.each(Highcharts.charts.slice(), function(chart) {
         if (chart != null) {
           chart.destroy();
         }
       });
-
       atualizaGuia();
     });
 
@@ -240,6 +258,14 @@
       }).on('shown.bs.tab', '[aria-controls="tab_municipal"]', function() {
         $('#tablist_municipal > li.active > a[data-toggle="tab"]')
           .trigger('shown.bs.tab');
+      });
+
+      $(document).on('shown.ipl', '#painel_grafico_partido', function() {
+        atualizaConfiguracao(cfg, series);
+        var indiceFederal   = indices.federal();
+        var indiceEstadual  = indices.estadual();
+        var indiceMunicipal = indices.municipal();
+        ipl.criaGraficoRadar('#grafico_partido', series, indiceFederal, indiceEstadual, indiceMunicipal);
       });
 
       if (history.state == null) {

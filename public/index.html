@@ -48,8 +48,9 @@
   <!-- Bootstrap Select -->
   <link href="css/bootstrap-select.min.css" rel="stylesheet">
 
-  <link href="css/index.css" rel="stylesheet">
-  <link href="css/bandeiras.css" rel="stylesheet">
+  <link href="css/app/index.css" rel="stylesheet">
+  <link href="css/sprites/bandeiras.css" rel="stylesheet">
+  <link href="css/sprites/partidos.css" rel="stylesheet">
 
   <!-- @endif -->
 
@@ -217,7 +218,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="form-group">
             <label class="control-label col-sm-2" for="regiao">Região</label>
             <div class="col-sm-10">
-              <select id="regiao" class="selectpicker form-control cfg cfg-grafico" data-live-search="true">
+              <select id="regiao" class="selectpicker form-control campo-configuracao" data-live-search="true">
                 <optgroup>
                   <option value="pais" data-content="<span class='bandeira bandeira-br'></span> Brasil">Brasil</option>
                 </optgroup>
@@ -264,7 +265,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="form-group">
             <label class="control-label col-sm-2" for="ano">Ano</label>
             <div class="col-sm-10">
-              <select id="ano" class="selectpicker form-control cfg cfg-grafico" data-live-search="true">
+              <select id="ano" class="selectpicker form-control campo-configuracao" data-live-search="true">
                 <optgroup>
                   <option value="todos">Todos</option>
                 </optgroup>
@@ -301,39 +302,80 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
           <div class="form-group">
             <label class="control-label col-sm-2" for="partido">Partidos</label>
             <div class="col-sm-10">
-              <select id="partidos" class="selectpicker form-control cfg cfg-grafico" data-live-search="true">
+              <select id="partidos" class="selectpicker form-control campo-configuracao" data-live-search="true">
                 <optgroup>
                   <option value="todos">Todos</option>
                 </optgroup>
-                <optgroup>
-                  <option value="top3">Top 3</option>
-                  <option value="top10" selected>Top 10</option>
-                  <option value="antigos">Antigos</option>
+                <optgroup label="Seleções">
+                  <option value="selecao-top3">Top 3</option>
+                  <option value="selecao-top10" selected>Top 10</option>
+                  <option value="selecao-antigos">Antigos</option>
+                </optgroup>
+                <optgroup label="Grandes">
+                  <option value="partido-pmdb15" data-content="<span class='partido partido-pmdb15'></span> PMDB - Partido do Movimento Democrático Brasileiro">PMDB</option>
+                  <option value="partido-pt13" data-content="<span class='partido partido-pt13'></span> PT - Partido dos Trabalhadores">PT</option>
+                  <option value="partido-psdb45" data-content="<span class='partido partido-psdb45'></span> PSDB - Partido da Social Democracia Brasileira">PSDB</option>
+                </optgroup>
+                <optgroup label="Médios">
+                  <option value="partido-ptb14" data-content="<span class='partido partido-ptb14'></span> PTB - Partido Trabalhista Brasileiro">PTB</option>
+                  <option value="partido-pdt12" data-content="<span class='partido partido-pdt12'></span> PDT - Partido Democrático Trabalhista">PDT</option>
+                  <option value="partido-psb40" data-content="<span class='partido partido-psb40'></span> PSB - Partido Socialista Brasileiro">PSB</option>
+                  <option value="partido-pp11" data-content="<span class='partido partido-pp11'></span> PP - Partido Progressista">PP</option>
+                  <option value="partido-pr22" data-content="<span class='partido partido-pr22'></span> PR - Partido Republicano">PR</option>
+                  <option value="partido-dem25" data-content="<span class='partido partido-dem25'></span> DEM - Democratas">DEM</option>
+                  <option value="partido-psd55" data-content="<span class='partido partido-psd55'></span> PSD - Partido Social Democrático">PSD</option>
+                </optgroup>
+                <optgroup label="Pequenos">
+                  <option value="partido-psc20" data-content="<span class='partido partido-psc20'></span> PSC - Partido Social Cristão">PSC</option>
+                  <option value="partido-pcdob65" data-content="<span class='partido partido-pcdob65'></span> PCdoB - Partido Comunista do Brasil">PCdoB</option>
+                  <option value="partido-pv43" data-content="<span class='partido partido-pv43'></span> PV - Partido Verde">PV</option>
+                  <option value="partido-pps23" data-content="<span class='partido partido-pps23'></span> PPS - Partido Popular Socialista">PPS</option>
+                  <option value="partido-prb10" data-content="<span class='partido partido-prb10'></span> PRB - Partido Republicano Brasileiro">PRB</option>
+                  <option value="partido-psol50" data-content="<span class='partido partido-psol50'></span> PSOL - Partido Socialismo e Liberdade">PSOL</option>
+                  <option value="partido-pros90" data-content="<span class='partido partido-pros90'></span> PROS - Partido Republicano da Ordem Social">PROS</option>
+                  <option value="partido-sd77" data-content="<span class='partido partido-sd77'></span> SD - Solidariedade">SD</option>
+                </optgroup>
+                <optgroup label="Nanicos">
+                  <option value="partido-pmn33" data-content="<span class='partido partido-pmn33'></span> PMN - Partido da Mobilização Nacional">PMN</option>
+                  <option value="partido-prp44" data-content="<span class='partido partido-prp44'></span> PRP - Partido Republicano Progressista">PRP</option>
+                  <option value="partido-psl17" data-content="<span class='partido partido-psl17'></span> PSL - Partido Social Liberal">PSL</option>
+                  <option value="partido-prtb28" data-content="<span class='partido partido-prtb28'></span> PRTB - Partido Renovador Trabalhista Brasileiro">PRTB</option>
+                  <option value="partido-ptn19" data-content="<span class='partido partido-ptn19'></span> PTN - Partido Trabalhista Nacional">PTN</option>
+                  <option value="partido-psdc27" data-content="<span class='partido partido-psdc27'></span> PSDC - Partido Social Democrata Cristão">PSDC</option>
+                  <option value="partido-ptc36" data-content="<span class='partido partido-ptc36'></span> PTC - Partido Trabalhista Cristão">PTC</option>
+                  <option value="partido-phs31" data-content="<span class='partido partido-phs31'></span> PHS - Partido Humanista da Solidariedade">PHS</option>
+                  <option value="partido-pen51" data-content="<span class='partido partido-pen51'></span> PEN - Partido Ecológico Nacional">PEN</option>
+                </optgroup>
+                <optgroup label="Fora do congresso">
+                  <option value="partido-ptdob70" data-content="<span class='partido partido-ptdob70'></span> PTdoB - Partido Trabalhista do Brasil">PTdoB</option>
+                  <option value="partido-pstu16" data-content="<span class='partido partido-pstu16'></span> PSTU - Partido Socialista dos Trabalhadores Unificado">PSTU</option>
+                  <option value="partido-pcb21" data-content="<span class='partido partido-pcb21'></span> PCB - Partido Comunista Brasileiro">PCB</option>
+                  <option value="partido-pco29" data-content="<span class='partido partido-pco29'></span> PCO - Partido da Causa Operária">PCO</option>
+                  <option value="partido-ppl54" data-content="<span class='partido partido-ppl54'></span> PPL - Partido Pátria Livre">PPL</option>
                 </optgroup>
               </select>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-10">
+            <div class="col-sm-offset-2 col-sm-10">
               <div id="painel_mesclagem" class="panel panel-default collapse">
                 <div class="panel-heading">Mesclar retroativo</div>
                 <div class="panel-body">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" id="mudancas_de_nome" class="cfg cfg-indice" checked>
+                      <input type="checkbox" id="mudancas_de_nome" class="campo-configuracao" checked>
                       Renomeados
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" id="incorporacoes" class="cfg cfg-indice">
+                      <input type="checkbox" id="incorporacoes" class="campo-configuracao">
                       Incorporados
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" id="fusoes" class="cfg cfg-indice">
+                      <input type="checkbox" id="fusoes" class="campo-configuracao">
                       Fundidos
                     </label>
                   </div>
@@ -345,151 +387,159 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
       </div>
     </div>
 
-    <div id="painel_tipo_de_grafico" class="panel panel-default collapse in">
-      <div class="panel-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xs-9">
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_curvas" class="cfg cfg-grafico" autocomplete="off"> Curvas
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_linhas" class="cfg cfg-grafico" autocomplete="off"> Linhas
-                </label>
-                <label class="btn btn-default active" aria-pressed="true">
-                  <input type="radio" name="tipo_de_grafico" id="tipo_area" class="cfg cfg-grafico" autocomplete="off" checked> Área
-                </label>
+    <div id="painel_graficos" class="collapse in">
+
+      <div id="painel_tipo_de_grafico" class="panel panel-default collapse in">
+        <div class="panel-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-9">
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="tipo_de_grafico" id="tipo_curvas" class="campo-configuracao" autocomplete="off"> Curvas
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="tipo_de_grafico" id="tipo_linhas" class="campo-configuracao" autocomplete="off"> Linhas
+                  </label>
+                  <label class="btn btn-default active" aria-pressed="true">
+                    <input type="radio" name="tipo_de_grafico" id="tipo_area" class="campo-configuracao" autocomplete="off" checked> Área
+                  </label>
+                </div>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="passos" class="cfg cfg-grafico">
-                  Em passos
-                </label>
+              <div class="col-xs-3">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="passos" class="campo-configuracao">
+                    Em passos
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div role="tabpanel">
+        <ul id="tablist_graficos" class="nav nav-tabs nav-justified" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tab_total" aria-controls="tab_total" role="tab" data-toggle="tab">Total</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab_federal" aria-controls="tab_federal" role="tab" data-toggle="tab">Federal</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab_estadual" aria-controls="tab_estadual" role="tab" data-toggle="tab">Estadual</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab_municipal" aria-controls="tab_municipal" role="tab" data-toggle="tab">Municipal</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tab_total">
+            <ul id="tablist_total" class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_indice_total" aria-controls="tab_indice_total" role="tab" data-toggle="tab">Índice</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_legislativo_total" aria-controls="tab_legislativo_total" role="tab" data-toggle="tab">Só legislativo</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_executivo_total" aria-controls="tab_executivo_total" role="tab" data-toggle="tab">Só executivo</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab_indice_total">
+                <div id="indice_total" class="grafico" data-titulo="Índice" data-subtitulo="Federal / 3 + Estadual / 3 + Municipal / 3"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_legislativo_total">
+                <div id="legislativo_total" class="grafico" data-titulo="Legislativo" data-subtitulo="Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_executivo_total">
+                <div id="executivo_total" class="grafico" data-titulo="Executivo" data-subtitulo="Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3"></div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tab_federal">
+            <ul id="tablist_federal" class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_indice_federal" aria-controls="tab_indice_federal" role="tab" data-toggle="tab">Índice</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_legislativo_federal" aria-controls="tab_legislativo_federal" role="tab" data-toggle="tab">Só legislativo</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_executivo_federal" aria-controls="tab_executivo_federal" role="tab" data-toggle="tab">Só executivo</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab_indice_federal">
+                <div id="indice_federal" class="grafico" data-titulo="Índice Federal" data-subtitulo="congresso = 75% e presidente = 25%"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
+                <div id="deputados_federais" class="grafico" data-titulo="Câmara dos Deputados"></div>
+                <div id="senadores" class="grafico" data-titulo="Senado Federal"></div>
+                <div id="congresso_nacional" class="grafico" data-titulo="Congresso Nacional" data-subtitulo="Câmara dos Deputados + Senado Federal"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
+                <div id="presidentes" class="grafico" data-titulo="Presidência da República"></div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tab_estadual">
+            <ul id="tablist_estadual" class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_indice_estadual" aria-controls="tab_indice_estadual" role="tab" data-toggle="tab">Índice</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_legislativo_estadual" aria-controls="tab_legislativo_estadual" role="tab" data-toggle="tab">Só legislativo</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_executivo_estadual" aria-controls="tab_executivo_estadual" role="tab" data-toggle="tab">Só executivo</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab_indice_estadual">
+                <div id="indice_estadual" class="grafico" data-titulo="Índice Estadual" data-subtitulo="deputados estaduais = 75% e governadores = 25%"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_legislativo_estadual">
+                <div id="deputados_estaduais" class="grafico" data-titulo="Assembléias Legislativas Estaduais ou Distritais"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_executivo_estadual">
+                <div id="governadores" class="grafico" data-titulo="Governos Estaduais"></div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tab_municipal">
+            <ul id="tablist_municipal" class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tab_indice_municipal" aria-controls="tab_indice_municipal" role="tab" data-toggle="tab">Índice</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_legislativo_municipal" aria-controls="tab_legislativo_municipal" role="tab" data-toggle="tab">Só legislativo</a>
+              </li>
+              <li role="presentation">
+                <a href="#tab_executivo_municipal" aria-controls="tab_executivo_municipal" role="tab" data-toggle="tab">Só executivo</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab_indice_municipal">
+                <div id="indice_municipal" class="grafico" data-titulo="Índice Municipal" data-subtitulo="vereadores = 75% e prefeitos = 25%"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_legislativo_municipal">
+                <div id="vereadores" class="grafico" data-titulo="Câmaras Municipais"></div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tab_executivo_municipal">
+                <div id="prefeitos" class="grafico" data-titulo="Prefeituras"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div role="tabpanel">
-      <ul id="tablist_graficos" class="nav nav-tabs nav-justified" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#tab_total" aria-controls="tab_total" role="tab" data-toggle="tab">Total</a>
-        </li>
-        <li role="presentation">
-          <a href="#tab_federal" aria-controls="tab_federal" role="tab" data-toggle="tab">Federal</a>
-        </li>
-        <li role="presentation">
-          <a href="#tab_estadual" aria-controls="tab_estadual" role="tab" data-toggle="tab">Estadual</a>
-        </li>
-        <li role="presentation">
-          <a href="#tab_municipal" aria-controls="tab_municipal" role="tab" data-toggle="tab">Municipal</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="tab_total">
-          <ul id="tablist_total" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_total" aria-controls="tab_indice_total" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_total" aria-controls="tab_legislativo_total" role="tab" data-toggle="tab">Só legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_total" aria-controls="tab_executivo_total" role="tab" data-toggle="tab">Só executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_total">
-              <div id="indice_total" class="grafico" data-titulo="Índice" data-subtitulo="Federal / 3 + Estadual / 3 + Municipal / 3"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_total">
-              <div id="legislativo_total" class="grafico" data-titulo="Legislativo" data-subtitulo="Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_total">
-              <div id="executivo_total" class="grafico" data-titulo="Executivo" data-subtitulo="Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3"></div>
-            </div>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="tab_federal">
-          <ul id="tablist_federal" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_federal" aria-controls="tab_indice_federal" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_federal" aria-controls="tab_legislativo_federal" role="tab" data-toggle="tab">Só legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_federal" aria-controls="tab_executivo_federal" role="tab" data-toggle="tab">Só executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_federal">
-              <div id="indice_federal" class="grafico" data-titulo="Índice Federal" data-subtitulo="congresso = 75% e presidente = 25%"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
-              <div id="deputados_federais" class="grafico" data-titulo="Câmara dos Deputados"></div>
-              <div id="senadores" class="grafico" data-titulo="Senado Federal"></div>
-              <div id="congresso_nacional" class="grafico" data-titulo="Congresso Nacional" data-subtitulo="Câmara dos Deputados + Senado Federal"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
-              <div id="presidentes" class="grafico" data-titulo="Presidência da República"></div>
-            </div>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="tab_estadual">
-          <ul id="tablist_estadual" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_estadual" aria-controls="tab_indice_estadual" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_estadual" aria-controls="tab_legislativo_estadual" role="tab" data-toggle="tab">Só legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_estadual" aria-controls="tab_executivo_estadual" role="tab" data-toggle="tab">Só executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_estadual">
-              <div id="indice_estadual" class="grafico" data-titulo="Índice Estadual" data-subtitulo="deputados estaduais = 75% e governadores = 25%"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_estadual">
-              <div id="deputados_estaduais" class="grafico" data-titulo="Assembléias Legislativas Estaduais ou Distritais"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_estadual">
-              <div id="governadores" class="grafico" data-titulo="Governos Estaduais"></div>
-            </div>
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="tab_municipal">
-          <ul id="tablist_municipal" class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tab_indice_municipal" aria-controls="tab_indice_municipal" role="tab" data-toggle="tab">Índice</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_legislativo_municipal" aria-controls="tab_legislativo_municipal" role="tab" data-toggle="tab">Só legislativo</a>
-            </li>
-            <li role="presentation">
-              <a href="#tab_executivo_municipal" aria-controls="tab_executivo_municipal" role="tab" data-toggle="tab">Só executivo</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab_indice_municipal">
-              <div id="indice_municipal" class="grafico" data-titulo="Índice Municipal" data-subtitulo="vereadores = 75% e prefeitos = 25%"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_legislativo_municipal">
-              <div id="vereadores" class="grafico" data-titulo="Câmaras Municipais"></div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab_executivo_municipal">
-              <div id="prefeitos" class="grafico" data-titulo="Prefeituras"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id="painel_grafico_partido" class="collapse">
+      <div id="grafico_partido" class="grafico"></div>
     </div>
 
   </div>
@@ -507,6 +557,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>
   <script src="//code.highcharts.com/4.1.7/highcharts.js"></script>
+  <script src="//code.highcharts.com/4.1.7/highcharts-more.js"></script>
   <script src="//code.highcharts.com/4.1.7/themes/grid-light.js"></script>
   <script src="//code.highcharts.com/4.1.7/modules/exporting.js"></script>
   <script src="//code.highcharts.com/4.1.7/modules/no-data-to-display.js"></script>
@@ -531,6 +582,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
 
   <!-- Highcharts -->
   <script src="js/highcharts/highcharts.js"></script>
+  <script src="js/highcharts/highcharts-more.js"></script>
   <script src="js/highcharts/grid-light.js"></script>
   <script src="js/highcharts/exporting.js"></script>
   <script src="js/highcharts/no-data-to-display.js"></script>
@@ -551,6 +603,7 @@ Esfera Municipal = Executivo Municipal * 0,25 + Legislativo Municipal * 0,75
   <script src="js/app/configuracao.js"></script>
   <script src="js/app/cores.js"></script>
   <script src="js/app/series.js"></script>
+  <script src="js/app/highcharts.js"></script>
   <script src="js/app/grafico.js"></script>
   <script src="js/app/main.js"></script>
 

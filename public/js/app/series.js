@@ -5,6 +5,25 @@
   'use strict';
 
   /**
+   * Ponto da série.
+   *
+   * @typedef ipl.PontoDaSerie
+   * @property {ipl.Ano} ano
+   * @property {number} indice
+   */
+
+  /**
+   * Série (formato mínimo).
+   *
+   * @typedef ipl.Serie
+   * @property {string} nome
+   * @property {ipl.Ano} fundado
+   * @property {?ipl.Ano} extinto
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.PontoDaSerie>} indices
+   */
+
+  /**
    * @classdesc Gera séries para os gráficos.
    *
    * @alias ipl.GeradorDeSeries
@@ -46,13 +65,44 @@
     this.ehGraficoDeArea = false;
   }
 
-  /** @const {ipl.Tom} */
-  GeradorDeSeries.COR_RESTO = '#333';
-
-  /** @const {string} */
-  GeradorDeSeries.LINHA_RESTO = 'dash';
-
   GeradorDeSeries.prototype = {
+
+    /**
+     * Retorna anos de eleição.
+     *
+     * @method ipl.GeradorDeSeries~eleicoes
+     * @param {ipl.Indice} indice
+     * @param {ipl.Regiao} regiao
+     * @return {Array<ipl.Ano>}
+     */
+    eleicoes: function(indice, regiao) {
+      // Fazendo isso aqui fora uma só vez por motivos de performance
+      var anos = _.uniq(indice.eleicoes(regiao).sort(), true);
+      // Filtra anos que tem dados o suficiente para calcular o índice
+      anos = _.filter(anos, function(ano) {
+        return indice.temDados(regiao, ano);
+      });
+      // Adiciona um ano depois da última eleição para o último passo ficar visível
+      if (this.ehGraficoEmPassos === true) {
+        anos.push(_.max(anos) + 1);
+      }
+      return anos;
+    },
+
+    /**
+     * Retorna partidos com representantes.
+     *
+     * @method ipl.GeradorDeSeries~idPartidos
+     * @param {ipl.Indice} indice
+     * @param {ipl.Regiao} regiao
+     * @param {Array<ipl.Ano>} eleicoes
+     * @return {Array<ipl.IdPartido>}
+     */
+    idPartidos: function(indice, regiao, eleicoes) {
+      return _.uniq(_.flatten(_.map(eleicoes, function(ano) {
+        return indice.partidos(regiao, ano);
+      })).sort(), true)
+    },
 
     /**
      * Calcula todos os índices necessários para formatar as séries.
@@ -61,25 +111,31 @@
      * @param {ipl.Indice} indice
      * @param {ipl.Regiao} regiao
      * @param {Array<ipl.Ano>} anos
+     * @param {?ipl.IdPartido} idPartido
      * @return {Array<ipl.Serie>}
      */
-    geraIndices: function(indice, regiao, anos) {
-      // Siglas para todos os anos
-      var idPartidos = _.uniq(_.flatten(_.map(anos, function(ano) {
-        return indice.partidos(regiao, ano);
-      })).sort(), true);
-      var partidos = this.partidos.todos();
-      return _.map(idPartidos, function(siglaENumero) {
+    geraIndices: function(indice, regiao, anoDeEleicao, idPartido) {
+      var eleicoes = anoDeEleicao != null ?
+        [ anoDeEleicao ] :
+        this.eleicoes(indice, regiao);
+      var idPartidos = idPartido != null ?
+        [ ipl.RepositorioDePartidos.normalizaSiglaENumero(idPartido) ] :
+        this.idPartidos(indice, regiao, eleicoes);
+      return _.map(idPartidos, function(idPartido) {
         // Carrega informações do partido
-        var info = _.find(partidos, function(p) {
-          return siglaENumero === (p.sigla + p.numero);
-        });
+        var info = this.partidos.buscaSiglaENumero(idPartido);
         // Calcula índices
-        var indices = _.map(anos, function(ano) {
-          return { ano: ano, indice: indice.calcula(regiao, ano, siglaENumero) };
+        var indices = _.map(eleicoes, function(ano) {
+          return { ano: ano, indice: indice.calcula(regiao, ano, idPartido) };
         });
-        return { info: info, indices: indices };
-      });
+        return {
+          nome: info.sigla,
+          fundado: info.fundado,
+          extinto: info.extinto,
+          info: info,
+          indices: indices
+        };
+      }, this);
     },
 
     /**
@@ -138,145 +194,6 @@
     inicializaCores: function() {
       // Realiza primeira chamada de ipl.GerenciadorDeCores#cor na ordem padrão
       _.each(this.partidos.todos(), this.cores.cor, this.cores);
-    },
-
-    /**
-     * Formata séries para gráfico de linhas ou área do Highcharts.
-     *
-     * @method ipl.GeradorDeSeries~formataParaLinhasOuAreasHighcharts
-     * @param {Array<ipl.Serie2>} seriesNaoFormatadas
-     * @return {Array<Object>}
-     */
-    formataParaLinhasOuAreasHighcharts: function(seriesNaoFormatadas) {
-      var tabela = this.configuracao.tabelaDeReescrita;
-      this.inicializaCores();
-      // Converte série para o formato esperado
-      var series = _.map(seriesNaoFormatadas, function(p) {
-        // Converte pontos para o formato esperado
-        var pontos = _.map(p.indices, function(ponto) {
-          return { x: Date.UTC(ponto.ano + 1, 0, 1), y: ponto.indice * 100 };
-        });
-        // Ordena índices por data (Highcharts precisa deles ordenados)
-        var indicesOrdenados = _.sortBy(pontos, 'x');
-        var partidos = p.info != null ? [ p.info ].concat(p.mesclados) : p.mesclados;
-        var serie = { name: p.sigla, data: indicesOrdenados, partidos: partidos };
-        // Aparência da série
-        if (tabela != null && p.sigla === tabela.resto) {
-          // Resto:
-          // Cor preta
-          serie.color = GeradorDeSeries.COR_RESTO;
-          // Linha tracejada
-          if (this.ehGraficoDeArea === false) {
-            serie.dashStyle = GeradorDeSeries.LINHA_RESTO;
-          }
-          // Substitui null por 0 para mostrar resto em todos os anos
-          serie.data = _.map(serie.data, function(p) { return { x: p.x, y: p.y || 0 }; });
-        } else {
-          // Cor da série
-          serie.color = this.cores.cor(p.info);
-        }
-        return serie;
-      }, this);
-      var todosOsPontos = _.flatten(_.pluck(series, 'data'));
-      var ultimoAno = _.max(_.pluck(todosOsPontos, 'x'));
-      // Ordena pela "importância do partido", isto é, a soma de todos os índices
-      series = _.sortBy(series, function(p) {
-        var somaDosIndices = _.reduce(p.data, function(total, ponto) {
-          // Não soma último ano se ele foi adicionado porque é gráfico em passos
-          if (this.ehGraficoEmPassos === true && ponto.x === ultimoAno) {
-            return total;
-          }
-          return total + ponto.y;
-        }, 0, this);
-        // Mantém o resto por último (adiciona 100000 nos demais)
-        if (tabela != null) {
-          somaDosIndices += (tabela.resto === p.name) ? 0 : 100000;
-        }
-        return somaDosIndices;
-      }, this).reverse();
-      return series;
-    },
-
-    /**
-     * Formata séries para gráfico de torta do Highcharts.
-     *
-     * @method ipl.GeradorDeSeries~formataParaTortaHighcharts
-     * @param {Array<ipl.Serie2>} seriesNaoFormatadas
-     * @return {Array<Object>}
-     */
-    formataParaTortaHighcharts: function(seriesNaoFormatadas) {
-      var tabela = this.configuracao.tabelaDeReescrita;
-      this.inicializaCores();
-      // Converte série para o formato esperado pelo Highcharts
-      var series = _.map(seriesNaoFormatadas, function(p) {
-        var partidos = p.info != null ? [ p.info ].concat(p.mesclados) : p.mesclados;
-        var serie = { name: p.sigla, y: p.indices[0].indice * 100, partidos: partidos };
-        // Cor da série
-        var ehResto = tabela != null && p.sigla === tabela.resto;
-        serie.color = ehResto ? GeradorDeSeries.COR_RESTO : this.cores.cor(p.info);
-        return serie;
-      }, this);
-      // Ordena pelo índice (descendente)
-      series = _.sortBy(series, function(p) {
-        var indice = p.y;
-        // Mantém o resto por último (adiciona 100000 nos demais)
-        if (tabela != null) {
-          indice += (tabela.resto === p.name) ? 0 : 100000;
-        }
-        return indice;
-      }).reverse();
-      // Retorna como uma série do tipo torta
-      return [{ type: 'pie', name: 'Índice', data: series }];
-    },
-
-    /**
-     * Gera séries com filtro de região.
-     *
-     * @method ipl.GeradorDeSeries#seriesPorRegiao
-     * @param {ipl.Indice} indice
-     * @param {ipl.Regiao} regiao
-     * @return {Array<Object>}
-     */
-    seriesPorRegiao: function(indice, regiao) {
-      // Fazendo isso aqui fora uma só vez por motivos de performance
-      var anos = _.uniq(indice.eleicoes(regiao).sort(), true);
-      // Filtra anos que tem dados o suficiente para calcular o índice
-      anos = _.filter(anos, function(ano) {
-        return indice.temDados(regiao, ano);
-      });
-      // Adiciona um ano depois da última eleição para o último passo ficar visível
-      if (this.ehGraficoEmPassos === true) {
-        anos.push(_.max(anos) + 1);
-      }
-      var series = this.geraIndices(indice, regiao, anos);
-      series = this.configuracao.mapeiaPartidos(series);
-      series = this.filtraAnos(series, this.ehGraficoDeArea);
-      series = this.filtraPartidos(series);
-      series = this.formataParaLinhasOuAreasHighcharts(series);
-      return series;
-    },
-
-    /**
-     * Gera séries para um ano específico com filtro de região.
-     *
-     * @method ipl.GeradorDeSeries#seriesPorAno
-     * @param {ipl.Indice} indice
-     * @param {ipl.Regiao} regiao
-     * @param {ipl.Ano} ano
-     * @return {Array<Object>}
-     */
-    seriesPorAno: function(indice, regiao, ano) {
-      var anoDaEleicao = ano - 1;
-      if (indice.temDados(regiao, anoDaEleicao) === false) {
-        // Se não retornar nada, ainda precisa estar em um formato específico
-        return this.formataParaTortaHighcharts([]);
-      }
-      var series = this.geraIndices(indice, regiao, [ anoDaEleicao ]);
-      series = this.configuracao.mapeiaPartidos(series);
-      series = this.filtraAnos(series, this.ehGraficoDeArea);
-      series = this.filtraPartidos(series);
-      series = this.formataParaTortaHighcharts(series);
-      return series;
     }
 
   };

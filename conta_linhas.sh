@@ -6,7 +6,7 @@ function imprime_contagem() {
   eval ls -dS $* 2>/dev/null | xargs wc
 }
 
-web='public/index.html public/js/app/*.js public/css/{index,bandeiras}.css'
+web='public/index.html public/js/app/*.js public/css/app/*.css'
 spec='spec/*_spec.js'
 carga='carga/*.rb carga/eleitos/presidentes.txt carga/eleitos/governadores_bionicos.txt'
 img='img/**/*.fish'

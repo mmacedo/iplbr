@@ -99,8 +99,8 @@ module.exports = function(grunt) {
       app: {
         files: {
           'tmp/min/app.min.css': [
-            'public/css/index.css',
-            'public/css/bandeiras.css'
+            'public/css/app/*.css',
+            'public/css/sprites/*.css'
           ]
         }
       }
@@ -135,6 +135,7 @@ module.exports = function(grunt) {
             'public/js/app/configuracao.js',
             'public/js/app/cores.js',
             'public/js/app/series.js',
+            'public/js/app/highcharts.js',
             'public/js/app/grafico.js',
             'public/js/app/main.js'
           ]
@@ -150,11 +151,11 @@ module.exports = function(grunt) {
     copy: {
       dist: {
         files: [
-          { 'tmp/build/index.html':     'tmp/min/index.html' },
-          { 'tmp/build/js/big.min.js':  'public/js/big.min.js' },
-          { 'tmp/build/js/app.min.js':  'tmp/min/app.min.js' },
-          { 'tmp/build/js/app.min.css': 'tmp/min/app.min.css' },
-          { 'tmp/build/eleitos.json':   'public/eleitos.json' },
+          { 'tmp/build/index.html':      'tmp/min/index.html' },
+          { 'tmp/build/js/big.min.js':   'public/js/big.min.js' },
+          { 'tmp/build/js/app.min.js':   'tmp/min/app.min.js' },
+          { 'tmp/build/css/app.min.css': 'tmp/min/app.min.css' },
+          { 'tmp/build/eleitos.json':    'public/eleitos.json' },
           {
             dest: 'tmp/build/favicons/',
             src: 'public/favicons/*',

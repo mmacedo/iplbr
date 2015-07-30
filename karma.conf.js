@@ -13,6 +13,7 @@ module.exports = function(config) {
       'public/js/app/configuracao.js',
       'public/js/app/cores.js',
       'public/js/app/series.js',
+      'public/js/app/highcharts.js',
       // Testes
       'spec/**/*_spec.js'
     ],

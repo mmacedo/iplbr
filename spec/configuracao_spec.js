@@ -6,13 +6,12 @@ describe('ipl.ConfiguracaoDePartidos', function() {
 
     function geraInput(partido) {
       return {
-        sigla:     partido.sigla,
-        numero:    partido.numero,
-        info:      partido,
+        nome:     partido.sigla,
         fundado:   partido.fundado,
         extinto:   partido.extinto,
-        mesclados: [],
-        indices:   []
+        info:      partido,
+        indices:   [],
+        mesclados: []
       };
     }
 
@@ -44,7 +43,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
         sinon.spy(this.repo, 'buscaSucessor');
         var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(1);
-        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).not.to.be.ok();
+        expect(_.find(resultado, 'nome', this.a.sigla)).not.to.be.ok();
         expect(this.repo.buscaSucessor).to.have.been.called();
       });
 
@@ -53,7 +52,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
         sinon.spy(this.repo, 'buscaSucessor');
         var resultado = this.cfg.mesclaPartidosExtintos(this.dados);
         expect(resultado.length).to.equal(2);
-        expect(_.find(resultado, _.pick(this.a, [ 'sigla', 'numero' ]))).to.be.ok();
+        expect(_.find(resultado, 'nome', this.a.sigla)).to.be.ok();
         expect(this.repo.buscaSucessor).not.to.have.been.called();
       });
 
@@ -135,7 +134,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var partidos = new ipl.RepositorioDePartidos([ a, b ]);
       var cfg = new ipl.ConfiguracaoDePartidos(partidos);
       var resultado = cfg.desambiguaSiglas([ { info: a }, { info: b } ]);
-      var esperado = [ { sigla: 'A', info: a }, { sigla: 'B', info: b } ];
+      var esperado = [ { nome: 'A', info: a }, { nome: 'B', info: b } ];
       expect(resultado).to.eql(esperado);
     });
 
@@ -145,7 +144,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var partidos = new ipl.RepositorioDePartidos([ a1, a2 ]);
       var cfg = new ipl.ConfiguracaoDePartidos(partidos);
       var resultado = cfg.desambiguaSiglas([ { info: a1 }, { info: a2 } ]);
-      var esperado = [ { sigla: 'A (1979)', info: a1 }, { sigla: 'A', info: a2 } ];
+      var esperado = [ { nome: 'A (1979)', info: a1 }, { nome: 'A', info: a2 } ];
       expect(resultado).to.eql(esperado);
     });
 
@@ -158,7 +157,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ partido ]));
       cfg.tabelaDeReescrita = { mapear: [], resto: 'Resto' };
       var resultado = cfg.agrupaPartidos([ { info: partido } ]);
-      expect(resultado[0].sigla).to.equal('Resto');
+      expect(resultado[0].nome).to.equal('Resto');
     });
 
     it('deve retornar nova sigla se estiver mapeado', function() {
@@ -166,7 +165,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ partido ]));
       cfg.tabelaDeReescrita = { mapear: [ { de: { sigla: 'A', numero: 1 }, para: 'B' } ] };
       var resultado = cfg.agrupaPartidos([ { info: partido } ]);
-      expect(resultado[0].sigla).to.equal('B');
+      expect(resultado[0].nome).to.equal('B');
     });
 
     it('deve mesclar se mais de um não estiver mapeado', function() {
@@ -177,7 +176,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, indices: [] }
       ]);
-      expect(resultado[0].sigla).to.equal('Resto');
+      expect(resultado[0].nome).to.equal('Resto');
     });
 
     it('deve mesclar se mais de um estiver mapeado para a mesma sigla', function() {
@@ -189,7 +188,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
         { info: a, indices: [] }, { info: b, indices: [] }
       ]);
       expect(resultado).to.have.length(1);
-      expect(resultado[0].sigla).to.equal('C');
+      expect(resultado[0].nome).to.equal('C');
     });
 
     it('deve somar os índices', function() {
@@ -285,11 +284,18 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var info = { sigla: 'A', numero: 1, fundado: 1979, extinto: 1980 };
       var indices = [ { ano: 1979, indice: 1 } ];
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ info ]));
-      var resultado = cfg.mapeiaPartidos([ {  info: info, indices: indices } ]);
+      var serie = {
+        nome: info.sigla,
+        fundado: info.fundado,
+        extinto: info.extinto,
+        info: info,
+        indices: indices
+      };
+      var resultado = cfg.mapeiaPartidos([ serie ]);
       expect(resultado).to.have.length(1);
       expect(resultado[0]).to.have.all.keys([
-        'info', 'indices', 'mesclados',
-        'sigla', 'numero', 'fundado', 'extinto'
+        'nome', 'fundado', 'extinto',
+        'info', 'indices', 'mesclados'
       ]);
     });
 

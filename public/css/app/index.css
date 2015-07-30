@@ -16,6 +16,7 @@
   .grafico > .highcharts-container { height: 600px; }
 }
 
+
 /* Rodapé grudento
 -------------------------------------------------------- */
 
@@ -39,6 +40,7 @@ body {
 }
 
 #dedicacao > .glyphicon-heart { color: #DC143C; } /* Crimson */
+
 
 /* Filtros
 -------------------------------------------------------- */

@@ -280,6 +280,17 @@
   /** @const {Array<ipl.Partido>} ipl.RepositorioDePartidos.PARTIDOS */
   RepositorioDePartidos.PARTIDOS = _.flatten(_.values(partidosEmGrupos));
 
+  /**
+   * Busca um partido pelo idPartido.
+   *
+   * @param {ipl.IdPartido} idPartido
+   * @returns {ipl.Partido}
+   * @nosideeffects
+   */
+  RepositorioDePartidos.normalizaSiglaENumero = function(idPartido) {
+    return idPartido.toUpperCase().replace(/DOB(?=[0-9]{2}$)/, 'doB');
+  };
+
   RepositorioDePartidos.prototype = {
 
     /**
@@ -301,10 +312,24 @@
      */
     busca: function(filtro) {
       var partido = _.find(this.partidos, filtro);
+      // Se não encontrou, tem erro no programa
       if (partido == null) {
         throw 'Partido ' + JSON.stringify(filtro) + ' não encontrado!';
       }
       return partido;
+    },
+
+    /**
+     * Busca um partido pelo idPartido.
+     *
+     * @param {ipl.IdPartido} idPartido
+     * @returns {ipl.Partido}
+     * @nosideeffects
+     */
+    buscaSiglaENumero: function(idPartido) {
+      var grupos = idPartido.match(/^([A-Z]{2,}(doB)?)([0-9]{2})$/);
+      var sigla  = grupos[1], numero = +grupos[3];
+      return this.busca({ sigla: sigla, numero: numero });
     },
 
     /**

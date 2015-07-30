@@ -13,31 +13,14 @@
    */
 
   /**
-   * Ponto da série.
-   *
-   * @typedef ipl.PontoDaSerie
-   * @property {ipl.Ano} ano
-   * @property {number} indice
-   */
-
-  /**
-   * Série (formato mínimo).
-   *
-   * @typedef ipl.Serie
-   * @property {ipl.Partido} info
-   * @property {Array<ipl.PontoDaSerie>} indices
-   */
-
-  /**
    * Série (formato com dados produzidos pela mesclagem).
    *
-   * @typedef ipl.Serie2
-   * @property {ipl.Partido} info
-   * @property {Array<ipl.PontoDaSerie>} indices
-   * @property {string} sigla
-   * @property {number} numero
+   * @typedef ipl.SerieMesclada
+   * @property {string} nome
    * @property {ipl.Ano} fundado
    * @property {?ipl.Ano} extinto
+   * @property {ipl.Partido} info
+   * @property {Array<ipl.PontoDaSerie>} indices
    * @property {Array<ipl.Partido>} mesclados
    */
 
@@ -157,7 +140,7 @@
 
   /**
    * @callback ipl.somaIndicesCallback
-   * @param {Array<ipl.Serie2>} conjuntoDePartidos
+   * @param {Array<ipl.SerieMesclada>} conjuntoDePartidos
    * @param {Array<ipl.PontoDaSerie>} somasDosIndices
    * @inner
    */
@@ -165,7 +148,7 @@
    * Agrupa cada conjunto de partido somando índices e aplicando função.
    *
    * @function ipl.somaIndices
-   * @param {Array<ipl.Serie2>} conjuntosDePartidos - Lista de partidos para mesclar.
+   * @param {Array<ipl.SerieMesclada>} conjuntosDePartidos - Lista de partidos para mesclar.
    * @param {ipl.somaIndicesCallback} callback - Retorna um único partido mesclado.
    * @param {Object} [thisArg] - Objeto this no callback.
    * @inner
@@ -190,8 +173,8 @@
      * Mescla partidos extintos com seus sucessores de acordo com a configuração.
      *
      * @method ipl.ConfiguracaoDePartidos~mesclaPartidosExtintos
-     * @param {Array<ipl.Serie2>} partidos
-     * @returns {Array<ipl.Serie2>}
+     * @param {Array<ipl.SerieMesclada>} partidos
+     * @returns {Array<ipl.SerieMesclada>}
      */
     mesclaPartidosExtintos: function(partidos) {
       var migrouUmPartido = false;
@@ -216,12 +199,11 @@
         var sucessor = this.partidos.buscaSucessor(partido.info);
 
         return {
-          sigla:     sucessor.sigla,
-          numero:    sucessor.numero,
+          nome:      sucessor.sigla,
           fundado:   partido.fundado,
           extinto:   sucessor.extinto,
-          indices:   partido.indices,
           info:      sucessor,
+          indices:   partido.indices,
           mesclados: partido.mesclados.concat([ partido.info ])
         };
 
@@ -231,19 +213,19 @@
 
         // Agrupa repetidos
         var porPartido = _.values(_.groupBy(processados, function(partido) {
-          return partido.sigla + partido.numero + (partido.extinto || '');
+          return partido.nome + (partido.extinto || '');
         }));
 
         // Soma índices
         var mesclados = somaIndices(porPartido, function(lista, somas) {
+          var p = lista[0];
           return {
-            sigla:     lista[0].sigla,
-            numero:    lista[0].numero,
+            nome:      p.nome,
             fundado:   _.min(lista, 'fundado').fundado,
-            extinto:   lista[0].extinto,
+            extinto:   p.extinto,
+            info:      p.info,
             indices:   somas,
-            info:      lista[0].info,
-            mesclados: lista[0].mesclados
+            mesclados: p.mesclados
           };
         });
 
@@ -258,14 +240,14 @@
     /**
      * Desambígua siglas repetidas.
      * @example
-     * // [ { sigla: 'PSD' }, { sigla: 'PSD (1987)' } ]
+     * // [ { nome: 'PSD' }, { nome: 'PSD (1987)' } ]
      * desambiguaSiglas([
-     *   { sigla: 'PSD', numero: 55, fundado: 2011 },
-     *   { sigla: 'PSD', numero: 41, fundado: 1987 }
+     *   { nome: 'PSD', fundado: 2011 },
+     *   { nome: 'PSD', fundado: 1987 }
      * ])
      * @method ipl.ConfiguracaoDePartidos~desambiguaSiglas
-     * @param {Array<ipl.Serie2>} partidos
-     * @returns {Array<ipl.Serie2>}
+     * @param {Array<ipl.SerieMesclada>} partidos
+     * @returns {Array<ipl.SerieMesclada>}
      */
     desambiguaSiglas: function(partidos) {
       return _.map(partidos, function(p) {
@@ -273,7 +255,7 @@
         var siglaDesambiguada = p.info.naoEhUltimo === true ?
           (p.info.sigla + ' (' + p.info.fundado.toString() + ')') :
           p.info.sigla;
-        return _.assign({}, p, { sigla: siglaDesambiguada });
+        return _.assign({}, p, { nome: siglaDesambiguada });
       });
     },
 
@@ -281,48 +263,48 @@
      * Agrupa partidos de acordo com a tabela de reescrita configurada.
      *
      * @method ipl.ConfiguracaoDePartidos~agrupaPartidos
-     * @param {Array<ipl.Serie2>} partidos
-     * @returns {Array<ipl.Serie2>}
+     * @param {Array<ipl.SerieMesclada>} partidos
+     * @returns {Array<ipl.SerieMesclada>}
      */
     agrupaPartidos: function(partidos) {
 
       // Encontra novas siglas
       var migrados = _.map(partidos, function(p) {
-        var de = { de: _.pick(p, [ 'sigla', 'numero' ]) };
+        var de = { de: _.pick(p.info, [ 'sigla', 'numero' ]) };
         var config = _.find(this.tabelaDeReescrita.mapear, de);
         return _.assign({}, p, {
-          sigla: config != null ?
+          nome: config != null ?
             config.para :
             this.tabelaDeReescrita.resto
         });
       }, this);
 
       // Agrupa repetidos
-      var porSigla = _.values(_.groupBy(migrados, 'sigla'));
+      var porNome = _.values(_.groupBy(migrados, 'nome'));
 
       // Soma índices
-      var mesclados = somaIndices(porSigla, function(partidos, somas) {
-        var sigla = partidos[0].sigla;
+      var mesclados = somaIndices(porNome, function(partidos, somas) {
+        var nome = partidos[0].nome;
 
         var todosMesclados = _.flatten(_.map(partidos, function(p) {
           return [ p.info ].concat(p.mesclados);
         }));
 
         var info = null, mesclados = todosMesclados;
-        if (sigla !== this.tabelaDeReescrita.resto) {
+        if (nome !== this.tabelaDeReescrita.resto) {
           info = _(this.tabelaDeReescrita.mapear)
-            .filter('para', sigla)
+            .filter('para', nome)
             .map(function(mapa) { return _.find(todosMesclados, mapa.de); })
             .find();
           mesclados = _.without(mesclados, info);
         }
 
         return {
-          sigla:     sigla,
+          nome:      nome,
           fundado:   _.min(partidos, 'fundado').fundado,
           extinto:   _.all(partidos, 'extinto') ? _.max(partidos, 'extinto').extinto : null,
-          indices:   somas,
           info:      info,
+          indices:   somas,
           mesclados: mesclados
         };
       }, this);
@@ -336,23 +318,18 @@
      *
      * @method ipl.ConfiguracaoDePartidos#mapeiaPartidos
      * @param {Array<ipl.Serie>} partidos
-     * @returns {Array<ipl.Serie2>}
+     * @returns {Array<ipl.SerieMesclada>}
      */
-    mapeiaPartidos: function(indicesPorSigla) {
-      var partidos = _.map(indicesPorSigla, function(p) {
-        return _.assign({}, p, {
-          sigla:     p.info.sigla,
-          numero:    p.info.numero,
-          fundado:   p.info.fundado,
-          extinto:   p.info.extinto,
-          mesclados: []
-        });
+    mapeiaPartidos: function(seriesNaoMescladas) {
+      var series = _.map(seriesNaoMescladas, function(serie) {
+        serie.mesclados = [];
+        return serie;
       });
-      partidos = this.mesclaPartidosExtintos(partidos);
+      series = this.mesclaPartidosExtintos(series);
       if (this.tabelaDeReescrita == null) {
-        return this.desambiguaSiglas(partidos);
+        return this.desambiguaSiglas(series);
       } else {
-        return this.agrupaPartidos(partidos);
+        return this.agrupaPartidos(series);
       }
     }
 

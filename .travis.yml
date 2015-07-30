@@ -5,6 +5,7 @@ node_js:
   - iojs
 before_script:
   - npm install -g grunt-cli
+  - ./conta_linhas.sh
 script:
   - npm run lint
   - npm test

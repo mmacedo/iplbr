@@ -2,12 +2,18 @@
 
 describe('ipl.RepositorioDePartidos', function() {
 
-  describe('#constructor', function() {
+  describe('(constructor)', function() {
 
     it('deve usar .PARTIDOS como padrão se não receber partidos', function() {
       var repo = new ipl.RepositorioDePartidos();
       expect(repo.partidos).to.equal(ipl.RepositorioDePartidos.PARTIDOS);
     });
+
+  });
+
+  describe('.normalizaSiglaENumero', function() {
+
+    xit('…');
 
   });
 
@@ -43,6 +49,12 @@ describe('ipl.RepositorioDePartidos', function() {
       function chamada() { repo.busca(filtro); }
       expect(chamada).to.throw();
     });
+
+  });
+
+  describe('#buscaSiglaENumero', function() {
+
+    xit('…');
 
   });
 

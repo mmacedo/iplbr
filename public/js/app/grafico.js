@@ -1,7 +1,9 @@
 /* jshint browser: true */
 /* globals ipl, _, jQuery, Big */
 /* exported ipl.criaGrafico */
+/* exported ipl.criaGraficoRadar */
 /* exported ipl.filtroPorRegiao */
+/* exported ipl.filtroDePartidos */
 
 ;(function(ipl, _, $, Big) {
   'use strict';
@@ -39,6 +41,20 @@
     } else {
       return { ues: [ matches[2].toUpperCase() ], nome: matches[2] };
     }
+  }
+
+  function filtroDePartidos() {
+    var partidos = $('#partidos').val().match(/^(todos|(selecao|partido)-([a-z0-9]+))$/);
+    if (partidos[0] === 'todos') {
+      return null;
+    }
+    if (partidos[2] === 'selecao') {
+      return { selecao: partidos[3] };
+    }
+    if (partidos[2] === 'partido') {
+      return { partido: partidos[3] };
+    }
+    return null;
   }
 
   function criaGraficoDeEvolucaoDoIndice($el, apenas0e100) {
@@ -101,7 +117,7 @@
 
           var indice;
           if (this.y === 0) {
-            indice = '0';
+            indice = 'Zero';
           } else {
             var arredondado = new Big(this.y).round(2);
             if (arredondado.eq(0)) {
@@ -151,39 +167,99 @@
     }).highcharts();
   }
 
+  function criaGraficoParaUmUnicoAnoPorPartido($el) {
+    return $el.highcharts({
+      chart: { polar: true },
+      title: { text: null },
+      pane: { startAngle: -60 },
+      xAxis: {
+        categories: [ 'Federal', 'Estadual', 'Municipal' ],
+        tickmarkPlacement: 'on',
+        lineWidth: 0
+      },
+      yAxis: {
+        gridLineInterpolation: 'polygon',
+        tickInterval: 10,
+        minorTickInterval: null,
+        min: 0,
+        ceiling: 100,
+        labels: {
+          enabled: false
+        }
+      },
+      credits: { enabled: false },
+      tooltip: {
+        headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
+        pointFormat:  '{point.name}: <strong>{point.y:.2f}%</strong> do total<br/>'
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          dataLabels: {
+            enabled: true,
+            format:  '{point.y:.2f}%'
+          }
+        }
+      }
+    }).highcharts();
+  }
+
   function atualizaGrafico(chart, series) {
     chart.showLoading();
-
     setTimeout(function() {
       // Remove todas as séries
       _.each(chart.series.slice(), function(series) { series.remove(false); });
-
       // Adiciona séries
       _.each(series, function(series) { chart.addSeries(series, false); });
-
       // Atualiza tela
       chart.redraw();
       chart.hideLoading();
     }, 0);
   }
 
-  function criaGrafico(id, series, indice, apenas0e100) {
-    var $el = $(id), chart = $el.highcharts();
-    var regiao = filtroPorRegiao(), ano = $('#ano').val();
+  function criaGrafico(id, geradorDeSeries, indice, apenas0e100) {
+    var $el = $(id), chart = $el.highcharts(), series = null;
+    var regiao = filtroPorRegiao(), ano = $('#ano').val(), partidos = filtroDePartidos();
+    var idPartido  = partidos && partidos.partido;
     if (ano === 'todos') {
-      if (chart == null) {
-        chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
+      if (idPartido != null) {
+        if (chart == null) {
+          chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
+        }
+        series = geradorDeSeries.evolucaoDoIndicePorPartido(indice, regiao, idPartido);
+      } else {
+        if (chart == null) {
+          chart = criaGraficoDeEvolucaoDoIndice($el, apenas0e100);
+        }
+        series = geradorDeSeries.evolucaoDoIndice(indice, regiao);
       }
-      atualizaGrafico(chart, series.seriesPorRegiao(indice, regiao));
     } else {
-      if (chart == null) {
-        chart = criaGraficoParaUmUnicoAno($el);
+      if (idPartido == null) {
+        if (chart == null) {
+          chart = criaGraficoParaUmUnicoAno($el);
+        }
+        series = geradorDeSeries.indiceNoAno(indice, regiao, +ano);
       }
-      atualizaGrafico(chart, series.seriesPorAno(indice, regiao, +ano));
     }
+    atualizaGrafico(chart, series);
+  }
+
+  function criaGraficoRadar(id, geradorDeSeries, indiceFederal, indiceEstadual, indiceMunicipal) {
+    var $el = $(id), chart = $el.highcharts();
+    if (chart == null) {
+      chart = criaGraficoParaUmUnicoAnoPorPartido($el);
+    }
+    var regiao = filtroPorRegiao(), ano = $('#ano').val(), partidos = filtroDePartidos();
+    var idPartido  = partidos && partidos.partido;
+    var series = geradorDeSeries.indiceNoAnoPorPartido(indiceFederal, indiceEstadual, indiceMunicipal, regiao, +ano, idPartido);
+    atualizaGrafico(chart, series);
   }
 
   ipl.criaGrafico      = criaGrafico;
-  ipl.filtroPorRegiao = filtroPorRegiao;
+  ipl.criaGraficoRadar = criaGraficoRadar;
+  ipl.filtroPorRegiao  = filtroPorRegiao;
+  ipl.filtroDePartidos = filtroDePartidos;
 
 })(ipl, _, jQuery, Big);
