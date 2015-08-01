@@ -50,23 +50,26 @@
         }
         return serie;
       }, this);
-      var todosOsPontos = _.flatten(_.pluck(series, 'data'));
-      var ultimoAno = _.max(_.pluck(todosOsPontos, 'x'));
       // Ordena pela "importância do partido", isto é, a soma de todos os índices
       series = _.sortBy(series, function(p) {
-        var somaDosIndices = _.reduce(p.data, function(total, ponto) {
-          // Não soma último ano se ele foi adicionado porque é gráfico em passos
-          if (this.ehGraficoEmPassos === true && ponto.x === ultimoAno) {
-            return total;
-          }
-          return total + ponto.y;
-        }, 0, this);
+        var somaDosIndices = _.sum(p.data, 'y');
         // Mantém o resto por último (adiciona 100000 nos demais)
         if (tabela != null) {
           somaDosIndices += (tabela.resto === p.name) ? 0 : 100000;
         }
         return somaDosIndices;
       }, this).reverse();
+      // Duplica o último ano para torná-lo visível no gráfico em passos
+      if (this.ehGraficoEmPassos === true) {
+        var ultimoAno  = _(series).pluck('data').map(_.last).compact().pluck('x').max();
+        var proximoAno = Date.UTC(new Date(ultimoAno).getUTCFullYear() + 1, 0, 1);
+        _.each(series, function(p) {
+          var maiorAno = _.last(p.data);
+          if(maiorAno.x === ultimoAno) {
+            p.data.push({ x: proximoAno, y: maiorAno.y });
+          }
+        });
+      }
       return series;
     },
 

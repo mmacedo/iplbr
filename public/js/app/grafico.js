@@ -58,17 +58,17 @@
   }
 
   function criaGraficoDeEvolucaoDoIndice($el, apenas0e100) {
-    var curvas, linhas, area, passos;
+    var curvas, linhas, areas, passos;
     if (apenas0e100 === true) {
-      curvas = false;
       linhas = false;
-      area   = true;
+      areas  = true;
+      curvas = false;
       passos = true;
     } else {
-      curvas = $('#tipo_curvas').is(':checked');
       linhas = $('#tipo_linhas').is(':checked');
-      area   = $('#tipo_area').is(':checked');
-      passos = $('#passos').is(':checked:enabled');
+      areas  = $('#tipo_areas').is(':checked');
+      curvas = $('#atenuacao_curvas').is(':checked');
+      passos = $('#atenuacao_passos').is(':checked:enabled');
     }
 
     return $el.highcharts({
@@ -78,8 +78,8 @@
       credits: { enabled: false },
       yAxis: {
         title: { text: '%' },
-        tickInterval: area ? 20 : 5,
-        minorTickInterval: area ? 10 : null,
+        tickInterval: areas ? 20 : 5,
+        minorTickInterval: areas ? 10 : null,
         min: 0,
         ceiling: 100,
         reversedStacks: true
@@ -107,7 +107,7 @@
         useHTML: true,
         pointFormatter: function() {
 
-          var ano = new Date(this.x).getFullYear() - 1;
+          var ano = new Date(this.x).getUTCFullYear() - 1;
 
           // Não mostra tooltip para extinto
           var partidos = this.series.options.partidos;
@@ -136,10 +136,10 @@
       plotOptions: {
         series: {
           marker: { enabled: false },
-          step: passos?'left':false
+          step: passos ? 'left' : false
         },
         area: {
-          stacking: area?'normal':null,
+          stacking: areas ? 'normal' : null,
           states: { hover: { enabled: false } }
         }
       }

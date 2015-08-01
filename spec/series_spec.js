@@ -23,13 +23,6 @@ describe('ipl.GeradorDeSeries (general)', function() {
       expect(resultado).to.eql([ 2006 ]);
     });
 
-    it('deve adicionar ano extra no final para gráfico em passos', function() {
-      this.indice.eleicoes.returns([ 2002 ]);
-      this.g.ehGraficoEmPassos = true;
-      var resultado = this.g.eleicoes(this.indice, null);
-      expect(resultado).to.eql([ 2002, 2003 ]);
-    });
-
     it('deve retornar lista vazia se não tiver dados', function() {
       this.indice.temDados.returns(false);
       var resultado = this.g.eleicoes(this.indice, null);

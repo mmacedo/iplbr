@@ -32,28 +32,65 @@
   };
 
   MathJax.Hub.Config({
-    jax:                    [ "input/MathML", "output/HTML-CSS" ],
+    jax:                    [ 'input/MathML', 'output/HTML-CSS' ],
     extensions:             [],
     showProcessingMessages: false,
     showMathMenu:           false,
     showMathMenuMSIE:       false,
-    "HTML-CSS": {
+    'HTML-CSS': {
       linebreaks: { automatic: true }
     }
   });
 
-  function atualizaConfiguracao(cfg, series, apenas0e100) {
-    var partidos = ipl.filtroDePartidos();
+  // https://github.com/twbs/bootstrap/issues/16703 (remover no 3.3.6)
+  // jshint ignore:start
+  // jscs:disable
+  $.fn.button.Constructor.prototype.toggle = function () {
+    var changed = true
+    var $parent = this.$element.closest('[data-toggle="buttons"], [data-toggle="workaround-buttons"]')
 
+    if ($parent.length) {
+      var $input = this.$element.find('input')
+      if ($input.prop('type') == 'radio') {
+        if ($input.prop('checked')) changed = false
+        $parent.find('.active').removeClass('active')
+        this.$element.addClass('active')
+      } else if ($input.prop('type') == 'checkbox') {
+        if (($input.prop('checked')) !== this.$element.hasClass('active')) changed = false
+        this.$element.toggleClass('active')
+      }
+      $input.prop('checked', this.$element.hasClass('active'))
+      if (changed) $input.trigger('change')
+    } else {
+      this.$element.attr('aria-pressed', !this.$element.hasClass('active'))
+      this.$element.toggleClass('active')
+    }
+  }
+
+  $(document)
+    .on('click.bs.button.data-api', '[data-toggle="workaround-buttons"]', function (e) {
+      var $btn = $(e.target)
+      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
+      if (!$btn.hasClass('disabled')) $.fn.button.call($btn, 'toggle')
+      if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
+    })
+    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle="workaround-buttons"]', function (e) {
+      $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
+    })
+  // jscs:enable
+  // jshint ignore:end
+
+  function atualizaConfiguracaoDosPartidos(cfg) {
+    var partidos = ipl.filtroDePartidos();
     if (partidos === null) {
       cfg.mudancasDeNome = $('#mudancas_de_nome').is(':checked:enabled');
       cfg.incorporacoes  = $('#incorporacoes').is(':checked:enabled');
       cfg.fusoes         = $('#fusoes').is(':checked:enabled');
       cfg.tabelaDeReescrita = null;
     } else {
-      cfg.mudancasDeNome    = partidos.partido != null;
-      cfg.incorporacoes     = false;
-      cfg.fusoes            = false;
+      cfg.mudancasDeNome = partidos.partido != null;
+      cfg.incorporacoes  = false;
+      cfg.fusoes         = false;
 
       if (partidos.selecao != null) {
         cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos[partidos.selecao];
@@ -61,13 +98,15 @@
         cfg.tabelaDeReescrita = null;
       }
     }
+  }
 
+  function atualizaConfiguracaoDoGrafico(series, apenas0e100) {
     if (apenas0e100 === true) {
       series.ehGraficoEmPassos = true;
       series.ehGraficoDeArea   = true;
     } else {
-      series.ehGraficoEmPassos = $('#passos').is(':checked:enabled');
-      series.ehGraficoDeArea   = $('#tipo_area').is(':checked');
+      series.ehGraficoEmPassos = $('#atenuacao_passos').is(':checked:enabled');
+      series.ehGraficoDeArea   = $('#tipo_areas').is(':checked');
     }
   }
 
@@ -122,9 +161,9 @@
     // Esconde tipo de gráfico quando o ano for selecionado (apenas torta)
     $(document).on('change', '#ano', function() {
       if ($('#ano').val() === 'todos') {
-        $('#painel_tipo_de_grafico').addClass('in');
+        $('#painel_configuracao_grafico').addClass('in');
       } else {
-        $('#painel_tipo_de_grafico').removeClass('in');
+        $('#painel_configuracao_grafico').removeClass('in');
       }
     });
 
@@ -147,18 +186,15 @@
       }
     });
 
-    // Desabilita 'Em passos' quando o tipo de gráfico não permitir isso
+    // Desabilita função 'Curvas' quando o tipo de gráfico for 'Áreas'
     $(document).on('change', '[name="tipo_de_grafico"]', function() {
-      if ($('#tipo_curvas').is(':checked')) {
-        $('#passos')
-          .prop('disabled', true)
-          .closest('.checkbox')
-          .addClass('disabled');
+      if ($('#tipo_areas').is(':checked')) {
+        fazerMudancas(function() {
+          $('#atenuacao_curvas').prop('disabled', true).closest('.btn').addClass('disabled');
+          $('#atenuacao_retas').click();
+        });
       } else {
-        $('#passos')
-          .prop('disabled', false)
-          .closest('.checkbox')
-          .removeClass('disabled');
+        $('#atenuacao_curvas').prop('disabled', false).closest('.btn').removeClass('disabled');
       }
     });
 
@@ -203,23 +239,28 @@
       var series = new ipl.GeradorDeSeries(cfg, partidos, cores);
 
       $(document).on('shown.bs.tab', '[aria-controls="tab_indice_total"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.indice();
         ipl.criaGrafico('#indice_total', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_total"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.legislativo();
         ipl.criaGrafico('#legislativo_total', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_total"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.executivo();
         ipl.criaGrafico('#executivo_total', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_indice_federal"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.federal();
         ipl.criaGrafico('#indice_federal', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_federal"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indiceCamara = indices.deputadosFederais();
         ipl.criaGrafico('#deputados_federais', series, indiceCamara);
         var indiceSenado = indices.senadores();
@@ -227,34 +268,41 @@
         var indiceCongresso = indices.legislativoFederal();
         ipl.criaGrafico('#congresso_nacional', series, indiceCongresso);
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_federal"]', function() {
-        atualizaConfiguracao(cfg, series, true);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series, true);
         var indice = indices.executivoFederal();
         ipl.criaGrafico('#presidentes', series, indice, true);
       }).on('shown.bs.tab', '[aria-controls="tab_indice_estadual"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.estadual();
         ipl.criaGrafico('#indice_estadual', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_estadual"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.legislativoEstadual();
         ipl.criaGrafico('#deputados_estaduais', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_estadual"]', function() {
         var apenasUmaUf = ipl.filtroPorRegiao().ues.length === 1;
-        atualizaConfiguracao(cfg, series, apenasUmaUf);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series, apenasUmaUf);
         var indice = indices.executivoEstadual();
         ipl.criaGrafico('#governadores', series, indice, apenasUmaUf);
       }).on('shown.bs.tab', '[aria-controls="tab_indice_municipal"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.municipal();
         ipl.criaGrafico('#indice_municipal', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_legislativo_municipal"]', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indice = indices.legislativoMunicipal();
         ipl.criaGrafico('#vereadores', series, indice);
       }).on('shown.bs.tab', '[aria-controls="tab_executivo_municipal"]', function() {
         var ues = ipl.filtroPorRegiao().ues;
         var apenasDf = ues.length === 1 && ues[0] === 'DF';
-        atualizaConfiguracao(cfg, series, apenasDf);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series, apenasDf);
         var indice = indices.executivoMunicipal();
         ipl.criaGrafico('#prefeitos', series, indice, apenasDf);
       }).on('shown.bs.tab', '[aria-controls="tab_total"]', function() {
@@ -272,7 +320,8 @@
       });
 
       $(document).on('shown.ipl', '#painel_grafico_partido', function() {
-        atualizaConfiguracao(cfg, series);
+        atualizaConfiguracaoDosPartidos(cfg);
+        atualizaConfiguracaoDoGrafico(series);
         var indiceFederal   = indices.federal();
         var indiceEstadual  = indices.estadual();
         var indiceMunicipal = indices.municipal();

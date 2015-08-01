@@ -82,10 +82,6 @@
       anos = _.filter(anos, function(ano) {
         return indice.temDados(regiao, ano);
       });
-      // Adiciona um ano depois da última eleição para o último passo ficar visível
-      if (this.ehGraficoEmPassos === true) {
-        anos.push(_.max(anos) + 1);
-      }
       return anos;
     },
 
@@ -101,7 +97,7 @@
     idPartidos: function(indice, regiao, eleicoes) {
       return _.uniq(_.flatten(_.map(eleicoes, function(ano) {
         return indice.partidos(regiao, ano);
-      })).sort(), true)
+      })).sort(), true);
     },
 
     /**

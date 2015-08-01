@@ -58,26 +58,6 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
         expect(resultado[1].partidos[0]).to.equal(a);
       });
 
-      it('não deve somar índices do ano extra adicionado para gráfico em passos', function() {
-        var a = { sigla: 'A', numero: 1, cor: 'azul' };
-        var b = { sigla: 'B', numero: 2, cor: 'azul' };
-        this.g.ehGraficoEmPassos = true;
-        var resultado = this.g.seriesHighcharts([
-          { info: a, indices: [
-            { ano: 2002, indice: 0.00 },
-            { ano: 2006, indice: 0.02 },
-            { ano: 2007, indice: 0.02 }
-          ] },
-          { info: b, indices: [
-            { ano: 2002, indice: 0.03 },
-            { ano: 2006, indice: 0.00 },
-            { ano: 2007, indice: 0.00 }
-          ] }
-        ]);
-        expect(resultado[0].partidos[0]).to.equal(b);
-        expect(resultado[1].partidos[0]).to.equal(a);
-      });
-
       it('deve retornar resto por último', function() {
         this.cfg.tabelaDeReescrita = { resto: 'Resto' };
         var a = { sigla: 'A', numero: 1, cor: 'azul' };
@@ -105,6 +85,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
         var a = { sigla: 'A', numero: 1, cor: 'azul' };
         var serieA = { nome: 'A', info: a, indices: [ { ano: 2002, indice: 0.1 } ] };
         var resultado = this.g.seriesHighcharts([ serieA ]);
+        expect(new Date(resultado[0].data[0].x).getUTCFullYear()).to.equal(2003);
         expect(resultado[0].data[0].x).to.eql(Date.UTC(2003, 0, 1));
       });
 
@@ -112,7 +93,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
         var a = { sigla: 'A', numero: 1, cor: 'azul' };
         var serieA = { nome: 'A', info: a, indices: [ { ano: 2002, indice: 0.1 } ] };
         var resultado = this.g.seriesHighcharts([ serieA ]);
-        expect(resultado[0].data[0].y).to.eql(10);
+        expect(resultado[0].data[0].y).to.equal(10);
       });
 
       it('deve retornar pontos ordenados pela data', function() {
@@ -120,8 +101,18 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
         var serieA = { nome: 'A', info: a, indices: [
           { ano: 2004, indice: 0.1 }, { ano: 2002, indice: 0.1 } ] };
         var resultado = this.g.seriesHighcharts([ serieA ]);
-        expect(resultado[0].data[0].x).to.eql(Date.UTC(2003, 0, 1));
-        expect(resultado[0].data[1].x).to.eql(Date.UTC(2005, 0, 1));
+        expect(new Date(resultado[0].data[0].x).getUTCFullYear()).to.equal(2003);
+        expect(new Date(resultado[0].data[1].x).getUTCFullYear()).to.equal(2005);
+      });
+
+      it('deve adicionar ano extra no final para gráfico em passos', function() {
+        var a = { sigla: 'A', numero: 1, cor: 'azul' };
+        this.g.ehGraficoEmPassos = true;
+        var resultado = this.g.seriesHighcharts([
+          { info: a, indices: [ { ano: 2002, indice: 0.01 }, { ano: 2006, indice: 0.02 } ] }
+        ]);
+        expect(new Date(resultado[0].data[1].x).getUTCFullYear()).to.equal(2007);
+        expect(new Date(resultado[0].data[2].x).getUTCFullYear()).to.equal(2008);
       });
 
     });

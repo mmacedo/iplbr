@@ -82,3 +82,16 @@ body {
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
+
+
+/* https://github.com/twbs/bootstrap/issues/16703 (remover no 3.3.6)
+-------------------------------------------------------- */
+
+[data-toggle="workaround-buttons"] > .btn input[type="radio"],
+[data-toggle="workaround-buttons"] > .btn-group > .btn input[type="radio"],
+[data-toggle="workaround-buttons"] > .btn input[type="checkbox"],
+[data-toggle="workaround-buttons"] > .btn-group > .btn input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
