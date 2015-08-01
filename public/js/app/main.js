@@ -80,7 +80,7 @@
       'partido-' + estado.partidos :
       null;
     fazerMudancas(function() {
-      $('#partidos').selectpicker('val', valor).change();
+      $('#partidos').selectpicker().selectpicker('val', valor).change();
       if (valor === 'todos') {
         $('#mudancas_de_nome').prop('checked', true);
         $('#incorporacoes, #fusoes').prop('checked', false);
