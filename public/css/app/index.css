@@ -1,7 +1,7 @@
 /* Muda altura dos gráficos conforme o tamanho da tela
 -------------------------------------------------------- */
 
-.grafico { width: 100%; height: 400px; }
+.grafico { width: 100%; height: 400px; margin-top: 1em; }
 .grafico > .highcharts-container { height: 400px; }
 
 /* @screen-sm-min: 768px; */
@@ -39,7 +39,17 @@ body {
   text-align: center;
 }
 
-#dedicacao > .glyphicon-heart { color: #DC143C; } /* Crimson */
+#dedicacao > .coracao:after {
+  content: "♥";
+  color: crimson;
+  text-align: center;
+  animation: pulso 1s linear infinite;
+}
+@keyframes pulso {
+ 0%   { transform: scale(1.1); }
+ 50%  { transform: scale(0.8); }
+ 100% { transform: scale(1);   }
+}
 
 
 /* Filtros

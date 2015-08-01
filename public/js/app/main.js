@@ -5,6 +5,9 @@
   'use strict';
 
   Highcharts.setOptions({
+    chart: {
+      backgroundColor: 'white'
+    },
     lang: {
       decimalPoint:       ',',
       thousandsSep:       '.',
