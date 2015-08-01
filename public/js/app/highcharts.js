@@ -5,7 +5,7 @@
   'use strict';
 
   /** @const {ipl.Tom} */
-  ipl.GeradorDeSeries.COR_RESTO = '#333';
+  ipl.GeradorDeSeries.COR_RESTO = '#333333';
 
   /** @const {string} */
   ipl.GeradorDeSeries.LINHA_RESTO = 'dash';
@@ -120,9 +120,12 @@
         name: serieFederal.nome,
         color: this.cores.cor(serieFederal.info),
         data: [
-          { name: 'Federal', y: serieFederal.indices[0].indice * 100 },
-          { name: 'Estadual', y: serieEstadual.indices[0].indice * 100 },
-          { name: 'Municipal', y: serieMunicipal.indices[0].indice * 100 }
+          { name: 'Federal', y: serieFederal.indices[0].indice * 100,
+            dataLabels: { align: 'center', verticalAlign: 'bottom' } },
+          { name: 'Estadual', y: serieEstadual.indices[0].indice * 100,
+            dataLabels: { align: 'left', verticalAlign: 'top' } },
+          { name: 'Municipal', y: serieMunicipal.indices[0].indice * 100,
+            dataLabels: { align: 'right', verticalAlign: 'top' } }
         ]
       };
     },

@@ -71,6 +71,9 @@
       passos = $('#atenuacao_passos').is(':checked:enabled');
     }
 
+    var filtroPartidos = ipl.filtroDePartidos();
+    var apenasUmPartido = filtroPartidos != null && filtroPartidos.partido != null;
+
     return $el.highcharts({
       chart: { type: curvas?'spline':linhas?'line':'area' },
       title: { text: $el.data('titulo') },
@@ -81,6 +84,9 @@
         tickInterval: areas ? 20 : 5,
         minorTickInterval: areas ? 10 : null,
         min: 0,
+        // Make sure a chart with all zeros is shown in the bottom
+        // http://stackoverflow.com/a/23243448/619510
+        minRange : 0.1,
         ceiling: 100,
         reversedStacks: true
       },
@@ -103,10 +109,10 @@
         ]
       },
       tooltip: {
+        enabled: !apenasUmPartido,
         shared: true,
         useHTML: true,
         pointFormatter: function() {
-
           var ano = new Date(this.x).getUTCFullYear() - 1;
 
           // Não mostra tooltip para extinto
@@ -121,7 +127,7 @@
           } else {
             var arredondado = new Big(this.y).round(2);
             if (arredondado.eq(0)) {
-              indice = '< 0.01';
+              indice = '< 0.01%';
             } else {
               indice = arredondado.toFixed(2);
             }
@@ -129,18 +135,22 @@
 
           var cor   = '<span style="color:' + this.color + ';">\u25CF</span>';
           var nome  = this.series.name;
-          var valor = '<strong>' + indice + '</strong>';
+          var valor = '<strong>' + indice + '%</strong>';
           return cor + ' ' + nome + ': ' + valor + '<br/>';
         }
       },
       plotOptions: {
         series: {
-          marker: { enabled: false },
+          marker: { enabled: apenasUmPartido },
+          dataLabels: {
+            enabled: apenasUmPartido,
+            format:  '{point.y:.2f}%'
+          },
           step: passos ? 'left' : false
         },
         area: {
-          stacking: areas ? 'normal' : null,
-          states: { hover: { enabled: false } }
+          stacking: (areas && !apenasUmPartido) ? 'normal' : null,
+          states: { hover: { enabled: apenasUmPartido } }
         }
       }
     }).highcharts();
@@ -183,23 +193,18 @@
         minorTickInterval: null,
         min: 0,
         ceiling: 100,
-        labels: {
-          enabled: false
-        }
+        labels: { enabled: false }
       },
       credits: { enabled: false },
-      tooltip: {
-        headerFormat: '<span style="font-size:larger">{series.name}</span><br>',
-        pointFormat:  '{point.name}: <strong>{point.y:.2f}%</strong> do total<br/>'
-      },
-      legend: {
-        enabled: false
-      },
+      tooltip: { enabled: false },
+      legend: { enabled: false },
       plotOptions: {
         series: {
           dataLabels: {
             enabled: true,
-            format:  '{point.y:.2f}%'
+            format:  '{point.y:.2f}%',
+            // Make it visible when the triangle is too small
+            allowOverlap: true
           }
         }
       }
