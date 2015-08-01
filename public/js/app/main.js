@@ -1,7 +1,7 @@
 /* jshint browser: true */
-/* globals ipl, _, jQuery, Highcharts */
+/* globals ipl, _, jQuery, Highcharts, MathJax */
 
-;(function(ipl, _, $, Highcharts) {
+;(function(ipl, _, $, Highcharts, MathJax) {
   'use strict';
 
   Highcharts.setOptions({
@@ -30,6 +30,17 @@
     ],
     multipleSeparator: ', '
   };
+
+  MathJax.Hub.Config({
+    jax:                    [ "input/MathML", "output/HTML-CSS" ],
+    extensions:             [],
+    showProcessingMessages: false,
+    showMathMenu:           false,
+    showMathMenuMSIE:       false,
+    "HTML-CSS": {
+      linebreaks: { automatic: true }
+    }
+  });
 
   function atualizaConfiguracao(cfg, series, apenas0e100) {
     var partidos = ipl.filtroDePartidos();
@@ -286,4 +297,4 @@
     });
   });
 
-})(ipl, _, jQuery, Highcharts);
+})(ipl, _, jQuery, Highcharts, MathJax);
