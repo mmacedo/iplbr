@@ -34,7 +34,7 @@
         var partidos = p.info != null ? [ p.info ].concat(mesclados) : mesclados;
         var serie = { name: p.nome, data: indicesOrdenados, partidos: partidos };
         // Aparência da série
-        if (tabela != null && p.nome === tabela.resto) {
+        if (tabela != null && p.nome === tabela.resto()) {
           // Resto:
           // Cor preta
           serie.color = ipl.GeradorDeSeries.COR_RESTO;
@@ -55,7 +55,7 @@
         var somaDosIndices = _.sum(p.data, 'y');
         // Mantém o resto por último (adiciona 100000 nos demais)
         if (tabela != null) {
-          somaDosIndices += (tabela.resto === p.name) ? 0 : 100000;
+          somaDosIndices += (tabela.resto() === p.name) ? 0 : 100000;
         }
         return somaDosIndices;
       }, this).reverse();
@@ -65,7 +65,7 @@
         var proximoAno = Date.UTC(new Date(ultimoAno).getUTCFullYear() + 1, 0, 1);
         _.each(series, function(p) {
           var maiorAno = _.last(p.data);
-          if(maiorAno.x === ultimoAno) {
+          if (maiorAno.x === ultimoAno) {
             p.data.push({ x: proximoAno, y: maiorAno.y });
           }
         });
@@ -88,7 +88,7 @@
         var partidos = p.info != null ? [ p.info ].concat(p.mesclados) : p.mesclados;
         var serie = { name: p.nome, y: p.indices[0].indice * 100, partidos: partidos };
         // Cor da série
-        var ehResto = tabela != null && p.nome === tabela.resto;
+        var ehResto = tabela != null && p.nome === tabela.resto();
         serie.color = ehResto ? ipl.GeradorDeSeries.COR_RESTO : this.cores.cor(p.info);
         return serie;
       }, this);
@@ -97,7 +97,7 @@
         var indice = p.y;
         // Mantém o resto por último (adiciona 100000 nos demais)
         if (tabela != null) {
-          indice += (tabela.resto === p.name) ? 0 : 100000;
+          indice += (tabela.resto() === p.name) ? 0 : 100000;
         }
         return indice;
       }).reverse();

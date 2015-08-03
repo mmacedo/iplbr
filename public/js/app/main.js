@@ -1,49 +1,84 @@
 /* jshint browser: true */
-/* globals ipl, _, jQuery, Highcharts, MathJax */
+/* globals ipl, _, jQuery, Highcharts */
 
-;(function(ipl, _, $, Highcharts, MathJax) {
+;(function(ipl, _, $, Highcharts) {
   'use strict';
 
-  Highcharts.setOptions({
-    chart: {
-      backgroundColor: 'white'
-    },
-    lang: {
-      decimalPoint:       ',',
-      thousandsSep:       '.',
-      noData:             'Sem dados para exibir',
-      contextButtonTitle: 'Exportar',
-      printChart:         'Imprimir gráfico',
-      downloadPNG:        'Baixar como imagem PNG',
-      downloadJPEG:       'Baixar como imagem JPEG',
-      downloadPDF:        'Baixar como documento PDF',
-      downloadSVG:        'Baixar como vetor gráfico SVG',
-      loading:            'Carregando...'
-    }
-  });
+  function inicializaPtBr() {
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint:       ',',
+        thousandsSep:       '.',
+        noData:             'Sem dados para exibir',
+        contextButtonTitle: 'Exportar',
+        printChart:         'Imprimir gráfico',
+        downloadPNG:        'Baixar como imagem PNG',
+        downloadJPEG:       'Baixar como imagem JPEG',
+        downloadPDF:        'Baixar como documento PDF',
+        downloadSVG:        'Baixar como vetor gráfico SVG',
+        loading:            'Carregando...'
+      }
+    });
+    $.fn.selectpicker.defaults = {
+      noneSelectedText:  'Nada selecionado',
+      noneResultsText:   'Nada encontrado contendo {0}',
+      countSelectedText: 'Selecionado {0} de {1}',
+      maxOptionsText:    [
+        'Limite excedido (máx. {n} {var})',
+        'Limite do grupo excedido (máx. {n} {var})',
+        [ 'itens', 'item' ]
+      ],
+      multipleSeparator: ', '
+    };
+    ipl.ConfiguracaoDePartidos.restoPadrao = 'Outros';
+  }
 
-  $.fn.selectpicker.defaults = {
-    noneSelectedText:  'Nada selecionado',
-    noneResultsText:   'Nada encontrado contendo {0}',
-    countSelectedText: 'Selecionado {0} de {1}',
-    maxOptionsText:    [
-      'Limite excedido (máx. {n} {var})',
-      'Limite do grupo excedido (máx. {n} {var})',
-      [ 'itens', 'item' ]
-    ],
-    multipleSeparator: ', '
-  };
+  function inicializaEn() {
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint:       '.',
+        thousandsSep:       ',',
+        noData:             'No data to display',
+        contextButtonTitle: 'Export',
+        printChart:         'Print chart',
+        downloadPNG:        'Download PNG image',
+        downloadJPEG:       'Download JPEG image',
+        downloadPDF:        'Download PDF document',
+        downloadSVG:        'Download SVG vector',
+        loading:            'Loading...'
+      }
+    });
+    $.fn.selectpicker.defaults = {
+      noneSelectedText: 'Nothing selected',
+      noneResultsText: 'No results match {0}',
+      countSelectedText: function (numSelected) {
+        return numSelected === 1 ? '{0} item selected' : '{0} items selected';
+      },
+      maxOptionsText: function (numAll, numGroup) {
+        return [
+          numAll === 1 ?
+            'Limit reached ({n} item max)' :
+            'Limit reached ({n} items max)',
+          numGroup === 1 ?
+            'Group limit reached ({n} item max)' :
+            'Group limit reached ({n} items max)'
+        ];
+      },
+      selectAllText: 'Select All',
+      deselectAllText: 'Deselect All',
+      multipleSeparator: ', '
+    };
+    ipl.ConfiguracaoDePartidos.restoPadrao = 'Other';
+  }
 
-  MathJax.Hub.Config({
-    jax:                    [ 'input/MathML', 'output/HTML-CSS' ],
-    extensions:             [],
-    showProcessingMessages: false,
-    showMathMenu:           false,
-    showMathMenuMSIE:       false,
-    'HTML-CSS': {
-      linebreaks: { automatic: true }
-    }
-  });
+  function inicializaLocalizacao(locale) {
+    ({ 'pt-BR': inicializaPtBr, en: inicializaEn })[locale]();
+  }
+
+  var idioma = $('html').attr('lang');
+  inicializaLocalizacao(idioma);
+
+  Highcharts.setOptions({ chart: { backgroundColor: 'white' } });
 
   // https://github.com/twbs/bootstrap/issues/16703 (remover no 3.3.6)
   // jshint ignore:start
@@ -131,14 +166,22 @@
     return $('#partidos [value="' + valor + '"]').text();
   }
 
+  function urlBase() {
+    var idioma = $('html').attr('lang');
+    if (idioma === 'pt-BR') {
+      return '#';
+    }
+    return idioma + '/#';
+  }
+
   function adicionaHistoria() {
     if (window.fazendoMudancas === true) {
       return;
     }
-    var filtro = ipl.filtroDePartidos();
+    var filtro   = ipl.filtroDePartidos();
     var partidos = filtro ? filtro.selecao || filtro.partido : 'todos';
-    var titulo  = $('#partidos :selected').text();
-    history.pushState({ partidos: partidos }, titulo, '#' + partidos);
+    var titulo   = $('#partidos :selected').text();
+    history.pushState({ partidos: partidos }, titulo, urlBase() + partidos);
   }
 
   function atualizaGuia() {
@@ -336,7 +379,7 @@
         var hash   = window.location.hash ? window.location.hash.replace(/^#/, '') : 'top10';
         var estado = { partidos: hash };
         var titulo = atualizaTela(estado);
-        history.replaceState(estado, titulo, '#' + hash);
+        history.replaceState(estado, titulo, urlBase() + hash);
       } else {
         // Alguns navegadores chamam onload se o browser for reiniciado
         atualizaTela(history.state);
@@ -349,4 +392,4 @@
     });
   });
 
-})(ipl, _, jQuery, Highcharts, MathJax);
+})(ipl, _, jQuery, Highcharts);

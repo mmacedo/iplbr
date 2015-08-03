@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Projeto idealizado com o intuito de educar o cidadão brasileiro sobre o poder de cada partido e a necessidade de escolher bem seus representantes no legislativo.">
+  <meta name="description" content="Projeto idealizado com o intuito de educar o cidadão brasileiro sobre o poder de cada partido político e a necessidade de escolher bem seus representantes no legislativo.">
   <meta name="author" content="Michel Pavan Macedo">
 
   <title>Índice de Poder Legislativo</title>
+
+  <link rel="alternate" hreflang="en" href="en" />
 
   <!--Icons-->
   <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png">
@@ -84,12 +86,12 @@
       </div>
       <div id="sobre" class="panel-collapse collapse" aria-labelledby="cabecalho_sobre">
         <div class="panel-body">
-          <h3>O que é?</h3>
-          <p>O <strong>Índice de Poder Legislativo</strong> é uma tentativa de determinar qual é o poder de cada partido.</p>
-          <h3>Como?</h3>
-          <p>Analisando o resultado das eleições e calculando o número de representantes eleitos por cada partido proporcionalmente à população representada (afetada pelas legislação que o representante pode passar).</p>
+          <h3>O que é o Índice de Poder Legislativo?</h3>
+          <p>O <strong>Índice de Poder Legislativo</strong> é uma tentativa de determinar qual é o poder de cada partido político.</p>
+          <h3>Como é calculado?</h3>
+          <p>Analisando o resultado das eleições e calculando a população representada por cada partido político, ou mais especificamente, a população afetada pela legislação passada pelos representantes eleitos pelo partido.</p>
           <h3>Brasil</h3>
-          <p>O estado brasileiro é uma federação com três níveis de governo e <a href="https://pt.wikipedia.org/wiki/Teoria_da_separa%C3%A7%C3%A3o_dos_poderes">três poderes</a>.</p>
+          <p>O estado brasileiro é uma república federativa com três níveis de governo e <a href="https://pt.wikipedia.org/wiki/Teoria_da_separa%C3%A7%C3%A3o_dos_poderes">três poderes</a>.</p>
           <div class="panel-group" id="sobre-brasil">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -102,10 +104,10 @@
                   <p>No Brasil, os três poderes da União são:</p>
                   <ul>
                     <li>O <a href="https://pt.wikipedia.org/wiki/Poder_Legislativo"><strong>legislativo</strong></a> é o poder encarregado de passar legislação;</li>
-                    <li>O <a href="https://pt.wikipedia.org/wiki/Poder_Executivo"><strong>executivo</strong></a> no <a href="https://pt.wikipedia.org/wiki/Estado_de_direito">estado de direito</a> não tem poder independente de passar legislação, mas tem um poder limitado de afetar a sua aprovação através do <a href="https://jb.jusbrasil.com.br/definicoes/100004356/veto">veto</a>.</li>
-                    <li>O <a href="https://pt.wikipedia.org/wiki/Poder_Judici%C3%A1rio"><strong>judiciário</strong></a> é em teoria imparcial e apartidário, portanto não é considerado no cálculo;</li>
+                    <li>O <a href="https://pt.wikipedia.org/wiki/Poder_Executivo"><strong>executivo</strong></a> no <a href="https://pt.wikipedia.org/wiki/Estado_de_direito">estado de direito</a> não tem poder independente de passar legislação, mas tem um poder limitado de afetar a sua aprovação através do <a href="https://jb.jusbrasil.com.br/definicoes/100004356/veto">veto</a>;</li>
+                    <li>O <a href="https://pt.wikipedia.org/wiki/Poder_Judici%C3%A1rio"><strong>judiciário</strong></a> é em teoria imparcial e apartidário, portanto não é usado no índice.</li>
                   </ul>
-                  <p>Para uma lei ser aprovada é necessário <a href="https://pt.wikipedia.org/wiki/Maioria_simples"><strong>maioria simples</strong></a>, isto é, <abbr title="cinquenta por cento mais um">50% + 1</abbr> dos <u>presentes</u> e para que haja votação é necessário que estejam presentes (<a href="https://pt.wikipedia.org/wiki/Qu%C3%B3rum"><strong>quórum</strong></a>) pelo menos <abbr title="cinquenta por cento mais um">50% + 1</abbr>. Mas um projeto pode ser vetado pelo executivo, daí ele volta para o legislativo que tem a oportunidade de derrubar o veto. Para derrubar o veto e aprovar o projeto que não levou a sanção do executivo é necessário <a href="https://pt.wikipedia.org/wiki/Maioria_absoluta_(Brasil)"><strong>maioria absoluta</strong></a>, isto é, <abbr title="cinquenta por cento mais um">50% + 1</abbr> dos membros do colegiado (<u>todos</u>, não só os presentes).</p>
+                  <p>Para uma lei ser aprovada é necessário <a href="https://pt.wikipedia.org/wiki/Maioria_simples_(Brasil)"><strong>maioria simples</strong></a>, isto é, 50% + 1 dos <u>presentes</u> e para que haja votação é necessário que estejam presentes (<a href="https://pt.wikipedia.org/wiki/Qu%C3%B3rum"><strong>quórum</strong></a>) pelo menos 50% + 1. Mas um projeto pode ser vetado pelo executivo, daí ele volta para o legislativo que tem a oportunidade de derrubar o veto. Para derrubar o veto e aprovar o projeto que não levou a sanção do executivo é necessário <a href="https://pt.wikipedia.org/wiki/Maioria_absoluta_(Brasil)"><strong>maioria absoluta</strong></a>, isto é, 50% + 1 dos membros do colegiado (<u>todos</u>, não só os presentes).</p>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="panel panel-default">
@@ -113,17 +115,13 @@
                           <h5 class="panel-title">Sem veto</h5>
                         </div>
                         <div class="panel-body">
-                          <!-- <div class="well"> -->
-                            <math display="block"><mi>Quórum</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Todos</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
-                            <math display="block"><mi>Maioria Simples (mín.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Quórum</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
-                            <math display="block"><mi>Maioria Simples (máx.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Todos</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
-                          <!-- </div> -->
+                          <math display="block"><mi>Quórum</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Todos</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
+                          <math display="block"><mi>Maioria Simples (mín.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Quórum</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
+                          <math display="block"><mi>Maioria Simples (máx.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Todos</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
                           <p>Ex. A Câmara dos Deputados tem 513 membros:</p>
-                          <!-- <div class="well"> -->
-                            <math display="block"><mi>Quórum</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>513</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn></math>
-                            <math display="block"><mi>Maioria Simples (mín.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>257</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>129</mn> <mo>&asymp;</mo> <mn>25%</mn></math>
-                            <math display="block"><mi>Maioria Simples (máx.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>257</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn> <mo>&asymp;</mo> <mn>50%</mn></math>
-                          <!-- </div> -->
+                          <math display="block"><mi>Quórum</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>513</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn></math>
+                          <math display="block"><mi>Maioria Simples (mín.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>257</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>129</mn> <mo>&asymp;</mo> <mn>25%</mn></math>
+                          <math display="block"><mi>Maioria Simples (máx.)</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>257</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn> <mo>&asymp;</mo> <mn>50%</mn></math>
                         </div>
                       </div>
                     </div>
@@ -133,18 +131,14 @@
                           <h5 class="panel-title">Com veto</h5>
                         </div>
                         <div class="panel-body">
-                          <!-- <div class="well"> -->
-                            <math display="block"><mi>Maioria Absoluta</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Membros da casa</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
-                          <!-- </div> -->
+                          <math display="block"><mi>Maioria Absoluta</mi> <mo>=</mo> <mrow><mfenced><mrow><mi>Todos</mi> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow></math>
                           <p>Ex. A Câmara dos Deputados tem 513 membros:</p>
-                          <!-- <div class="well"> -->
-                            <math display="block"><mi>Maioria Absoluta</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>513</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn> <mo>&asymp;</mo> <mn>50%</mn></math>
-                          <!-- </div> -->
+                          <math display="block"><mi>Maioria Absoluta</mi> <mo>=</mo> <mrow><mfenced><mrow><mn>513</mn> <mo>&times;</mo> <mn>50%</mn></mrow></mfenced> <mo>+</mo> <mn>1</mn></mrow> <mo>=</mo> <mn>257</mn> <mo>&asymp;</mo> <mn>50%</mn></math>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <p>Se 50% dos membros da casa estão presentes (o mínimo requerido para votação de uma lei), são necessários 50% dos votos com sanção do executivo e 100% dos votos sem sanção do executivo. Se 100% dos membros da casa estão presentes, são necessários 50% dos votos com ou sem sanção do executivo. Ou seja, dependendo do número de presentes, a sanção do executivo tem o potencial para elevar o requisito de votos de 0 até 50%. Levando isso em consideração o executivo é dado nesse índice o peso de 25% (média aproximada dos dois extremos):</p>
+                  <p>Se 50% dos membros da casa estão presentes (o mínimo requerido para votação de uma lei), são necessários 50% dos votos com sanção do executivo e 100% dos votos sem sanção do executivo. Se 100% dos membros da casa estão presentes, são necessários 50% dos votos com ou sem sanção do executivo. Ou seja, dependendo do número de presentes, a sanção do executivo tem o potencial para elevar o requisito de votos em 0 ou até 50%. Levando isso em consideração o executivo é dado nesse índice o peso de 25% (uma aproximação do meio entre os dois extremos):</p>
                   <math display="block">
                     <mrow>
                       <mi>Total</mi>
@@ -258,7 +252,7 @@
                               <mo>=</mo>
                               <mfrac>
                                 <mi>Presidentes</mi>
-                                <mi>Total de Presidentes</mi>
+                                <mi>1</mi>
                               </mfrac>
                             </mrow>
                           </math>
@@ -351,7 +345,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#sobre-brasil" href="#sobre-brasil-entes-da-federacao">Entes da Federação</a>
+                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#sobre-brasil" href="#sobre-brasil-entes-da-federacao">Entes da federação</a>
                 </h4>
               </div>
               <div id="sobre-brasil-entes-da-federacao" class="panel-collapse collapse">
@@ -359,16 +353,9 @@
                   <p>Independente de qual estado elegeu um deputado federal ou senador, as leis propostas ou votados por esse valerão em todo o território nacional, portanto o índice federal de uma <dfn title="Unidade da Federação">UF</dfn> ou município é o mesmo para todos, assim como o índice estadual é o mesmo para todos os municípios da mesma UF.</p>
                   <p>Para calcular o índice estadual ou municipal do país é necessário juntar os índices de todas as UFs e municípios, respectivamente. Há várias formas para realizar esse cálculo:</p>
                   <ul>
-                    <li>O método <strong>nominal (sem peso)</strong> é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo todos os vereadores no país teriam o mesmo peso indpendente de qual cidade eles representam. O problema desse método é que o número de vereadores de um município variam, enquanto o prefeito de São Paulo receberia o peso (1 / 5.566) &times; 0,25, a câmara de vereadores de São Paulo receberia (55 / 57.239) &times; 0,75 ou aproximadamente (1 / 1.040,71) &times; 0,75.</li>
-                    <li>O método <strong>proporcional ao legislativo</strong> é igual ao nominal para os representantes do legislativo, portanto a Prefeitura de São Paulo receberia o peso de (55 / 57.239) &times; 0,25 assim como a Câmara Municipal de São Paulo ao invés de (1 / 5.566) &times; 0,25. Normalizamos o peso do ente da federação nos diversos poderes de governo, mas o número de vereadores de uma cidade ainda não é uma medida justa do poder individual de cada vereador. Em 2012, São Paulo com uma população de 11.376.685 tinha o peso de 1 / 1.040 e Blumenau com uma população de 316.139 tinha o peso de 1/3.815,93, 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
-                    <li>No método <strong>proporcional à população representada</strong> é dado o peso para determinada <dfn title="Unidade Eleitoral">UE</dfn> proporcional a última estimativa de população dada pelo IBGE antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685 / 193.917.083 ou 1 / 17,05 e Blumenau teria o peso 316.139 / 193.917.083 ou 1 / 613,39. <u>Esse foi o método escolhido para o cálculo desse índice.</u></li>
-                  </ul>
-                  <h5>Dificuldades</h5>
-                  <p>A soma dos índices para todos os partidos nem sempre fecha exatamente 100%. Há vários problemas que dificultam a obtenção de um resultado mais preciso:</p>
-                  <ul>
-                    <li>A soma das estimativas de população dadas pelo IBGE podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
-                    <li>Alguns municípios recém emancipados tiveram eleição em ano em que o IBGE ainda não tinha dado estimativa, portanto estimativa do próximo ano foi utilizada. Assim, um grupo de pessoas pode ter sido incluído em dois municípios ou nenhum, criando diferenças significativas. Mesmo que os novos municípios fossem formados apenas por pessoas que não existiam na estimativa anterior, a população muda naturalmente ou por migração de um ano para outro e quando usamos estimativas de anos diferentes os número terão pequenas variações.</li>
-                    <li>O banco de dados dos resultados das eleições municipais do TSE tem muitos buracos.</li>
+                    <li>O método <strong>nominal (sem peso)</strong> é aquele em que todos os representantes de mesmo cargo tem poder igual, por exemplo, todos os vereadores no país teriam o mesmo peso independente de qual cidade eles representam. O problema desse método é que enquanto o número de prefeitos em um município é fixo em 1, o número de vereadores variam. Enquanto o prefeito de São Paulo receberia o peso (1 / 5.566) &times; 0,25, a câmara de vereadores de São Paulo inteira receberia (55 / 57.239) &times; 0,75 ou aproximadamente (1 / 1.040,71) &times; 0,75.</li>
+                    <li>O método <strong>proporcional ao legislativo</strong> é igual ao nominal para os representantes do legislativo, portanto a Prefeitura de São Paulo receberia o peso de (55 / 57.239) &times; 0,25 assim como a Câmara Municipal de São Paulo. Normalizamos o peso do ente da federação em todos os poderes de governo, mas o número de vereadores de uma cidade ainda é uma medida imperfeita do peso relativo de cada ente da federação. Em 2012, São Paulo, com uma população de 11.376.685 tinha o peso de 1 / 1.040 e Blumenau com uma população de 316.139 tinha o peso de 1 / 3.816 ou 27,3% do peso do município de São Paulo com apenas 2,8% da sua população.</li>
+                    <li>No método <strong>proporcional à população representada</strong>, uma <dfn title="Unidade Eleitoral">UE</dfn> é dada um peso proporcional a última estimativa de população dada pelo <dfn title="Instituto Brasileiro de Geografia e Estatística"><a href="https://pt.wikipedia.org/wiki/Instituto_Brasileiro_de_Geografia_e_Estat%C3%ADstica">IBGE</a></dfn> antes daquela data. Em 2012, o município de São Paulo teria o peso 11.376.685 / 193.917.083 ou 1 / 17,05 e Blumenau teria o peso 316.139 / 193.917.083 ou 1 / 613,39. <u>Esse foi o método escolhido para o cálculo desse índice.</u></li>
                   </ul>
                 </div>
               </div>
@@ -385,7 +372,7 @@
                     <dt>r</dt><dd>Número de representantes pelo partido</dd>
                     <dt>t</dt><dd>Número total de representantes</dd>
                     <dt>p</dt><dd>População da UE</dd>
-                    <dt>E</dt><dd>Conjunto de estados (exclui DF)</dd>
+                    <dt>E</dt><dd>Conjunto de estados (não inclui o DF)</dd>
                     <dt>M</dt><dd>Conjunto de municípios</dd>
                   </dl>
                   <p>Para calcularmos o índice da esfera federal (<var>f</var>) para o país:</p>
@@ -497,7 +484,7 @@
                       <mo>)</mo>
                     </mrow>
                   </math>
-                  <p>Para calcularmos o índice da esfera municipal (exceto Brasília) (<var>m</var>) para o país:</p>
+                  <p>Para calcularmos o índice da esfera municipal (não inclui Brasília) (<var>m</var>) para o país:</p>
                   <math display="block">
                     <mi>m</mi>
                     <mo>=</mo>
@@ -574,7 +561,7 @@
               </div>
             </div>
           </div>
-          <h3>Dúvidas Frequentes</h3>
+          <h3>Problemas Comuns</h3>
           <div class="panel-group" id="faq">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -587,9 +574,10 @@
                   <p>Essas são as primeiras eleições após a Lei da Anistia e o retorno do pluripartidarismo, embora os municípios, os territórios, o Distrito Federal, o recém-criado estado de Rondônia e o Senado Federal continuaram com representantes não-eleitos:</p>
                   <ol>
                     <li value="1985">Pela primeira vez 201 municípios puderam escolher seus prefeitos, incluindo as capitais.</li>
-                    <li value="1986">O estado de Rondônia e o Distrito Federal elegeram pela primeira vez seus representantes. Em 1986 também foram substituídos os senadores biônicos de 1978.</li>
+                    <li value="1986">O estado de Rondônia e o Distrito Federal elegeram pela primeira vez seus representantes.</li>
+                    <li value="1986">Os senadores <dfn title="Escolhidos pela ditadura"><a href="https://pt.wikipedia.org/wiki/Cargo_bi%C3%B4nico">biônicos</a></dfn> escolhidos em 1978 foram substituídos por senadores eleitos.</li>
                     <li value="1988">Pela primeira vez todos os municípios puderam escolher seus representantes.</li>
-                    <li value="1990">Os territórios federais de Amapá e Roraima foram elevados à estado pela Constituição de 1988 e escolheram pela primeira vez seus representantes. O Tocantins também teve sua primeira eleição, mas esse foi emancipado do estado de Goiás, que já escolhia seus representantes.</li>
+                    <li value="1990">Os territórios federais de Amapá e Roraima foram elevados à estado pela <a href="http://www.planalto.gov.br/ccivil_03/Constituicao/Constituicao.htm">Constituição de 1988</a> e escolheram pela primeira vez seus representantes. O Tocantins também teve sua primeira eleição, mas esse foi emancipado do estado de Goiás, que já escolhia seus representantes.</li>
                   </ol>
                 </div>
               </div>
@@ -614,7 +602,7 @@
               </div>
               <div id="faq-3" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>As eleições de 1985 foram realizadas em apenas algumas cidades. Não há os dados necessários sobre as eleições de 1988 e 1992 no site do TSE.</p>
+                  <p>As eleições de 1985 foram realizadas em apenas algumas cidades. Não há os dados necessários sobre as eleições de 1988 e 1992 no site do <dfn title="Tribunal Superior Eleitoral"><a href="https://pt.wikipedia.org/wiki/Tribunal_Superior_Eleitoral">TSE</a></dfn>.</p>
                 </div>
               </div>
             </div>
@@ -626,14 +614,14 @@
               </div>
               <div id="faq-4" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>Há várias dificuldades de utilizar as cores do partido: os partidos tem múltiplas cores, as cores não ficam bem no gráfico, as cores repetem muito entre partidos, etc. Portanto, as cores são escolhidas de forma arbritária para facilitar a compreensão do gráfico. Na maioria dos casos, as cores são tons de uma das cores do partido.</p>
+                  <p>Há várias dificuldades de utilizar as cores do partido: os partidos tem múltiplas cores, as cores não ficam bem no gráfico, as cores repetem muito entre partidos, etc. Portanto, as cores são escolhidas de forma mais ou menos arbitrária para facilitar a compreensão do gráfico. Na maioria dos casos, as cores são tons de uma das cores do partido.</p>
                 </div>
               </div>
             </div>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq" href="#faq-5">Por que o índice federal para localidade X não é proporcional aos representantes de X?</a>
+                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq" href="#faq-5">Por que o índice federal para localidade X não é proporcional aos representantes eleitos por X?</a>
                 </h4>
               </div>
               <div id="faq-5" class="panel-collapse collapse">
@@ -650,7 +638,7 @@
               </div>
               <div id="faq-6" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>O índice não rastreia mudanças de partido, renúncias, impeachmants, cassações, eleições complementares, etc. O número de representantes de cada partido é baseado exclusivamente no número de eleitos das eleições nacionais.</p>
+                  <p>O índice não rastreia mudanças de partido, licenças, renúncias, impeachments, suspensões, eleições complementares, etc. O número de representantes de cada partido é baseado exclusivamente no número de eleitos das eleições nacionais.</p>
                 </div>
               </div>
             </div>
@@ -669,15 +657,16 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq" href="#faq-8">Por que alguns indíces parecem não somar 100%?</a>
+                  <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq" href="#faq-8">Por que alguns indíces não somam 100%?</a>
                 </h4>
               </div>
               <div id="faq-8" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>Há mais de um problema que pode causar isso:</p>
+                  <p>Há vários problemas que dificultam a obtenção de um resultado mais preciso:</p>
                   <ul>
-                    <li>A lista de cidades do IBGE em suas estimativas de população difere da lista de cidades onde houve eleição. Essa lista pode diferir ainda mais quando não há estimativas de população para um ano que teve eleição e é necessário estimativas de um ano diferente.</li>
-                    <li>Não está listado nenhum representante eleito para o cargo e a localidade.</li>
+                    <li>A soma das estimativas de população dadas pelo <dfn title="Instituto Brasileiro de Geografia e Estatística"><a href="https://pt.wikipedia.org/wiki/Instituto_Brasileiro_de_Geografia_e_Estat%C3%ADstica">IBGE</a></dfn> podem não fechar 100% por causa de decisões judiciais alterando a estimativa de um município;</li>
+                    <li>Alguns municípios recém-emancipados tiveram eleição em um ano que o IBGE ainda não tinha publicado uma estimativa para a população para eles, portanto a estimativa do ano seguinte teve que ser utilizada. Assim, um grupo de pessoas pode ter sido incluído em dois municípios ou nenhum, criando diferenças significativas. Mesmo que os novos municípios fossem formados apenas por pessoas que não existiam na estimativa anterior, a população muda de um ano para outro, naturalmente ou por migração, logo quando usamos estimativas de anos diferentes os número terão pequenas variações.</li>
+                    <li>O banco de dados dos resultados das eleições municipais do <dfn title="Tribunal Superior Eleitoral"><a href="https://pt.wikipedia.org/wiki/Tribunal_Superior_Eleitoral">TSE</a></dfn> tem muitos buracos. Não há como saber se está faltando um ou mais representantes para um cargo e o índice será calculado proporcionalmente ao número disponível, mas se todos os representantes de um cargo público para uma determinada localidade estiverem faltando, a soma dos índices para todos os partidos será zero, deixando um buraco nos dados proporcional ao peso da localidade.</li>
                   </ul>
                 </div>
               </div>
@@ -748,23 +737,23 @@
                   <option value="2013">2013</option>
                   <option value="2011">2011</option>
                 </optgroup>
-                <optgroup label="Era Lula">
+                <optgroup label="<a href='https://pt.wikipedia.org/wiki/Luiz_In%C3%A1cio_Lula_da_Silva'>Era Lula</a>">
                   <option value="2009">2009</option>
                   <option value="2007">2007</option>
                   <option value="2005">2005</option>
                   <option value="2003">2003</option>
                 </optgroup>
-                <optgroup label="Era FHC">
+                <optgroup label="<a href='https://pt.wikipedia.org/wiki/Fernando_Henrique_Cardoso'>Era FHC</a>">
                   <option value="2001">2001</option>
                   <option value="1999">1999</option>
                   <option value="1997">1997</option>
                   <option value="1995">1995</option>
                 </optgroup>
-                <optgroup label="Era Collor">
+                <optgroup label="<a href='https://pt.wikipedia.org/wiki/Fernando_Collor_de_Mello'>Era Collor</a>">
                   <option value="1991">1991</option>
                   <option value="1990">1990</option>
                 </optgroup>
-                <optgroup label="Redemocratização">
+                <optgroup label="<a href='https://pt.wikipedia.org/wiki/Abertura_pol%C3%ADtica'>Abertura política</a>">
                   <option value="1989">1989</option>
                   <option value="1987">1987</option>
                   <option value="1983">1983</option>
@@ -918,13 +907,13 @@
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="tab_indice_total">
-                <div id="indice_total" class="grafico" data-titulo="Índice" data-subtitulo="Federal / 3 + Estadual / 3 + Municipal / 3"></div>
+                <div id="indice_total" class="grafico" data-titulo="Índice" data-subtitulo="(Federal + Estadual + Municipal) / 3"></div>
               </div>
               <div role="tabpanel" class="tab-pane" id="tab_legislativo_total">
-                <div id="legislativo_total" class="grafico" data-titulo="Legislativo" data-subtitulo="Legislativo Federal / 3 + Legislativo Estadual / 3 + Legislativo Municipal / 3"></div>
+                <div id="legislativo_total" class="grafico" data-titulo="Legislativo" data-subtitulo="(Legislativo Federal + Legislativo Estadual + Legislativo Municipal) / 3"></div>
               </div>
               <div role="tabpanel" class="tab-pane" id="tab_executivo_total">
-                <div id="executivo_total" class="grafico" data-titulo="Executivo" data-subtitulo="Executivo Federal / 3 + Executivo Estadual / 3 + Executivo Municipal / 3"></div>
+                <div id="executivo_total" class="grafico" data-titulo="Executivo" data-subtitulo="(Executivo Federal + Executivo Estadual + Executivo Municipal) / 3"></div>
               </div>
             </div>
           </div>
@@ -947,7 +936,7 @@
               <div role="tabpanel" class="tab-pane" id="tab_legislativo_federal">
                 <div id="deputados_federais" class="grafico" data-titulo="Câmara dos Deputados"></div>
                 <div id="senadores" class="grafico" data-titulo="Senado Federal"></div>
-                <div id="congresso_nacional" class="grafico" data-titulo="Congresso Nacional" data-subtitulo="Câmara dos Deputados + Senado Federal"></div>
+                <div id="congresso_nacional" class="grafico" data-titulo="Congresso Nacional" data-subtitulo="(Câmara dos Deputados + Senado Federal) / 2"></div>
               </div>
               <div role="tabpanel" class="tab-pane" id="tab_executivo_federal">
                 <div id="presidentes" class="grafico" data-titulo="Presidência da República"></div>
@@ -1014,14 +1003,13 @@
 
   <footer id="rodape">
     <div class="container">
-      <p id="ideia" class="text-muted">Projeto idealizado com o intuito de educar o cidadão brasileiro sobre o poder de cada partido e a necessidade de escolher bem seus representantes no legislativo.</p>
+      <p id="ideia" class="text-muted">Projeto idealizado com o intuito de educar o cidadão brasileiro sobre o poder de cada partido político e a necessidade de escolher bem seus representantes no legislativo.</p>
       <p id="dedicacao" class="small text-muted">Dedicado à Aline L. S., minha amada <span class="coracao"></span></p>
     </div>
   </footer>
 
   <!-- @if true !>
 
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML&locale=pt-BR"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"></script>
@@ -1037,10 +1025,6 @@
   <!-- @endif -->
 
   <!-- @if false -->
-
-
-  <!-- MathJax -->
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML&amp;locale=pt-BR"></script>
 
   <!-- jQuery -->
   <script src="js/jquery.min.js"></script>
@@ -1082,4 +1066,21 @@
   <script src="js/app/main.js"></script>
 
   <!-- @endif -->
+
+  <!-- Configuração do MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax:                    [ 'input/MathML', 'output/HTML-CSS' ],
+      extensions:             [],
+      showProcessingMessages: false,
+      showMathMenu:           false,
+      showMathMenuMSIE:       false,
+      'HTML-CSS': {
+        linebreaks: { automatic: true }
+      }
+    });
+  </script>
+
+  <!-- MathJax -->
+  <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML&amp;locale=pt-BR"></script>
 </body></html>

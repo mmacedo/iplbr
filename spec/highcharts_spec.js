@@ -59,7 +59,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
       });
 
       it('deve retornar resto por último', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var a = { sigla: 'A', numero: 1, cor: 'azul' };
         var resultado = this.g.seriesHighcharts([
           { nome: 'A',     info: a,    indices: [ { ano: 2002, indice: 0.00 } ] },
@@ -143,21 +143,21 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
       });
 
       it('deve retornar linha preta se a série for resto', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var serieResto = { nome: 'Resto', indices: [] };
         var resultado = this.g.seriesHighcharts([ serieResto ]);
         expect(resultado[0].color).to.equal(ipl.GeradorDeSeries.COR_RESTO);
       });
 
       it('deve retornar linha tracejada se a série for resto', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var serieResto = { nome: 'Resto', indices: [] };
         var resultado = this.g.seriesHighcharts([ serieResto ]);
         expect(resultado[0].dashStyle).to.equal(ipl.GeradorDeSeries.LINHA_RESTO);
       });
 
       it('não deve retornar linha tracejada se o gráfico for de área', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         this.g.ehGraficoDeArea = true;
         var serieResto = { nome: 'Resto', indices: [] };
         var resultado = this.g.seriesHighcharts([ serieResto ]);
@@ -165,7 +165,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
       });
 
       it('deve mostrar resto em todos os anos', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var serieResto = { nome: 'Resto', indices: [
           { ano: 2002, indice: null }, { ano: 2004, indice: 1 }, { ano: 2006, indice: null }
         ] };
@@ -228,7 +228,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
       });
 
       it('deve retornar resto por último', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var serieResto = { nome: 'Resto', info: null, indices: [
           { ano: 2002, indice: 0.2 } ] };
         var a = { sigla: 'A', numero: 1, cor: 'azul' };
@@ -268,7 +268,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
       });
 
       it('deve retornar fatia preta se a série for resto', function() {
-        this.cfg.tabelaDeReescrita = { resto: 'Resto' };
+        this.cfg.tabelaDeReescrita = { resto: _.constant('Resto') };
         var serieResto = { nome: 'Resto', indices: [ { ano: 2002, indice: 0.1 } ] };
         var resultado = this.g.serieTortaHighcharts([ serieResto ]);
         expect(resultado.data[0].color).to.equal(ipl.GeradorDeSeries.COR_RESTO);

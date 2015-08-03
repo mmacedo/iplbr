@@ -5,11 +5,16 @@
   'use strict';
 
   /**
+   * @callback ipl.TextoLocalizado
+   * @returns {string}
+   */
+
+  /**
    * Tabela para criar séries personalizadas com os partidos.
    *
    * @typedef {Object} ipl.TabelaDeReescrita
    * @property {Array<{sigla:string, numero:number}>} mapear
-   * @property {string} resto
+   * @property {ipl.TextoLocalizado} resto
    */
 
   /**
@@ -63,7 +68,10 @@
     this.tabelaDeReescrita = null;
   }
 
-  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top10 */
+  /** @member {string} ipl.ConfiguracaoDePartidos.restoPadrao */
+  ConfiguracaoDePartidos.restoPadrao = 'Outros';
+
+  /** @const {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top10 */
   ConfiguracaoDePartidos.top10 = {
     mapear: [
       { de: { sigla: 'PT',    numero: 13 }, para: 'PT' },
@@ -89,20 +97,20 @@
       { de: { sigla: 'PAN',   numero: 26 }, para: 'PTB' },
       { de: { sigla: 'PSD',   numero: 55 }, para: 'PSD' }
     ],
-    resto: 'Resto'
+    resto: function() { return ConfiguracaoDePartidos.restoPadrao; }
   };
 
-  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top3 */
+  /** @const {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.top3 */
   ConfiguracaoDePartidos.top3 = {
     mapear: [
       { de: { sigla: 'PT',   numero: 13 }, para: 'PT' },
       { de: { sigla: 'PMDB', numero: 15 }, para: 'PMDB' },
       { de: { sigla: 'PSDB', numero: 45 }, para: 'PSDB' }
     ],
-    resto: 'Resto'
+    resto: function() { return ConfiguracaoDePartidos.restoPadrao; }
   };
 
-  /** @constant {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.antigos */
+  /** @const {ipl.TabelaDeReescrita} ipl.ConfiguracaoDePartidos.antigos */
   ConfiguracaoDePartidos.antigos = {
     mapear: [
       { de: { sigla: 'PDS',    numero: 11 }, para: 'ARENA (1965)' },
@@ -135,7 +143,7 @@
       { de: { sigla: 'PCdoB',  numero: 65 }, para: 'PCB (1922)' },
       { de: { sigla: 'PPL',    numero: 54 }, para: 'PCB (1922)' }
     ],
-    resto: 'Resto'
+    resto: function() { return ConfiguracaoDePartidos.restoPadrao; }
   };
 
   /**
@@ -275,7 +283,7 @@
         return _.assign({}, p, {
           nome: config != null ?
             config.para :
-            this.tabelaDeReescrita.resto
+            this.tabelaDeReescrita.resto()
         });
       }, this);
 
@@ -291,7 +299,7 @@
         }));
 
         var info = null, mesclados = todosMesclados;
-        if (nome !== this.tabelaDeReescrita.resto) {
+        if (nome !== this.tabelaDeReescrita.resto()) {
           info = _(this.tabelaDeReescrita.mapear)
             .filter('para', nome)
             .map(function(mapa) { return _.find(todosMesclados, mapa.de); })

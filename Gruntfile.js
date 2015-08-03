@@ -29,11 +29,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     htmllint: {
-      all: 'public/index.html',
+      all: 'public/**/index.html',
       dashboard: 'dashboard/web/index.html'
     },
     bootlint: {
-      all: 'public/index.html',
+      all: 'public/**/index.html',
       dashboard: 'dashboard/web/index.html'
     },
     jshint: {
@@ -91,8 +91,10 @@ module.exports = function(grunt) {
     },
     preprocess: {
       html: {
-        src: 'public/index.html',
-        dest: 'tmp/min/index.html'
+        files: {
+          'tmp/min/index-pt-BR.html': 'public/index.html',
+          'tmp/min/index-en.html':    'public/en/index.html'
+        }
       }
     },
     cssmin: {
@@ -114,8 +116,10 @@ module.exports = function(grunt) {
           minifyJS: true,
           minifyURLs: true
         },
-        src: 'tmp/min/index.html',
-        dest: 'tmp/min/index.html'
+        files: {
+          'tmp/min/index-pt-BR.html': 'tmp/min/index-pt-BR.html',
+          'tmp/min/index-en.html':    'tmp/min/index-en.html'
+        }
       },
       options: {
       }
@@ -151,7 +155,9 @@ module.exports = function(grunt) {
     copy: {
       dist: {
         files: [
-          { 'tmp/build/index.html':      'tmp/min/index.html' },
+          { 'tmp/build/sitemap.xml':     'public/sitemap.xml' },
+          { 'tmp/build/index.html':      'tmp/min/index-pt-BR.html' },
+          { 'tmp/build/en/index.html':   'tmp/min/index-en.html' },
           { 'tmp/build/js/big.min.js':   'public/js/big.min.js' },
           { 'tmp/build/js/app.min.js':   'tmp/min/app.min.js' },
           { 'tmp/build/css/app.min.css': 'tmp/min/app.min.css' },

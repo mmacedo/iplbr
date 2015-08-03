@@ -155,7 +155,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
     it('deve retornar como resto se não estiver mapeado', function() {
       var partido = { sigla: 'A', numero: 1 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ partido ]));
-      cfg.tabelaDeReescrita = { mapear: [], resto: 'Resto' };
+      cfg.tabelaDeReescrita = { mapear: [], resto: _.constant('Resto') };
       var resultado = cfg.agrupaPartidos([ { info: partido } ]);
       expect(resultado[0].nome).to.equal('Resto');
     });
@@ -172,7 +172,7 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [], resto: 'Resto' };
+      cfg.tabelaDeReescrita = { mapear: [], resto: _.constant('Resto') };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, indices: [] }
       ]);
@@ -183,7 +183,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, indices: [] }
       ]);
@@ -200,7 +203,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var c_indices = [ { ano: 2002, indice: 1 }, { ano: 2006, indice: 3 }, { ano: 2010, indice: 1 } ];
       // jscs:enable maximumLineLength
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: a_indices }, { info: b, indices: b_indices }
       ]);
@@ -212,7 +218,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: b, para: 'C' }, { de: a, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: b, para: 'C' }, { de: a, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, indices: [] }
       ]);
@@ -225,11 +234,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var b = { sigla: 'B', numero: 2 };
       var c = { sigla: 'C', numero: 3 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b, c ]));
-      cfg.tabelaDeReescrita = { mapear: [
-        { de: a, para: 'D' },
-        { de: b, para: 'D' },
-        { de: c, para: 'D' }
-      ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'D' }, { de: b, para: 'D' }, { de: c, para: 'D' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         // Não elegeu representantes
         //  logo, não foi retornada em ipl.Indice#partidos
@@ -244,7 +252,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, fundado: 1980, indices: [] }, { info: b, fundado: 1979, indices: [] }
       ]);
@@ -256,7 +267,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, extinto: 1980, indices: [] }, { info: b, extinto: 1979, indices: [] }
       ]);
@@ -268,7 +282,10 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
       var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b ]));
-      cfg.tabelaDeReescrita = { mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ] };
+      cfg.tabelaDeReescrita = {
+        mapear: [ { de: a, para: 'C' }, { de: b, para: 'C' } ],
+        resto: _.noop
+      };
       var resultado = cfg.agrupaPartidos([
         { info: a, indices: [] }, { info: b, extinto: 1979, indices: [] }
       ]);
