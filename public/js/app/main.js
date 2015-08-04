@@ -127,8 +127,8 @@
       cfg.tabelaDeReescrita = null;
     } else {
       cfg.mudancasDeNome = partidos.partido != null;
-      cfg.incorporacoes  = false;
-      cfg.fusoes         = false;
+      cfg.incorporacoes  = partidos.partido != null;
+      cfg.fusoes         = partidos.partido != null;
 
       if (partidos.selecao != null) {
         cfg.tabelaDeReescrita = ipl.ConfiguracaoDePartidos[partidos.selecao];
@@ -236,8 +236,12 @@
     $(document).on('change', '[name="tipo_de_grafico"]', function() {
       if ($('#tipo_areas').is(':checked')) {
         fazerMudancas(function() {
-          $('#atenuacao_curvas').prop('disabled', true).closest('.btn').addClass('disabled');
-          $('#atenuacao_retas').click();
+          var $curvas = $('#atenuacao_curvas');
+          var curvasSelecionado = $curvas.is(':checked');
+          $curvas.prop('disabled', true).closest('.btn').addClass('disabled');
+          if (curvasSelecionado) {
+            $('#atenuacao_retas').click();
+          }
         });
       } else {
         $('#atenuacao_curvas').prop('disabled', false).closest('.btn').removeClass('disabled');

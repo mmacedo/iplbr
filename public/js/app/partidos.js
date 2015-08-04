@@ -291,6 +291,34 @@
     return idPartido.toUpperCase().replace(/DOB(?=[0-9]{2}$)/, 'doB');
   };
 
+  function buscaPredecessores(partido, mudancasDeNome, incorporacoes, fusoes) {
+    return [partido].concat(_(this.partidos).filter(function(predecessor) {
+      if (partido.extinto != null && predecessor.extinto > partido.extinto) {
+        return false;
+      }
+      if (mudancasDeNome === true &&
+          predecessor.renomeado === partido.sigla &&
+          partido.fundado >= predecessor.extinto) {
+        return true;
+      }
+      if (incorporacoes === true &&
+          predecessor.incorporado === partido.sigla &&
+          partido.fundado <= predecessor.extinto) {
+        return true;
+      }
+      if (fusoes === true &&
+          predecessor.fusao === partido.sigla &&
+          partido.fundado >= predecessor.extinto) {
+        return true;
+      }
+      return false;
+    }).map(function(predecessor) {
+      return buscaPredecessores.call(this, predecessor, mudancasDeNome, incorporacoes, fusoes);
+    }, this).flatten().value());
+  }
+
+  window.a = buscaPredecessores;
+
   RepositorioDePartidos.prototype = {
 
     /**
@@ -333,6 +361,22 @@
     },
 
     /**
+     * Busca partidos que foram extintos para integrar o partido atual.
+     *
+     * @param {ipl.Partido} partido - Partido sucessor.
+     * @returns {Array<ipl.Partido>} Lista de partidos predecessores.
+     * @nosideeffects
+     */
+    buscaPredecessores: function(partido, mudancasDeNome, incorporacoes, fusoes) {
+      var chave = 'buscaPredecessores' + partido.sigla + partido.numero + partido.fundado;
+      if (!this.cache.has(chave)) {
+        var predecessores = buscaPredecessores.call(this, partido, mudancasDeNome, incorporacoes, fusoes);
+        this.cache.set(chave, predecessores);
+      }
+      return this.cache.get(chave);
+    },
+
+    /**
      * Busca o partido em que outro foi incorporado, fundido ou renomeado.
      *
      * @param {ipl.Partido} partido - Partido extinto.
@@ -362,7 +406,6 @@
         // Ex.: PTR -> PP (1993) ao invés de PP (2003)
         var sucessor = _.min(possiveisSucessores, 'fundado');
         this.cache.set(chave, sucessor);
-        return sucessor;
       }
       return this.cache.get(chave);
     }

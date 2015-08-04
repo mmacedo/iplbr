@@ -36,17 +36,6 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.eql([]);
     });
 
-    it('deve buscar do cache na segunda chamada', function() {
-      var json = { BR: { presidente: {} } };
-      var repo = new ipl.RepositorioEleitoral(json);
-      var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
-      sinon.spy(repo.cache, 'get');
-      repo.anosDeEleicao(tipoDeEleicao);
-      repo.anosDeEleicao(tipoDeEleicao);
-      expect(repo.cache.get).to.have.been.called();
-      expect(repo.cache.get).to.have.callCount(1);
-    });
-
   });
 
   describe('#mandatosAtivos', function() {
@@ -83,17 +72,6 @@ describe('ipl.RepositorioEleitoral', function() {
       expect(resultado).to.eql([]);
     });
 
-    it('deve buscar do cache na segunda chamada', function() {
-      var json = { BR: { presidente: { 1989: { mandato: 5 } } } };
-      var repo = new ipl.RepositorioEleitoral(json);
-      var tipoDeEleicao = { cargo: 'presidente', ue: 'BR' };
-      sinon.spy(repo.cache, 'get');
-      repo.mandatosAtivos(tipoDeEleicao, 1995);
-      repo.mandatosAtivos(tipoDeEleicao, 1995);
-      expect(repo.cache.get).to.have.been.called();
-      expect(repo.cache.get).to.have.callCount(1);
-    });
-
   });
 
   describe('#partidosComRepresentantes', function() {
@@ -128,17 +106,6 @@ describe('ipl.RepositorioEleitoral', function() {
       var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
       var resultado = repo.partidosComRepresentantes(tipoDeEleicao, 2002);
       expect(resultado).to.eql([]);
-    });
-
-    it('deve buscar do cache na segunda chamada', function() {
-      var json = { BR: { senador: {} } };
-      var repo = new ipl.RepositorioEleitoral(json);
-      var tipoDeEleicao = { cargo: 'senador', ue: 'BR' };
-      sinon.spy(repo.cache, 'get');
-      repo.partidosComRepresentantes(tipoDeEleicao, 2002);
-      repo.partidosComRepresentantes(tipoDeEleicao, 2002);
-      expect(repo.cache.get).to.have.been.called();
-      expect(repo.cache.get).to.have.callCount(1);
     });
 
   });

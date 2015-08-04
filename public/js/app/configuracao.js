@@ -300,10 +300,7 @@
 
         var info = null, mesclados = todosMesclados;
         if (nome !== this.tabelaDeReescrita.resto()) {
-          info = _(this.tabelaDeReescrita.mapear)
-            .filter('para', nome)
-            .map(function(mapa) { return _.find(todosMesclados, mapa.de); })
-            .find();
+          info = this.partidos.busca(_.find(this.tabelaDeReescrita.mapear, 'para', nome).de);
           mesclados = _.without(mesclados, info);
         }
 

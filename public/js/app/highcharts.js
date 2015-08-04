@@ -159,6 +159,7 @@
      */
     evolucaoDoIndicePorPartido: function(indice, regiao, idPartido) {
       var series = this.geraIndices(indice, regiao, null, idPartido);
+      series = this.configuracao.mapeiaPartidos(series);
       series = this.filtraAnos(series, this.ehGraficoDeArea);
       series = this.seriesHighcharts(series);
       return series;

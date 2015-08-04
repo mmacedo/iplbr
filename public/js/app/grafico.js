@@ -129,13 +129,13 @@
             if (arredondado.eq(0)) {
               indice = '< 0.01%';
             } else {
-              indice = arredondado.toFixed(2);
+              indice = arredondado.toFixed(2) + '%';
             }
           }
 
           var cor   = '<span style="color:' + this.color + ';">\u25CF</span>';
           var nome  = this.series.name;
-          var valor = '<strong>' + indice + '%</strong>';
+          var valor = '<strong>' + indice + '</strong>';
           return cor + ' ' + nome + ': ' + valor + '<br/>';
         }
       },

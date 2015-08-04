@@ -58,6 +58,12 @@ describe('ipl.RepositorioDePartidos', function() {
 
   });
 
+  describe('#buscaPredecessores', function() {
+
+    xit('…');
+
+  });
+
   describe('#buscaSucessor', function() {
 
     it('deve retornar sucessor se foi incorporado', function() {
@@ -118,17 +124,6 @@ describe('ipl.RepositorioDePartidos', function() {
       var repo = new ipl.RepositorioDePartidos([ a, b_antes, b_apos ]);
       var resultado = repo.buscaSucessor(a);
       expect(resultado).to.equal(b_apos);
-    });
-
-    it('deve busca do cache se chamar duas vezes', function() {
-      var a = { sigla: 'A', numero: 1, fundado: 1979, extinto: 2012, incorporado: 'B' };
-      var b = { sigla: 'B', numero: 2, fundado: 1979 };
-      var repo = new ipl.RepositorioDePartidos([ a, b ]);
-      sinon.spy(repo.cache, 'get');
-      repo.buscaSucessor(a);
-      repo.buscaSucessor(a);
-      expect(repo.cache.get).to.have.been.called();
-      expect(repo.cache.get).to.have.callCount(1);
     });
 
   });

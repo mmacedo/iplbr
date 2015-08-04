@@ -114,21 +114,25 @@
       var eleicoes = anoDeEleicao != null ?
         [ anoDeEleicao ] :
         this.eleicoes(indice, regiao);
-      var idPartidos = idPartido != null ?
-        [ ipl.RepositorioDePartidos.normalizaSiglaENumero(idPartido) ] :
-        this.idPartidos(indice, regiao, eleicoes);
-      return _.map(idPartidos, function(idPartido) {
-        // Carrega informações do partido
-        var info = this.partidos.buscaSiglaENumero(idPartido);
+      var partidos = idPartido != null ?
+        _.sortBy(this.partidos.buscaPredecessores(
+          this.partidos.buscaSiglaENumero(ipl.RepositorioDePartidos.normalizaSiglaENumero(idPartido)),
+          this.configuracao.mudancasDeNome,
+          this.configuracao.incorporacoes,
+          this.configuracao.fusoes), 'fundado') :
+        _.map(this.idPartidos(indice, regiao, eleicoes), function(idPartido) {
+          return this.partidos.buscaSiglaENumero(idPartido);
+        }, this);
+      return _.map(partidos, function(info) {
         // Calcula índices
         var indices = _.map(eleicoes, function(ano) {
-          return { ano: ano, indice: indice.calcula(regiao, ano, idPartido) };
+          return { ano: ano, indice: indice.calcula(regiao, ano, info.sigla + info.numero) };
         });
         return {
-          nome: info.sigla,
+          nome:    info.sigla,
           fundado: info.fundado,
           extinto: info.extinto,
-          info: info,
+          info:    info,
           indices: indices
         };
       }, this);

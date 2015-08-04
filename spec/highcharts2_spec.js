@@ -68,6 +68,7 @@ describe('ipl.GeradorDeSeries (Highcharts)', function() {
 
     it('deve filtrar índice pela região', function() {
       this.partidos.buscaSiglaENumero.returns({ sigla: 'A', numero: 1 });
+      this.partidos.buscaPredecessores.returns([ { sigla: 'A', numero: 1 } ]);
       this.indice.eleicoes.returns([ 2002 ]);
       var regiao = {};
       this.g.evolucaoDoIndicePorPartido(this.indice, regiao, 'A1');

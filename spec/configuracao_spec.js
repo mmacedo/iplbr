@@ -229,25 +229,6 @@ describe('ipl.ConfiguracaoDePartidos', function() {
       expect(resultado[0].info).to.equal(b);
     });
 
-    it('deve retornar informações do primeiro mapeado que tem dados', function() {
-      var a = { sigla: 'A', numero: 1 };
-      var b = { sigla: 'B', numero: 2 };
-      var c = { sigla: 'C', numero: 3 };
-      var cfg = new ipl.ConfiguracaoDePartidos(new ipl.RepositorioDePartidos([ a, b, c ]));
-      cfg.tabelaDeReescrita = {
-        mapear: [ { de: a, para: 'D' }, { de: b, para: 'D' }, { de: c, para: 'D' } ],
-        resto: _.noop
-      };
-      var resultado = cfg.agrupaPartidos([
-        // Não elegeu representantes
-        //  logo, não foi retornada em ipl.Indice#partidos
-        //  logo, não foi passada nesse método
-        { info: b, indices: [] }, { info: c, indices: [] }
-      ]);
-      expect(resultado).to.have.length(1);
-      expect(resultado[0].info).to.equal(b);
-    });
-
     it('deve manter a data de fundação do mais antigo', function() {
       var a = { sigla: 'A', numero: 1 };
       var b = { sigla: 'B', numero: 2 };
